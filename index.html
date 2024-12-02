@@ -7,11 +7,19 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+  <audio id="background-music" autoplay loop>
+    <source src="tech-music.mp3" type="audio/mp3">
+  </audio>
+
   <div class="container">
+    <canvas id="particles"></canvas>
+
     <h1 class="title">🚀 Site en Construction...</h1>
     <p class="subtitle">Prépare-toi, on arrive bientôt avec quelque chose de *fou*! 🤖</p>
+    
     <div class="loader"></div>
-    <p class="hint">Reste connecté : chaque seconde compte... ⏳</p>
+    <p class="countdown">Lancement dans <span id="countdown-timer">10</span> secondes... ⏳</p>
+    <p class="hint">Reste connecté : chaque seconde compte... 👾</p>
   </div>
 
   <script src="script.js"></script>
