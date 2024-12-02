@@ -2,7 +2,7 @@
 body {
   margin: 0;
   font-family: 'Poppins', sans-serif;
-  background: linear-gradient(120deg, #0f2027, #203a43, #2c5364);
+  background: linear-gradient(120deg, #1a2a6c, #b21f1f, #fdbb2d);
   color: #fff;
   overflow: hidden;
   display: flex;
@@ -11,10 +11,21 @@ body {
   height: 100vh;
 }
 
+/* Canvas pour les particules */
+#particles {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
 /* Container */
 .container {
   text-align: center;
-  animation: fadeIn 2s ease-in-out;
+  z-index: 1;
+  position: relative;
 }
 
 /* Titre principal */
@@ -31,7 +42,7 @@ body {
 .subtitle {
   font-size: 1.5rem;
   margin: 20px 0;
-  opacity: 0.8;
+  opacity: 0.9;
 }
 
 /* Loader */
@@ -45,21 +56,24 @@ body {
   animation: spin 1s linear infinite;
 }
 
+/* Compteur */
+.countdown {
+  font-size: 1.2rem;
+  margin: 20px 0;
+  font-weight: bold;
+}
+
 /* Indice ou Easter egg */
 .hint {
   font-size: 1rem;
-  opacity: 0.6;
+  opacity: 0.7;
+  margin-top: 10px;
 }
 
 /* Animations */
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
-}
-
-@keyframes fadeIn {
-  0% { opacity: 0; transform: scale(0.9); }
-  100% { opacity: 1; transform: scale(1); }
 }
 
 @keyframes glow {
