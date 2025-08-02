@@ -121,14 +121,24 @@
   }
 }
 
+/* 
+  Animation navbar-slide-down améliorée pour un effet "glissé" plus naturel et fluide :
+  - Départ plus haut, effet ressort léger à l'arrivée.
+  - Opacité progressive, translation plus marquée, rebond subtil.
+  - Durée allongée pour accentuer la fluidité.
+*/
 @keyframes navbar-slide-down {
   0% {
     opacity: 0;
-    transform: translateY(-40px) scale(0.98);
+    transform: translateY(-74px) scale(0.87);
   }
-  50% {
+  60% {
     opacity: 1;
-    transform: translateY(4px) scale(1.01);
+    transform: translateY(8px) scale(1.03);
+  }
+  80% {
+    opacity: 1;
+    transform: translateY(-2px) scale(0.99);
   }
   100% {
     opacity: 1;
@@ -136,5 +146,5 @@
   }
 }
 .animate-navbar-slide-down {
-  animation: navbar-slide-down 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  animation: navbar-slide-down 0.9s cubic-bezier(0.23, 1.05, 0.32, 1) both;
 }
