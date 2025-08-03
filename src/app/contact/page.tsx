@@ -11,7 +11,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle, } from "@/co
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Separator } from "@/components/ui/separator";
 import {Loader2, CheckCircle, XCircle, Briefcase, GraduationCap, MessageSquare, Users, FileText,
-        Upload, Github, Linkedin, Twitter, Instagram, Mail, Phone, MapPin,} from "lucide-react";
+        Upload, Github, Linkedin, Twitter, Instagram, Mail, Phone, MapPin, ArrowLeft,} from "lucide-react";
 
 
 type ContactInfo = {
@@ -220,31 +220,154 @@ export default function ContactPage() {
   return (
     <div className="min-h-screen bg-background py-12 px-4 pt-24">
       <div className="max-w-2xl mx-auto">
+        {/* Bouton de retour */}
+        <div className="mb-4">
+          <Button variant="outline" size="sm" asChild>
+            <Link href="/">
+              <ArrowLeft className="h-4 w-4 mr-2" />
+              Retour à l&apos;accueil
+            </Link>
+          </Button>
+        </div>
         <Card>
           <CardHeader className="text-center">
             <CardTitle className="text-2xl">Contactez-moi</CardTitle>
             <CardDescription>
-              Étudiant BTS SIO SISR • À la recherche d&rsquo;alternance/CDI
+              Étudiant BTS SIO SISR • À la recherche d&apos;alternance/CDI
             </CardDescription>
-            <div className="mt-4 flex flex-col sm:flex-row sm:flex-wrap sm:justify-center gap-4 text-sm text-muted-foreground">
-              {contactInfos.map(({ label, value, href, icon: Icon }) =>
-                href ? (
-                  <Link
-                    key={label}
-                    href={href}
-                    target="_blank"
-                    className="flex items-center gap-3 hover:text-foreground transition-colors"
-                  >
-                    <Icon className="w-4 h-4" />
-                    <span>{value}</span>
-                  </Link>
-                ) : (
-                  <div key={label} className="flex items-center gap-2">
-                    <Icon className="w-4 h-4" />
-                    <span>{value}</span>
-                  </div>
-                )
-              )}
+            {/* 
+              Mobile first, display flex, fond gris clair (muted), 
+              chaque ligne = flex-row centrée, gap-3 (plus serré), 
+              items = flex items-center gap-2
+              Ordre strict :
+                1. GitHub + LinkedIn
+                2. Instagram + Twitter (X)
+                3. Localisation + Téléphone
+                4. Email
+              Correction mobile : 
+                - Sur mobile, la ligne 3 (localisation + tel) doit être bien alignée verticalement (icône + texte sur la même ligne, tailles cohérentes)
+                - Ajout px-3 (padding horizontal réduit) sur chaque ligne pour éviter que le contenu soit collé au bord, surtout à droite
+                - Ajout max-w-xs w-full mx-auto sur chaque ligne pour éviter le dépassement sur mobile
+                - Centrage par rapport au parent (justify-center, mx-auto)
+            */}
+            <div className="mt-4 flex flex-col gap-2 text-sm text-muted-foreground items-center w-full ">
+              {/* Ligne 1 : GitHub + LinkedIn */}
+              <div className="flex flex-row justify-around items-center bg-muted/60 rounded-lg py-2 px-3 w-full mx-auto gap-3 max-w-md">
+                {(() => {
+                  const github = contactInfos.find((c) => c.label === "GitHub");
+                  const linkedin = contactInfos.find((c) => c.label === "LinkedIn");
+                  return (
+                    <>
+                      {github && github.href && (
+                        <Link
+                          href={github.href}
+                          target="_blank"
+                          className="flex items-center gap-2 hover:text-foreground transition-colors min-w-0"
+                        >
+                          {github.icon && <github.icon className="w-5 h-5 sm:w-4 sm:h-4" />}
+                          <span className="truncate">{github.value}</span>
+                        </Link>
+                      )}
+                      {linkedin && linkedin.href && (
+                        <Link
+                          href={linkedin.href}
+                          target="_blank"
+                          className="flex items-center gap-2 hover:text-foreground transition-colors min-w-0"
+                        >
+                          {linkedin.icon && <linkedin.icon className="w-5 h-5 sm:w-4 sm:h-4" />}
+                          <span className="truncate">{linkedin.value}</span>
+                        </Link>
+                      )}
+                    </>
+                  );
+                })()}
+              </div>
+              {/* Ligne 2 : Instagram + Twitter (X) */}
+              <div className="flex flex-row justify-around items-center bg-muted/60 rounded-lg py-2 px-3 w-full mx-auto gap-3 max-w-md">
+                {(() => {
+                  const instagram = contactInfos.find((c) => c.label === "Instagram");
+                  const twitter = contactInfos.find((c) => c.label === "Twitter");
+                  return (
+                    <>
+                      {instagram && instagram.href && (
+                        <Link
+                          href={instagram.href}
+                          target="_blank"
+                          className="flex items-center gap-2 hover:text-foreground transition-colors min-w-0"
+                        >
+                          {instagram.icon && <instagram.icon className="w-5 h-5 sm:w-4 sm:h-4" />}
+                          <span className="truncate">{instagram.value}</span>
+                        </Link>
+                      )}
+                      {twitter && twitter.href && (
+                        <Link
+                          href={twitter.href}
+                          target="_blank"
+                          className="flex items-center gap-2 hover:text-foreground transition-colors min-w-0"
+                        >
+                          {twitter.icon && <twitter.icon className="w-5 h-5 sm:w-4 sm:h-4" />}
+                          <span className="truncate">{twitter.value}</span>
+                        </Link>
+                      )}
+                    </>
+                  );
+                })()}
+              </div>
+              {/* Ligne 3 : Localisation + Téléphone */}
+              <div className="flex flex-row justify-around items-center bg-muted/60 rounded-lg py-2 px-3 w-full mx-auto gap-3 max-w-md">
+                {(() => {
+                  const localisation = contactInfos.find((c) => c.label === "Localisation");
+                  const tel = contactInfos.find((c) => c.label === "Téléphone");
+                  return (
+                    <>
+                      {localisation && (
+                        <div className="flex items-center gap-2 min-w-0">
+                          {localisation.icon && (
+                            <span className="flex items-center justify-center ">
+                              <localisation.icon className="w-5 h-5 sm:w-4 sm:h-4" />
+                            </span>
+                          )}
+                          <span>{localisation.value}</span>
+                        </div>
+                      )}
+                      {tel && (
+                        <a
+                          href={tel.href || `tel:${tel.value}`}
+                          className="flex items-center gap-2 hover:text-foreground transition-colors min-w-0"
+                        >
+                          {tel.icon && (
+                            <span className="flex items-center justify-center ">
+                              <tel.icon className="w-5 h-5 sm:w-4 sm:h-4" />
+                            </span>
+                          )}
+                          <span>{tel.value}</span>
+                        </a>
+                      )}
+                    </>
+                  );
+                })()}
+              </div>
+              {/* Ligne 4 : Email */}
+              <div className="flex flex-row justify-center items-center bg-muted/60 rounded-lg py-2 px-3 max-w-xs w-full mx-auto">
+                {(() => {
+                  const email = contactInfos.find((c) => c.label === "Email");
+                  return (
+                    email && (
+                      <a
+                        href={`mailto:${email.value}`}
+                        className="flex items-center gap-2 hover:text-foreground transition-colors min-w-0"
+                      >
+                        {email.icon && (
+                          <span className="flex items-center justify-center">
+                            <email.icon className="w-5 h-5 sm:w-4 sm:h-4" />
+                          </span>
+                        )}
+                        <span className="truncate">{email.value}</span>
+                      </a>
+                    )
+                  );
+                })()}
+              </div>
             </div>
             <Separator className="mt-4" />
           </CardHeader>
@@ -403,7 +526,7 @@ export default function ContactPage() {
                 <Alert variant="destructive">
                   <XCircle className="h-4 w-4" />
                   <AlertDescription>
-                    Erreur lors de l&rsquo;envoi. Veuillez réessayer.
+                    Erreur lors de l&apos;envoi. Veuillez réessayer.
                   </AlertDescription>
                 </Alert>
               )}
@@ -436,3 +559,4 @@ export default function ContactPage() {
     </div>
   );
 }
+
