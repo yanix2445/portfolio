@@ -218,7 +218,7 @@ export default function ContactPage() {
   );
 
   return (
-    <div className="min-h-screen bg-background py-12 px-4 pt-55">
+    <div className="min-h-screen bg-background py-12 px-4 pt-24">
       <div className="max-w-2xl mx-auto">
         <Card>
           <CardHeader className="text-center">

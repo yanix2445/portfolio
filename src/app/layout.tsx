@@ -32,23 +32,32 @@ export default function RootLayout({
         />
       </head>
       <body>
+        
         {/* Vercel Analytics */}
         <Analytics />
+
         {/* Vercel Speed Insights */}
         <SpeedInsights />
+
         {/* Style globale du theme */}
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
+
           {/* Navigation Bar */}
-          <NavBar />
+          {/*<NavBar /*/}
 
           {/* Contenu principal */}
           {children}
         </ThemeProvider>
 
-        {/* Footer ( pied de page ) */}
-        <footer className="w-full py-12 text-center text-muted-foreground text-sm">
-          © {new Date().getFullYear()} Yanis Harrat. Tous droits réservés.
-        </footer>
+        {/* Footer */}
+      <footer className="border-t border-border/50 bg-background/50 backdrop-blur-sm">
+        <div className="container mx-auto px-6 py-8 text-center">
+          <p className="text-sm text-muted-foreground">
+            Portfolio en cours de développement avec ❤️ • 
+            <span className="text-primary font-medium"> Merci pour ta patience !</span>
+          </p>
+        </div>
+      </footer>
       </body>
     </html>
   );

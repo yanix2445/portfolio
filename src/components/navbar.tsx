@@ -5,14 +5,15 @@ import { Avatar, AvatarImage } from "./ui/avatar";
 import Image from "next/image";
 import Link from "next/link";
 import { ModeToggle } from "./toogle-theme";
+import { Badge } from "./ui/badge";
 
 const navLinks = [
-  { name: "Accueil", href: "/", color: "blue" },
-  { name: "Parcours", href: "/parcours", color: "purple" },
-  { name: "Portfolio", href: "/projects", color: "green" },
-  { name: "Ressources", href: "/resources", color: "teal" }, // facultatif mais cool
-  { name: "Blog", href: "/blog", color: "pink" },
-  { name: "Contact", href: "/contact", color: "red" },
+  { name: "Accueil", href: "#", color: "blue" },
+  { name: "Parcours", href: "#", color: "purple" },
+  { name: "Portfolio", href: "#", color: "green" },
+  { name: "Ressources", href: "#", color: "teal" }, // facultatif mais cool
+  { name: "Blog", href: "#", color: "pink" },
+  { name: "Contact", href: "#", color: "red" },
 ];
 
 const socialLinks = [
@@ -65,6 +66,12 @@ export default function NavBar() {
         `}
         aria-label="Navigation principale"
       >
+            
+            <Badge variant="outline" className="gap-2">
+              <div className="w-2 h-2 bg-orange-500 rounded-full animate-pulse" />
+              En construction
+            </Badge>
+          
         {/* Logo ou titre du site */}
         <Link href="/">
           <Avatar className="w-[64px] h-[64px]">
