@@ -32,7 +32,7 @@ export const siteMetadata: Metadata = {
   publisher: "Yanis Harrat",
   openGraph: {
     type: "profile",
-    locale: "fr_FR",
+    locale:"fr_FR",
     url: "/",
     title: "Yanis Harrat - Technicien IT & Développeur | BTS SIO SISR Alternance",
     description: "🚀 Technicien IT + Développeur disponible ! Infrastructure réseau • FTTH • React/Next.js • BTS SIO SISR • Contact: 06.03.05.98.29",
