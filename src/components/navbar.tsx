@@ -6,6 +6,32 @@ import Image from "next/image";
 import Link from "next/link";
 import { ModeToggle } from "./toogle-theme";
 
+const navLinks = [
+  { name: "Accueil", href: "/", color: "blue" },
+  { name: "À propos", href: "/about", color: "orange" },
+  { name: "Parcours", href: "/parcours", color: "purple" },
+  { name: "Portfolio", href: "/projects", color: "green" },
+  { name: "Ressources", href: "/resources", color: "teal" }, // facultatif mais cool
+  { name: "Blog", href: "/blog", color: "pink" },
+  { name: "Contact", href: "/contact", color: "red" },
+];
+
+const socialLinks = [
+  {
+    href: "https://www.linkedin.com/in/yanis-harrat",
+    icon: "/linkedin.svg",
+    alt: "LinkedIn",
+    size: 24,
+  },
+  {
+    href: "https://github.com/yanix2445",
+    icon: "/github.svg",
+    alt: "GitHub",
+    size: 20,
+  
+  },
+];
+
 export default function NavBar() {
   // On déclenche l'animation uniquement côté client (évite tout bug SSR/hydratation)
   const [isVisible, setIsVisible] = useState(false);
@@ -26,14 +52,15 @@ export default function NavBar() {
         className={`
           fixed top-4 left-1/2 z-50
           -translate-x-1/2
-          w-[95vw] max-w-3xl
-          rounded-2xl
+          w-[95vw] max-w-5xl
+          rounded-full
           bg-white/20 dark:bg-gray-900/40
-          backdrop-blur-md
-          shadow-lg
+          backdrop-blur-sm
+          shadow-xl
+          dark:shadow-gray-900/60
           border border-white/30 dark:border-gray-700/60
           flex items-center justify-between
-          px-8 py-3
+          px-4 
           transition-all duration-300
           ${isVisible ? "animate-navbar-slide-down" : "opacity-0"}
         `}
@@ -51,86 +78,39 @@ export default function NavBar() {
         </Link>
 
         {/* Liens de navigation */}
-        <ul className="flex gap-6">
-          <li>
-            <Link
-              href="/"
-              className="
-                text-gray-900 dark:text-white font-medium px-3 py-1 rounded-lg
-                transition-colors duration-200
-                hover:bg-white/40 hover:backdrop-blur-sm hover:text-blue-500
-                focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400
-              "
-            >
-              Accueil
-            </Link>
-          </li>
-          <li>
-            <Link
-              href="/about"
-              className="
-                text-gray-900 dark:text-white font-medium px-3 py-1 rounded-lg
-                transition-colors duration-200
-                hover:bg-white/40 hover:backdrop-blur-sm hover:text-purple-500
-                focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-400
-              "
-            >
-              À propos
-            </Link>
-          </li>
-          <li>
-            <Link
-              href="/contact"
-              className="
-                text-gray-900 dark:text-white font-medium px-3 py-1 rounded-lg
-                transition-colors duration-200
-                hover:bg-white/40 hover:backdrop-blur-sm hover:text-pink-500
-                focus:outline-none focus-visible:ring-2 focus-visible:ring-pink-400
-              "
-            >
-              Contact
-            </Link>
-          </li>
+        <ul className="flex gap-2">
+          {navLinks.map(({ name, href, color }) => (
+            <li key={href}>
+              <Link
+                href={href}
+                className={`
+                  text-gray-900 dark:text-white font-medium px-3 py-1
+                  transition-colors duration-200 
+                `}
+              >
+                {name}
+              </Link>
+            </li>
+          ))}
         </ul>
 
         {/* Liens de réseaux sociaux */}
-        <ul className=" flex gap-4 items-center sm:flex">
-          <li>
-            <Link
-              href="www.linkedin.com/in/yanis-harrat"
-              target="_blank"
-              
-            >
-              <Image
-                src="/linkedin.svg"
-                alt="LinkedIn"
-                width={24}
-                height={24}
-                className="w-6 h-6 rounded-full transition-transform transform hover:scale-110"
-              />
-            </Link>
-          </li>
-          <li>
-            <Link
-              href="https://github.com/yanix2445"
-              target="_blank"
-              
-              aria-label="Voir le profil GitHub"
-            >
-              <Image
-                src="/github.svg"
-                alt="GitHub"
-                width={20}
-                height={20}
-                className=" rounded-full
-                bg-gray-900 text-white font-medium shadow-md
-                transition-all duration-200
-                hover:bg-gray-800 hover:scale-105
-                focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-500 
-              "
-              />
-            </Link>
-          </li> <ModeToggle />
+        <ul className="flex gap-4 items-center sm:flex">
+          {socialLinks.map(({ href, icon, alt, size }) => (
+            <li key={href}>
+              <Link href={href} target="_blank">
+                <Image
+                  src={icon}
+                  alt={alt}
+                  width={size}
+                  height={size}
+                  className={`rounded-full transition-transform transform hover:scale-110 ${
+                    icon === "/github.svg" ? "bg-zinc-950 " : ""
+                  }`} />
+              </Link>
+            </li>
+          ))}
+          <ModeToggle />
         </ul>
        
       </nav>
