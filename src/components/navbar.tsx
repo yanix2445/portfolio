@@ -8,7 +8,6 @@ import { ModeToggle } from "./toogle-theme";
 
 const navLinks = [
   { name: "Accueil", href: "/", color: "blue" },
-  { name: "À propos", href: "/about", color: "orange" },
   { name: "Parcours", href: "/parcours", color: "purple" },
   { name: "Portfolio", href: "/projects", color: "green" },
   { name: "Ressources", href: "/resources", color: "teal" }, // facultatif mais cool
