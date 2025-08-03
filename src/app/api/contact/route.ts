@@ -55,8 +55,12 @@ export async function POST(request: NextRequest) {
       const bytes = await file.arrayBuffer();
       const buffer = Buffer.from(bytes);
       
+      // *** CORRECTION pour Vercel : Utiliser /tmp pour les fichiers temporaires ***
+      // En production sur Vercel, le seul dossier inscriptible est /tmp.
+      // En local, on peut utiliser un dossier 'temp' dans le répertoire du projet.
+      const tempDir = process.env.VERCEL_ENV === 'production' ? '/tmp' : path.join(process.cwd(), 'temp');
+      
       // Crée le dossier temp s'il n'existe pas
-      const tempDir = path.join(process.cwd(), 'temp');
       await mkdir(tempDir, { recursive: true });
 
       // Sauvegarde temporaire du fichier
