@@ -1,11 +1,9 @@
-# robots.txt pour le site de Yanis Harrat
-
-# Autoriser tous les robots à explorer tout le site
+# *
 User-agent: *
 Allow: /
 
-# Spécifie la sitemap générée automatiquement (via next-sitemap)
-Sitemap: https://yanis-harrat.vercel.app/sitemap.xml
-
-# Déclaration de l’URL canonique principale
+# Host
 Host: https://yanis-harrat.vercel.app
+
+# Sitemaps
+Sitemap: https://yanis-harrat.vercel.app/sitemap.xml
