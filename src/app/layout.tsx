@@ -4,6 +4,7 @@ import { ThemeProvider } from "@/utils/theme-provider";
 import { siteMetadata } from "@/lib/metadata";
 import { Analytics } from "@vercel/analytics/next"
 import { SpeedInsights } from '@vercel/speed-insights/next';
+import { GoogleAnalytics } from "@/components/google-analytics";
 
 export const metadata = siteMetadata;
 console.log('Métadonnées générées:', siteMetadata);
@@ -15,6 +16,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="fr" suppressHydrationWarning>
+      <head>
+      <GoogleAnalytics/>
+        {/* Ici, tu peux ajouter Google Fonts, manifest, etc. */}
+      </head>
       <body>
         {/* Vercel Analytics */}
         <Analytics />
