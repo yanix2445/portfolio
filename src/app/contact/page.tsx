@@ -89,7 +89,7 @@ type ContactReason = {
   variant: "default" | "secondary" | "outline" | "destructive";
 };
 
-export const contactReasons: ContactReason[] = [
+const contactReasons: ContactReason[] = [
   {
     value: "alternance",
     label: "Proposer une alternance",
@@ -224,7 +224,7 @@ export default function ContactPage() {
           <CardHeader className="text-center">
             <CardTitle className="text-2xl">Contactez-moi</CardTitle>
             <CardDescription>
-              Étudiant BTS SIO SISR • À la recherche d'alternance/CDI
+              Étudiant BTS SIO SISR • À la recherche d&rsquo;alternance/CDI
             </CardDescription>
             <div className="mt-4 flex flex-col sm:flex-row sm:flex-wrap sm:justify-center gap-4 text-sm text-muted-foreground">
               {contactInfos.map(({ label, value, href, icon: Icon }) =>
@@ -403,7 +403,7 @@ export default function ContactPage() {
                 <Alert variant="destructive">
                   <XCircle className="h-4 w-4" />
                   <AlertDescription>
-                    Erreur lors de l'envoi. Veuillez réessayer.
+                    Erreur lors de l&rsquo;envoi. Veuillez réessayer.
                   </AlertDescription>
                 </Alert>
               )}

@@ -33,7 +33,7 @@ export async function POST(request: NextRequest) {
       },
     });
 
-    let attachments = [];
+    const attachments = [];
     let tempFilePath = '';
 
     // Gestion du fichier joint
