@@ -15,6 +15,18 @@ const contactFormSchema = z.object({
   message: z.string().min(10, "Le message doit contenir au moins 10 caractères.").max(1000, "Le message ne doit pas dépasser 1000 caractères."),
 });
 
+/**
+ * Fonction utilitaire pour échapper les caractères HTML
+ * Permet de prévenir les injections de code XSS dans le corps de l'e-mail.
+ */
+function escapeHtml(unsafe: string): string {
+  return unsafe.replace(/&/g, "&amp;")
+               .replace(/</g, "&lt;")
+               .replace(/>/g, "&gt;")
+               .replace(/"/g, "&quot;")
+               .replace(/'/g, "&#039;");
+}
+
 export async function POST(request: NextRequest) {
   let tempFilePath = '';
 
@@ -83,10 +95,17 @@ export async function POST(request: NextRequest) {
       'contact': '💬 Prise de contact'
     };
 
+    // Application de la fonction d'échappement aux données avant de les insérer dans le HTML
+    const sanitizedFirstName = escapeHtml(data.firstName);
+    const sanitizedLastName = escapeHtml(data.lastName);
+    const sanitizedEmail = escapeHtml(data.email);
+    const sanitizedSubject = escapeHtml(data.subject);
+    const sanitizedMessage = escapeHtml(data.message);
+
     const mailOptions = {
       from: process.env.EMAIL_USER,
       to: process.env.EMAIL_USER, // ton email où tu veux recevoir les messages
-      subject: `[Portfolio - ${reasonLabels[data.reason] || data.reason}] ${data.subject}`,
+      subject: `[Portfolio - ${reasonLabels[data.reason] || data.reason}] ${sanitizedFirstName} ${sanitizedLastName} - ${sanitizedSubject}`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
           <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 20px; color: white; border-radius: 10px 10px 0 0;">
@@ -96,15 +115,15 @@ export async function POST(request: NextRequest) {
             </div>
           </div>
           <div style="background: #f9f9f9; padding: 20px; border-radius: 0 0 10px 10px; border: 1px solid #ddd;">
-            <p><strong>Prénom :</strong> ${data.firstName}</p>
-            <p><strong>Nom :</strong> ${data.lastName}</p>
-            <p><strong>Email :</strong> ${data.email}</p>
+            <p><strong>Prénom :</strong> ${sanitizedFirstName}</p>
+            <p><strong>Nom :</strong> ${sanitizedLastName}</p>
+            <p><strong>Email :</strong> ${sanitizedEmail}</p>
             <p><strong>Type de contact :</strong> ${reasonLabels[data.reason] || data.reason}</p>
-            <p><strong>Objet :</strong> ${data.subject}</p>
+            <p><strong>Objet :</strong> ${sanitizedSubject}</p>
             <div style="margin-top: 20px;">
               <strong>Message :</strong>
               <div style="background: white; padding: 15px; border-radius: 5px; margin-top: 10px; border-left: 4px solid #667eea;">
-                ${data.message.replace(/\n/g, '<br>')}
+                ${sanitizedMessage.replace(/\n/g, '<br>')}
               </div>
             </div>
             ${file ? `<p style="margin-top: 20px;"><strong>Fichier joint :</strong> ${file.name}</p>` : ''}
