@@ -39,7 +39,7 @@ export const siteMetadata: Metadata = {
     siteName: "Portfolio Yanis Harrat",
     images: [
       {
-        url: "/og-image.jpeg",
+        url: "/og-image.jpg",
         width: 1200,
         height: 630,
         alt: "Yanis Harrat - Technicien IT & Développeur disponible",
@@ -50,7 +50,7 @@ export const siteMetadata: Metadata = {
     card: "summary_large_image",
     title: "Yanis Harrat - Technicien IT & Développeur BTS SIO SISR",
     description: "🚀 Double compétence IT : Technicien réseau/infrastructure + Développeur. BTS SIO SISR, projets concrets. Alternance/CDI Paris.",
-    images:["/og-image.jpeg"],
+    images:["/og-image.jpg"],
     creator: "@yanix2445",
     site: "@yanix2445",
   },
