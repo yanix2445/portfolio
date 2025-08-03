@@ -2,6 +2,7 @@
 "use client";
 import Link from "next/link";
 import { useState } from "react";
+import { useRouter } from "next/navigation"; // Importation de useRouter
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -139,6 +140,7 @@ const contactReasons: ContactReason[] = [
 export default function ContactPage() {
   const [file, setFile] = useState<File | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter(); // Initialisation du routeur
   const {
     register,
     handleSubmit,
@@ -195,6 +197,7 @@ export default function ContactPage() {
         });
         reset(); // Réinitialise les champs du formulaire
         setFile(null);
+        router.push('/'); // Redirige l'utilisateur vers la page d'accueil
       } else {
         const errorData = await response.json();
         if (response.status === 400 && errorData.errors) {
