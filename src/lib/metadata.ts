@@ -4,7 +4,7 @@ import { Metadata } from 'next';
 export const siteMetadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://yanis-harrat.vercel.app"),
   title: "Yanis Harrat - Technicien IT & Développeur | BTS SIO SISR | Alternance CDI Paris",
-  description: "Technicien IT et développeur BTS SIO SISR. Infrastructure réseau + développement web (React/Next.js). Recherche alternance ou CDI Paris. Contact : 06.03.05.98.29",
+  description: "Technicien IT et développeur fullstack, étudiant en BTS SIO SISR. Compétences en infrastructure réseau, systèmes et développement web (React/Next.js). Disponible pour une alternance ou un CDI à Paris. 📞 06.03.05.98.29",
   keywords: [
     "technicien informatique junior",
     "BTS SIO SISR alternance",
@@ -35,21 +35,21 @@ export const siteMetadata: Metadata = {
     locale:"fr_FR",
     url: "/",
     title: "Yanis Harrat - Technicien IT & Développeur | BTS SIO SISR Alternance",
-    description: "🚀 Technicien IT + Développeur disponible ! Infrastructure réseau • FTTH • React/Next.js • BTS SIO SISR • Contact: 06.03.05.98.29",
+    description: "Étudiant en BTS SIO SISR/CIEL, je combine compétences en (réseaux, systèmes) et développement web (React, Next.js). Sérieux, motivé, dispo en alternance ou CDI sur Paris. 📞 06.03.05.98.29",
     siteName: "Portfolio Yanis Harrat",
     images: [
       {
         url: "https://yanis-harrat.vercel.app/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: "Yanis Harrat - Technicien IT & Développeur disponible",
+        alt: "Yanis Harrat - Développeur & Technicien IT disponible",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Yanis Harrat - Technicien IT & Développeur BTS SIO SISR",
-    description: "🚀 Double compétence IT : Technicien réseau/infrastructure + Développeur. BTS SIO SISR, projets concrets. Alternance/CDI Paris.",
+    title: "Yanis Harrat - Développeur & Technicien  BTS SIO SISR",
+    description: "🚀 Double compétence IT : technicien réseau/infrastructure & développeur web. Étudiant en BTS SIO SISR, projets concrets en systèmes, réseaux et développement. Disponible en alternance ou CDI sur Paris.",
     images:["/og-image.jpg"],
     creator: "@yanix2445",
     site: "@yanix2445",
@@ -103,7 +103,7 @@ export const siteMetadata: Metadata = {
     },
   },
   verification: {
-    // google: "ton-code-verification-google", // À configurer après déploiement
+    google: "E4I3QWy6fRHfT7FJgV0yISzK5bkXlv8OqAc4DzTNW6g"
   },
   category: "business",
   classification: "Technicien IT & Développeur | Double Compétence | BTS SIO SISR",
