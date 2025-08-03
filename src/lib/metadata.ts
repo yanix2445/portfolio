@@ -39,7 +39,7 @@ export const siteMetadata: Metadata = {
     siteName: "Portfolio Yanis Harrat",
     images: [
       {
-        url: "/og-image.jpg",
+        url: "https://yanis-harrat.vercel.app/og-image.jpg",
         width: 1200,
         height: 630,
         alt: "Yanis Harrat - Technicien IT & Développeur disponible",
