@@ -33,7 +33,7 @@ export const siteMetadata: Metadata = {
   openGraph: {
     type: "profile",
     locale:"fr_FR",
-    url: "/",
+    url: "https://yanis-harrat.vercel.app",
     title: "Yanis Harrat - Technicien IT & Développeur | BTS SIO SISR Alternance",
     description: "Étudiant en BTS SIO SISR/CIEL, je combine compétences en (réseaux, systèmes) et développement web (React, Next.js). Sérieux, motivé, dispo en alternance ou CDI sur Paris. 📞 06.03.05.98.29",
     siteName: "Portfolio Yanis Harrat",
@@ -50,7 +50,7 @@ export const siteMetadata: Metadata = {
     card: "summary_large_image",
     title: "Yanis Harrat - Développeur & Technicien  BTS SIO SISR",
     description: "🚀 Double compétence IT : technicien réseau/infrastructure & développeur web. Étudiant en BTS SIO SISR, projets concrets en systèmes, réseaux et développement. Disponible en alternance ou CDI sur Paris.",
-    images:["/og-image.jpg"],
+    images:["https://yanis-harrat.vercel.app/og-image.jpg"],
     creator: "@yanix2445",
     site: "@yanix2445",
   },
@@ -108,6 +108,6 @@ export const siteMetadata: Metadata = {
   category: "business",
   classification: "Technicien IT & Développeur | Double Compétence | BTS SIO SISR",
   alternates: {
-    canonical: "/",
+    canonical: "https://yanis-harrat.vercel.app",
   },
 };
