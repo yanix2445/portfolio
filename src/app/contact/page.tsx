@@ -2,7 +2,7 @@
 "use client";
 import Link from "next/link";
 import { useState } from "react";
-import { useRouter } from "next/navigation"; // Importation de useRouter
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -15,7 +15,7 @@ import {Loader2, CheckCircle, XCircle, Briefcase, GraduationCap, MessageSquare, 
 import { useForm, Controller } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { toast } from "sonner"; // Importe la fonction toast pour les notifications
+import { toast } from "sonner";
 
 // Définit le schéma de validation du formulaire de contact
 const contactFormSchema = z.object({
@@ -140,7 +140,7 @@ const contactReasons: ContactReason[] = [
 export default function ContactPage() {
   const [file, setFile] = useState<File | null>(null);
   const [isLoading, setIsLoading] = useState(false);
-  const router = useRouter(); // Initialisation du routeur
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -197,7 +197,8 @@ export default function ContactPage() {
         });
         reset(); // Réinitialise les champs du formulaire
         setFile(null);
-        router.push('/'); // Redirige l'utilisateur vers la page d'accueil
+        // Redirige immédiatement après le toast de succès
+        router.push('/');
       } else {
         const errorData = await response.json();
         if (response.status === 400 && errorData.errors) {
@@ -233,331 +234,333 @@ export default function ContactPage() {
   };
 
   return (
-    <div className="min-h-screen bg-background py-12 px-4 pt-24">
-      <div className="max-w-2xl mx-auto">
-        {/* Bouton pour revenir à la page d'accueil */}
-        <div className="mb-4">
-          <Button variant="outline" size="sm" asChild>
-            <Link href="/">
-              <ArrowLeft className="h-4 w-4 mr-2" />
-              Retour à l&apos;accueil
-            </Link>
-          </Button>
-        </div>
-        <Card>
-          <CardHeader className="text-center">
-            <CardTitle className="text-2xl">Contactez-moi</CardTitle>
-            <CardDescription>
-              Étudiant BTS SIO SISR • À la recherche d&apos;alternance/CDI
-            </CardDescription>
-            {/* Section des informations de contact avec un design responsive */}
-            <div className="mt-4 flex flex-col gap-2 text-sm text-muted-foreground items-center w-full ">
-              {/* Ligne 1 : GitHub + LinkedIn */}
-              <div className="flex flex-row justify-around items-center bg-muted/60 rounded-lg py-2 px-3 w-full mx-auto gap-3 max-w-md">
-                {(() => {
-                  const github = contactInfos.find((c) => c.label === "GitHub");
-                  const linkedin = contactInfos.find((c) => c.label === "LinkedIn");
-                  return (
-                    <>
-                      {github && github.href && (
-                        <Link
-                          href={github.href}
-                          target="_blank"
-                          className="flex items-center gap-2 hover:text-foreground transition-colors min-w-0"
-                        >
-                          {github.icon && <github.icon className="w-5 h-5 sm:w-4 sm:h-4" />}
-                          <span className="truncate">{github.value}</span>
-                        </Link>
-                      )}
-                      {linkedin && linkedin.href && (
-                        <Link
-                          href={linkedin.href}
-                          target="_blank"
-                          className="flex items-center gap-2 hover:text-foreground transition-colors min-w-0"
-                        >
-                          {linkedin.icon && <linkedin.icon className="w-5 h-5 sm:w-4 sm:h-4" />}
-                          <span className="truncate">{linkedin.value}</span>
-                        </Link>
-                      )}
-                    </>
-                  );
-                })()}
-              </div>
-              {/* Ligne 2 : Instagram + Twitter (X) */}
-              <div className="flex flex-row justify-around items-center bg-muted/60 rounded-lg py-2 px-3 w-full mx-auto gap-3 max-w-md">
-                {(() => {
-                  const instagram = contactInfos.find((c) => c.label === "Instagram");
-                  const twitter = contactInfos.find((c) => c.label === "Twitter");
-                  return (
-                    <>
-                      {instagram && instagram.href && (
-                        <Link
-                          href={instagram.href}
-                          target="_blank"
-                          className="flex items-center gap-2 hover:text-foreground transition-colors min-w-0"
-                        >
-                          {instagram.icon && <instagram.icon className="w-5 h-5 sm:w-4 sm:h-4" />}
-                          <span className="truncate">{instagram.value}</span>
-                        </Link>
-                      )}
-                      {twitter && twitter.href && (
-                        <Link
-                          href={twitter.href}
-                          target="_blank"
-                          className="flex items-center gap-2 hover:text-foreground transition-colors min-w-0"
-                        >
-                          {twitter.icon && <twitter.icon className="w-5 h-5 sm:w-4 sm:h-4" />}
-                          <span className="truncate">{twitter.value}</span>
-                        </Link>
-                      )}
-                    </>
-                  );
-                })()}
-              </div>
-              {/* Ligne 3 : Localisation + Téléphone */}
-              <div className="flex flex-row justify-around items-center bg-muted/60 rounded-lg py-2 px-3 w-full mx-auto gap-3 max-w-md">
-                {(() => {
-                  const localisation = contactInfos.find((c) => c.label === "Localisation");
-                  const tel = contactInfos.find((c) => c.label === "Téléphone");
-                  return (
-                    <>
-                      {localisation && (
-                        <div className="flex items-center gap-2 min-w-0">
-                          {localisation.icon && (
-                            <span className="flex items-center justify-center ">
-                              <localisation.icon className="w-5 h-5 sm:w-4 sm:h-4" />
-                            </span>
-                          )}
-                          <span>{localisation.value}</span>
-                        </div>
-                      )}
-                      {tel && (
-                        <a
-                          href={tel.href || `tel:${tel.value}`}
-                          className="flex items-center gap-2 hover:text-foreground transition-colors min-w-0"
-                        >
-                          {tel.icon && (
-                            <span className="flex items-center justify-center ">
-                              <tel.icon className="w-5 h-5 sm:w-4 sm:h-4" />
-                            </span>
-                          )}
-                          <span>{tel.value}</span>
-                        </a>
-                      )}
-                    </>
-                  );
-                })()}
-              </div>
-              {/* Ligne 4 : Email */}
-              <div className="flex flex-row justify-center items-center bg-muted/60 rounded-lg py-2 px-3 max-w-xs w-full mx-auto">
-                {(() => {
-                  const email = contactInfos.find((c) => c.label === "Email");
-                  return (
-                    email && (
-                      <a
-                        href={`mailto:${email.value}`}
-                        className="flex items-center gap-2 hover:text-foreground transition-colors min-w-0"
-                      >
-                        {email.icon && (
-                          <span className="flex items-center justify-center">
-                            <email.icon className="w-5 h-5 sm:w-4 sm:h-4" />
-                          </span>
+    <>
+      <div className="min-h-screen bg-background py-12 px-4 pt-24">
+        <div className="max-w-2xl mx-auto">
+          {/* Bouton pour revenir à la page d'accueil */}
+          <div className="mb-4">
+            <Button variant="outline" size="sm" asChild>
+              <Link href="/">
+                <ArrowLeft className="h-4 w-4 mr-2" />
+                Retour à l&apos;accueil
+              </Link>
+            </Button>
+          </div>
+          <Card>
+            <CardHeader className="text-center">
+              <CardTitle className="text-2xl">Contactez-moi</CardTitle>
+              <CardDescription>
+                Étudiant BTS SIO SISR • À la recherche d&apos;alternance/CDI
+              </CardDescription>
+              {/* Section des informations de contact avec un design responsive */}
+              <div className="mt-4 flex flex-col gap-2 text-sm text-muted-foreground items-center w-full ">
+                {/* Ligne 1 : GitHub + LinkedIn */}
+                <div className="flex flex-row justify-around items-center bg-muted/60 rounded-lg py-2 px-3 w-full mx-auto gap-3 max-w-md">
+                  {(() => {
+                    const github = contactInfos.find((c) => c.label === "GitHub");
+                    const linkedin = contactInfos.find((c) => c.label === "LinkedIn");
+                    return (
+                      <>
+                        {github && github.href && (
+                          <Link
+                            href={github.href}
+                            target="_blank"
+                            className="flex items-center gap-2 hover:text-foreground transition-colors min-w-0"
+                          >
+                            {github.icon && <github.icon className="w-5 h-5 sm:w-4 sm:h-4" />}
+                            <span className="truncate">{github.value}</span>
+                          </Link>
                         )}
-                        <span className="truncate">{email.value}</span>
-                      </a>
-                    )
-                  );
-                })()}
+                        {linkedin && linkedin.href && (
+                          <Link
+                            href={linkedin.href}
+                            target="_blank"
+                            className="flex items-center gap-2 hover:text-foreground transition-colors min-w-0"
+                          >
+                            {linkedin.icon && <linkedin.icon className="w-5 h-5 sm:w-4 sm:h-4" />}
+                            <span className="truncate">{linkedin.value}</span>
+                          </Link>
+                        )}
+                      </>
+                    );
+                  })()}
+                </div>
+                {/* Ligne 2 : Instagram + Twitter (X) */}
+                <div className="flex flex-row justify-around items-center bg-muted/60 rounded-lg py-2 px-3 w-full mx-auto gap-3 max-w-md">
+                  {(() => {
+                    const instagram = contactInfos.find((c) => c.label === "Instagram");
+                    const twitter = contactInfos.find((c) => c.label === "Twitter");
+                    return (
+                      <>
+                        {instagram && instagram.href && (
+                          <Link
+                            href={instagram.href}
+                            target="_blank"
+                            className="flex items-center gap-2 hover:text-foreground transition-colors min-w-0"
+                          >
+                            {instagram.icon && <instagram.icon className="w-5 h-5 sm:w-4 sm:h-4" />}
+                            <span className="truncate">{instagram.value}</span>
+                          </Link>
+                        )}
+                        {twitter && twitter.href && (
+                          <Link
+                            href={twitter.href}
+                            target="_blank"
+                            className="flex items-center gap-2 hover:text-foreground transition-colors min-w-0"
+                          >
+                            {twitter.icon && <twitter.icon className="w-5 h-5 sm:w-4 sm:h-4" />}
+                            <span className="truncate">{twitter.value}</span>
+                          </Link>
+                        )}
+                      </>
+                    );
+                  })()}
+                </div>
+                {/* Ligne 3 : Localisation + Téléphone */}
+                <div className="flex flex-row justify-around items-center bg-muted/60 rounded-lg py-2 px-3 w-full mx-auto gap-3 max-w-md">
+                  {(() => {
+                    const localisation = contactInfos.find((c) => c.label === "Localisation");
+                    const tel = contactInfos.find((c) => c.label === "Téléphone");
+                    return (
+                      <>
+                        {localisation && (
+                          <div className="flex items-center gap-2 min-w-0">
+                            {localisation.icon && (
+                              <span className="flex items-center justify-center ">
+                                <localisation.icon className="w-5 h-5 sm:w-4 sm:h-4" />
+                              </span>
+                            )}
+                            <span>{localisation.value}</span>
+                          </div>
+                        )}
+                        {tel && (
+                          <a
+                            href={tel.href || `tel:${tel.value}`}
+                            className="flex items-center gap-2 hover:text-foreground transition-colors min-w-0"
+                          >
+                            {tel.icon && (
+                              <span className="flex items-center justify-center ">
+                                <tel.icon className="w-5 h-5 sm:w-4 sm:h-4" />
+                              </span>
+                            )}
+                            <span>{tel.value}</span>
+                          </a>
+                        )}
+                      </>
+                    );
+                  })()}
+                </div>
+                {/* Ligne 4 : Email */}
+                <div className="flex flex-row justify-center items-center bg-muted/60 rounded-lg py-2 px-3 max-w-xs w-full mx-auto">
+                  {(() => {
+                    const email = contactInfos.find((c) => c.label === "Email");
+                    return (
+                      email && (
+                        <a
+                          href={`mailto:${email.value}`}
+                          className="flex items-center gap-2 hover:text-foreground transition-colors min-w-0"
+                        >
+                          {email.icon && (
+                            <span className="flex items-center justify-center">
+                              <email.icon className="w-5 h-5 sm:w-4 sm:h-4" />
+                            </span>
+                          )}
+                          <span className="truncate">{email.value}</span>
+                        </a>
+                      )
+                    );
+                  })()}
+                </div>
               </div>
-            </div>
-            <Separator className="mt-4" />
-          </CardHeader>
+              <Separator className="mt-4" />
+            </CardHeader>
 
-          <CardContent className="space-y-6">
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-              {/* Champs pour le nom et le prénom */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <CardContent className="space-y-6">
+              <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+                {/* Champs pour le nom et le prénom */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="firstName" className="mb-2 block ">
+                      Prénom *
+                    </Label>
+                    <Input
+                      id="firstName"
+                      placeholder="Votre prénom"
+                      {...register("firstName")}
+                    />
+                    {errors.firstName && (
+                      <p className="text-red-500 text-sm mt-1">
+                        {errors.firstName.message}
+                      </p>
+                    )}
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="lastName" className="mb-2 block">
+                      Nom *
+                    </Label>
+                    <Input
+                      id="lastName"
+                      placeholder="Votre nom"
+                      {...register("lastName")}
+                    />
+                    {errors.lastName && (
+                      <p className="text-red-500 text-sm mt-1">
+                        {errors.lastName.message}
+                      </p>
+                    )}
+                  </div>
+                </div>
+
+                {/* Champ pour l'adresse e-mail */}
                 <div className="space-y-2">
-                  <Label htmlFor="firstName" className="mb-2 block ">
-                    Prénom *
+                  <Label htmlFor="email" className="mb-2 block">
+                    Email *
                   </Label>
                   <Input
-                    id="firstName"
-                    placeholder="Votre prénom"
-                    {...register("firstName")}
+                    type="email"
+                    id="email"
+                    placeholder="votre@email.com"
+                    {...register("email")}
                   />
-                  {errors.firstName && (
+                  {errors.email && (
                     <p className="text-red-500 text-sm mt-1">
-                      {errors.firstName.message}
+                      {errors.email.message}
                     </p>
                   )}
                 </div>
 
-                <div className="space-y-2">
-                  <Label htmlFor="lastName" className="mb-2 block">
-                    Nom *
-                  </Label>
-                  <Input
-                    id="lastName"
-                    placeholder="Votre nom"
-                    {...register("lastName")}
-                  />
-                  {errors.lastName && (
-                    <p className="text-red-500 text-sm mt-1">
-                      {errors.lastName.message}
-                    </p>
-                  )}
-                </div>
-              </div>
-
-              {/* Champ pour l'adresse e-mail */}
-              <div className="space-y-2">
-                <Label htmlFor="email" className="mb-2 block">
-                  Email *
-                </Label>
-                <Input
-                  type="email"
-                  id="email"
-                  placeholder="votre@email.com"
-                  {...register("email")}
-                />
-                {errors.email && (
-                  <p className="text-red-500 text-sm mt-1">
-                    {errors.email.message}
-                  </p>
-                )}
-              </div>
-
-              {/* Champ de sélection pour le type de contact */}
-              <div className="space-y-3">
-                <Label className="mb-2 block">Type de contact *</Label>
-                <Controller
-                  name="reason"
-                  control={control}
-                  render={({ field }) => (
-                    <Select
-                      onValueChange={field.onChange}
-                      value={field.value}
-                    >
-                      <SelectTrigger className="w-full max-w-full whitespace-normal break-words min-h-[4rem]">
-                        <SelectValue placeholder="Sélectionnez la demande" />
-                      </SelectTrigger>
-                      <SelectContent
-                        className="w-[--radix-select-trigger-width] max-w-[95vw] max-h-[50vh] overflow-y-auto z-50"
-                        side="bottom"
-                        align="start"
+                {/* Champ de sélection pour le type de contact */}
+                <div className="space-y-3">
+                  <Label className="mb-2 block">Type de contact *</Label>
+                  <Controller
+                    name="reason"
+                    control={control}
+                    render={({ field }) => (
+                      <Select
+                        onValueChange={field.onChange}
+                        value={field.value}
                       >
-                        {contactReasons.map((reason) => {
-                          const Icon = reason.icon;
-                          return (
-                            <SelectItem key={reason.value} value={reason.value}>
-                              <div className="flex flex-col text-left">
-                                <div className="flex items-center gap-2">
-                                  <Icon className="h-4 w-4 text-muted-foreground" />
-                                  <span className="font-medium">
-                                    {reason.label}
+                        <SelectTrigger className="w-full max-w-full whitespace-normal break-words min-h-[4rem]">
+                          <SelectValue placeholder="Sélectionnez la demande" />
+                        </SelectTrigger>
+                        <SelectContent
+                          className="w-[--radix-select-trigger-width] max-w-[95vw] max-h-[50vh] overflow-y-auto z-50"
+                          side="bottom"
+                          align="start"
+                        >
+                          {contactReasons.map((reason) => {
+                            const Icon = reason.icon;
+                            return (
+                              <SelectItem key={reason.value} value={reason.value}>
+                                <div className="flex flex-col text-left">
+                                  <div className="flex items-center gap-2">
+                                    <Icon className="h-4 w-4 text-muted-foreground" />
+                                    <span className="font-medium">
+                                      {reason.label}
+                                    </span>
+                                  </div>
+                                  <span className="text-xs text-muted-foreground">
+                                    {reason.description}
                                   </span>
                                 </div>
-                                <span className="text-xs text-muted-foreground">
-                                  {reason.description}
-                                </span>
-                              </div>
-                            </SelectItem>
-                          );
-                        })}
-                      </SelectContent>
-                    </Select>
+                              </SelectItem>
+                            );
+                          })}
+                        </SelectContent>
+                      </Select>
+                    )}
+                  />
+                  {errors.reason && (
+                    <p className="text-red-500 text-sm mt-1">
+                      {errors.reason.message}
+                    </p>
                   )}
-                />
-                {errors.reason && (
-                  <p className="text-red-500 text-sm mt-1">
-                    {errors.reason.message}
-                  </p>
-                )}
-              </div>
+                </div>
 
-              {/* Champ pour l'objet du message */}
-              <div className="space-y-2">
-                <Label htmlFor="subject" className="mb-2 block">
-                  Objet *
-                </Label>
-                <Input
-                  id="subject"
-                  placeholder="Sujet de votre message"
-                  {...register("subject")}
-                />
-                {errors.subject && (
-                  <p className="text-red-500 text-sm mt-1">
-                    {errors.subject.message}
-                  </p>
-                )}
-              </div>
+                {/* Champ pour l'objet du message */}
+                <div className="space-y-2">
+                  <Label htmlFor="subject" className="mb-2 block">
+                    Objet *
+                  </Label>
+                  <Input
+                    id="subject"
+                    placeholder="Sujet de votre message"
+                    {...register("subject")}
+                  />
+                  {errors.subject && (
+                    <p className="text-red-500 text-sm mt-1">
+                      {errors.subject.message}
+                    </p>
+                  )}
+                </div>
 
-              {/* Champ de texte pour le message */}
-              <div className="space-y-2">
-                <Label htmlFor="message" className="mb-2 block">
-                  Message *
-                </Label>
-                <Textarea
-                  id="message"
-                  rows={6}
-                  placeholder="Décrivez votre demande en détail..."
-                  className="resize-none"
-                  {...register("message")}
-                />
-                {errors.message && (
-                  <p className="text-red-500 text-sm mt-1">
-                    {errors.message.message}
-                  </p>
-                )}
-              </div>
+                {/* Champ de texte pour le message */}
+                <div className="space-y-2">
+                  <Label htmlFor="message" className="mb-2 block">
+                    Message *
+                  </Label>
+                  <Textarea
+                    id="message"
+                    rows={6}
+                    placeholder="Décrivez votre demande en détail..."
+                    className="resize-none"
+                    {...register("message")}
+                  />
+                  {errors.message && (
+                    <p className="text-red-500 text-sm mt-1">
+                      {errors.message.message}
+                    </p>
+                  )}
+                </div>
 
-              {/* Champ pour le téléchargement d'un fichier (optionnel) */}
-              <div className="space-y-2">
-                <Label htmlFor="file" className="mb-2 block">
-                  Fichier joint (optionnel)
-                </Label>
-                <Input
-                  type="file"
-                  id="file"
-                  onChange={handleFileChange}
-                  accept=".pdf,.doc,.docx,.txt,.jpg,.jpeg,.png,.gif"
-                />
-                {file && (
-                  <div className="flex items-center gap-2 mt-2">
-                    <Upload className="h-4 w-4 text-muted-foreground" />
-                    <span className="text-sm text-muted-foreground">
-                      {file.name}
-                    </span>
-                  </div>
-                )}
-              </div>
+                {/* Champ pour le téléchargement d'un fichier (optionnel) */}
+                <div className="space-y-2">
+                  <Label htmlFor="file" className="mb-2 block">
+                    Fichier joint (optionnel)
+                  </Label>
+                  <Input
+                    type="file"
+                    id="file"
+                    onChange={handleFileChange}
+                    accept=".pdf,.doc,.docx,.txt,.jpg,.jpeg,.png,.gif"
+                  />
+                  {file && (
+                    <div className="flex items-center gap-2 mt-2">
+                      <Upload className="h-4 w-4 text-muted-foreground" />
+                      <span className="text-sm text-muted-foreground">
+                        {file.name}
+                      </span>
+                    </div>
+                  )}
+                </div>
 
-              <Separator />
+                <Separator />
 
-              {/* Bouton de soumission du formulaire */}
-              <Button
-                type="submit"
-                disabled={isLoading}
-                className="w-full"
-                size="lg"
-              >
-                {isLoading ? (
-                  <>
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    Envoi en cours...
-                  </>
-                ) : (
-                  <>
-                    <Mail className="mr-2 h-4 w-4" />
-                    Envoyer le message
-                  </>
-                )}
-              </Button>
-            </form>
-          </CardContent>
-        </Card>
+                {/* Bouton de soumission du formulaire */}
+                <Button
+                  type="submit"
+                  disabled={isLoading}
+                  className="w-full"
+                  size="lg"
+                >
+                  {isLoading ? (
+                    <>
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      Envoi en cours...
+                    </>
+                  ) : (
+                    <>
+                      <Mail className="mr-2 h-4 w-4" />
+                      Envoyer le message
+                    </>
+                  )}
+                </Button>
+              </form>
+            </CardContent>
+          </Card>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
