@@ -2,7 +2,7 @@
 import { Metadata } from 'next';
 
 export const siteMetadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://yanis-harrat.vercel.app"),
   title: "Yanis Harrat - Technicien IT & Développeur | BTS SIO SISR | Alternance CDI Paris",
   description: "Technicien IT et développeur BTS SIO SISR. Infrastructure réseau + développement web (React/Next.js). Recherche alternance ou CDI Paris. Contact : 06.03.05.98.29",
   keywords: [
@@ -58,7 +58,7 @@ export const siteMetadata: Metadata = {
     // Liens directs pour faciliter le contact
     "contact:phone": "tel:+33603059829",
     "contact:email": "mailto:yanis.amine.harrat@gmail.com",
-    "contact:linkedin": "https://linkedin.com/in/yanisharrat",
+    "contact:linkedin": "https://linkedin.com/in/yanis-harrat",
     "contact:github": "https://github.com/yanix2445",
     
     // Infos cruciales pour RH
