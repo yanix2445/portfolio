@@ -8,11 +8,25 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue, } from "@/components/ui/select";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, } from "@/components/ui/card";
-import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Separator } from "@/components/ui/separator";
 import {Loader2, CheckCircle, XCircle, Briefcase, GraduationCap, MessageSquare, Users, FileText,
         Upload, Github, Linkedin, Twitter, Instagram, Mail, Phone, MapPin, ArrowLeft,} from "lucide-react";
+import { useForm, Controller } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { toast } from "sonner"; // Importe la fonction toast pour les notifications
 
+// Définit le schéma de validation du formulaire de contact
+const contactFormSchema = z.object({
+  firstName: z.string().min(2, "Le prénom doit contenir au moins 2 caractères.").max(50, "Le prénom ne doit pas dépasser 50 caractères."),
+  lastName: z.string().min(2, "Le nom doit contenir au moins 2 caractères.").max(50, "Le nom ne doit pas dépasser 50 caractères."),
+  email: z.string().email("Veuillez entrer une adresse e-mail valide."),
+  reason: z.string().min(1, "Veuillez sélectionner un type de contact."),
+  subject: z.string().min(5, "L'objet doit contenir au moins 5 caractères.").max(100, "L'objet ne doit pas dépasser 100 caractères."),
+  message: z.string().min(10, "Le message doit contenir au moins 10 caractères.").max(1000, "Le message ne doit pas dépasser 1000 caractères."),
+});
+
+type ContactFormData = z.infer<typeof contactFormSchema>;
 
 type ContactInfo = {
   label: string;
@@ -21,6 +35,7 @@ type ContactInfo = {
   href?: string;
 };
 
+// Liste des informations de contact à afficher
 const contactInfos: ContactInfo[] = [
   {
     label: "GitHub",
@@ -65,21 +80,6 @@ const contactInfos: ContactInfo[] = [
   },
 ];
 
-/**
- * Pourquoi cette structure ?
- * --------------------------
- * - Ce formulaire est destiné à un portfolio, donc la cible principale : recruteurs, RH, managers, partenaires potentiels.
- * - On met en avant les cas d'usage RH : proposition d'alternance, CDI, stage, mission freelance, prise de contact pro, etc.
- * - On clarifie chaque raison pour guider le recruteur et faciliter le tri côté back.
- * - On prépare la structure pour l'accessibilité et l'évolutivité.
- *
- * Comment ?
- * ---------
- * - Ajout d'une description explicite pour chaque raison (utile pour l'accessibilité, les tooltips, ou l'affichage contextuel).
- * - Ordre logique : d'abord les offres concrètes, puis les demandes de contact ou d'information.
- * - Typage explicite pour robustesse et évolutivité.
- * - "Autre" reste pour les cas non couverts.
- */
 
 type ContactReason = {
   value: string;
@@ -89,6 +89,7 @@ type ContactReason = {
   variant: "default" | "secondary" | "outline" | "destructive";
 };
 
+// Liste des raisons de contact pour le champ Select
 const contactReasons: ContactReason[] = [
   {
     value: "alternance",
@@ -136,52 +137,46 @@ const contactReasons: ContactReason[] = [
 ];
 
 export default function ContactPage() {
-  const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    reason: "",
-    subject: "",
-    message: "",
-  });
   const [file, setFile] = useState<File | null>(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
+  const {
+    register,
+    handleSubmit,
+    control,
+    reset,
+    setError,
+    formState: { errors },
+  } = useForm<ContactFormData>({
+    resolver: zodResolver(contactFormSchema),
+    // Initialise le formulaire avec des valeurs par défaut pour un état contrôlé
+    defaultValues: {
+      firstName: "",
+      lastName: "",
+      email: "",
+      reason: "",
+      subject: "",
+      message: "",
+    },
+  });
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    setFormData((prev) => ({
-      ...prev,
-      [e.target.name]: e.target.value,
-    }));
-  };
-
-  const handleReasonChange = (value: string) => {
-    setFormData((prev) => ({
-      ...prev,
-      reason: value,
-    }));
-  };
-
+  // Gère la sélection d'un fichier
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       setFile(e.target.files[0]);
     }
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  // Fonction appelée à la soumission du formulaire
+  const onSubmit = async (data: ContactFormData) => {
     setIsLoading(true);
-    setStatus("idle");
 
     const formDataToSend = new FormData();
-    formDataToSend.append("firstName", formData.firstName);
-    formDataToSend.append("lastName", formData.lastName);
-    formDataToSend.append("email", formData.email);
-    formDataToSend.append("reason", formData.reason);
-    formDataToSend.append("subject", formData.subject);
-    formDataToSend.append("message", formData.message);
+    formDataToSend.append("firstName", data.firstName);
+    formDataToSend.append("lastName", data.lastName);
+    formDataToSend.append("email", data.email);
+    formDataToSend.append("reason", data.reason);
+    formDataToSend.append("subject", data.subject);
+    formDataToSend.append("message", data.message);
     if (file) {
       formDataToSend.append("file", file);
     }
@@ -193,34 +188,51 @@ export default function ContactPage() {
       });
 
       if (response.ok) {
-        setStatus("success");
-        setFormData({
-          firstName: "",
-          lastName: "",
-          email: "",
-          reason: "",
-          subject: "",
-          message: "",
+        toast.success("Message envoyé !", {
+          description: "Merci pour votre message, je vous répondrai rapidement.",
+          icon: <CheckCircle className="h-4 w-4 text-green-500" />,
+          className: "bg-green-50 text-green-800 border-green-200"
         });
+        reset(); // Réinitialise les champs du formulaire
         setFile(null);
       } else {
-        setStatus("error");
+        const errorData = await response.json();
+        if (response.status === 400 && errorData.errors) {
+          Object.keys(errorData.errors).forEach((key) => {
+            setError(key as keyof ContactFormData, {
+              type: "server",
+              message: errorData.errors[key][0],
+            });
+          });
+          toast.error("Erreur de validation", {
+            description: "Veuillez vérifier les champs du formulaire.",
+            icon: <XCircle className="h-4 w-4 text-red-500" />,
+            className: "bg-red-50 text-red-800 border-red-200"
+          });
+        } else {
+          toast.error("Échec de l'envoi", {
+            description: "Une erreur est survenue. Veuillez réessayer plus tard.",
+            icon: <XCircle className="h-4 w-4 text-red-500" />,
+            className: "bg-red-50 text-red-800 border-red-200"
+          });
+        }
       }
     } catch (error) {
-      setStatus("error");
+      console.error("Erreur d'envoi du formulaire:", error);
+      toast.error("Échec de l'envoi", {
+        description: "Une erreur de connexion est survenue. Veuillez vérifier votre connexion internet.",
+        icon: <XCircle className="h-4 w-4 text-red-500" />,
+        className: "bg-red-50 text-red-800 border-red-200"
+      });
     } finally {
       setIsLoading(false);
     }
   };
 
-  const selectedReason = contactReasons.find(
-    (r) => r.value === formData.reason
-  );
-
   return (
     <div className="min-h-screen bg-background py-12 px-4 pt-24">
       <div className="max-w-2xl mx-auto">
-        {/* Bouton de retour */}
+        {/* Bouton pour revenir à la page d'accueil */}
         <div className="mb-4">
           <Button variant="outline" size="sm" asChild>
             <Link href="/">
@@ -235,21 +247,7 @@ export default function ContactPage() {
             <CardDescription>
               Étudiant BTS SIO SISR • À la recherche d&apos;alternance/CDI
             </CardDescription>
-            {/* 
-              Mobile first, display flex, fond gris clair (muted), 
-              chaque ligne = flex-row centrée, gap-3 (plus serré), 
-              items = flex items-center gap-2
-              Ordre strict :
-                1. GitHub + LinkedIn
-                2. Instagram + Twitter (X)
-                3. Localisation + Téléphone
-                4. Email
-              Correction mobile : 
-                - Sur mobile, la ligne 3 (localisation + tel) doit être bien alignée verticalement (icône + texte sur la même ligne, tailles cohérentes)
-                - Ajout px-3 (padding horizontal réduit) sur chaque ligne pour éviter que le contenu soit collé au bord, surtout à droite
-                - Ajout max-w-xs w-full mx-auto sur chaque ligne pour éviter le dépassement sur mobile
-                - Centrage par rapport au parent (justify-center, mx-auto)
-            */}
+            {/* Section des informations de contact avec un design responsive */}
             <div className="mt-4 flex flex-col gap-2 text-sm text-muted-foreground items-center w-full ">
               {/* Ligne 1 : GitHub + LinkedIn */}
               <div className="flex flex-row justify-around items-center bg-muted/60 rounded-lg py-2 px-3 w-full mx-auto gap-3 max-w-md">
@@ -373,8 +371,8 @@ export default function ContactPage() {
           </CardHeader>
 
           <CardContent className="space-y-6">
-            <form onSubmit={handleSubmit} className="space-y-6">
-              {/* Nom et Prénom */}
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+              {/* Champs pour le nom et le prénom */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <Label htmlFor="firstName" className="mb-2 block ">
@@ -382,12 +380,14 @@ export default function ContactPage() {
                   </Label>
                   <Input
                     id="firstName"
-                    name="firstName"
-                    required
-                    value={formData.firstName}
-                    onChange={handleChange}
                     placeholder="Votre prénom"
+                    {...register("firstName")}
                   />
+                  {errors.firstName && (
+                    <p className="text-red-500 text-sm mt-1">
+                      {errors.firstName.message}
+                    </p>
+                  )}
                 </div>
 
                 <div className="space-y-2">
@@ -396,16 +396,18 @@ export default function ContactPage() {
                   </Label>
                   <Input
                     id="lastName"
-                    name="lastName"
-                    required
-                    value={formData.lastName}
-                    onChange={handleChange}
                     placeholder="Votre nom"
+                    {...register("lastName")}
                   />
+                  {errors.lastName && (
+                    <p className="text-red-500 text-sm mt-1">
+                      {errors.lastName.message}
+                    </p>
+                  )}
                 </div>
               </div>
 
-              {/* Email */}
+              {/* Champ pour l'adresse e-mail */}
               <div className="space-y-2">
                 <Label htmlFor="email" className="mb-2 block">
                   Email *
@@ -413,85 +415,101 @@ export default function ContactPage() {
                 <Input
                   type="email"
                   id="email"
-                  name="email"
-                  required
-                  value={formData.email}
-                  onChange={handleChange}
                   placeholder="votre@email.com"
+                  {...register("email")}
                 />
+                {errors.email && (
+                  <p className="text-red-500 text-sm mt-1">
+                    {errors.email.message}
+                  </p>
+                )}
               </div>
 
-              {/* Raison du contact */}
+              {/* Champ de sélection pour le type de contact */}
               <div className="space-y-3">
                 <Label className="mb-2 block">Type de contact *</Label>
-                <Select
-                  value={formData.reason}
-                  onValueChange={handleReasonChange}
-                  required
-                >
-                  <SelectTrigger className="w-full max-w-full whitespace-normal break-words min-h-[4rem]">
-                    <SelectValue placeholder="Sélectionnez la demande" />
-                  </SelectTrigger>
-                  <SelectContent
-                    className="w-[--radix-select-trigger-width] max-w-[95vw] max-h-[50vh] overflow-y-auto z-50"
-                    side="bottom"
-                    align="start"
-                  >
-                    {contactReasons.map((reason) => {
-                      const Icon = reason.icon;
-                      return (
-                        <SelectItem key={reason.value} value={reason.value}>
-                          <div className="flex flex-col text-left">
-                            <div className="flex items-center gap-2">
-                              <Icon className="h-4 w-4 text-muted-foreground" />
-                              <span className="font-medium">
-                                {reason.label}
-                              </span>
-                            </div>
-                            <span className="text-xs text-muted-foreground">
-                              {reason.description}
-                            </span>
-                          </div>
-                        </SelectItem>
-                      );
-                    })}
-                  </SelectContent>
-                </Select>
+                <Controller
+                  name="reason"
+                  control={control}
+                  render={({ field }) => (
+                    <Select
+                      onValueChange={field.onChange}
+                      value={field.value}
+                    >
+                      <SelectTrigger className="w-full max-w-full whitespace-normal break-words min-h-[4rem]">
+                        <SelectValue placeholder="Sélectionnez la demande" />
+                      </SelectTrigger>
+                      <SelectContent
+                        className="w-[--radix-select-trigger-width] max-w-[95vw] max-h-[50vh] overflow-y-auto z-50"
+                        side="bottom"
+                        align="start"
+                      >
+                        {contactReasons.map((reason) => {
+                          const Icon = reason.icon;
+                          return (
+                            <SelectItem key={reason.value} value={reason.value}>
+                              <div className="flex flex-col text-left">
+                                <div className="flex items-center gap-2">
+                                  <Icon className="h-4 w-4 text-muted-foreground" />
+                                  <span className="font-medium">
+                                    {reason.label}
+                                  </span>
+                                </div>
+                                <span className="text-xs text-muted-foreground">
+                                  {reason.description}
+                                </span>
+                              </div>
+                            </SelectItem>
+                          );
+                        })}
+                      </SelectContent>
+                    </Select>
+                  )}
+                />
+                {errors.reason && (
+                  <p className="text-red-500 text-sm mt-1">
+                    {errors.reason.message}
+                  </p>
+                )}
               </div>
 
-              {/* Objet */}
+              {/* Champ pour l'objet du message */}
               <div className="space-y-2">
                 <Label htmlFor="subject" className="mb-2 block">
                   Objet *
                 </Label>
                 <Input
                   id="subject"
-                  name="subject"
-                  required
-                  value={formData.subject}
-                  onChange={handleChange}
                   placeholder="Sujet de votre message"
+                  {...register("subject")}
                 />
+                {errors.subject && (
+                  <p className="text-red-500 text-sm mt-1">
+                    {errors.subject.message}
+                  </p>
+                )}
               </div>
 
-              {/* Message */}
+              {/* Champ de texte pour le message */}
               <div className="space-y-2">
                 <Label htmlFor="message" className="mb-2 block">
                   Message *
                 </Label>
                 <Textarea
                   id="message"
-                  name="message"
-                  required
                   rows={6}
-                  value={formData.message}
-                  onChange={handleChange}
                   placeholder="Décrivez votre demande en détail..."
                   className="resize-none"
+                  {...register("message")}
                 />
+                {errors.message && (
+                  <p className="text-red-500 text-sm mt-1">
+                    {errors.message.message}
+                  </p>
+                )}
               </div>
 
-              {/* Fichier joint */}
+              {/* Champ pour le téléchargement d'un fichier (optionnel) */}
               <div className="space-y-2">
                 <Label htmlFor="file" className="mb-2 block">
                   Fichier joint (optionnel)
@@ -512,31 +530,12 @@ export default function ContactPage() {
                 )}
               </div>
 
-              {/* Messages de statut */}
-              {status === "success" && (
-                <Alert>
-                  <CheckCircle className="h-4 w-4" />
-                  <AlertDescription>
-                    Message envoyé avec succès ! Je vous répondrai rapidement.
-                  </AlertDescription>
-                </Alert>
-              )}
-
-              {status === "error" && (
-                <Alert variant="destructive">
-                  <XCircle className="h-4 w-4" />
-                  <AlertDescription>
-                    Erreur lors de l&apos;envoi. Veuillez réessayer.
-                  </AlertDescription>
-                </Alert>
-              )}
-
               <Separator />
 
-              {/* Bouton d'envoi */}
+              {/* Bouton de soumission du formulaire */}
               <Button
                 type="submit"
-                disabled={isLoading || !formData.reason}
+                disabled={isLoading}
                 className="w-full"
                 size="lg"
               >
@@ -559,4 +558,3 @@ export default function ContactPage() {
     </div>
   );
 }
-

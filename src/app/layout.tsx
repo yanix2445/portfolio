@@ -4,6 +4,7 @@ import { ThemeProvider } from "@/utils/theme-provider";
 import { siteMetadata } from "@/lib/metadata";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { Toaster } from "@/components/ui/sonner";
 
 export const metadata = siteMetadata;
 console.log("Métadonnées générées:", siteMetadata);
@@ -32,7 +33,7 @@ export default function RootLayout({
         />
       </head>
       <body>
-        
+
         {/* Vercel Analytics */}
         <Analytics />
 
@@ -58,6 +59,7 @@ export default function RootLayout({
           </p>
         </div>
       </footer>
+      <Toaster />
       </body>
     </html>
   );
