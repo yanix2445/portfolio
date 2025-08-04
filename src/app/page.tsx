@@ -16,8 +16,8 @@ import { useForm, Controller } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
+import FloatingDots from "@/components/floatingDots";
 // Import du composant FloatingDots
-import FloatingDots from "@/components/FloatingDots";
 
 // Définit le schéma de validation du formulaire de contact
 const contactFormSchema = z.object({
