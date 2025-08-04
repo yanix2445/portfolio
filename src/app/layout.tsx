@@ -50,7 +50,6 @@ export default function RootLayout({
             {/* Contenu principal */}
             {children}
           </ThemeProvider>
-          <FloatingDots />
           {/* Footer */}
           <footer className="border-t border-border/50 bg-background/50 backdrop-blur-sm">
             <div className="container mx-auto px-6 py-8 text-center gap-1">
