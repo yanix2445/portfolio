@@ -54,6 +54,7 @@ import {
 // Import des composants UI existants
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Avatar, AvatarImage } from "@/components/ui/avatar";
 
 // Tableau des technologies avec icônes
 const technologies = [
@@ -234,9 +235,15 @@ const ComingSoonPage = () => {
     },
   ];
 
+  // Mes hobbies reflètent mes passions pour la culture japonaise, les animés/mangas, le cinéma, les séries et les films d'animation.
   const hobbies = [
     { id: "hobby-volleyball", label: "🏐 Volleyball 8 ans" },
     { id: "hobby-gaming", label: "🎮 Gaming" },
+    { id: "hobby-anime", label: "🍥 Animés, mangas & culture japonaise" },
+    {
+      id: "hobby-cinema",
+      label: "🎬 Cinéphile, sériephile & films d'animation",
+    },
     { id: "hobby-travel", label: "✈️ Voyages" },
     { id: "hobby-hardware", label: "🔧 Hardware" },
   ];
@@ -250,11 +257,14 @@ const ComingSoonPage = () => {
         <div className="container mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-gradient-to-br from-primary to-primary/70 rounded-xl flex items-center justify-center">
-                <span className="text-primary-foreground font-bold text-sm">
-                  YH
-                </span>
-              </div>
+                <Avatar className="w-[64px] h-[64px]">
+                  <AvatarImage
+                    src="/yanis-logo.png"
+                    alt="Logo du site"
+                    className="w-full h-full rounded-full object-cover"
+                  />
+                </Avatar>
+             
               <div>
                 <div className="font-semibold text-sm">Yanis Harrat</div>
                 <div className="text-xs text-muted-foreground">
@@ -303,7 +313,6 @@ const ComingSoonPage = () => {
               <ProgressBar />
             </div>
           </div>
-          {/* ... reste de votre code inchangé ... */}
           <section
             className={`mb-24 transition-all duration-1000 delay-300 ${
               isVisible
@@ -313,7 +322,7 @@ const ComingSoonPage = () => {
           >
             {/* En-tête */}
             <div className="text-center mb-16">
-              <div className="flex justify-center items-center gap-3 mb-5">
+              <div className="flex flex-col justify-center items-center gap-3 mb-5">
                 <div className="w-10 h-10 bg-primary/20 rounded-xl flex items-center justify-center">
                   <Heart className="w-5 h-5 text-primary" />
                 </div>
@@ -383,13 +392,13 @@ const ComingSoonPage = () => {
                 </div>
 
                 <div className="space-y-3 text-muted-foreground ">
-                  <p>
-                    <span className="inline-flex items-center gap-1">
-                      <MapPin className="w-4 h-4 text-primary inline" />
+                  <div className="flex flex-col md:flex-row md:items-center gap-1">
+                    <div className="flex items-center gap-1">
+                      <MapPin className="w-4 h-4 text-primary" />
                       <span className="font-medium">Localisation&nbsp;:</span>
-                      <span className="ml-1">Paris, Île-de-France</span>
-                    </span>
-                  </p>
+                    </div>
+                    <span className="ml-1 md:ml-0">Paris, Île-de-France</span>
+                  </div>
                   <p>
                     Je démarre ma{" "}
                     <strong>
@@ -516,7 +525,7 @@ const ComingSoonPage = () => {
 
               {/* CTA vers page contact */}
               <div className="bg-background/50 backdrop-blur-sm rounded-xl p-6 border border-border/50">
-                <h3 className="font-semibold mb-2">Plutôt formulaire ?</h3>
+                <h3 className="font-semibold mb-2">Ou en direct ?</h3>
                 <p className="text-sm text-muted-foreground mb-4">
                   J&apos;ai déjà une page contact propre avec un formulaire qui
                   marche nickel !
