@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useEffect, useMemo } from 'react'
+import React, { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 
 interface StarDot {
@@ -14,39 +14,33 @@ interface StarDot {
 }
 
 const FloatingDots: React.FC = () => {
-  const [mounted, setMounted] = useState<boolean>(false)
+  const [stars, setStars] = useState<StarDot[] | null>(null)
 
-  // Génération optimisée des étoiles avec useMemo
-  // Les positions x et y sont calculées de manière aléatoire
-  // une seule fois au montage du composant, garantissant une apparition unique
-  // pour chaque chargement de page.
-  const stars = useMemo<StarDot[]>(() => {
-    return Array.from({ length: 600 }, (_, i) => ({
+  useEffect(() => {
+    // La génération des étoiles est déplacée dans useEffect
+    // pour garantir qu'elle ne se produit que sur le client.
+    const generatedStars = Array.from({ length: 100 }, (_, i) => ({
       id: i,
       x: Math.random() * 100,
       y: Math.random() * 100,
-      size: Math.random() * 4 + 1, // 2-5px
+      size: Math.random() * 3 + 2, // 2-5px
       delay: Math.random() * 4,
-      duration: Math.random() * 3 + 6, // 4-7s
-      opacity: Math.random() * 0.6 + 0.8, // 0.6-1.2
+      duration: Math.random() * 3 + 4, // 4-7s
+      opacity: Math.random() * 0.6 + 0.6, // 0.6-1.2
     }))
+    setStars(generatedStars)
   }, [])
 
-  useEffect(() => {
-    setMounted(true)
-  }, [])
-
-  // Hydration guard pour éviter les erreurs SSR
-  if (!mounted) {
+  // N'afficher le composant qu'une fois les étoiles générées
+  if (!stars) {
     return null
   }
 
   return (
     <div 
-      className="fixed inset-0 pointer-events-none select-none overflow-hidden "
+      className="fixed inset-0 pointer-events-none select-none overflow-hidden z-[-1]"
       aria-hidden="true"
     >
-
       {stars.map((star) => (
         <motion.div
           key={star.id}
@@ -57,8 +51,7 @@ const FloatingDots: React.FC = () => {
             width: `${star.size}px`,
             height: `${star.size}px`,
             willChange: 'transform, opacity',
-            boxShadow: '0 0 6px hsl(var(--primary))', 
-            
+            boxShadow: '0 0 4px hsl(var(--primary))', // Effet de lueur
           }}
           initial={{ opacity: 0, scale: 0 }}
           animate={{
@@ -69,8 +62,7 @@ const FloatingDots: React.FC = () => {
             duration: star.duration,
             repeat: Infinity,
             delay: star.delay,
-            ease: [0.42, 0, 0.58, 1], 
-            
+            ease: [0.42, 0, 0.58, 1],
           }}
         />
       ))}
