@@ -83,11 +83,12 @@ const currentLearning = [
 
 // Barre de progression
 const ProgressBar = () => {
+  // on utilise un état pour savoir si on est côté client
+  const [isMounted, setIsMounted] = useState(false);
   const [progress, setProgress] = useState(0);
-  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setMounted(true);
+    setIsMounted(true);
 
     // --- 1. Définition des dates du projet ---
     const startDate = new Date("2025-07-15T00:00:00");
@@ -125,23 +126,23 @@ const ProgressBar = () => {
     return () => clearInterval(timer);
   }, []);
 
-  // On arrondit la valeur pour l'affichage du texte (ex: 34%)
-  const displayProgress = mounted ? Math.round(progress) : 0;
+  // Le rendu initial sur le serveur sera de 0%, puis la valeur réelle sera calculée côté client
+  const displayProgress = isMounted ? Math.round(progress) : 0;
 
   return (
     <div className="relative">
       <div className="flex justify-between items-center mb-3">
         <span className="text-sm font-medium">Portfolio en construction</span>
         <span className="text-sm text-primary font-bold">
-          {displayProgress}%
+          {isMounted ? `${displayProgress}%` : "0%"}
         </span>
       </div>
       <div className="h-2 bg-muted/30 rounded-full overflow-hidden">
         <div
           className="h-full bg-gradient-to-r from-primary via-primary/80 to-primary/60 rounded-full transition-all duration-300 relative"
-          style={{ width: `${mounted ? progress : 0}%` }}
+          style={{ width: `${isMounted ? progress : 0}%` }}
         >
-          {mounted && (
+          {isMounted && (
             <div className="absolute inset-0 bg-white/20 animate-pulse rounded-full" />
           )}
         </div>
@@ -200,6 +201,8 @@ const ComingSoonPage = () => {
   return (
     <>
       <div className="min-h-screen bg-gradient-to-br from-background/95 via-background/98 to-muted/10 relative ">
+        {/* FloatingDots est un composant client, il doit être rendu ici */}
+        <FloatingDots />
         {/* Header flottant */}
         <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-xl border-b border-border/50">
           <div className="container mx-auto px-6 py-4">
@@ -231,7 +234,6 @@ const ComingSoonPage = () => {
 
         {/* Main content */}
         <main className="pt-32 pb-16 px-6 relative z-10 ">
-        <FloatingDots />
           <div className="container mx-auto max-w-4xl ">
             {/* Hero Section */}
             <div
