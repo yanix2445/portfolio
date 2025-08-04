@@ -232,6 +232,7 @@ const ComingSoonPage = () => {
 
         {/* Main content */}
         <main className="pt-32 pb-16 px-6 relative z-10 ">
+        <FloatingDots />
           <div className="container mx-auto max-w-4xl ">
             {/* Hero Section */}
             <div

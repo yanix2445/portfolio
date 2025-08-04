@@ -5,7 +5,6 @@ import { siteMetadata } from "@/lib/metadata";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Toaster } from "@/components/ui/sonner";
-import FloatingDots from "@/components/floatingDots";
 
 export const metadata = siteMetadata;
 console.log("Métadonnées générées:", siteMetadata);
@@ -35,7 +34,6 @@ export default function RootLayout({
         </head>
 
         <body>
-        <FloatingDots />
           {/* Vercel Analytics */}
           <Analytics />
 
