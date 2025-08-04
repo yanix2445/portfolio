@@ -1,6 +1,5 @@
 "use client";
-
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
 import {
   Github,
@@ -16,26 +15,19 @@ import {
   MapPin,
   Zap,
   Download,
-  Atom, // Pour React
-  SquareCode, // Pour TypeScript
-  FileCode, // Pour JavaScript
-  Code, // Pour Python
-  Database, // Pour PostgreSQL et Supabase
-  Pyramid, // Pour Prisma
-  Table, // Pour Airtable
-  CheckSquare, // Pour Zod
-  Figma, // Pour Figma
-  Monitor, // Pour VS Code
-  Terminal, // Pour Bash
-  Bird, // Pour NestJS
-  Sailboat, // Pour Kubernetes (représentant les conteneurs)
-  Hammer, // Pour Terraform
-  Workflow, // Pour CI/CD
-  Key, // Pour Auth
-  Cable, // Pour FTTH
-  Network, // Pour Diagnostic réseau
-  Gauge, // Pour monitoring
-  Braces, // Pour scripting avancé
+  Atom,
+  Database,
+  Pyramid,
+  CheckSquare,
+  Figma,
+  Monitor,
+  Terminal,
+  Workflow,
+  Key,
+  Cable,
+  Network,
+  Gauge,
+  Braces,
 } from "lucide-react";
 import {
   RiTailwindCssFill,
@@ -55,6 +47,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
+import FloatingDots from "@/components/floatingDots";
 
 // Tableau des technologies avec icônes
 const technologies = [
@@ -87,50 +80,6 @@ const currentLearning = [
   { name: "scripting avancé", icon: <Braces className="w-4 h-4" /> },
   { name: "monitoring", icon: <Gauge className="w-4 h-4" /> },
 ];
-
-// Animation des points flottants
-const FloatingDots = () => {
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  if (!mounted) return null;
-
-  // Positions fixes pour éviter les problèmes d'hydratation
-  const staticDots = [
-    { id: "dot-1", left: 10, top: 20, delay: 0, duration: 2 },
-    { id: "dot-2", left: 85, top: 15, delay: 0.5, duration: 2.5 },
-    { id: "dot-3", left: 25, top: 70, delay: 1, duration: 3 },
-    { id: "dot-4", left: 70, top: 80, delay: 1.5, duration: 2.2 },
-    { id: "dot-5", left: 45, top: 30, delay: 2, duration: 2.8 },
-    { id: "dot-6", left: 90, top: 60, delay: 0.3, duration: 2.1 },
-    { id: "dot-7", left: 15, top: 45, delay: 1.2, duration: 2.7 },
-    { id: "dot-8", left: 60, top: 10, delay: 1.8, duration: 2.4 },
-    { id: "dot-9", left: 35, top: 85, delay: 0.8, duration: 2.6 },
-    { id: "dot-10", left: 80, top: 35, delay: 2.2, duration: 2.3 },
-    { id: "dot-11", left: 5, top: 75, delay: 1.6, duration: 2.9 },
-    { id: "dot-12", left: 95, top: 90, delay: 0.1, duration: 2.5 },
-  ];
-
-  return (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none">
-      {staticDots.map((dot) => (
-        <div
-          key={dot.id}
-          className="absolute w-2 h-2 bg-primary/20 rounded-full animate-pulse"
-          style={{
-            left: `${dot.left}%`,
-            top: `${dot.top}%`,
-            animationDelay: `${dot.delay}s`,
-            animationDuration: `${dot.duration}s`,
-          }}
-        />
-      ))}
-    </div>
-  );
-};
 
 // Barre de progression
 const ProgressBar = () => {
@@ -249,14 +198,14 @@ const ComingSoonPage = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/10 relative">
+    <>
       <FloatingDots />
-
-      {/* Header flottant */}
-      <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-xl border-b border-border/50">
-        <div className="container mx-auto px-6 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
+      <div className="min-h-screen bg-gradient-to-br from-background/95 via-background/98 to-muted/10 relative ">
+        {/* Header flottant */}
+        <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-xl border-b border-border/50">
+          <div className="container mx-auto px-6 py-4">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
                 <Avatar className="w-[64px] h-[64px]">
                   <AvatarImage
                     src="/yanis-logo.png"
@@ -264,304 +213,314 @@ const ComingSoonPage = () => {
                     className="w-full h-full rounded-full object-cover"
                   />
                 </Avatar>
-             
-              <div>
-                <div className="font-semibold text-sm">Yanis Harrat</div>
-                <div className="text-xs text-muted-foreground">
-                  Développeur • Étudiant BTS SIO
+
+                <div>
+                  <div className="font-semibold text-sm">Yanis Harrat</div>
+                  <div className="text-xs text-muted-foreground">
+                    Développeur • Étudiant BTS SIO
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <Badge variant="outline" className="gap-2">
-              <div className="w-2 h-2 bg-orange-500 rounded-full animate-pulse" />
-              En construction
-            </Badge>
-          </div>
-        </div>
-      </header>
-
-      {/* Main content */}
-      <main className="pt-32 pb-16 px-6">
-        <div className="container mx-auto max-w-4xl">
-          {/* Hero Section */}
-          <div
-            className={`text-center mb-16 transition-all duration-1000 ${
-              isVisible
-                ? "opacity-100 translate-y-0"
-                : "opacity-0 translate-y-8"
-            }`}
-          >
-            <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium mb-6">
-              <Clock className="w-4 h-4" />
-              Portfolio temporairement indisponible
-            </div>
-
-            <h1 className="text-5xl md:text-7xl font-bold mb-6">
-              Salut ! <br />
-              <span className="bg-gradient-to-r from-primary via-primary/80 to-primary/60 bg-clip-text text-transparent">
-                Moi c&apos;est Yanis
-              </span>
-            </h1>
-
-            <p className="text-xl md:text-2xl text-muted-foreground mb-8 max-w-2xl mx-auto leading-relaxed">
-              Je refais entièrement mon portfolio avec du Next.js et des technos
-              modernes. En attendant, laisse-moi me présenter rapidement !
-            </p>
-
-            <div className="max-w-md mx-auto mb-8">
-              <ProgressBar />
+              <Badge variant="outline" className="gap-2">
+                <div className="w-2 h-2 bg-orange-500 rounded-full animate-pulse" />
+                En construction
+              </Badge>
             </div>
           </div>
-          <section
-            className={`mb-24 transition-all duration-1000 delay-300 ${
-              isVisible
-                ? "opacity-100 translate-y-0"
-                : "opacity-0 translate-y-8"
-            }`}
-          >
-            {/* En-tête */}
-            <div className="text-center mb-16">
-              <div className="flex flex-col justify-center items-center gap-3 mb-5">
-                <div className="w-10 h-10 bg-primary/20 rounded-xl flex items-center justify-center">
-                  <Heart className="w-5 h-5 text-primary" />
-                </div>
-                <h2 className="text-3xl font-bold tracking-tight">
-                  Mieux me connaître
-                </h2>
+        </header>
+
+        {/* Main content */}
+        <main className="pt-32 pb-16 px-6 relative z-10 ">
+          <div className="container mx-auto max-w-4xl ">
+            {/* Hero Section */}
+            <div
+              className={`text-center mb-16 transition-all duration-1000 backdrop-blur-sm ${
+                isVisible
+                  ? "opacity-100 translate-y-0"
+                  : "opacity-0 translate-y-8"
+              }`}
+            >
+              <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium mb-6">
+                <Clock className="w-4 h-4" />
+                Portfolio temporairement indisponible
               </div>
 
-              <p className="max-w-2xl mx-auto text-lg text-muted-foreground">
-                Je suis Yanis — Technicien IT & Développeur informatique ,
-                orienté solutions concrètes. Sérieux, curieux et carré, je
-                cherche à progresser vite tout en restant utile. J’aime créer
-                des systèmes stables, bien pensés et sans friction.
+              <h1 className="text-5xl md:text-7xl font-bold mb-6">
+                Salut ! <br />
+                <span className="bg-gradient-to-r from-primary via-primary/80 to-primary/60 bg-clip-text text-transparent">
+                  Moi c&apos;est Yanis
+                </span>
+              </h1>
+
+              <p className="xl:text-2xl text-muted-foreground mb-8 max-w-2xl mx-auto leading-relaxed">
+                Je refais entièrement mon portfolio avec du Next.js et des
+                technos modernes. En attendant, laisse-moi me présenter
+                rapidement !
               </p>
+
+              <div className="max-w-md mx-auto mb-8">
+                <ProgressBar />
+              </div>
             </div>
+            <section
+              className={`mb-24 transition-all duration-1000 delay-300 backdrop-blur-sm ${
+                isVisible
+                  ? "opacity-100 translate-y-0"
+                  : "opacity-0 translate-y-8"
+              }`}
+            >
+              {/* En-tête */}
+              <div className="text-center mb-16">
+                <div className="flex flex-col justify-center items-center gap-3 mb-5">
+                  <div className="w-10 h-10 bg-primary/20 rounded-xl flex items-center justify-center">
+                    <Heart className="w-5 h-5 text-primary" />
+                  </div>
+                  <h2 className="text-3xl font-bold tracking-tight">
+                    Mieux me connaître
+                  </h2>
+                </div>
 
-            {/* Présentation perso */}
-            <div className="max-w-4xl mx-auto grid md:grid-cols-2 gap-10 mb-20 text-1xl">
-              {/* Profil perso */}
-              <div className="space-y-5 ">
-                <h3 className="text-xl font-semibold flex items-center gap-2">
-                  <Zap className="w-5 h-5 text-primary" />
-                  Mon parcours condensé
-                </h3>
-                <p className="text-muted-foreground ">
-                  Issu d’un Bac Pro SN et un BTS SIO SISR , j’ai touché à la
-                  fibre, au support, à la config réseau, au dev,
-                  l’automatisation et a la restoration . Mon expérience :
-                  terrain + code + logique. J’ai bossé sur un CRM no-code
-                  hybride (n8n, JS, Python, Airtable) livré complet avec doc et
-                  formation.
+                <p className="max-w-2xl mx-auto text-lg text-muted-foreground">
+                  Je suis Yanis — Technicien IT & Développeur informatique ,
+                  orienté solutions concrètes. Sérieux, curieux et carré, je
+                  cherche à progresser vite tout en restant utile. J’aime créer
+                  des systèmes stables, bien pensés et sans friction.
+                </p>
+              </div>
+
+              {/* Présentation perso */}
+              <div className="max-w-4xl mx-auto grid md:grid-cols-2 gap-10 mb-20 text-1xl">
+                {/* Profil perso */}
+                <div className="space-y-5 ">
+                  <h3 className="text-xl font-semibold flex items-center gap-2">
+                    <Zap className="w-5 h-5 text-primary" />
+                    Mon parcours condensé
+                  </h3>
+                  <p className="text-muted-foreground ">
+                    Issu d’un Bac Pro SN et un BTS SIO SISR , j’ai touché à la
+                    fibre, au support, à la config réseau, au dev,
+                    l’automatisation et a la restoration . Mon expérience :
+                    terrain + code + logique. J’ai bossé sur un CRM no-code
+                    hybride (n8n, JS, Python, Airtable) livré complet avec doc
+                    et formation.
+                  </p>
+
+                  <p className="text-muted-foreground ">
+                    8 ans de volley (3 en N2), ça forge : esprit d’équipe,
+                    pression, discipline, timing. J’applique ces réflexes dans
+                    mes projets tech.
+                  </p>
+
+                  <p className="text-muted-foreground">
+                    Passionné de découvertes culturelles&nbsp;— Algérie, Grèce,
+                    et bientôt direction le Japon&nbsp;! J’adore explorer de
+                    nouveaux horizons, comprendre d’autres modes de vie et
+                    m’inspirer de chaque rencontre.
+                  </p>
+
+                  <div className="flex flex-wrap gap-2 pt-2">
+                    {hobbies.map((hobby) => (
+                      <Badge
+                        key={hobby.id}
+                        variant="secondary"
+                        className="text-xs px-3 py-1"
+                      >
+                        {hobby.label}
+                      </Badge>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Carte alternance */}
+                <div className="bg-gradient-to-br from-primary/5 to-primary/10 rounded-2xl p-6 border border-primary/20 shadow-sm">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="w-8 h-8 bg-primary/20 rounded-lg flex items-center justify-center">
+                      <MapPin className="w-4 h-4 text-primary" />
+                    </div>
+                    <h3 className="text-xl font-bold">
+                      Mode Alternance activée
+                    </h3>
+                  </div>
+
+                  <div className="space-y-3 text-muted-foreground ">
+                    <div className="flex flex-col md:flex-row md:items-center gap-1">
+                      <div className="flex items-center gap-1">
+                        <MapPin className="w-4 h-4 text-primary" />
+                        <span className="font-medium">Localisation&nbsp;:</span>
+                      </div>
+                      <span className="ml-1 md:ml-0">Paris, Île-de-France</span>
+                    </div>
+                    <p>
+                      Je démarre ma
+                      <strong>
+                        1<sup>ère</sup> année de BTS SIO SISR
+                      </strong>
+                      en septembre 2025 ({" "}
+                      <strong>2j école / 3j entreprise</strong> ), et je
+                      recherche activement une alternance jusqu’en août 2027.
+                    </p>
+                    <p>
+                      Curieux, impliqué et déjà expérimenté sur le terrain (
+                      support, réseau, dev, automatisation ), je progresse vite
+                      et j’aime aller au fond des sujets.
+                      <br />
+                      Sérieux, fiable, à l’écoute, je m’investis à fond pour
+                      apporter des solutions concrètes et faire avancer
+                      l’équipe.
+                    </p>
+                    <p>
+                      Mon objectif&nbsp;: renforcer mes compétences en
+                      <strong>backend</strong>, <strong>automatisation</strong>,
+                      <strong>infra réseau</strong> et <strong>support</strong>
+                      tout en contribuant activement à vos projets.
+                    </p>
+                    <Badge variant="default" className="text-xs">
+                      🎯 Disponible dès septembre 2025
+                    </Badge>
+                  </div>
+                </div>
+              </div>
+
+              {/* Stack technique */}
+              <section className="bg-muted/30 rounded-2xl p-4 sm:p-6 border border-border/50 max-w-full sm:max-w-5xl mx-auto">
+                <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
+                  <div className="w-7 h-7 sm:w-8 sm:h-8 bg-primary/20 rounded-lg flex items-center justify-center">
+                    <Code2 className="w-4 h-4 text-primary" />
+                  </div>
+                  <h3 className="text-lg sm:text-xl font-bold">
+                    Stack & outils
+                  </h3>
+                </div>
+
+                <p className="text-xs sm:text-sm text-muted-foreground mb-3 sm:mb-4">
+                  J’utilise ces technos pour automatiser, développer et
+                  structurer mes projets :
                 </p>
 
-                <p className="text-muted-foreground ">
-                  8 ans de volley (3 en N2), ça forge : esprit d’équipe,
-                  pression, discipline, timing. J’applique ces réflexes dans mes
-                  projets tech.
-                </p>
-
-                <p className="text-muted-foreground">
-                  Passionné de découvertes culturelles&nbsp;— Algérie, Grèce, et
-                  bientôt direction le Japon&nbsp;! J’adore explorer de nouveaux
-                  horizons, comprendre d’autres modes de vie et m’inspirer de
-                  chaque rencontre.
-                </p>
-
-                <div className="flex flex-wrap gap-2 pt-2">
-                  {hobbies.map((hobby) => (
+                <div className="flex flex-wrap gap-1.5 sm:gap-2 mb-3 sm:mb-4">
+                  {technologies.map((tech, i) => (
                     <Badge
-                      key={hobby.id}
-                      variant="secondary"
-                      className="text-xs px-3 py-1"
+                      key={tech.name + i}
+                      variant="outline"
+                      className="flex items-center gap-1 py-1.5 sm:gap-1.5 sm:py-2 text-xs"
                     >
-                      {hobby.label}
+                      {tech.icon && tech.icon}
+                      {tech.name}
                     </Badge>
                   ))}
                 </div>
-              </div>
 
-              {/* Carte alternance */}
-              <div className="bg-gradient-to-br from-primary/5 to-primary/10 rounded-2xl p-6 border border-primary/20 shadow-sm">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-8 h-8 bg-primary/20 rounded-lg flex items-center justify-center">
-                    <MapPin className="w-4 h-4 text-primary" />
-                  </div>
-                  <h3 className="text-xl font-bold">Mode Alternance activée</h3>
+                <div className="flex flex-col sm:flex-row sm:items-center gap-1.5 sm:gap-2 text-xs text-muted-foreground italic">
+                  <span className="shrink-0">En cours :</span>
+                  <ul className="flex flex-wrap gap-1.5 sm:gap-2 font-bold not-italic">
+                    {currentLearning.map((tech, i) => (
+                      <li
+                        key={i}
+                        className="flex items-center gap-1 bg-muted/60 rounded px-1.5 py-0.5 sm:px-2 shadow-sm border border-border/30"
+                      >
+                        {tech.icon}
+                        <span>{tech.name}</span>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
-
-                <div className="space-y-3 text-muted-foreground ">
-                  <div className="flex flex-col md:flex-row md:items-center gap-1">
-                    <div className="flex items-center gap-1">
-                      <MapPin className="w-4 h-4 text-primary" />
-                      <span className="font-medium">Localisation&nbsp;:</span>
-                    </div>
-                    <span className="ml-1 md:ml-0">Paris, Île-de-France</span>
-                  </div>
-                  <p>
-                    Je démarre ma{" "}
-                    <strong>
-                      1<sup>ère</sup> année de BTS SIO SISR
-                    </strong>{" "}
-                    en septembre 2025 (<strong>2j école / 3j entreprise</strong>
-                    ), et je recherche activement une alternance jusqu’en août
-                    2027.
-                  </p>
-                  <p>
-                    Curieux, impliqué et déjà expérimenté sur le terrain
-                    (support, réseau, dev, automatisation), je progresse vite et
-                    j’aime aller au fond des sujets.
-                    <br />
-                    Sérieux, fiable, à l’écoute, je m’investis à fond pour
-                    apporter des solutions concrètes et faire avancer l’équipe.
-                  </p>
-                  <p>
-                    Mon objectif&nbsp;: renforcer mes compétences en{" "}
-                    <strong>backend</strong>, <strong>automatisation</strong>,{" "}
-                    <strong>infra réseau</strong> et <strong>support</strong>{" "}
-                    tout en contribuant activement à vos projets.
-                  </p>
-                  <Badge variant="default" className="text-xs">
-                    🎯 Disponible dès septembre 2025
-                  </Badge>
-                </div>
-              </div>
-            </div>
-
-            {/* Stack technique */}
-            <section className="bg-muted/30 rounded-2xl p-4 sm:p-6 border border-border/50 max-w-full sm:max-w-5xl mx-auto">
-              <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
-                <div className="w-7 h-7 sm:w-8 sm:h-8 bg-primary/20 rounded-lg flex items-center justify-center">
-                  <Code2 className="w-4 h-4 text-primary" />
-                </div>
-                <h3 className="text-lg sm:text-xl font-bold">Stack & outils</h3>
-              </div>
-
-              <p className="text-xs sm:text-sm text-muted-foreground mb-3 sm:mb-4">
-                J’utilise ces technos pour automatiser, développer et structurer
-                mes projets :
-              </p>
-
-              <div className="flex flex-wrap gap-1.5 sm:gap-2 mb-3 sm:mb-4">
-                {technologies.map((tech, i) => (
-                  <Badge
-                    key={tech.name + i}
-                    variant="outline"
-                    className="flex items-center gap-1 py-1.5 sm:gap-1.5 sm:py-2 text-xs"
-                  >
-                    {tech.icon && tech.icon}
-                    {tech.name}
-                  </Badge>
-                ))}
-              </div>
-
-              <div className="flex flex-col sm:flex-row sm:items-center gap-1.5 sm:gap-2 text-xs text-muted-foreground italic">
-                <span className="shrink-0">En cours :</span>
-                <ul className="flex flex-wrap gap-1.5 sm:gap-2 font-bold not-italic">
-                  {currentLearning.map((tech, i) => (
-                    <li
-                      key={i}
-                      className="flex items-center gap-1 bg-muted/60 rounded px-1.5 py-0.5 sm:px-2 shadow-sm border border-border/30"
-                    >
-                      {tech.icon}
-                      <span>{tech.name}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+              </section>
             </section>
-          </section>
 
-          {/* Contact Section */}
-          <div
-            className={`text-center space-y-8 transition-all duration-1000 delay-500 ${
-              isVisible
-                ? "opacity-100 translate-y-0"
-                : "opacity-0 translate-y-8"
-            }`}
-          >
-            {/* Contact principal */}
-            <div className="bg-gradient-to-r from-primary/5 via-primary/10 to-primary/5 rounded-2xl p-8 border border-primary/20">
-              <h2 className="text-3xl font-bold mb-4">On discute ?</h2>
-              <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
-                Portfolio en travaux, mais moi je suis toujours dispo ! Que ce
-                soit pour parler tech, alternance, projets ou juste prendre des
-                nouvelles.
-              </p>
-
-              <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8">
-                <Button className="gap-2" asChild>
-                  <a href="mailto:yanis.amine.harrat@gmail.com">
-                    <Mail className="w-4 h-4" />
-                    yanis.amine.harrat@gmail.com
-                  </a>
-                </Button>
-                <Button variant="outline" className="gap-2" asChild>
-                  <a href="tel:+33603059829">
-                    <Phone className="w-4 h-4" />
-                    06.03.05.98.29
-                  </a>
-                </Button>
-              </div>
-
-              {/* Bouton CV */}
-              <div className="mb-8">
-                <Button
-                  variant="default"
-                  size="lg"
-                  className="gap-3 bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 shadow-lg hover:shadow-xl transform hover:scale-105 transition-all"
-                  asChild
-                >
-                  <a href="/cv-yanis-harrat.pdf" download="CV-Yanis-Harrat.pdf">
-                    <Download className="w-5 h-5" />
-                    Récupérer mon CV
-                  </a>
-                </Button>
-                <p className="text-xs text-muted-foreground mt-2">
-                  PDF • Mise à jour récente
+            {/* Contact Section */}
+            <div
+              className={`text-center space-y-8 transition-all duration-1000 delay-500 backdrop-blur-sm ${
+                isVisible
+                  ? "opacity-100 translate-y-0"
+                  : "opacity-0 translate-y-8"
+              }`}
+            >
+              {/* Contact principal */}
+              <div className="bg-gradient-to-r from-primary/5 via-primary/10 to-primary/5 backdrop-blur-sm rounded-2xl p-8 border border-primary/20">
+                <h2 className="text-3xl font-bold mb-4">On discute ?</h2>
+                <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
+                  Portfolio en travaux, mais moi je suis toujours dispo ! Que ce
+                  soit pour parler tech, alternance, projets ou juste prendre
+                  des nouvelles.
                 </p>
-              </div>
 
-              {/* CTA vers page contact */}
-              <div className="bg-background/50 backdrop-blur-sm rounded-xl p-6 border border-border/50">
-                <h3 className="font-semibold mb-2">Ou en direct ?</h3>
-                <p className="text-sm text-muted-foreground mb-4">
-                  J&apos;ai déjà une page contact propre avec un formulaire qui
-                  marche nickel !
-                </p>
-                <Button variant="outline" className="gap-2 group" asChild>
-                  <Link href="/contact">
-                    Voir la page contact
-                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                  </Link>
-                </Button>
-              </div>
-            </div>
-            {/* Réseaux sociaux */}
-            <div>
-              <h3 className="text-xl font-semibold mb-6">Mes réseaux</h3>
-              <div className="flex justify-center gap-4">
-                {socialLinks.map((social) => (
-                  <a
-                    key={social.id}
-                    href={social.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group p-4 bg-muted/30 hover:bg-muted/50 rounded-xl border border-border/50 hover:border-primary/30 transition-all transform hover:scale-105"
-                    title={social.label}
+                <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8">
+                  <Button className="gap-2" asChild>
+                    <a href="mailto:yanis.amine.harrat@gmail.com">
+                      <Mail className="w-4 h-4" />
+                      yanis.amine.harrat@gmail.com
+                    </a>
+                  </Button>
+                  <Button variant="outline" className="gap-2" asChild>
+                    <a href="tel:+33603059829">
+                      <Phone className="w-4 h-4" />
+                      06.03.05.98.29
+                    </a>
+                  </Button>
+                </div>
+
+                {/* Bouton CV */}
+                <div className="mb-8">
+                  <Button
+                    variant="default"
+                    size="lg"
+                    className="gap-3 bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 shadow-lg hover:shadow-xl transform hover:scale-105 transition-all"
+                    asChild
                   >
-                    <div className="text-muted-foreground group-hover:text-primary transition-colors">
-                      {social.icon}
-                    </div>
-                  </a>
-                ))}
+                    <a
+                      href="/cv-yanis-harrat.pdf"
+                      download="CV-Yanis-Harrat.pdf"
+                    >
+                      <Download className="w-5 h-5" />
+                      Récupérer mon CV
+                    </a>
+                  </Button>
+                  <p className="text-xs text-muted-foreground mt-2">
+                    PDF • Mise à jour récente
+                  </p>
+                </div>
+
+                {/* CTA vers page contact */}
+                <div className="bg-background/50  rounded-xl p-6 border border-border/50">
+                  <h3 className="font-semibold mb-2">Ou en direct ?</h3>
+                  <p className="text-sm text-muted-foreground mb-4">
+                    J&apos;ai déjà une page contact propre avec un formulaire
+                    qui marche nickel !
+                  </p>
+                  <Button variant="outline" className="gap-2 group" asChild>
+                    <Link href="/contact">
+                      Voir la page contact
+                      <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                    </Link>
+                  </Button>
+                </div>
+              </div>
+              {/* Réseaux sociaux */}
+              <div>
+                <h3 className="text-xl font-semibold mb-6">Mes réseaux</h3>
+                <div className="flex justify-center gap-4">
+                  {socialLinks.map((social) => (
+                    <a
+                      key={social.id}
+                      href={social.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group p-4 bg-muted/30 hover:bg-muted/50 rounded-xl border border-border/50 hover:border-primary/30 transition-all transform hover:scale-105"
+                      title={social.label}
+                    >
+                      <div className="text-muted-foreground group-hover:text-primary transition-colors">
+                        {social.icon}
+                      </div>
+                    </a>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </main>
-    </div>
+        </main>
+      </div>
+    </>
   );
 };
 
