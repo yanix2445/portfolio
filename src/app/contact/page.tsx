@@ -237,7 +237,7 @@ export default function ContactPage() {
     <>
       <div className="min-h-screen bg-background  py-12 px-4 pt-5 ">
         <div className="max-w-2xl mx-auto relative z-10 ">
-   
+          
           {/* Bouton pour revenir à la page d'accueil */}
           <div className="mb-4 relative z-10 ">
             <Button variant="outline" size="sm" asChild className="relative z-10 ">

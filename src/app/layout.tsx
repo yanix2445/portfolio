@@ -5,6 +5,7 @@ import { siteMetadata } from "@/lib/metadata";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Toaster } from "@/components/ui/sonner";
+import FloatingDots from "@/components/floatingDots";
 
 // Déclaration des métadonnées pour Next.js
 export const metadata = siteMetadata;
@@ -40,6 +41,9 @@ export default function RootLayout({
         />
       </head>
       <body>
+
+      <FloatingDots />
+      
         {/* Vercel Analytics */}
         <Analytics />
 

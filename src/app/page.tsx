@@ -234,8 +234,8 @@ const ComingSoonPage = () => {
 
         {/* Main content */}
 
-        <main className="pt-32 pb-16 px-6">
-          <div className="container mx-auto max-w-4xl">
+        <main className="pt-32 pb-16 px-6 ">
+          <div className="container mx-auto max-w-4xl backdrop-blur-sm">
             {/* Hero Section */}
             <div
               className={`text-center backdrop-blur-sm mb-16 transition-all duration-1000 ${
