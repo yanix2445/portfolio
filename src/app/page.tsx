@@ -1,528 +1,571 @@
+// app/contact/page.tsx
 "use client";
-import React, { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
-import {
-  Github,
-  Linkedin,
-  Instagram,
-  Twitter,
-  Mail,
-  Phone,
-  ArrowRight,
-  Clock,
-  Heart,
-  Code2,
-  MapPin,
-  Zap,
-  Download,
-  Atom,
-  Database,
-  Pyramid,
-  CheckSquare,
-  Figma,
-  Monitor,
-  Terminal,
-  Workflow,
-  Key,
-  Cable,
-  Network,
-  Gauge,
-  Braces,
-} from "lucide-react";
-import {
-  RiTailwindCssFill,
-  RiNextjsLine,
-  RiSupabaseFill,
-} from "react-icons/ri";
-import {
-  SiN8N,
-  SiAirtable,
-  SiTypescript,
-  SiJavascript,
-  SiPython,
-  SiNestjs,
-} from "react-icons/si";
-
-// Import des composants UI existants
-import { Badge } from "@/components/ui/badge";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { Avatar, AvatarImage } from "@/components/ui/avatar";
-import FloatingDots from "@/components/floatingDots";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue, } from "@/components/ui/select";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle, } from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
+import {Loader2, CheckCircle, XCircle, Briefcase, GraduationCap, MessageSquare, Users, FileText,
+        Upload, Github, Linkedin, Twitter, Instagram, Mail, Phone, MapPin, ArrowLeft,} from "lucide-react";
+import { useForm, Controller } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { toast } from "sonner";
+// Import du composant FloatingDots
+import FloatingDots from "@/components/FloatingDots";
 
-// Tableau des technologies avec icônes
-const technologies = [
-  { name: "Next.js", icon: <RiNextjsLine className="w-4 h-4" /> },
-  { name: "React", icon: <Atom className="w-4 h-4" /> },
-  { name: "TailwindCSS", icon: <RiTailwindCssFill className="w-4 h-4" /> },
-  { name: "shadcn/ui" },
-  { name: "TypeScript", icon: <SiTypescript className="w-4 h-4" /> },
-  { name: "JavaScript", icon: <SiJavascript className="w-4 h-4" /> },
-  { name: "Python", icon: <SiPython className="w-4 h-4" /> },
-  { name: "PostgreSQL", icon: <Database className="w-4 h-4" /> },
-  { name: "Prisma", icon: <Pyramid className="w-4 h-4" /> },
-  { name: "n8n", icon: <SiN8N className="w-4 h-4" /> },
-  { name: "Airtable", icon: <SiAirtable className="w-4 h-4" /> },
-  { name: "REST API" },
-  { name: "Supabase", icon: <RiSupabaseFill className="w-4 h-4" /> },
-  { name: "Zod", icon: <CheckSquare className="w-4 h-4" /> },
-  { name: "CI/CD", icon: <Workflow className="w-4 h-4" /> },
-  { name: "Auth (betterAuth)", icon: <Key className="w-4 h-4" /> },
-  { name: "Figma", icon: <Figma className="w-4 h-4" /> },
-  { name: "VS Code", icon: <Monitor className="w-4 h-4" /> },
-  { name: "Bash", icon: <Terminal className="w-4 h-4" /> },
-  { name: "FTTH", icon: <Cable className="w-4 h-4" /> },
-  { name: "Diagnostic réseau", icon: <Network className="w-4 h-4" /> },
-];
+// Définit le schéma de validation du formulaire de contact
+const contactFormSchema = z.object({
+  firstName: z.string().min(2, "Le prénom doit contenir au moins 2 caractères.").max(50, "Le prénom ne doit pas dépasser 50 caractères."),
+  lastName: z.string().min(2, "Le nom doit contenir au moins 2 caractères.").max(50, "Le nom ne doit pas dépasser 50 caractères."),
+  email: z.string().email("Veuillez entrer une adresse e-mail valide."),
+  reason: z.string().min(1, "Veuillez sélectionner un type de contact."),
+  subject: z.string().min(5, "L'objet doit contenir au moins 5 caractères.").max(100, "L'objet ne doit pas dépasser 100 caractères."),
+  message: z.string().min(10, "Le message doit contenir au moins 10 caractères.").max(1000, "Le message ne doit pas dépasser 1000 caractères."),
+});
 
-// Tableau des technologies en cours d'apprentissage
-const currentLearning = [
-  { name: "NestJS", icon: <SiNestjs className="w-4 h-4" /> },
-  { name: "scripting avancé", icon: <Braces className="w-4 h-4" /> },
-  { name: "monitoring", icon: <Gauge className="w-4 h-4" /> },
-];
+type ContactFormData = z.infer<typeof contactFormSchema>;
 
-// Barre de progression
-const ProgressBar = () => {
-  const [progress, setProgress] = useState(0);
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-
-    // --- 1. Définition des dates du projet ---
-    const startDate = new Date("2025-07-15T00:00:00");
-    const endDate = new Date("2025-09-15T23:59:59"); // Fin de journée pour inclure le 15
-    const currentDate = new Date();
-    const maxValue = 100; // Le plafond défini (100%)
-
-    // --- 2. Calcul de la progression ---
-    const totalDuration = endDate.getTime() - startDate.getTime();
-    const elapsedDuration = currentDate.getTime() - startDate.getTime();
-
-    // Calcul du pourcentage de temps écoulé (entre 0 et 1)
-    let realProgressRatio = elapsedDuration / totalDuration;
-
-    // On s'assure que le ratio reste entre 0 et 1
-    if (realProgressRatio < 0) realProgressRatio = 0;
-    if (realProgressRatio > 1) realProgressRatio = 1;
-
-    // On mappe ce ratio à la valeur maximale de la barre (100)
-    const targetValue = realProgressRatio * maxValue;
-
-    // --- 3. Animation fluide vers la valeur cible ---
-    const timer = setInterval(() => {
-      setProgress((prev) => {
-        // Si on est très proche de la cible, on s'arrête
-        if (Math.abs(prev - targetValue) < 0.5) {
-          clearInterval(timer);
-          return targetValue;
-        }
-        // On se rapproche doucement de la cible
-        return prev + (targetValue - prev) * 0.06;
-      });
-    }, 50); // Met à jour l'animation toutes les 50ms
-
-    return () => clearInterval(timer);
-  }, []);
-
-  // On arrondit la valeur pour l'affichage du texte (ex: 34%)
-  const displayProgress = mounted ? Math.round(progress) : 0;
-
-  return (
-    <div className="relative">
-      <div className="flex justify-between items-center mb-3">
-        <span className="text-sm font-medium">Portfolio en construction</span>
-        <span className="text-sm text-primary font-bold">
-          {displayProgress}%
-        </span>
-      </div>
-      <div className="h-2 bg-muted/30 rounded-full overflow-hidden">
-        <div
-          className="h-full bg-gradient-to-r from-primary via-primary/80 to-primary/60 rounded-full transition-all duration-300 relative"
-          style={{ width: `${mounted ? progress : 0}%` }}
-        >
-          {mounted && (
-            <div className="absolute inset-0 bg-white/20 animate-pulse rounded-full" />
-          )}
-        </div>
-      </div>
-    </div>
-  );
+type ContactInfo = {
+  label: string;
+  value: string;
+  icon: React.ElementType;
+  href?: string;
 };
 
-const ComingSoonPage = () => {
-  const [isVisible, setIsVisible] = useState(false);
+// Liste des informations de contact à afficher
+const contactInfos: ContactInfo[] = [
+  {
+    label: "GitHub",
+    value: "yanix2445",
+    href: "https://github.com/yanix2445",
+    icon: Github,
+  },
+  {
+    label: "LinkedIn",
+    value: "yanis-harrat",
+    href: "https://www.linkedin.com/in/yanis-harrat",
+    icon: Linkedin,
+  },
+  {
+    label: "Twitter",
+    value: "@yanix2445",
+    href: "https://x.com/yanix_213",
+    icon: Twitter,
+  },
+  {
+    label: "Instagram",
+    value: "@yanix2445",
+    href: "https://instagram.com/yanix2445",
+    icon: Instagram,
+  },
+  {
+    label: "Localisation",
+    value: "Paris, Île-de-France",
+    icon: MapPin,
+  },
+  {
+    label: "Téléphone",
+    value: "06 03 05 98 29",
+    href: "tel:0603059829",
+    icon: Phone,
+  },
+  {
+    label: "Email",
+    value: "yanis.amine.harrat@gmail.com",
+    href: "mailto:yanis.amine.harrat@gmail.com",
+    icon: Mail,
+  },
+];
 
-  useEffect(() => {
-    setIsVisible(true);
-  }, []);
 
-  const socialLinks = [
-    {
-      id: "social-linkedin",
-      icon: <Linkedin className="w-5 h-5" />,
-      href: "https://www.linkedin.com/in/yanis-harrat",
-      label: "LinkedIn",
-    },
-    {
-      id: "social-github",
-      icon: <Github className="w-5 h-5" />,
-      href: "https://github.com/yanix2445",
-      label: "GitHub",
-    },
-    {
-      id: "social-instagram",
-      icon: <Instagram className="w-5 h-5" />,
-      href: "https://instagram.com/yanix2445",
-      label: "Instagram",
-    },
-    {
-      id: "social-twitter",
-      icon: <Twitter className="w-5 h-5" />,
-      href: "https://twitter.com/yanix2445",
-      label: "Twitter",
-    },
-  ];
+type ContactReason = {
+  value: string;
+  label: string;
+  description: string;
+  icon: React.ElementType;
+  variant: "default" | "secondary" | "outline" | "destructive";
+};
 
-  // Mes hobbies reflètent mes passions pour la culture japonaise, les animés/mangas, le cinéma, les séries et les films d'animation.
-  const hobbies = [
-    { id: "hobby-volleyball", label: "🏐 Volleyball 8 ans" },
-    { id: "hobby-gaming", label: "🎮 Gaming" },
-    { id: "hobby-anime", label: "🍥 Animés, mangas & culture japonaise" },
-    {
-      id: "hobby-cinema",
-      label: "🎬 Cinéphile, sériephile & films d'animation",
+// Liste des raisons de contact pour le champ Select
+const contactReasons: ContactReason[] = [
+  {
+    value: "alternance",
+    label: "Proposer une alternance",
+    description: "Vous souhaitez me proposer une alternance ou en discuter.",
+    icon: GraduationCap,
+    variant: "default",
+  },
+  {
+    value: "cdi",
+    label: "Proposer un CDI",
+    description: "Vous avez une opportunité de CDI à me présenter.",
+    icon: Briefcase,
+    variant: "secondary",
+  },
+  {
+    value: "stage",
+    label: "Proposer un stage",
+    description: "Vous souhaitez me proposer un stage ou en savoir plus.",
+    icon: FileText,
+    variant: "outline",
+  },
+  {
+    value: "freelance",
+    label: "Mission freelance",
+    description: "Vous cherchez un développeur pour une mission ponctuelle.",
+    icon: Users,
+    variant: "secondary",
+  },
+  {
+    value: "rdv",
+    label: "Organiser un entretien",
+    description: "Vous souhaitez planifier un échange ou un entretien.",
+    icon: MessageSquare,
+    variant: "default",
+  },
+  {
+    value: "autre",
+    label: "Autre demande professionnelle",
+    description:
+      "Pour toute autre demande liée à mon profil ou à une collaboration.",
+    icon: Mail,
+    variant: "outline",
+  },
+];
+
+export default function ContactPage() {
+  const [file, setFile] = useState<File | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
+  const {
+    register,
+    handleSubmit,
+    control,
+    reset,
+    setError,
+    formState: { errors },
+  } = useForm<ContactFormData>({
+    resolver: zodResolver(contactFormSchema),
+    // Initialise le formulaire avec des valeurs par défaut pour un état contrôlé
+    defaultValues: {
+      firstName: "",
+      lastName: "",
+      email: "",
+      reason: "",
+      subject: "",
+      message: "",
     },
-    { id: "hobby-travel", label: "✈️ Voyages" },
-    { id: "hobby-hardware", label: "🔧 Hardware" },
-  ];
+  });
+
+  // Gère la sélection d'un fichier
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      setFile(e.target.files[0]);
+    }
+  };
+
+  // Fonction appelée à la soumission du formulaire
+  const onSubmit = async (data: ContactFormData) => {
+    setIsLoading(true);
+
+    const formDataToSend = new FormData();
+    formDataToSend.append("firstName", data.firstName);
+    formDataToSend.append("lastName", data.lastName);
+    formDataToSend.append("email", data.email);
+    formDataToSend.append("reason", data.reason);
+    formDataToSend.append("subject", data.subject);
+    formDataToSend.append("message", data.message);
+    if (file) {
+      formDataToSend.append("file", file);
+    }
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        body: formDataToSend,
+      });
+
+      if (response.ok) {
+        toast.success("Message envoyé !", {
+          description: "Merci pour votre message, je vous répondrai rapidement.",
+          icon: <CheckCircle className="h-4 w-4 text-green-500" />,
+          className: "bg-green-50 text-green-800 border-green-200"
+        });
+        reset(); // Réinitialise les champs du formulaire
+        setFile(null);
+        // Redirige immédiatement après le toast de succès
+        router.push('/');
+      } else {
+        const errorData = await response.json();
+        if (response.status === 400 && errorData.errors) {
+          Object.keys(errorData.errors).forEach((key) => {
+            setError(key as keyof ContactFormData, {
+              type: "server",
+              message: errorData.errors[key][0],
+            });
+          });
+          toast.error("Erreur de validation", {
+            description: "Veuillez vérifier les champs du formulaire.",
+            icon: <XCircle className="h-4 w-4 text-red-500" />,
+            className: "bg-red-50 text-red-800 border-red-200"
+          });
+        } else {
+          toast.error("Échec de l'envoi", {
+            description: "Une erreur est survenue. Veuillez réessayer plus tard.",
+            icon: <XCircle className="h-4 w-4 text-red-500" />,
+            className: "bg-red-50 text-red-800 border-red-200"
+          });
+        }
+      }
+    } catch (error) {
+      console.error("Erreur d'envoi du formulaire:", error);
+      toast.error("Échec de l'envoi", {
+        description: "Une erreur de connexion est survenue. Veuillez vérifier votre connexion internet.",
+        icon: <XCircle className="h-4 w-4 text-red-500" />,
+        className: "bg-red-50 text-red-800 border-red-200"
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <>
-      <FloatingDots />
-      <div className="min-h-screen bg-gradient-to-br from-background/95 via-background/98 to-muted/10 relative ">
-        {/* Header flottant */}
-        <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-xl border-b border-border/50">
-          <div className="container mx-auto px-6 py-4">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <Avatar className="w-[64px] h-[64px]">
-                  <AvatarImage
-                    src="/yanis-logo.png"
-                    alt="Logo du site"
-                    className="w-full h-full rounded-full object-cover"
-                  />
-                </Avatar>
-
-                <div>
-                  <div className="font-semibold text-sm">Yanis Harrat</div>
-                  <div className="text-xs text-muted-foreground">
-                    Développeur • Étudiant BTS SIO
-                  </div>
-                </div>
-              </div>
-
-              <Badge variant="outline" className="gap-2">
-                <div className="w-2 h-2 bg-orange-500 rounded-full animate-pulse" />
-                En construction
-              </Badge>
-            </div>
-          </div>
-        </header>
-
-        {/* Main content */}
-        <main className="pt-32 pb-16 px-6 relative z-10 ">
+      <div className="min-h-screen bg-background py-12 px-4 pt-24 ">
+        {/* Assurez-vous que ce composant est ici, au-dessus du contenu de la carte */}
         <FloatingDots />
-          <div className="container mx-auto max-w-4xl ">
-            {/* Hero Section */}
-            <div
-              className={`text-center mb-16 transition-all duration-1000 backdrop-blur-sm ${
-                isVisible
-                  ? "opacity-100 translate-y-0"
-                  : "opacity-0 translate-y-8"
-              }`}
-            >
-              <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium mb-6">
-                <Clock className="w-4 h-4" />
-                Portfolio temporairement indisponible
-              </div>
-
-              <h1 className="text-5xl md:text-7xl font-bold mb-6">
-                Salut ! <br />
-                <span className="bg-gradient-to-r from-primary via-primary/80 to-primary/60 bg-clip-text text-transparent">
-                  Moi c&apos;est Yanis
-                </span>
-              </h1>
-
-              <p className="xl:text-2xl text-muted-foreground mb-8 max-w-2xl mx-auto leading-relaxed">
-                Je refais entièrement mon portfolio avec du Next.js et des
-                technos modernes. En attendant, laisse-moi me présenter
-                rapidement !
-              </p>
-
-              <div className="max-w-md mx-auto mb-8">
-                <ProgressBar />
-              </div>
-            </div>
-            <section
-              className={`mb-24 transition-all duration-1000 delay-300 backdrop-blur-sm ${
-                isVisible
-                  ? "opacity-100 translate-y-0"
-                  : "opacity-0 translate-y-8"
-              }`}
-            >
-              {/* En-tête */}
-              <div className="text-center mb-16">
-                <div className="flex flex-col justify-center items-center gap-3 mb-5">
-                  <div className="w-10 h-10 bg-primary/20 rounded-xl flex items-center justify-center">
-                    <Heart className="w-5 h-5 text-primary" />
-                  </div>
-                  <h2 className="text-3xl font-bold tracking-tight">
-                    Mieux me connaître
-                  </h2>
-                </div>
-
-                <p className="max-w-2xl mx-auto text-lg text-muted-foreground">
-                  Je suis Yanis — Technicien IT & Développeur informatique ,
-                  orienté solutions concrètes. Sérieux, curieux et carré, je
-                  cherche à progresser vite tout en restant utile. J’aime créer
-                  des systèmes stables, bien pensés et sans friction.
-                </p>
-              </div>
-
-              {/* Présentation perso */}
-              <div className="max-w-4xl mx-auto grid md:grid-cols-2 gap-10 mb-20 text-1xl">
-                {/* Profil perso */}
-                <div className="space-y-5 ">
-                  <h3 className="text-xl font-semibold flex items-center gap-2">
-                    <Zap className="w-5 h-5 text-primary" />
-                    Mon parcours condensé
-                  </h3>
-                  <p className="text-muted-foreground ">
-                    Issu d’un Bac Pro SN et un BTS SIO SISR , j’ai touché à la
-                    fibre, au support, à la config réseau, au dev,
-                    l’automatisation et a la restoration . Mon expérience :
-                    terrain + code + logique. J’ai bossé sur un CRM no-code
-                    hybride (n8n, JS, Python, Airtable) livré complet avec doc
-                    et formation.
-                  </p>
-
-                  <p className="text-muted-foreground ">
-                    8 ans de volley (3 en N2), ça forge : esprit d’équipe,
-                    pression, discipline, timing. J’applique ces réflexes dans
-                    mes projets tech.
-                  </p>
-
-                  <p className="text-muted-foreground">
-                    Passionné de découvertes culturelles&nbsp;— Algérie, Grèce,
-                    et bientôt direction le Japon&nbsp;! J’adore explorer de
-                    nouveaux horizons, comprendre d’autres modes de vie et
-                    m’inspirer de chaque rencontre.
-                  </p>
-
-                  <div className="flex flex-wrap gap-2 pt-2">
-                    {hobbies.map((hobby) => (
-                      <Badge
-                        key={hobby.id}
-                        variant="secondary"
-                        className="text-xs px-3 py-1"
-                      >
-                        {hobby.label}
-                      </Badge>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Carte alternance */}
-                <div className="bg-gradient-to-br from-primary/5 to-primary/10 rounded-2xl p-6 border border-primary/20 shadow-sm">
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="w-8 h-8 bg-primary/20 rounded-lg flex items-center justify-center">
-                      <MapPin className="w-4 h-4 text-primary" />
-                    </div>
-                    <h3 className="text-xl font-bold">
-                      Mode Alternance activée
-                    </h3>
-                  </div>
-
-                  <div className="space-y-3 text-muted-foreground ">
-                    <div className="flex flex-col md:flex-row md:items-center gap-1">
-                      <div className="flex items-center gap-1">
-                        <MapPin className="w-4 h-4 text-primary" />
-                        <span className="font-medium">Localisation&nbsp;:</span>
-                      </div>
-                      <span className="ml-1 md:ml-0">Paris, Île-de-France</span>
-                    </div>
-                    <p>
-                      Je démarre ma
-                      <strong>
-                        1<sup>ère</sup> année de BTS SIO SISR
-                      </strong>
-                      en septembre 2025 ({" "}
-                      <strong>2j école / 3j entreprise</strong> ), et je
-                      recherche activement une alternance jusqu’en août 2027.
-                    </p>
-                    <p>
-                      Curieux, impliqué et déjà expérimenté sur le terrain (
-                      support, réseau, dev, automatisation ), je progresse vite
-                      et j’aime aller au fond des sujets.
-                      <br />
-                      Sérieux, fiable, à l’écoute, je m’investis à fond pour
-                      apporter des solutions concrètes et faire avancer
-                      l’équipe.
-                    </p>
-                    <p>
-                      Mon objectif&nbsp;: renforcer mes compétences en
-                      <strong>backend</strong>, <strong>automatisation</strong>,
-                      <strong>infra réseau</strong> et <strong>support</strong>
-                      tout en contribuant activement à vos projets.
-                    </p>
-                    <Badge variant="default" className="text-xs">
-                      🎯 Disponible dès septembre 2025
-                    </Badge>
-                  </div>
-                </div>
-              </div>
-
-              {/* Stack technique */}
-              <section className="bg-muted/30 rounded-2xl p-4 sm:p-6 border border-border/50 max-w-full sm:max-w-5xl mx-auto">
-                <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
-                  <div className="w-7 h-7 sm:w-8 sm:h-8 bg-primary/20 rounded-lg flex items-center justify-center">
-                    <Code2 className="w-4 h-4 text-primary" />
-                  </div>
-                  <h3 className="text-lg sm:text-xl font-bold">
-                    Stack & outils
-                  </h3>
-                </div>
-
-                <p className="text-xs sm:text-sm text-muted-foreground mb-3 sm:mb-4">
-                  J’utilise ces technos pour automatiser, développer et
-                  structurer mes projets :
-                </p>
-
-                <div className="flex flex-wrap gap-1.5 sm:gap-2 mb-3 sm:mb-4">
-                  {technologies.map((tech, i) => (
-                    <Badge
-                      key={tech.name + i}
-                      variant="outline"
-                      className="flex items-center gap-1 py-1.5 sm:gap-1.5 sm:py-2 text-xs"
-                    >
-                      {tech.icon && tech.icon}
-                      {tech.name}
-                    </Badge>
-                  ))}
-                </div>
-
-                <div className="flex flex-col sm:flex-row sm:items-center gap-1.5 sm:gap-2 text-xs text-muted-foreground italic">
-                  <span className="shrink-0">En cours :</span>
-                  <ul className="flex flex-wrap gap-1.5 sm:gap-2 font-bold not-italic">
-                    {currentLearning.map((tech, i) => (
-                      <li
-                        key={i}
-                        className="flex items-center gap-1 bg-muted/60 rounded px-1.5 py-0.5 sm:px-2 shadow-sm border border-border/30"
-                      >
-                        {tech.icon}
-                        <span>{tech.name}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </section>
-            </section>
-
-            {/* Contact Section */}
-            <div
-              className={`text-center space-y-8 transition-all duration-1000 delay-500 backdrop-blur-sm ${
-                isVisible
-                  ? "opacity-100 translate-y-0"
-                  : "opacity-0 translate-y-8"
-              }`}
-            >
-              {/* Contact principal */}
-              <div className="bg-gradient-to-r from-primary/5 via-primary/10 to-primary/5 backdrop-blur-sm rounded-2xl p-8 border border-primary/20">
-                <h2 className="text-3xl font-bold mb-4">On discute ?</h2>
-                <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
-                  Portfolio en travaux, mais moi je suis toujours dispo ! Que ce
-                  soit pour parler tech, alternance, projets ou juste prendre
-                  des nouvelles.
-                </p>
-
-                <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8">
-                  <Button className="gap-2" asChild>
-                    <a href="mailto:yanis.amine.harrat@gmail.com">
-                      <Mail className="w-4 h-4" />
-                      yanis.amine.harrat@gmail.com
-                    </a>
-                  </Button>
-                  <Button variant="outline" className="gap-2" asChild>
-                    <a href="tel:+33603059829">
-                      <Phone className="w-4 h-4" />
-                      06.03.05.98.29
-                    </a>
-                  </Button>
-                </div>
-
-                {/* Bouton CV */}
-                <div className="mb-8">
-                  <Button
-                    variant="default"
-                    size="lg"
-                    className="gap-3 bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 shadow-lg hover:shadow-xl transform hover:scale-105 transition-all"
-                    asChild
-                  >
-                    <a
-                      href="/cv-yanis-harrat.pdf"
-                      download="CV-Yanis-Harrat.pdf"
-                    >
-                      <Download className="w-5 h-5" />
-                      Récupérer mon CV
-                    </a>
-                  </Button>
-                  <p className="text-xs text-muted-foreground mt-2">
-                    PDF • Mise à jour récente
-                  </p>
-                </div>
-
-                {/* CTA vers page contact */}
-                <div className="bg-background/50  rounded-xl p-6 border border-border/50">
-                  <h3 className="font-semibold mb-2">Ou en direct ?</h3>
-                  <p className="text-sm text-muted-foreground mb-4">
-                    J&apos;ai déjà une page contact propre avec un formulaire
-                    qui marche nickel !
-                  </p>
-                  <Button variant="outline" className="gap-2 group" asChild>
-                    <Link href="/contact">
-                      Voir la page contact
-                      <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                    </Link>
-                  </Button>
-                </div>
-              </div>
-              {/* Réseaux sociaux */}
-              <div>
-                <h3 className="text-xl font-semibold mb-6">Mes réseaux</h3>
-                <div className="flex justify-center gap-4">
-                  {socialLinks.map((social) => (
-                    <a
-                      key={social.id}
-                      href={social.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="group p-4 bg-muted/30 hover:bg-muted/50 rounded-xl border border-border/50 hover:border-primary/30 transition-all transform hover:scale-105"
-                      title={social.label}
-                    >
-                      <div className="text-muted-foreground group-hover:text-primary transition-colors">
-                        {social.icon}
-                      </div>
-                    </a>
-                  ))}
-                </div>
-              </div>
-            </div>
+        {/* Ce conteneur doit avoir `relative z-10` pour être au-dessus des étoiles */}
+        <div className="max-w-2xl mx-auto relative z-10">
+          {/* Bouton pour revenir à la page d'accueil */}
+          <div className="mb-4">
+            <Button variant="outline" size="sm" asChild>
+              <Link href="/">
+                <ArrowLeft className="h-4 w-4 mr-2" />
+                Retour à l&apos;accueil
+              </Link>
+            </Button>
           </div>
-        </main>
+          <Card>
+            <CardHeader className="text-center">
+              <CardTitle className="text-2xl">Contactez-moi</CardTitle>
+              <CardDescription>
+                Étudiant BTS SIO SISR • À la recherche d&apos;alternance/CDI
+              </CardDescription>
+              {/* Section des informations de contact avec un design responsive */}
+              <div className="mt-4 flex flex-col gap-2 text-sm text-muted-foreground items-center w-full ">
+                {/* Ligne 1 : GitHub + LinkedIn */}
+                <div className="flex flex-row justify-around items-center bg-muted/60 rounded-lg py-2 px-3 w-full mx-auto gap-3 max-w-md">
+                  {(() => {
+                    const github = contactInfos.find((c) => c.label === "GitHub");
+                    const linkedin = contactInfos.find((c) => c.label === "LinkedIn");
+                    return (
+                      <>
+                        {github && github.href && (
+                          <Link
+                            href={github.href}
+                            target="_blank"
+                            className="flex items-center gap-2 hover:text-foreground transition-colors min-w-0"
+                          >
+                            {github.icon && <github.icon className="w-5 h-5 sm:w-4 sm:h-4" />}
+                            <span className="truncate">{github.value}</span>
+                          </Link>
+                        )}
+                        {linkedin && linkedin.href && (
+                          <Link
+                            href={linkedin.href}
+                            target="_blank"
+                            className="flex items-center gap-2 hover:text-foreground transition-colors min-w-0"
+                          >
+                            {linkedin.icon && <linkedin.icon className="w-5 h-5 sm:w-4 sm:h-4" />}
+                            <span className="truncate">{linkedin.value}</span>
+                          </Link>
+                        )}
+                      </>
+                    );
+                  })()}
+                </div>
+                {/* Ligne 2 : Instagram + Twitter (X) */}
+                <div className="flex flex-row justify-around items-center bg-muted/60 rounded-lg py-2 px-3 w-full mx-auto gap-3 max-w-md">
+                  {(() => {
+                    const instagram = contactInfos.find((c) => c.label === "Instagram");
+                    const twitter = contactInfos.find((c) => c.label === "Twitter");
+                    return (
+                      <>
+                        {instagram && instagram.href && (
+                          <Link
+                            href={instagram.href}
+                            target="_blank"
+                            className="flex items-center gap-2 hover:text-foreground transition-colors min-w-0"
+                          >
+                            {instagram.icon && <instagram.icon className="w-5 h-5 sm:w-4 sm:h-4" />}
+                            <span className="truncate">{instagram.value}</span>
+                          </Link>
+                        )}
+                        {twitter && twitter.href && (
+                          <Link
+                            href={twitter.href}
+                            target="_blank"
+                            className="flex items-center gap-2 hover:text-foreground transition-colors min-w-0"
+                          >
+                            {twitter.icon && <twitter.icon className="w-5 h-5 sm:w-4 sm:h-4" />}
+                            <span className="truncate">{twitter.value}</span>
+                          </Link>
+                        )}
+                      </>
+                    );
+                  })()}
+                </div>
+                {/* Ligne 3 : Localisation + Téléphone */}
+                <div className="flex flex-row justify-around items-center bg-muted/60 rounded-lg py-2 px-3 w-full mx-auto gap-3 max-w-md">
+                  {(() => {
+                    const localisation = contactInfos.find((c) => c.label === "Localisation");
+                    const tel = contactInfos.find((c) => c.label === "Téléphone");
+                    return (
+                      <>
+                        {localisation && (
+                          <div className="flex items-center gap-2 min-w-0">
+                            {localisation.icon && (
+                              <span className="flex items-center justify-center ">
+                                <localisation.icon className="w-5 h-5 sm:w-4 sm:h-4" />
+                              </span>
+                            )}
+                            <span>{localisation.value}</span>
+                          </div>
+                        )}
+                        {tel && (
+                          <a
+                            href={tel.href || `tel:${tel.value}`}
+                            className="flex items-center gap-2 hover:text-foreground transition-colors min-w-0"
+                          >
+                            {tel.icon && (
+                              <span className="flex items-center justify-center ">
+                                <tel.icon className="w-5 h-5 sm:w-4 sm:h-4" />
+                              </span>
+                            )}
+                            <span>{tel.value}</span>
+                          </a>
+                        )}
+                      </>
+                    );
+                  })()}
+                </div>
+                {/* Ligne 4 : Email */}
+                <div className="flex flex-row justify-center items-center bg-muted/60 rounded-lg py-2 px-3 max-w-xs w-full mx-auto">
+                  {(() => {
+                    const email = contactInfos.find((c) => c.label === "Email");
+                    return (
+                      email && (
+                        <a
+                          href={`mailto:${email.value}`}
+                          className="flex items-center gap-2 hover:text-foreground transition-colors min-w-0"
+                        >
+                          {email.icon && (
+                            <span className="flex items-center justify-center">
+                              <email.icon className="w-5 h-5 sm:w-4 sm:h-4" />
+                            </span>
+                          )}
+                          <span className="truncate">{email.value}</span>
+                        </a>
+                      )
+                    );
+                  })()}
+                </div>
+              </div>
+              <Separator className="mt-4" />
+            </CardHeader>
+
+            <CardContent className="space-y-6">
+              <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+                {/* Champs pour le nom et le prénom */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="firstName" className="mb-2 block ">
+                      Prénom *
+                    </Label>
+                    <Input
+                      id="firstName"
+                      placeholder="Votre prénom"
+                      {...register("firstName")}
+                    />
+                    {errors.firstName && (
+                      <p className="text-red-500 text-sm mt-1">
+                        {errors.firstName.message}
+                      </p>
+                    )}
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="lastName" className="mb-2 block">
+                      Nom *
+                    </Label>
+                    <Input
+                      id="lastName"
+                      placeholder="Votre nom"
+                      {...register("lastName")}
+                    />
+                    {errors.lastName && (
+                      <p className="text-red-500 text-sm mt-1">
+                        {errors.lastName.message}
+                      </p>
+                    )}
+                  </div>
+                </div>
+
+                {/* Champ pour l'adresse e-mail */}
+                <div className="space-y-2">
+                  <Label htmlFor="email" className="mb-2 block">
+                    Email *
+                  </Label>
+                  <Input
+                    type="email"
+                    id="email"
+                    placeholder="votre@email.com"
+                    {...register("email")}
+                  />
+                  {errors.email && (
+                    <p className="text-red-500 text-sm mt-1">
+                      {errors.email.message}
+                    </p>
+                  )}
+                </div>
+
+                {/* Champ de sélection pour le type de contact */}
+                <div className="space-y-3">
+                  <Label className="mb-2 block">Type de contact *</Label>
+                  <Controller
+                    name="reason"
+                    control={control}
+                    render={({ field }) => (
+                      <Select
+                        onValueChange={field.onChange}
+                        value={field.value}
+                      >
+                        <SelectTrigger className="w-full max-w-full whitespace-normal break-words min-h-[4rem]">
+                          <SelectValue placeholder="Sélectionnez la demande" />
+                        </SelectTrigger>
+                        <SelectContent
+                          className="w-[--radix-select-trigger-width] max-w-[95vw] max-h-[50vh] overflow-y-auto z-50"
+                          side="bottom"
+                          align="start"
+                        >
+                          {contactReasons.map((reason) => {
+                            const Icon = reason.icon;
+                            return (
+                              <SelectItem key={reason.value} value={reason.value}>
+                                <div className="flex flex-col text-left">
+                                  <div className="flex items-center gap-2">
+                                    <Icon className="h-4 w-4 text-muted-foreground" />
+                                    <span className="font-medium">
+                                      {reason.label}
+                                    </span>
+                                  </div>
+                                  <span className="text-xs text-muted-foreground">
+                                    {reason.description}
+                                  </span>
+                                </div>
+                              </SelectItem>
+                            );
+                          })}
+                        </SelectContent>
+                      </Select>
+                    )}
+                  />
+                  {errors.reason && (
+                    <p className="text-red-500 text-sm mt-1">
+                      {errors.reason.message}
+                    </p>
+                  )}
+                </div>
+
+                {/* Champ pour l'objet du message */}
+                <div className="space-y-2">
+                  <Label htmlFor="subject" className="mb-2 block">
+                    Objet *
+                  </Label>
+                  <Input
+                    id="subject"
+                    placeholder="Sujet de votre message"
+                    {...register("subject")}
+                  />
+                  {errors.subject && (
+                    <p className="text-red-500 text-sm mt-1">
+                      {errors.subject.message}
+                    </p>
+                  )}
+                </div>
+
+                {/* Champ de texte pour le message */}
+                <div className="space-y-2">
+                  <Label htmlFor="message" className="mb-2 block">
+                    Message *
+                  </Label>
+                  <Textarea
+                    id="message"
+                    rows={6}
+                    placeholder="Décrivez votre demande en détail..."
+                    className="resize-none"
+                    {...register("message")}
+                  />
+                  {errors.message && (
+                    <p className="text-red-500 text-sm mt-1">
+                      {errors.message.message}
+                    </p>
+                  )}
+                </div>
+
+                {/* Champ pour le téléchargement d'un fichier (optionnel) */}
+                <div className="space-y-2">
+                  <Label htmlFor="file" className="mb-2 block">
+                    Fichier joint (optionnel)
+                  </Label>
+                  <Input
+                    type="file"
+                    id="file"
+                    onChange={handleFileChange}
+                    accept=".pdf,.doc,.docx,.txt,.jpg,.jpeg,.png,.gif"
+                  />
+                  {file && (
+                    <div className="flex items-center gap-2 mt-2">
+                      <Upload className="h-4 w-4 text-muted-foreground" />
+                      <span className="text-sm text-muted-foreground">
+                        {file.name}
+                      </span>
+                    </div>
+                  )}
+                </div>
+
+                <Separator />
+
+                {/* Bouton de soumission du formulaire */}
+                <Button
+                  type="submit"
+                  disabled={isLoading}
+                  className="w-full"
+                  size="lg"
+                >
+                  {isLoading ? (
+                    <>
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      Envoi en cours...
+                    </>
+                  ) : (
+                    <>
+                      <Mail className="mr-2 h-4 w-4" />
+                      Envoyer le message
+                    </>
+                  )}
+                </Button>
+              </form>
+            </CardContent>
+          </Card>
+        </div>
       </div>
     </>
   );
-};
-
-export default ComingSoonPage;
+}
