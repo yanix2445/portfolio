@@ -20,13 +20,13 @@ const FloatingDots: React.FC = () => {
     // La génération des étoiles est déplacée dans useEffect
     // pour garantir qu'elle ne se produit que sur le client.
     const generatedStars = Array.from({ length: 100 }, (_, i) => ({
-      id: i,
-      x: Math.random() * 100,
-      y: Math.random() * 100,
-      size: Math.random() * 3 + 2, // 2-5px
-      delay: Math.random() * 4,
-      duration: Math.random() * 3 + 4, // 4-7s
-      opacity: Math.random() * 0.6 + 0.6, // 0.6-1.2
+        id: i,
+        x: Math.random() * 100,
+        y: Math.random() * 100,
+        size: Math.random() * 4 + 1, // 2-5px
+        delay: Math.random() * 4,
+        duration: Math.random() * 3 + 6, // 4-7s
+        opacity: Math.random() * 0.6 + 0.8, // 0.6-1.2
     }))
     setStars(generatedStars)
   }, [])
