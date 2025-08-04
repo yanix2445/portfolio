@@ -16,7 +16,7 @@ import { useForm, Controller } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
-import FloatingDots from "@/components/floatingDots";
+//import FloatingDots from "@/components/floatingDots";
 // Import du composant FloatingDots
 
 // Définit le schéma de validation du formulaire de contact
@@ -239,7 +239,7 @@ export default function ContactPage() {
     <>
       <div className="min-h-screen bg-background py-12 px-4 pt-24 ">
         {/* Assurez-vous que ce composant est ici, au-dessus du contenu de la carte */}
-        <FloatingDots />
+        {/*<FloatingDots />*/}
         {/* Ce conteneur doit avoir `relative z-10` pour être au-dessus des étoiles */}
         <div className="max-w-2xl mx-auto relative z-10">
           {/* Bouton pour revenir à la page d'accueil */}
