@@ -200,9 +200,9 @@ const ComingSoonPage = () => {
 
   return (
     <>
-      <div className="min-h-screen bg-gradient-to-br from-background/95 via-background/98 to-muted/10 relative ">
-        {/* FloatingDots est un composant client, il doit être rendu ici */}
-        <FloatingDots />
+
+      <FloatingDots />
+      <div className="min-h-screen bg-gradient-to-br from-background/95 via-background/98 to-muted/10 ">
         {/* Header flottant */}
         <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-xl border-b border-border/50">
           <div className="container mx-auto px-6 py-4">
@@ -233,11 +233,12 @@ const ComingSoonPage = () => {
         </header>
 
         {/* Main content */}
-        <main className="pt-32 pb-16 px-6 relative z-10 ">
-          <div className="container mx-auto max-w-4xl ">
+
+        <main className="pt-32 pb-16 px-6">
+          <div className="container mx-auto max-w-4xl">
             {/* Hero Section */}
             <div
-              className={`text-center mb-16 transition-all duration-1000 backdrop-blur-sm ${
+              className={`text-center backdrop-blur-sm mb-16 transition-all duration-1000 ${
                 isVisible
                   ? "opacity-100 translate-y-0"
                   : "opacity-0 translate-y-8"
@@ -266,14 +267,16 @@ const ComingSoonPage = () => {
               </div>
             </div>
             <section
-              className={`mb-24 transition-all duration-1000 delay-300 backdrop-blur-sm ${
+
+              className={`mb-24 transition-all duration-1000 delay-300 ${
                 isVisible
                   ? "opacity-100 translate-y-0"
                   : "opacity-0 translate-y-8"
               }`}
             >
               {/* En-tête */}
-              <div className="text-center mb-16">
+
+              <div className="text-center mb-16 backdrop-blur-sm  ">
                 <div className="flex flex-col justify-center items-center gap-3 mb-5">
                   <div className="w-10 h-10 bg-primary/20 rounded-xl flex items-center justify-center">
                     <Heart className="w-5 h-5 text-primary" />
@@ -294,7 +297,8 @@ const ComingSoonPage = () => {
               {/* Présentation perso */}
               <div className="max-w-4xl mx-auto grid md:grid-cols-2 gap-10 mb-20 text-1xl">
                 {/* Profil perso */}
-                <div className="space-y-5 ">
+
+                <div className="space-y-5 backdrop-blur-sm ">
                   <h3 className="text-xl font-semibold flex items-center gap-2">
                     <Zap className="w-5 h-5 text-primary" />
                     Mon parcours condensé
@@ -335,7 +339,8 @@ const ComingSoonPage = () => {
                 </div>
 
                 {/* Carte alternance */}
-                <div className="bg-gradient-to-br from-primary/5 to-primary/10 rounded-2xl p-6 border border-primary/20 shadow-sm">
+
+                <div className="bg-gradient-to-br backdrop-blur-sm  from-primary/5 to-primary/10 rounded-2xl p-6 border border-primary/20 shadow-sm">
                   <div className="flex items-center gap-3 mb-4">
                     <div className="w-8 h-8 bg-primary/20 rounded-lg flex items-center justify-center">
                       <MapPin className="w-4 h-4 text-primary" />
@@ -385,7 +390,8 @@ const ComingSoonPage = () => {
               </div>
 
               {/* Stack technique */}
-              <section className="bg-muted/30 rounded-2xl p-4 sm:p-6 border border-border/50 max-w-full sm:max-w-5xl mx-auto">
+
+              <section className="bg-muted/30 rounded-2xl p-4 sm:p-6 border backdrop-blur-sm  border-border/50 max-w-full sm:max-w-5xl mx-auto">
                 <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
                   <div className="w-7 h-7 sm:w-8 sm:h-8 bg-primary/20 rounded-lg flex items-center justify-center">
                     <Code2 className="w-4 h-4 text-primary" />
@@ -432,14 +438,14 @@ const ComingSoonPage = () => {
 
             {/* Contact Section */}
             <div
-              className={`text-center space-y-8 transition-all duration-1000 delay-500 backdrop-blur-sm ${
+
+              className={`text-center space-y-8 transition-all duration-1000 delay-500 ${
                 isVisible
                   ? "opacity-100 translate-y-0"
                   : "opacity-0 translate-y-8"
               }`}
             >
-              {/* Contact principal */}
-              <div className="bg-gradient-to-r from-primary/5 via-primary/10 to-primary/5 backdrop-blur-sm rounded-2xl p-8 border border-primary/20">
+              <div className="bg-gradient-to-r from-primary/5 via-primary/10 to-primary/5 rounded-2xl p-8 border border-primary/20 backdrop-blur-sm " >
                 <h2 className="text-3xl font-bold mb-4">On discute ?</h2>
                 <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
                   Portfolio en travaux, mais moi je suis toujours dispo ! Que ce
