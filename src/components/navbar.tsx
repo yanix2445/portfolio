@@ -8,28 +8,17 @@ import { ModeToggle } from "./toogle-theme";
 import { Badge } from "./ui/badge";
 
 const navLinks = [
-  { name: "Accueil", href: "#", color: "blue" },
-  { name: "Parcours", href: "#", color: "purple" },
-  { name: "Portfolio", href: "#", color: "green" },
-  { name: "Ressources", href: "#", color: "teal" }, // facultatif mais cool
-  { name: "Blog", href: "#", color: "pink" },
-  { name: "Contact", href: "#", color: "red" },
+  { name: "Accueil", href: "#"},
+  { name: "Parcours", href: "#",},
+  { name: "Portfolio", href: "#",},
+  { name: "Ressources", href: "#",},
+  { name: "Blog", href: "#",},
+  { name: "Contact", href: "#",},
 ];
 
 const socialLinks = [
-  {
-    href: "https://www.linkedin.com/in/yanis-harrat",
-    icon: "/linkedin.svg",
-    alt: "LinkedIn",
-    size: 24,
-  },
-  {
-    href: "https://github.com/yanix2445",
-    icon: "/github.svg",
-    alt: "GitHub",
-    size: 20,
-  
-  },
+  { href: "https://www.linkedin.com/in/yanis-harrat", icon: "/linkedin.svg", alt: "LinkedIn", size: 24, },
+  { href: "https://github.com/yanix2445", icon: "/github.svg", alt: "GitHub", size: 20, },
 ];
 
 export default function NavBar() {
@@ -85,7 +74,7 @@ export default function NavBar() {
 
         {/* Liens de navigation */}
         <ul className="flex gap-2">
-          {navLinks.map(({ name, href, color }) => (
+          {navLinks.map(({ name, href }) => (
             <li key={href}>
               <Link
                 href={href}
