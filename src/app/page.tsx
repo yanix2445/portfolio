@@ -317,7 +317,7 @@ const ComingSoonPage = () => {
                 <p className="max-w-2xl mx-auto text-lg text-muted-foreground">
                   Je suis Yanis — Technicien IT & Développeur full-stack,
                   orienté solutions concrètes. Sérieux, curieux et carré, je
-                  cherche à progresser vite tout en restant utile. J'aime créer
+                  cherche à progresser vite tout en restant utile. J&apos;aime créer
                   des systèmes stables, bien pensés et sans friction.
                 </p>
               </header>
@@ -331,25 +331,25 @@ const ComingSoonPage = () => {
                     Mon parcours condensé
                   </h4>
                   <p className="text-muted-foreground">
-                    Issu d'un <strong>Bac Pro SN</strong> et actuellement en <strong>BTS SIO SISR</strong>, j'ai touché à la
+                    Issu d&apos;un <strong>Bac Pro SN</strong> et actuellement en <strong>BTS SIO SISR</strong>, j&apos;ai touché à la
                     fibre optique, au support informatique, à la configuration réseau, au développement web,
-                    l'automatisation et la restauration. Mon expérience :
-                    terrain + code + logique. J'ai développé un <strong>CRM no-code
+                    l&apos;automatisation et la restauration. Mon expérience :
+                    terrain + code + logique. J&apos;ai développé un <strong>CRM no-code
                     hybride</strong> (n8n, JavaScript, Python, Airtable) livré complet avec documentation
                     et formation utilisateur.
                   </p>
 
                   <p className="text-muted-foreground">
-                    <strong>8 ans de volleyball</strong> (3 en Nationale 2), ça forge : esprit d'équipe,
-                    gestion de la pression, discipline, timing. J'applique ces réflexes dans
+                    <strong>8 ans de volleyball</strong> (3 en Nationale 2), ça forge : esprit d&apos;équipe,
+                    gestion de la pression, discipline, timing. J&apos;applique ces réflexes dans
                     mes projets tech.
                   </p>
 
                   <p className="text-muted-foreground">
                     Passionné de découvertes culturelles&nbsp;— Algérie, Grèce,
-                    et bientôt direction le Japon&nbsp;! J'adore explorer de
-                    nouveaux horizons, comprendre d'autres modes de vie et
-                    m'inspirer de chaque rencontre.
+                    et bientôt direction le Japon&nbsp;! J&apos;adore explorer de
+                    nouveaux horizons, comprendre d&apos;autres modes de vie et
+                    m&apos;inspirer de chaque rencontre.
                   </p>
 
                   <div className="flex flex-wrap gap-2 pt-2">
@@ -391,16 +391,16 @@ const ComingSoonPage = () => {
                       </strong>
                       en <strong>septembre 2025</strong> ({" "}
                       <strong>2j école / 3j entreprise</strong> ), et je
-                      recherche activement une <strong>alternance jusqu'en août 2027</strong>.
+                      recherche activement une <strong>alternance jusqu&apos;en août 2027</strong>.
                     </p>
                     <p>
                       Curieux, impliqué et déjà expérimenté sur le terrain (
                       support IT, réseau, développement full-stack, automatisation ), je progresse vite
-                      et j'aime aller au fond des sujets.
+                      et j&apos;aime aller au fond des sujets.
                       <br />
-                      Sérieux, fiable, à l'écoute, je m'investis à fond pour
+                      Sérieux, fiable, à l&apos;écoute, je m&apos;investis à fond pour
                       apporter des solutions concrètes et faire avancer
-                      l'équipe.
+                      l&apos;équipe.
                     </p>
                     <p>
                       Mon objectif&nbsp;: renforcer mes compétences en

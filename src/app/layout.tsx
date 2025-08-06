@@ -1,5 +1,5 @@
 import "./globals.css";
-import NavBar from "@/components/navbar";
+//import NavBar from "@/components/navbar";
 import { ThemeProvider } from "@/utils/theme-provider";
 import { siteMetadata } from "@/lib/metadata";
 import { Analytics } from "@vercel/analytics/next";
