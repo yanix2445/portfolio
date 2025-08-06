@@ -36,51 +36,50 @@ type ContactInfo = {
   href?: string;
 };
 
-// Liste des informations de contact à afficher
+// Liste des informations de contact à afficher avec labels SEO
 const contactInfos: ContactInfo[] = [
   {
-    label: "GitHub",
+    label: "GitHub - Projets développement",
     value: "yanix2445",
     href: "https://github.com/yanix2445",
     icon: Github,
   },
   {
-    label: "LinkedIn",
+    label: "LinkedIn - Profil professionnel Yanis Harrat",
     value: "yanis-harrat",
     href: "https://www.linkedin.com/in/yanis-harrat",
     icon: Linkedin,
   },
   {
-    label: "Twitter",
+    label: "Twitter - Veille technologique",
     value: "@yanix2445",
     href: "https://x.com/yanix_213",
     icon: Twitter,
   },
   {
-    label: "Instagram",
+    label: "Instagram - Actualités",
     value: "@yanix2445",
     href: "https://instagram.com/yanix2445",
     icon: Instagram,
   },
   {
-    label: "Localisation",
+    label: "Localisation alternance",
     value: "Paris, Île-de-France",
     icon: MapPin,
   },
   {
-    label: "Téléphone",
+    label: "Téléphone contact professionnel",
     value: "06 03 05 98 29",
     href: "tel:0603059829",
     icon: Phone,
   },
   {
-    label: "Email",
+    label: "Email professionnel Yanis Harrat",
     value: "yanis.amine.harrat@gmail.com",
     href: "mailto:yanis.amine.harrat@gmail.com",
     icon: Mail,
   },
 ];
-
 
 type ContactReason = {
   value: string;
@@ -90,40 +89,40 @@ type ContactReason = {
   variant: "default" | "secondary" | "outline" | "destructive";
 };
 
-// Liste des raisons de contact pour le champ Select
+// Liste des raisons de contact pour le champ Select avec terminologie SEO
 const contactReasons: ContactReason[] = [
   {
     value: "alternance",
-    label: "Proposer une alternance",
-    description: "Vous souhaitez me proposer une alternance ou en discuter.",
+    label: "Proposer une alternance BTS SIO",
+    description: "Vous souhaitez me proposer une alternance BTS SIO SISR ou en discuter.",
     icon: GraduationCap,
     variant: "default",
   },
   {
     value: "cdi",
-    label: "Proposer un CDI",
-    description: "Vous avez une opportunité de CDI à me présenter.",
+    label: "Proposer un CDI développeur",
+    description: "Vous avez une opportunité de CDI développeur full-stack à me présenter.",
     icon: Briefcase,
     variant: "secondary",
   },
   {
     value: "stage",
-    label: "Proposer un stage",
-    description: "Vous souhaitez me proposer un stage ou en savoir plus.",
+    label: "Proposer un stage informatique",
+    description: "Vous souhaitez me proposer un stage en développement ou support IT.",
     icon: FileText,
     variant: "outline",
   },
   {
     value: "freelance",
-    label: "Mission freelance",
-    description: "Vous cherchez un développeur pour une mission ponctuelle.",
+    label: "Mission freelance développement",
+    description: "Vous cherchez un développeur JavaScript/Python pour une mission ponctuelle.",
     icon: Users,
     variant: "secondary",
   },
   {
     value: "rdv",
-    label: "Organiser un entretien",
-    description: "Vous souhaitez planifier un échange ou un entretien.",
+    label: "Organiser un entretien technique",
+    description: "Vous souhaitez planifier un entretien ou échange technique.",
     icon: MessageSquare,
     variant: "default",
   },
@@ -131,7 +130,7 @@ const contactReasons: ContactReason[] = [
     value: "autre",
     label: "Autre demande professionnelle",
     description:
-      "Pour toute autre demande liée à mon profil ou à une collaboration.",
+      "Pour toute autre demande liée à mon profil développeur ou collaboration technique.",
     icon: Mail,
     variant: "outline",
   },
@@ -160,6 +159,34 @@ export default function ContactPage() {
       message: "",
     },
   });
+
+  // SEO: Données structurées JSON-LD pour la page contact
+  const contactStructuredData = {
+    "@context": "https://schema.org",
+    "@type": "ContactPage",
+    "name": "Contact Yanis Harrat - Développeur BTS SIO",
+    "description": "Contactez Yanis Harrat, développeur full-stack et étudiant BTS SIO SISR. Recherche alternance, CDI, missions freelance à Paris.",
+    "url": "https://yanis-harrat.fr/contact",
+    "mainEntity": {
+      "@type": "Person",
+      "name": "Yanis Harrat",
+      "jobTitle": "Développeur Full-Stack & Étudiant BTS SIO SISR",
+      "telephone": "+33603059829",
+      "email": "yanis.amine.harrat@gmail.com",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Paris",
+        "addressRegion": "Île-de-France",
+        "addressCountry": "FR"
+      },
+      "sameAs": [
+        "https://www.linkedin.com/in/yanis-harrat",
+        "https://github.com/yanix2445",
+        "https://instagram.com/yanix2445",
+        "https://x.com/yanix_213"
+      ]
+    }
+  };
 
   // Gère la sélection d'un fichier
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -235,331 +262,371 @@ export default function ContactPage() {
 
   return (
     <>
-      <div className="min-h-screen bg-background  py-12 px-4 pt-5 ">
-        <div className="max-w-2xl mx-auto relative z-10 ">
+      {/* Données structurées JSON-LD pour le SEO */}
+      <script 
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(contactStructuredData) }}
+      />
+
+      <div className="min-h-screen bg-background py-12 px-4 pt-5">
+        <div className="max-w-2xl mx-auto relative z-10">
           
-          {/* Bouton pour revenir à la page d'accueil */}
-          <div className="mb-4 relative z-10 ">
-            <Button variant="outline" size="sm" asChild className="relative z-10 ">
-              <Link href="/" className="relative z-10 ">
-                <ArrowLeft className="h-4 w-4 mr-2relative z-10  " />
-                Retour à l&apos;accueil
+          {/* Navigation avec breadcrumb SEO */}
+          <nav className="mb-4 relative z-10" aria-label="Fil d'Ariane">
+            <Button variant="outline" size="sm" asChild className="relative z-10">
+              <Link href="/" className="relative z-10" aria-label="Retour au portfolio de Yanis Harrat">
+                <ArrowLeft className="h-4 w-4 mr-2 relative z-10" />
+                Retour au portfolio
               </Link>
             </Button>
-          </div>
-          <Card>
-            <CardHeader className="text-center">
-              <CardTitle className="text-2xl">Contactez-moi</CardTitle>
-              <CardDescription>
-                Étudiant BTS SIO SISR • À la recherche d&apos;alternance/CDI
-              </CardDescription>
-              {/* Section des informations de contact avec un design responsive */}
-              <div className="mt-4 flex flex-col gap-2 text-sm text-muted-foreground items-center w-full ">
-                {/* Ligne 1 : GitHub + LinkedIn */}
-                <div className="flex flex-row justify-around items-center bg-muted/60 rounded-lg py-2 px-3 w-full mx-auto gap-3 max-w-md">
-                  {(() => {
-                    const github = contactInfos.find((c) => c.label === "GitHub");
-                    const linkedin = contactInfos.find((c) => c.label === "LinkedIn");
-                    return (
-                      <>
-                        {github && github.href && (
-                          <Link
-                            href={github.href}
-                            target="_blank"
-                            className="flex items-center gap-2 hover:text-foreground transition-colors min-w-0"
-                          >
-                            {github.icon && <github.icon className="w-5 h-5 sm:w-4 sm:h-4" />}
-                            <span className="truncate">{github.value}</span>
-                          </Link>
-                        )}
-                        {linkedin && linkedin.href && (
-                          <Link
-                            href={linkedin.href}
-                            target="_blank"
-                            className="flex items-center gap-2 hover:text-foreground transition-colors min-w-0"
-                          >
-                            {linkedin.icon && <linkedin.icon className="w-5 h-5 sm:w-4 sm:h-4" />}
-                            <span className="truncate">{linkedin.value}</span>
-                          </Link>
-                        )}
-                      </>
-                    );
-                  })()}
-                </div>
-                {/* Ligne 2 : Instagram + Twitter (X) */}
-                <div className="flex flex-row justify-around items-center bg-muted/60 rounded-lg py-2 px-3 w-full mx-auto gap-3 max-w-md">
-                  {(() => {
-                    const instagram = contactInfos.find((c) => c.label === "Instagram");
-                    const twitter = contactInfos.find((c) => c.label === "Twitter");
-                    return (
-                      <>
-                        {instagram && instagram.href && (
-                          <Link
-                            href={instagram.href}
-                            target="_blank"
-                            className="flex items-center gap-2 hover:text-foreground transition-colors min-w-0"
-                          >
-                            {instagram.icon && <instagram.icon className="w-5 h-5 sm:w-4 sm:h-4" />}
-                            <span className="truncate">{instagram.value}</span>
-                          </Link>
-                        )}
-                        {twitter && twitter.href && (
-                          <Link
-                            href={twitter.href}
-                            target="_blank"
-                            className="flex items-center gap-2 hover:text-foreground transition-colors min-w-0"
-                          >
-                            {twitter.icon && <twitter.icon className="w-5 h-5 sm:w-4 sm:h-4" />}
-                            <span className="truncate">{twitter.value}</span>
-                          </Link>
-                        )}
-                      </>
-                    );
-                  })()}
-                </div>
-                {/* Ligne 3 : Localisation + Téléphone */}
-                <div className="flex flex-row justify-around items-center bg-muted/60 rounded-lg py-2 px-3 w-full mx-auto gap-3 max-w-md">
-                  {(() => {
-                    const localisation = contactInfos.find((c) => c.label === "Localisation");
-                    const tel = contactInfos.find((c) => c.label === "Téléphone");
-                    return (
-                      <>
-                        {localisation && (
-                          <div className="flex items-center gap-2 min-w-0">
-                            {localisation.icon && (
-                              <span className="flex items-center justify-center ">
-                                <localisation.icon className="w-5 h-5 sm:w-4 sm:h-4" />
-                              </span>
-                            )}
-                            <span>{localisation.value}</span>
-                          </div>
-                        )}
-                        {tel && (
-                          <a
-                            href={tel.href || `tel:${tel.value}`}
-                            className="flex items-center gap-2 hover:text-foreground transition-colors min-w-0"
-                          >
-                            {tel.icon && (
-                              <span className="flex items-center justify-center ">
-                                <tel.icon className="w-5 h-5 sm:w-4 sm:h-4" />
-                              </span>
-                            )}
-                            <span>{tel.value}</span>
-                          </a>
-                        )}
-                      </>
-                    );
-                  })()}
-                </div>
-                {/* Ligne 4 : Email */}
-                <div className="flex flex-row justify-center items-center bg-muted/60 rounded-lg py-2 px-3 max-w-xs w-full mx-auto">
-                  {(() => {
-                    const email = contactInfos.find((c) => c.label === "Email");
-                    return (
-                      email && (
-                        <a
-                          href={`mailto:${email.value}`}
-                          className="flex items-center gap-2 hover:text-foreground transition-colors min-w-0"
-                        >
-                          {email.icon && (
-                            <span className="flex items-center justify-center">
-                              <email.icon className="w-5 h-5 sm:w-4 sm:h-4" />
-                            </span>
+          </nav>
+
+          <main>
+            <Card>
+              <CardHeader className="text-center">
+                <CardTitle className="text-2xl">
+                  <h1>Contactez Yanis Harrat - Développeur BTS SIO</h1>
+                </CardTitle>
+                <CardDescription>
+                  Développeur full-stack • Étudiant BTS SIO SISR • Recherche alternance/CDI Paris 2025-2027
+                </CardDescription>
+                
+                {/* Section des informations de contact avec structure sémantique */}
+                <section className="mt-4 flex flex-col gap-2 text-sm text-muted-foreground items-center w-full" aria-label="Informations de contact Yanis Harrat">
+                  {/* Ligne 1 : GitHub + LinkedIn */}
+                  <div className="flex flex-row justify-around items-center bg-muted/60 rounded-lg py-2 px-3 w-full mx-auto gap-3 max-w-md">
+                    {(() => {
+                      const github = contactInfos.find((c) => c.label.includes("GitHub"));
+                      const linkedin = contactInfos.find((c) => c.label.includes("LinkedIn"));
+                      return (
+                        <>
+                          {github && github.href && (
+                            <Link
+                              href={github.href}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="flex items-center gap-2 hover:text-foreground transition-colors min-w-0"
+                              aria-label={github.label}
+                            >
+                              {github.icon && <github.icon className="w-5 h-5 sm:w-4 sm:h-4" />}
+                              <span className="truncate">{github.value}</span>
+                            </Link>
                           )}
-                          <span className="truncate">{email.value}</span>
-                        </a>
-                      )
-                    );
-                  })()}
-                </div>
-              </div>
-              <Separator className="mt-4" />
-            </CardHeader>
+                          {linkedin && linkedin.href && (
+                            <Link
+                              href={linkedin.href}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="flex items-center gap-2 hover:text-foreground transition-colors min-w-0"
+                              aria-label={linkedin.label}
+                            >
+                              {linkedin.icon && <linkedin.icon className="w-5 h-5 sm:w-4 sm:h-4" />}
+                              <span className="truncate">{linkedin.value}</span>
+                            </Link>
+                          )}
+                        </>
+                      );
+                    })()}
+                  </div>
+                  
+                  {/* Ligne 2 : Instagram + Twitter (X) */}
+                  <div className="flex flex-row justify-around items-center bg-muted/60 rounded-lg py-2 px-3 w-full mx-auto gap-3 max-w-md">
+                    {(() => {
+                      const instagram = contactInfos.find((c) => c.label.includes("Instagram"));
+                      const twitter = contactInfos.find((c) => c.label.includes("Twitter"));
+                      return (
+                        <>
+                          {instagram && instagram.href && (
+                            <Link
+                              href={instagram.href}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="flex items-center gap-2 hover:text-foreground transition-colors min-w-0"
+                              aria-label={instagram.label}
+                            >
+                              {instagram.icon && <instagram.icon className="w-5 h-5 sm:w-4 sm:h-4" />}
+                              <span className="truncate">{instagram.value}</span>
+                            </Link>
+                          )}
+                          {twitter && twitter.href && (
+                            <Link
+                              href={twitter.href}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="flex items-center gap-2 hover:text-foreground transition-colors min-w-0"
+                              aria-label={twitter.label}
+                            >
+                              {twitter.icon && <twitter.icon className="w-5 h-5 sm:w-4 sm:h-4" />}
+                              <span className="truncate">{twitter.value}</span>
+                            </Link>
+                          )}
+                        </>
+                      );
+                    })()}
+                  </div>
+                  
+                  {/* Ligne 3 : Localisation + Téléphone */}
+                  <div className="flex flex-row justify-around items-center bg-muted/60 rounded-lg py-2 px-3 w-full mx-auto gap-3 max-w-md">
+                    {(() => {
+                      const localisation = contactInfos.find((c) => c.label.includes("Localisation"));
+                      const tel = contactInfos.find((c) => c.label.includes("Téléphone"));
+                      return (
+                        <>
+                          {localisation && (
+                            <div className="flex items-center gap-2 min-w-0" aria-label={localisation.label}>
+                              {localisation.icon && (
+                                <span className="flex items-center justify-center">
+                                  <localisation.icon className="w-5 h-5 sm:w-4 sm:h-4" />
+                                </span>
+                              )}
+                              <span>{localisation.value}</span>
+                            </div>
+                          )}
+                          {tel && (
+                            <a
+                              href={tel.href || `tel:${tel.value}`}
+                              className="flex items-center gap-2 hover:text-foreground transition-colors min-w-0"
+                              aria-label={tel.label}
+                            >
+                              {tel.icon && (
+                                <span className="flex items-center justify-center">
+                                  <tel.icon className="w-5 h-5 sm:w-4 sm:h-4" />
+                                </span>
+                              )}
+                              <span>{tel.value}</span>
+                            </a>
+                          )}
+                        </>
+                      );
+                    })()}
+                  </div>
+                  
+                  {/* Ligne 4 : Email */}
+                  <div className="flex flex-row justify-center items-center bg-muted/60 rounded-lg py-2 px-3 max-w-xs w-full mx-auto">
+                    {(() => {
+                      const email = contactInfos.find((c) => c.label.includes("Email"));
+                      return (
+                        email && (
+                          <a
+                            href={`mailto:${email.value}`}
+                            className="flex items-center gap-2 hover:text-foreground transition-colors min-w-0"
+                            aria-label={email.label}
+                          >
+                            {email.icon && (
+                              <span className="flex items-center justify-center">
+                                <email.icon className="w-5 h-5 sm:w-4 sm:h-4" />
+                              </span>
+                            )}
+                            <span className="truncate">{email.value}</span>
+                          </a>
+                        )
+                      );
+                    })()}
+                  </div>
+                </section>
+                <Separator className="mt-4" />
+              </CardHeader>
 
-            <CardContent className="space-y-6">
-              <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-                {/* Champs pour le nom et le prénom */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <CardContent className="space-y-6">
+                {/* Formulaire de contact avec labels SEO optimisés */}
+                <form onSubmit={handleSubmit(onSubmit)} className="space-y-6" aria-label="Formulaire de contact professionnel">
+                  {/* Champs pour le nom et le prénom */}
+                  <fieldset className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <legend className="sr-only">Informations personnelles</legend>
+                    <div className="space-y-2">
+                      <Label htmlFor="firstName" className="mb-2 block">
+                        Prénom *
+                      </Label>
+                      <Input
+                        id="firstName"
+                        placeholder="Votre prénom"
+                        autoComplete="given-name"
+                        {...register("firstName")}
+                      />
+                      {errors.firstName && (
+                        <p className="text-red-500 text-sm mt-1" role="alert">
+                          {errors.firstName.message}
+                        </p>
+                      )}
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="lastName" className="mb-2 block">
+                        Nom *
+                      </Label>
+                      <Input
+                        id="lastName"
+                        placeholder="Votre nom"
+                        autoComplete="family-name"
+                        {...register("lastName")}
+                      />
+                      {errors.lastName && (
+                        <p className="text-red-500 text-sm mt-1" role="alert">
+                          {errors.lastName.message}
+                        </p>
+                      )}
+                    </div>
+                  </fieldset>
+
+                  {/* Champ pour l'adresse e-mail */}
                   <div className="space-y-2">
-                    <Label htmlFor="firstName" className="mb-2 block ">
-                      Prénom *
+                    <Label htmlFor="email" className="mb-2 block">
+                      Email professionnel *
                     </Label>
                     <Input
-                      id="firstName"
-                      placeholder="Votre prénom"
-                      {...register("firstName")}
+                      type="email"
+                      id="email"
+                      placeholder="votre@email.com"
+                      autoComplete="email"
+                      {...register("email")}
                     />
-                    {errors.firstName && (
-                      <p className="text-red-500 text-sm mt-1">
-                        {errors.firstName.message}
+                    {errors.email && (
+                      <p className="text-red-500 text-sm mt-1" role="alert">
+                        {errors.email.message}
                       </p>
                     )}
                   </div>
 
-                  <div className="space-y-2">
-                    <Label htmlFor="lastName" className="mb-2 block">
-                      Nom *
-                    </Label>
-                    <Input
-                      id="lastName"
-                      placeholder="Votre nom"
-                      {...register("lastName")}
-                    />
-                    {errors.lastName && (
-                      <p className="text-red-500 text-sm mt-1">
-                        {errors.lastName.message}
-                      </p>
-                    )}
-                  </div>
-                </div>
-
-                {/* Champ pour l'adresse e-mail */}
-                <div className="space-y-2">
-                  <Label htmlFor="email" className="mb-2 block">
-                    Email *
-                  </Label>
-                  <Input
-                    type="email"
-                    id="email"
-                    placeholder="votre@email.com"
-                    {...register("email")}
-                  />
-                  {errors.email && (
-                    <p className="text-red-500 text-sm mt-1">
-                      {errors.email.message}
-                    </p>
-                  )}
-                </div>
-
-                {/* Champ de sélection pour le type de contact */}
-                <div className="space-y-3">
-                  <Label className="mb-2 block">Type de contact *</Label>
-                  <Controller
-                    name="reason"
-                    control={control}
-                    render={({ field }) => (
-                      <Select
-                        onValueChange={field.onChange}
-                        value={field.value}
-                      >
-                        <SelectTrigger className="w-full max-w-full whitespace-normal break-words min-h-[4rem]">
-                          <SelectValue placeholder="Sélectionnez la demande" />
-                        </SelectTrigger>
-                        <SelectContent
-                          className="w-[--radix-select-trigger-width] max-w-[95vw] max-h-[50vh] overflow-y-auto z-50"
-                          side="bottom"
-                          align="start"
+                  {/* Champ de sélection pour le type de contact */}
+                  <div className="space-y-3">
+                    <Label className="mb-2 block">Type de demande professionnelle *</Label>
+                    <Controller
+                      name="reason"
+                      control={control}
+                      render={({ field }) => (
+                        <Select
+                          onValueChange={field.onChange}
+                          value={field.value}
                         >
-                          {contactReasons.map((reason) => {
-                            const Icon = reason.icon;
-                            return (
-                              <SelectItem key={reason.value} value={reason.value}>
-                                <div className="flex flex-col text-left">
-                                  <div className="flex items-center gap-2">
-                                    <Icon className="h-4 w-4 text-muted-foreground" />
-                                    <span className="font-medium">
-                                      {reason.label}
+                          <SelectTrigger className="w-full max-w-full whitespace-normal break-words min-h-[4rem]" aria-label="Sélectionner le type de demande">
+                            <SelectValue placeholder="Sélectionnez votre demande (alternance, CDI, stage...)" />
+                          </SelectTrigger>
+                          <SelectContent
+                            className="w-[--radix-select-trigger-width] max-w-[95vw] max-h-[50vh] overflow-y-auto z-50"
+                            side="bottom"
+                            align="start"
+                          >
+                            {contactReasons.map((reason) => {
+                              const Icon = reason.icon;
+                              return (
+                                <SelectItem key={reason.value} value={reason.value}>
+                                  <div className="flex flex-col text-left">
+                                    <div className="flex items-center gap-2">
+                                      <Icon className="h-4 w-4 text-muted-foreground" />
+                                      <span className="font-medium">
+                                        {reason.label}
+                                      </span>
+                                    </div>
+                                    <span className="text-xs text-muted-foreground">
+                                      {reason.description}
                                     </span>
                                   </div>
-                                  <span className="text-xs text-muted-foreground">
-                                    {reason.description}
-                                  </span>
-                                </div>
-                              </SelectItem>
-                            );
-                          })}
-                        </SelectContent>
-                      </Select>
+                                </SelectItem>
+                              );
+                            })}
+                          </SelectContent>
+                        </Select>
+                      )}
+                    />
+                    {errors.reason && (
+                      <p className="text-red-500 text-sm mt-1" role="alert">
+                        {errors.reason.message}
+                      </p>
                     )}
-                  />
-                  {errors.reason && (
-                    <p className="text-red-500 text-sm mt-1">
-                      {errors.reason.message}
+                  </div>
+
+                  {/* Champ pour l'objet du message */}
+                  <div className="space-y-2">
+                    <Label htmlFor="subject" className="mb-2 block">
+                      Objet du message *
+                    </Label>
+                    <Input
+                      id="subject"
+                      name="subject"
+                      placeholder="Ex: Proposition alternance développeur BTS SIO"
+                    />
+                    {errors.subject && (
+                      <p className="text-red-500 text-sm mt-1" role="alert">
+                        {errors.subject.message}
+                      </p>
+                    )}
+                  </div>
+
+                  {/* Champ de texte pour le message */}
+                  <div className="space-y-2">
+                    <Label htmlFor="message" className="mb-2 block">
+                      Message détaillé *
+                    </Label>
+                    <Textarea
+                      id="message"
+                      rows={6}
+                      placeholder="Décrivez votre proposition (alternance, mission, contexte entreprise, technologies utilisées, équipe...)..."
+                      className="resize-none"
+                      {...register("message")}
+                    />
+
+                    {errors.message && (
+                      <p className="text-red-500 text-sm mt-1" role="alert">
+                        {errors.message.message}
+                      </p>
+                    )}
+                  </div>
+
+                  {/* Champ pour le téléchargement d'un fichier (optionnel) */}
+                  <div className="space-y-2">
+                    <Label htmlFor="file" className="mb-2 block">
+                      Document joint (CV, offre, présentation...) - Optionnel
+                    </Label>
+                    <Input
+                      type="file"
+                      id="file"
+                      name="file"
+                      onChange={handleFileChange}
+                      accept=".pdf,.doc,.docx,.txt,.jpg,.jpeg,.png,.gif"
+                      aria-describedby="file-help"
+                    />
+                    <p id="file-help" className="text-xs text-muted-foreground">
+                      Formats acceptés : PDF, Word, images (max 10MB)
                     </p>
-                  )}
-                </div>
+                    {file && (
+                      <div className="flex items-center gap-2 mt-2">
+                        <Upload className="h-4 w-4 text-muted-foreground" />
+                        <span className="text-sm text-muted-foreground">
+                          {file.name}
+                        </span>
+                      </div>
+                    )}
+                  </div>
 
-                {/* Champ pour l'objet du message */}
-                <div className="space-y-2">
-                  <Label htmlFor="subject" className="mb-2 block">
-                    Objet *
-                  </Label>
-                  <Input
-                    id="subject"
-                    placeholder="Sujet de votre message"
-                    {...register("subject")}
-                  />
-                  {errors.subject && (
-                    <p className="text-red-500 text-sm mt-1">
-                      {errors.subject.message}
-                    </p>
-                  )}
-                </div>
+                  <Separator />
 
-                {/* Champ de texte pour le message */}
-                <div className="space-y-2">
-                  <Label htmlFor="message" className="mb-2 block">
-                    Message *
-                  </Label>
-                  <Textarea
-                    id="message"
-                    rows={6}
-                    placeholder="Décrivez votre demande en détail..."
-                    className="resize-none"
-                    {...register("message")}
-                  />
-                  {errors.message && (
-                    <p className="text-red-500 text-sm mt-1">
-                      {errors.message.message}
-                    </p>
-                  )}
-                </div>
-
-                {/* Champ pour le téléchargement d'un fichier (optionnel) */}
-                <div className="space-y-2">
-                  <Label htmlFor="file" className="mb-2 block">
-                    Fichier joint (optionnel)
-                  </Label>
-                  <Input
-                    type="file"
-                    id="file"
-                    onChange={handleFileChange}
-                    accept=".pdf,.doc,.docx,.txt,.jpg,.jpeg,.png,.gif"
-                  />
-                  {file && (
-                    <div className="flex items-center gap-2 mt-2">
-                      <Upload className="h-4 w-4 text-muted-foreground" />
-                      <span className="text-sm text-muted-foreground">
-                        {file.name}
-                      </span>
-                    </div>
-                  )}
-                </div>
-
-                <Separator />
-
-                {/* Bouton de soumission du formulaire */}
-                <Button
-                  type="submit"
-                  disabled={isLoading}
-                  className="w-full"
-                  size="lg"
-                >
-                  {isLoading ? (
-                    <>
-                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                      Envoi en cours...
-                    </>
-                  ) : (
-                    <>
-                      <Mail className="mr-2 h-4 w-4" />
-                      Envoyer le message
-                    </>
-                  )}
-                </Button>
-              </form>
-            </CardContent>
-          </Card>
+                  {/* Bouton de soumission du formulaire */}
+                  <Button
+                    type="submit"
+                    disabled={isLoading}
+                    className="w-full"
+                    size="lg"
+                    aria-describedby="submit-help"
+                  >
+                    {isLoading ? (
+                      <>
+                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                        Envoi en cours...
+                      </>
+                    ) : (
+                      <>
+                        <Mail className="mr-2 h-4 w-4" />
+                        Envoyer ma demande
+                      </>
+                    )}
+                  </Button>
+                  <p id="submit-help" className="text-xs text-center text-muted-foreground mt-2">
+                    Réponse garantie sous 24h • Toutes demandes professionnelles bienvenues
+                  </p>
+                </form>
+              </CardContent>
+            </Card>
+          </main>
         </div>
       </div>
     </>
