@@ -1,6 +1,10 @@
 "use client";
+
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import Script from "next/script";
+
+// Import des Icon
 import {
   Github,
   Linkedin,
@@ -157,84 +161,108 @@ const ComingSoonPage = () => {
     setIsVisible(true);
   }, []);
 
+  // --- Liste des liens vers mes réseaux sociaux ---
   const socialLinks = [
     {
       id: "social-linkedin",
-      icon: <Linkedin className="w-5 h-5" />,
-      href: "https://www.linkedin.com/in/yanis-harrat",
-      label: "LinkedIn",
+      icon: <Linkedin className="w-5 h-5" />, // Icône LinkedIn
+      href: "https://www.linkedin.com/in/yanis-harrat", // Lien vers mon profil LinkedIn
+      label: "LinkedIn", // Nom affiché et pour l'accessibilité
     },
     {
       id: "social-github",
-      icon: <Github className="w-5 h-5" />,
-      href: "https://github.com/yanix2445",
+      icon: <Github className="w-5 h-5" />, // Icône GitHub
+      href: "https://github.com/yanix2445", // Lien vers mon profil GitHub
       label: "GitHub",
     },
     {
       id: "social-instagram",
-      icon: <Instagram className="w-5 h-5" />,
-      href: "https://instagram.com/yanix2445",
+      icon: <Instagram className="w-5 h-5" />, // Icône Instagram
+      href: "https://instagram.com/yanix2445", // Lien vers mon profil Instagram
       label: "Instagram",
     },
     {
       id: "social-twitter",
-      icon: <Twitter className="w-5 h-5" />,
-      href: "https://twitter.com/yanix2445",
+      icon: <Twitter className="w-5 h-5" />, // Icône Twitter
+      href: "https://twitter.com/yanix2445", // Lien vers mon profil Twitter
       label: "Twitter",
     },
   ];
 
-  // Mes hobbies reflètent mes passions pour la culture japonaise, les animés/mangas, le cinéma, les séries et les films d'animation.
+  // --- Liste de mes hobbies ---
   const hobbies = [
-    { id: "hobby-volleyball", label: "🏐 Volleyball 8 ans" },
-    { id: "hobby-gaming", label: "🎮 Gaming" },
-    { id: "hobby-anime", label: "🍥 Animés, mangas & culture japonaise" },
+    { id: "hobby-volleyball", label: "🏐 Volleyball 8 ans" }, // Sport collectif, persévérance
+    { id: "hobby-gaming", label: "🎮 Gaming" }, // Passion jeux vidéo
+    { id: "hobby-anime", label: "🍥 Animés, mangas & culture japonaise" }, // Culture pop japonaise
     {
       id: "hobby-cinema",
-      label: "🎬 Cinéphile, sériephile & films d'animation",
+      label: "🎬 Cinéphile, sériephile & films d'animation", // Goût pour l'image et la narration
     },
-    { id: "hobby-travel", label: "✈️ Voyages" },
-    { id: "hobby-hardware", label: "🔧 Hardware" },
+    { id: "hobby-travel", label: "✈️ Voyages" }, // Ouverture d'esprit, découverte
+    { id: "hobby-hardware", label: "🔧 Hardware" }, // Intérêt pour la technique et le DIY
   ];
 
+  // --- Données structurées JSON-LD pour le SEO ---
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "Person",
-    "name": "Yanis Harrat",
-    "jobTitle": "Développeur Full-Stack & Technicien IT",
-    "description": "Étudiant BTS SIO SISR, développeur JavaScript/Python, spécialisé en automatisation et infrastructure réseau. Recherche alternance Paris 2025-2027.",
-    "url": "https://yanis-harrat.vercel.app",
-    "sameAs": [
+    name: "Yanis Harrat",
+    jobTitle: "Développeur Full-Stack & Technicien IT",
+    description:
+      "Étudiant BTS SIO SISR, développeur JavaScript/Python, spécialisé en automatisation et infrastructure réseau. Recherche alternance Paris 2025-2027.",
+    url: "https://yanis-harrat.vercel.app",
+    sameAs: [
       "https://www.linkedin.com/in/yanis-harrat",
       "https://github.com/yanix2445",
       "https://instagram.com/yanix2445",
-      "https://twitter.com/yanix2445"
+      "https://twitter.com/yanix2445",
     ],
-    "address": {
+    address: {
       "@type": "PostalAddress",
-      "addressLocality": "Paris",
-      "addressRegion": "Île-de-France",
-      "addressCountry": "FR"
+      addressLocality: "Paris",
+      addressRegion: "Île-de-France",
+      addressCountry: "FR",
     },
-    "knowsAbout": [
-      "JavaScript", "TypeScript", "Python", "Next.js", "React", 
-      "PostgreSQL", "n8n", "Automatisation", "Réseau", "FTTH"
-    ]
+    knowsAbout: [
+      "JavaScript",
+      "TypeScript",
+      "Python",
+      "Next.js",
+      "React",
+      "PostgreSQL",
+      "n8n",
+      "Automatisation",
+      "Réseau",
+      "FTTH",
+    ],
   };
 
   return (
     <>
-      {/* Données structurées JSON-LD pour le SEO */}
-      <script 
+      {/* 
+        Script JSON-LD pour le SEO : 
+        Permet aux moteurs de recherche de mieux comprendre le contenu de la page (données structurées Person)
+      */}
+      <Script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />
 
+      {/* 
+        Wrapper principal : 
+        Applique un fond dégradé sur toute la hauteur de l'écran 
+      */}
       <div className="min-h-screen bg-gradient-to-br from-background/95 via-background/98 to-muted/10">
-        {/* Header flottant avec structure sémantique */}
+        {/* 
+          Header flottant et toujours visible en haut de page : 
+          Affiche l'avatar, le nom, le titre et un badge "En construction"
+        */}
         <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-xl border-b border-border/50">
           <div className="container mx-auto px-6 py-4">
             <div className="flex items-center justify-between">
+              {/* 
+                Bloc avatar + nom + sous-titre 
+              */}
               <div className="flex items-center gap-3">
                 <Avatar className="w-[64px] h-[64px]">
                   <AvatarImage
@@ -252,6 +280,7 @@ const ComingSoonPage = () => {
                 </div>
               </div>
 
+              {/* Badge d'état du site */}
               <Badge variant="outline" className="gap-2">
                 <div className="w-2 h-2 bg-orange-500 rounded-full animate-pulse" />
                 En construction
@@ -260,10 +289,15 @@ const ComingSoonPage = () => {
           </div>
         </header>
 
-        {/* Main content avec structure sémantique optimisée */}
+        {/* 
+          Contenu principal de la page 
+        */}
         <main className="pt-32 pb-16 px-6">
           <div className="container mx-auto max-w-4xl backdrop-blur-sm">
-            {/* Hero Section */}
+            {/* 
+              Section Hero : 
+              Présentation rapide, message d'indisponibilité temporaire et barre de progression
+            */}
             <section
               className={`text-center backdrop-blur-sm mb-16 transition-all duration-1000 ${
                 isVisible
@@ -272,11 +306,13 @@ const ComingSoonPage = () => {
               }`}
               aria-label="Présentation Yanis Harrat développeur"
             >
+              {/* Message d'indisponibilité du portfolio */}
               <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium mb-6">
                 <Clock className="w-4 h-4" />
                 Portfolio temporairement indisponible
               </div>
 
+              {/* Titre principal */}
               <h2 className="text-5xl md:text-7xl font-bold mb-6">
                 Salut ! <br />
                 <span className="bg-gradient-to-r from-primary via-primary/80 to-primary/60 bg-clip-text text-transparent">
@@ -284,17 +320,23 @@ const ComingSoonPage = () => {
                 </span>
               </h2>
 
+              {/* Description courte */}
               <p className="xl:text-2xl text-muted-foreground mb-8 max-w-2xl mx-auto leading-relaxed">
-                Développeur full-stack passionné, je refais entièrement mon portfolio avec du Next.js et des
-                technos modernes. En attendant, laisse-moi me présenter rapidement !
+                Développeur full-stack passionné, je refais entièrement mon
+                portfolio avec du Next.js et des technos modernes. En attendant,
+                laisse-moi me présenter rapidement !
               </p>
 
+              {/* Barre de progression (animation ou indicateur d'avancement) */}
               <div className="max-w-md mx-auto mb-8">
                 <ProgressBar />
               </div>
             </section>
 
-            {/* Section About avec contenu SEO optimisé */}
+            {/* 
+              Section "À propos" : 
+              Présentation détaillée, parcours, hobbies, et carte alternance
+            */}
             <section
               className={`mb-24 transition-all duration-1000 delay-300 ${
                 isVisible
@@ -303,7 +345,9 @@ const ComingSoonPage = () => {
               }`}
               aria-label="À propos de Yanis Harrat"
             >
-              {/* En-tête */}
+              {/* 
+                En-tête de la section "À propos" 
+              */}
               <header className="text-center mb-16 backdrop-blur-sm">
                 <div className="flex flex-col justify-center items-center gap-3 mb-5">
                   <div className="w-10 h-10 bg-primary/20 rounded-xl flex items-center justify-center">
@@ -314,44 +358,59 @@ const ComingSoonPage = () => {
                   </h3>
                 </div>
 
+                {/* Texte d'intro sur la personnalité et la philosophie */}
                 <p className="max-w-2xl mx-auto text-lg text-muted-foreground">
                   Je suis Yanis — Technicien IT & Développeur full-stack,
                   orienté solutions concrètes. Sérieux, curieux et carré, je
-                  cherche à progresser vite tout en restant utile. J&apos;aime créer
-                  des systèmes stables, bien pensés et sans friction.
+                  cherche à progresser vite tout en restant utile. J&apos;aime
+                  créer des systèmes stables, bien pensés et sans friction.
                 </p>
               </header>
 
-              {/* Présentation perso */}
+              {/* 
+                Grille de présentation : 
+                - À gauche : parcours, expériences, hobbies
+                - À droite : carte alternance
+              */}
               <div className="max-w-4xl mx-auto grid md:grid-cols-2 gap-10 mb-20 text-1xl">
-                {/* Profil perso avec mots-clés SEO intégrés */}
+                {/* 
+                  Bloc parcours et hobbies 
+                */}
                 <article className="space-y-5 backdrop-blur-sm">
+                  {/* Titre du parcours */}
                   <h4 className="text-xl font-semibold flex items-center gap-2">
                     <Zap className="w-5 h-5 text-primary" />
                     Mon parcours condensé
                   </h4>
+                  {/* Description du parcours scolaire et professionnel */}
                   <p className="text-muted-foreground">
-                    Issu d&apos;un <strong>Bac Pro SN</strong> et actuellement en <strong>BTS SIO SISR</strong>, j&apos;ai touché à la
-                    fibre optique, au support informatique, à la configuration réseau, au développement web,
-                    l&apos;automatisation et la restauration. Mon expérience :
-                    terrain + code + logique. J&apos;ai développé un <strong>CRM no-code
-                    hybride</strong> (n8n, JavaScript, Python, Airtable) livré complet avec documentation
-                    et formation utilisateur.
+                    Issu d&apos;un <strong>Bac Pro SN</strong> et actuellement
+                    en <strong>BTS SIO SISR</strong>, j&apos;ai touché à la
+                    fibre optique, au support informatique, à la configuration
+                    réseau, au développement web, l&apos;automatisation et la
+                    restauration. Mon expérience : terrain + code + logique.
+                    J&apos;ai développé un <strong>CRM no-code hybride</strong>{" "}
+                    (n8n, JavaScript, Python, Airtable) livré complet avec
+                    documentation et formation utilisateur.
                   </p>
 
+                  {/* Expérience sportive et soft skills */}
                   <p className="text-muted-foreground">
-                    <strong>8 ans de volleyball</strong> (3 en Nationale 2), ça forge : esprit d&apos;équipe,
-                    gestion de la pression, discipline, timing. J&apos;applique ces réflexes dans
-                    mes projets tech.
+                    <strong>8 ans de volleyball</strong> (3 en Nationale 2), ça
+                    forge : esprit d&apos;équipe, gestion de la pression,
+                    discipline, timing. J&apos;applique ces réflexes dans mes
+                    projets tech.
                   </p>
 
+                  {/* Ouverture culturelle */}
                   <p className="text-muted-foreground">
                     Passionné de découvertes culturelles&nbsp;— Algérie, Grèce,
-                    et bientôt direction le Japon&nbsp;! J&apos;adore explorer de
-                    nouveaux horizons, comprendre d&apos;autres modes de vie et
-                    m&apos;inspirer de chaque rencontre.
+                    et bientôt direction le Japon&nbsp;! J&apos;adore explorer
+                    de nouveaux horizons, comprendre d&apos;autres modes de vie
+                    et m&apos;inspirer de chaque rencontre.
                   </p>
 
+                  {/* Liste des hobbies sous forme de badges */}
                   <div className="flex flex-wrap gap-2 pt-2">
                     {hobbies.map((hobby) => (
                       <Badge
@@ -365,7 +424,10 @@ const ComingSoonPage = () => {
                   </div>
                 </article>
 
-                {/* Carte alternance avec info SEO importante */}
+                {/* 
+                  Carte alternance : 
+                  Met en avant la recherche d'alternance avec infos clés pour le SEO
+                */}
                 <aside className="bg-gradient-to-br backdrop-blur-sm from-primary/5 to-primary/10 rounded-2xl p-6 border border-primary/20 shadow-sm">
                   <div className="flex items-center gap-3 mb-4">
                     <div className="w-8 h-8 bg-primary/20 rounded-lg flex items-center justify-center">
@@ -377,37 +439,47 @@ const ComingSoonPage = () => {
                   </div>
 
                   <div className="space-y-3 text-muted-foreground">
+                    {/* Localisation de l'alternance */}
                     <div className="flex flex-col md:flex-row md:items-center gap-1">
                       <div className="flex items-center gap-1">
                         <MapPin className="w-4 h-4 text-primary" />
                         <span className="font-medium">Localisation&nbsp;:</span>
                       </div>
-                      <span className="ml-1 md:ml-0"><strong>Paris, Île-de-France</strong></span>
+                      <span className="ml-1 md:ml-0">
+                        <strong>Paris, Île-de-France</strong>
+                      </span>
                     </div>
+                    {/* Détail du cursus et de la période d'alternance */}
                     <p>
-                      Je démarre ma {" "}
+                      Je démarre ma{" "}
                       <strong>
                         1<sup>ère</sup> année de BTS SIO SISR{" "}
                       </strong>
                       en <strong>septembre 2025</strong> ({" "}
                       <strong>2j école / 3j entreprise</strong> ), et je
-                      recherche activement une <strong>alternance jusqu&apos;en août 2027</strong>.
+                      recherche activement une{" "}
+                      <strong>alternance jusqu&apos;en août 2027</strong>.
                     </p>
+                    {/* Soft skills et motivation */}
                     <p>
                       Curieux, impliqué et déjà expérimenté sur le terrain (
-                      support IT, réseau, développement full-stack, automatisation ), je progresse vite
-                      et j&apos;aime aller au fond des sujets.
+                      support IT, réseau, développement full-stack,
+                      automatisation ), je progresse vite et j&apos;aime aller
+                      au fond des sujets.
                       <br />
-                      Sérieux, fiable, à l&apos;écoute, je m&apos;investis à fond pour
-                      apporter des solutions concrètes et faire avancer
-                      l&apos;équipe.
+                      Sérieux, fiable, à l&apos;écoute, je m&apos;investis à
+                      fond pour apporter des solutions concrètes et faire
+                      avancer l&apos;équipe.
                     </p>
+                    {/* Objectifs professionnels */}
                     <p>
                       Mon objectif&nbsp;: renforcer mes compétences en
-                      <strong> backend</strong>, <strong>automatisation</strong>,
-                      <strong> infrastructure réseau</strong> et <strong>support informatique</strong>
+                      <strong> backend</strong>, <strong>automatisation</strong>
+                      ,<strong> infrastructure réseau</strong> et{" "}
+                      <strong>support informatique</strong>
                       tout en contribuant activement à vos projets.
                     </p>
+                    {/* Badge de disponibilité */}
                     <Badge variant="default" className="text-xs">
                       🚀 Disponible dès septembre 2025
                     </Badge>
@@ -415,7 +487,10 @@ const ComingSoonPage = () => {
                 </aside>
               </div>
 
-              {/* Stack technique avec mots-clés SEO */}
+              {/* 
+                Section stack technique : 
+                Liste des technologies maîtrisées et en cours d'apprentissage
+              */}
               <section className="bg-muted/30 rounded-2xl p-4 sm:p-6 border backdrop-blur-sm border-border/50 max-w-full sm:max-w-5xl mx-auto">
                 <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
                   <div className="w-7 h-7 sm:w-8 sm:h-8 bg-primary/20 rounded-lg flex items-center justify-center">
@@ -426,11 +501,13 @@ const ComingSoonPage = () => {
                   </h4>
                 </div>
 
+                {/* Description de la stack */}
                 <p className="text-xs sm:text-sm text-muted-foreground mb-3 sm:mb-4">
-                  Technologies que je maîtrise pour automatiser, développer des applications web et
-                  structurer mes projets full-stack :
+                  Technologies que je maîtrise pour automatiser, développer des
+                  applications web et structurer mes projets full-stack :
                 </p>
 
+                {/* Liste des technologies principales sous forme de badges */}
                 <div className="flex flex-wrap gap-1.5 sm:gap-2 mb-3 sm:mb-4">
                   {technologies.map((tech, i) => (
                     <Badge
@@ -444,8 +521,11 @@ const ComingSoonPage = () => {
                   ))}
                 </div>
 
+                {/* Liste des technologies en cours d'apprentissage */}
                 <div className="flex flex-col sm:flex-row sm:items-center gap-1.5 sm:gap-2 text-xs text-muted-foreground italic">
-                  <span className="shrink-0">Technologies en apprentissage :</span>
+                  <span className="shrink-0">
+                    Technologies en apprentissage :
+                  </span>
                   <ul className="flex flex-wrap gap-1.5 sm:gap-2 font-bold not-italic">
                     {currentLearning.map((tech, i) => (
                       <li
@@ -461,7 +541,10 @@ const ComingSoonPage = () => {
               </section>
             </section>
 
-            {/* Contact Section avec SEO optimisé */}
+            {/* 
+              Section contact : 
+              Propose plusieurs moyens de contact et accès au CV
+            */}
             <section
               className={`text-center space-y-8 transition-all duration-1000 delay-500 ${
                 isVisible
@@ -470,17 +553,26 @@ const ComingSoonPage = () => {
               }`}
               aria-label="Contact Yanis Harrat"
             >
+              {/* 
+                Bloc principal de contact : 
+                Email, téléphone, bouton de téléchargement du CV, lien vers page contact
+              */}
               <div className="bg-gradient-to-r from-primary/5 via-primary/10 to-primary/5 rounded-2xl p-8 border border-primary/20 backdrop-blur-sm">
-                <h3 className="text-3xl font-bold mb-4">Discutons ensemble 💬</h3>
+                {/* Titre de la section contact */}
+                <h3 className="text-3xl font-bold mb-4">
+                  Discutons ensemble 💬
+                </h3>
+                {/* Message d'ouverture */}
                 <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
-                  Portfolio en travaux, mais moi je suis toujours disponible ! Que ce
-                  soit pour parler tech, alternance BTS SIO, projets de développement ou juste prendre
-                  des nouvelles.
+                  Portfolio en travaux, mais moi je suis toujours disponible !
+                  Que ce soit pour parler tech, alternance BTS SIO, projets de
+                  développement ou juste prendre des nouvelles.
                 </p>
 
+                {/* Boutons de contact direct (email et téléphone) */}
                 <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8">
                   <Button className="gap-2" asChild>
-                    <Link 
+                    <Link
                       href="mailto:yanis.amine.harrat@gmail.com"
                       aria-label="Contacter Yanis Harrat par email"
                     >
@@ -489,7 +581,7 @@ const ComingSoonPage = () => {
                     </Link>
                   </Button>
                   <Button variant="outline" className="gap-2" asChild>
-                    <Link 
+                    <Link
                       href="tel:+33603059829"
                       aria-label="Appeler Yanis Harrat"
                     >
@@ -499,7 +591,10 @@ const ComingSoonPage = () => {
                   </Button>
                 </div>
 
-                {/* Bouton CV avec nom de fichier SEO */}
+                {/* 
+                  Bouton de téléchargement du CV : 
+                  Nom de fichier optimisé pour le SEO
+                */}
                 <div className="mb-8">
                   <Button
                     variant="default"
@@ -521,15 +616,17 @@ const ComingSoonPage = () => {
                   </p>
                 </div>
 
-                {/* CTA vers page contact */}
+                {/* 
+                  Lien vers la page de contact avec formulaire 
+                */}
                 <div className="bg-background/50 rounded-xl p-6 border border-border/50">
                   <h4 className="font-semibold mb-2">Formulaire de contact</h4>
                   <p className="text-sm text-muted-foreground mb-4">
-                    J&apos;ai déjà une page contact fonctionnelle avec un formulaire
-                    qui marche nickel !
+                    J&apos;ai déjà une page contact fonctionnelle avec un
+                    formulaire qui marche nickel !
                   </p>
                   <Button variant="outline" className="gap-2 group" asChild>
-                    <Link 
+                    <Link
                       href="/contact"
                       aria-label="Accéder au formulaire de contact de Yanis Harrat"
                     >
@@ -539,10 +636,15 @@ const ComingSoonPage = () => {
                   </Button>
                 </div>
               </div>
-              
-              {/* Réseaux sociaux avec liens optimisés */}
+
+              {/* 
+                Bloc réseaux sociaux : 
+                Affiche les liens vers les différents réseaux avec icônes
+              */}
               <div>
-                <h4 className="text-xl font-semibold mb-6">Mes réseaux sociaux</h4>
+                <h4 className="text-xl font-semibold mb-6">
+                  Mes réseaux sociaux
+                </h4>
                 <div className="flex justify-center gap-4">
                   {socialLinks.map((social) => (
                     <Link

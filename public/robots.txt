@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 
 Host: https://yanis-harrat.vercel.app
-Sitemap: https://yanis-harrat.vercel.app/sitemap.xml
+Sitemap: https://yanis-harrat.vercel.app/sitemap.xml        
