@@ -8,25 +8,35 @@ import { ModeToggle } from "./toogle-theme";
 import { Badge } from "./ui/badge";
 
 const navLinks = [
-  { name: "Accueil", href: "#"},
-  { name: "Parcours", href: "#",},
-  { name: "Portfolio", href: "#",},
-  { name: "Ressources", href: "#",},
-  { name: "Blog", href: "#",},
-  { name: "Contact", href: "#",},
+  { name: "Accueil", href: "#" },
+  { name: "Parcours", href: "#" },
+  { name: "Portfolio", href: "#" },
+  { name: "Ressources", href: "#" },
+  { name: "Blog", href: "#" },
+  { name: "Contact", href: "#" },
 ];
 
 const socialLinks = [
-  { href: "https://www.linkedin.com/in/yanis-harrat", icon: "/linkedin.svg", alt: "LinkedIn", size: 24, },
-  { href: "https://github.com/yanix2445", icon: "/github.svg", alt: "GitHub", size: 20, },
+  {
+    href: "https://www.linkedin.com/in/yanis-harrat",
+    icon: "/linkedin.svg",
+    alt: "LinkedIn",
+    size: 24,
+  },
+  {
+    href: "https://github.com/yanix2445",
+    icon: "/github.svg",
+    alt: "GitHub",
+    size: 20,
+  },
 ];
 
 export default function NavBar() {
-  // On déclenche l'animation uniquement côté client (évite tout bug SSR/hydratation)
+  //? On déclenche l'animation uniquement côté client (évite tout bug SSR/hydratation)
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    // On attend le mount pour lancer l'animation (évite le flash SSR)
+    //? On attend le mount pour lancer l'animation (évite le flash SSR)
     const timeout = setTimeout(() => setIsVisible(true), 10);
     return () => clearTimeout(timeout);
   }, []);
