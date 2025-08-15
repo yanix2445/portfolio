@@ -88,7 +88,7 @@ export default function NavBar() {
           ))}
         </ul>
 
-        {/* Liens de réseaux sociaux */}
+        {/*//?? Liens de réseaux sociaux */}
         <ul className="flex gap-4 items-center sm:flex">
           {socialLinks.map(({ href, icon, alt, size }) => (
             <li key={href}>
