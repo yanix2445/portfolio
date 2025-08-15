@@ -282,7 +282,7 @@ const ComingSoonPage = () => {
                 </div>
               </div>
 
-              {/* Badge d'état du site */}
+              {/* //? Badge d'état du site */}
               <Badge variant="outline" className="gap-2">
                 <div className="w-2 h-2 bg-orange-500 rounded-full animate-pulse" />
                 En construction
