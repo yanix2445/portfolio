@@ -1,10 +1,12 @@
 "use client";
 
+//? Dépendances React et Next.js essentielles pour le composant
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Script from "next/script";
 
-//? Import des Icon
+//? Import des icônes principales utilisées dans l'UI (lucide-react + react-icons)
+//? (Permet d'avoir des icônes cohérentes et réutilisables partout)
 import {
   Github,
   Linkedin,
@@ -47,17 +49,17 @@ import {
   SiNestjs,
 } from "react-icons/si";
 
-//? Import des composants UI existants
+//? Import des composants UI custom (badge, bouton, avatar)
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 
-//? Tableau des technologies avec icônes
+//? Liste des technologies principales maîtrisées (affichées dans la stack)
 const technologies = [
   { name: "Next.js", icon: <RiNextjsLine className="w-4 h-4" /> },
   { name: "React", icon: <Atom className="w-4 h-4" /> },
   { name: "TailwindCSS", icon: <RiTailwindCssFill className="w-4 h-4" /> },
-  { name: "shadcn/ui" },
+  { name: "shadcn/ui" }, //* Pas d'icône dispo
   { name: "TypeScript", icon: <SiTypescript className="w-4 h-4" /> },
   { name: "JavaScript", icon: <SiJavascript className="w-4 h-4" /> },
   { name: "Python", icon: <SiPython className="w-4 h-4" /> },
@@ -65,7 +67,7 @@ const technologies = [
   { name: "Prisma", icon: <Pyramid className="w-4 h-4" /> },
   { name: "n8n", icon: <SiN8N className="w-4 h-4" /> },
   { name: "Airtable", icon: <SiAirtable className="w-4 h-4" /> },
-  { name: "REST API" },
+  { name: "REST API" }, //* Pas d'icône dispo
   { name: "Supabase", icon: <RiSupabaseFill className="w-4 h-4" /> },
   { name: "Zod", icon: <CheckSquare className="w-4 h-4" /> },
   { name: "CI/CD", icon: <Workflow className="w-4 h-4" /> },
@@ -77,59 +79,59 @@ const technologies = [
   { name: "Diagnostic réseau", icon: <Network className="w-4 h-4" /> },
 ];
 
-//? Tableau des technologies en cours d'apprentissage
+//? Technologies en cours d'apprentissage (affichées à part)
 const currentLearning = [
   { name: "NestJS", icon: <SiNestjs className="w-4 h-4" /> },
   { name: "scripting avancé", icon: <Braces className="w-4 h-4" /> },
   { name: "monitoring", icon: <Gauge className="w-4 h-4" /> },
 ];
 
-//?  Barre de progression
+//? Composant ProgressBar : Affiche la progression temporelle du projet (animation fluide)
 const ProgressBar = () => {
-  // on utilise un état pour savoir si on est côté client
+  //? Savoir si le composant est monté côté client (évite l'hydratation Next.js)
   const [isMounted, setIsMounted] = useState(false);
+  //? Valeur de progression animée (0 à 100)
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
     setIsMounted(true);
 
-    // --- 1. Définition des dates du projet ---
+    //? 1. Définition des bornes temporelles du projet
     const startDate = new Date("2025-07-15T00:00:00");
-    const endDate = new Date("2025-09-15T23:59:59"); // Fin de journée pour inclure le 15
+    const endDate = new Date("2025-09-15T23:59:59"); //* Fin de journée incluse
     const currentDate = new Date();
-    const maxValue = 100; // Le plafond défini (100%)
+    const maxValue = 100; //? Valeur max de la barre (100%)
 
-    // --- 2. Calcul de la progression ---
+    //? 2. Calcul du ratio de progression réel (entre 0 et 1)
     const totalDuration = endDate.getTime() - startDate.getTime();
     const elapsedDuration = currentDate.getTime() - startDate.getTime();
-
-    // Calcul du pourcentage de temps écoulé (entre 0 et 1)
     let realProgressRatio = elapsedDuration / totalDuration;
 
-    // On s'assure que le ratio reste entre 0 et 1
+    //? Clamp le ratio entre 0 et 1 pour éviter les débordements
     if (realProgressRatio < 0) realProgressRatio = 0;
     if (realProgressRatio > 1) realProgressRatio = 1;
 
-    // On mappe ce ratio à la valeur maximale de la barre (100)
+    //? 3. Calcul de la valeur cible à atteindre (pour l'animation)
     const targetValue = realProgressRatio * maxValue;
 
-    // --- 3. Animation fluide vers la valeur cible ---
+    //? 4. Animation fluide vers la valeur cible (effet easing)
     const timer = setInterval(() => {
       setProgress((prev) => {
-        // Si on est très proche de la cible, on s'arrête
+        //? Si on est très proche de la cible, on arrête l'animation
         if (Math.abs(prev - targetValue) < 0.5) {
           clearInterval(timer);
           return targetValue;
         }
-        // On se rapproche doucement de la cible
+        //? Sinon, on s'approche progressivement (effet smooth)
         return prev + (targetValue - prev) * 0.06;
       });
-    }, 50); // Met à jour l'animation toutes les 50ms
+    }, 50); //* Animation toutes les 50ms
 
+    //? Nettoyage du timer à l'unmount
     return () => clearInterval(timer);
   }, []);
 
-  // Le rendu initial sur le serveur sera de 0%, puis la valeur réelle sera calculée côté client
+  //? Affichage progressif côté client, 0% côté serveur (évite le mismatch SSR/CSR)
   const displayProgress = isMounted ? Math.round(progress) : 0;
 
   return (
@@ -154,55 +156,57 @@ const ProgressBar = () => {
   );
 };
 
+//? Composant principal de la page "Coming Soon"
 const ComingSoonPage = () => {
+  //? Contrôle l'animation d'apparition des sections (fade/slide)
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
     setIsVisible(true);
   }, []);
 
-  //?  --- Liste des liens vers mes réseaux sociaux ---
+  //? Liste des liens vers les réseaux sociaux (affichés en bas de page)
   const socialLinks = [
     {
       id: "social-linkedin",
-      icon: <Linkedin className="w-5 h-5" />, // Icône LinkedIn
-      href: "https://www.linkedin.com/in/yanis-harrat", // Lien vers mon profil LinkedIn
-      label: "LinkedIn", // Nom affiché et pour l'accessibilité
+      icon: <Linkedin className="w-5 h-5" />, //? Icône LinkedIn
+      href: "https://www.linkedin.com/in/yanis-harrat", //? Lien LinkedIn
+      label: "LinkedIn", //? Accessibilité
     },
     {
       id: "social-github",
-      icon: <Github className="w-5 h-5" />, // Icône GitHub
-      href: "https://github.com/yanix2445", // Lien vers mon profil GitHub
+      icon: <Github className="w-5 h-5" />, //? Icône GitHub
+      href: "https://github.com/yanix2445",
       label: "GitHub",
     },
     {
       id: "social-instagram",
-      icon: <Instagram className="w-5 h-5" />, // Icône Instagram
-      href: "https://instagram.com/yanix2445", // Lien vers mon profil Instagram
+      icon: <Instagram className="w-5 h-5" />, //? Icône Instagram
+      href: "https://instagram.com/yanix2445",
       label: "Instagram",
     },
     {
       id: "social-twitter",
-      icon: <Twitter className="w-5 h-5" />, // Icône Twitter
-      href: "https://twitter.com/yanix2445", // Lien vers mon profil Twitter
+      icon: <Twitter className="w-5 h-5" />, //? Icône Twitter
+      href: "https://twitter.com/yanix2445",
       label: "Twitter",
     },
   ];
 
-  //?  --- Liste de mes hobbies ---
+  //? Liste des hobbies (affichés sous forme de badges)
   const hobbies = [
-    { id: "hobby-volleyball", label: "🏐 Volleyball 8 ans" }, // Sport collectif, persévérance
-    { id: "hobby-gaming", label: "🎮 Gaming" }, // Passion jeux vidéo
-    { id: "hobby-anime", label: "🍥 Animés, mangas & culture japonaise" }, // Culture pop japonaise
+    { id: "hobby-volleyball", label: "🏐 Volleyball 8 ans" }, //? Sport collectif, persévérance
+    { id: "hobby-gaming", label: "🎮 Gaming" }, //? Passion jeux vidéo
+    { id: "hobby-anime", label: "🍥 Animés, mangas & culture japonaise" }, //? Culture pop japonaise
     {
       id: "hobby-cinema",
-      label: "🎬 Cinéphile, sériephile & films d'animation", // Goût pour l'image et la narration
+      label: "🎬 Cinéphile, sériephile & films d'animation", //? Goût pour l'image et la narration
     },
-    { id: "hobby-travel", label: "✈️ Voyages" }, // Ouverture d'esprit, découverte
-    { id: "hobby-hardware", label: "🔧 Hardware" }, // Intérêt pour la technique et le DIY
+    { id: "hobby-travel", label: "✈️ Voyages" }, //? Ouverture d'esprit, découverte
+    { id: "hobby-hardware", label: "🔧 Hardware" }, //? Intérêt pour la technique et le DIY
   ];
 
-  //?  --- Données structurées JSON-LD pour le SEO ---
+  //? Données structurées JSON-LD pour le SEO (améliore la compréhension par Google)
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "Person",
@@ -240,26 +244,27 @@ const ComingSoonPage = () => {
   return (
     <>
       {/* 
-        //? Script JSON-LD pour le SEO : 
-        //? Permet aux moteurs de recherche de mieux comprendre le contenu de la page 
+        //? Script JSON-LD pour le SEO 
+        //? (Permet aux moteurs de recherche de mieux comprendre le contenu de la page)
       */}
-      <Script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} />
+      <Script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+      />
 
       {/* 
-        //? Wrapper principal : 
-        //? Applique un fond dégradé sur toute la hauteur de l'écran 
+        //? Wrapper principal : fond dégradé sur toute la hauteur de l'écran 
       */}
       <div className="min-h-screen bg-gradient-to-br from-background/95 via-background/98 to-muted/10">
 
         {/* 
-          //? Header flottant et toujours visible en haut de page : 
-          //? Affiche l'avatar, le nom, le titre et un badge "En construction"
+          //? Header flottant : avatar, nom, titre, badge "En construction"
         */}
         <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-xl border-b border-border/50">
           <div className="container mx-auto px-6 py-4">
             <div className="flex items-center justify-between">
               {/* 
-                Bloc avatar + nom + sous-titre 
+                //? Bloc avatar + nom + sous-titre 
               */}
               <div className="flex items-center gap-3">
                 <Avatar className="w-[64px] h-[64px]">
