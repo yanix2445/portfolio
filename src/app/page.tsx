@@ -297,8 +297,7 @@ const ComingSoonPage = () => {
         <main className="pt-32 pb-16 px-6">
           <div className="container mx-auto max-w-4xl backdrop-blur-sm">
             {/* 
-              //? Section Hero : 
-              P//? présentation rapide, message d'indisponibilité temporaire et barre de progression
+              //? Section Hero : présentation rapide, message d'indisponibilité, barre de progression
             */}
             <section
               className={`text-center backdrop-blur-sm mb-16 transition-all duration-1000 ${
@@ -308,13 +307,13 @@ const ComingSoonPage = () => {
               }`}
               aria-label="Présentation Yanis Harrat développeur"
             >
-              {/* Message d'indisponibilité du portfolio */}
+              {/* //? Message d'indisponibilité du portfolio */}
               <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium mb-6">
                 <Clock className="w-4 h-4" />
                 Portfolio temporairement indisponible
               </div>
 
-              {/* Titre principal */}
+              {/* //? Titre principal */}
               <h2 className="text-5xl md:text-7xl font-bold mb-6">
                 Salut ! <br />
                 <span className="bg-gradient-to-r from-primary via-primary/80 to-primary/60 bg-clip-text text-transparent">
@@ -322,22 +321,21 @@ const ComingSoonPage = () => {
                 </span>
               </h2>
 
-              {/* Description courte */}
+              {/* //? Description courte */}
               <p className="xl:text-2xl text-muted-foreground mb-8 max-w-2xl mx-auto leading-relaxed">
                 Développeur full-stack passionné, je refais entièrement mon
                 portfolio avec du Next.js et des technos modernes. En attendant,
                 laisse-moi me présenter rapidement !
               </p>
 
-              {/* Barre de progression (animation ou indicateur d'avancement) */}
+              {/* //? Barre de progression (animation ou indicateur d'avancement) */}
               <div className="max-w-md mx-auto mb-8">
                 <ProgressBar />
               </div>
             </section>
 
             {/* 
-              //? Section "À propos" : 
-              //? Présentation détaillée, parcours, hobbies, et carte alternance
+              //? Section "À propos" : présentation détaillée, parcours, hobbies, alternance
             */}
             <section
               className={`mb-24 transition-all duration-1000 delay-300 ${
