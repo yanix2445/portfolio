@@ -269,7 +269,6 @@ const ComingSoonPage = () => {
                     className="w-full h-full rounded-full object-cover"
                   />
                 </Avatar>
-
                 <div>
                   <h1 className="font-semibold text-sm">Yanis Harrat</h1>
                   <p className="text-xs text-muted-foreground">
