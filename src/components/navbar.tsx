@@ -71,7 +71,7 @@ export default function NavBar() {
           </Avatar>
         </Link>
 
-        {/* Liens de navigation */}
+        {/*//? Liens de navigation */}
         <ul className="flex gap-2">
           {navLinks.map(({ name, href }) => (
             <li key={href}>
