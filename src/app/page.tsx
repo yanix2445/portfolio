@@ -345,9 +345,7 @@ const ComingSoonPage = () => {
               }`}
               aria-label="À propos de Yanis Harrat"
             >
-              {/* 
-                En-tête de la section "À propos" 
-              */}
+              {/* //? En-tête de la section "À propos" */}
               <header className="text-center mb-16 backdrop-blur-sm">
                 <div className="flex flex-col justify-center items-center gap-3 mb-5">
                   <div className="w-10 h-10 bg-primary/20 rounded-xl flex items-center justify-center">
@@ -358,7 +356,7 @@ const ComingSoonPage = () => {
                   </h3>
                 </div>
 
-                {/* Texte d'intro sur la personnalité et la philosophie */}
+                {/* //? Intro sur la personnalité et la philosophie */}
                 <p className="max-w-2xl mx-auto text-lg text-muted-foreground">
                   Je suis Yanis — Technicien IT & Développeur full-stack,
                   orienté solutions concrètes. Sérieux, curieux et carré, je
@@ -368,21 +366,19 @@ const ComingSoonPage = () => {
               </header>
 
               {/* 
-                Grille de présentation : 
-                - À gauche : parcours, expériences, hobbies
-                - À droite : carte alternance
+                //? Grille de présentation : 
+                //? - À gauche : parcours, expériences, hobbies
+                //? - À droite : carte alternance
               */}
               <div className="max-w-4xl mx-auto grid md:grid-cols-2 gap-10 mb-20 text-1xl">
-                {/* 
-                  Bloc parcours et hobbies 
-                */}
+                {/* //? Bloc parcours et hobbies */}
                 <article className="space-y-5 backdrop-blur-sm">
-                  {/* Titre du parcours */}
+                  {/* //? Titre du parcours */}
                   <h4 className="text-xl font-semibold flex items-center gap-2">
                     <Zap className="w-5 h-5 text-primary" />
                     Mon parcours condensé
                   </h4>
-                  {/* Description du parcours scolaire et professionnel */}
+                  {/* //? Description du parcours scolaire et professionnel */}
                   <p className="text-muted-foreground">
                     Issu d&apos;un <strong>Bac Pro SN</strong> et actuellement
                     en <strong>BTS SIO SISR</strong>, j&apos;ai touché à la
@@ -394,7 +390,7 @@ const ComingSoonPage = () => {
                     documentation et formation utilisateur.
                   </p>
 
-                  {/* Expérience sportive et soft skills */}
+                  {/* //? Expérience sportive et soft skills */}
                   <p className="text-muted-foreground">
                     <strong>8 ans de volleyball</strong> (3 en Nationale 2), ça
                     forge : esprit d&apos;équipe, gestion de la pression,
@@ -402,7 +398,7 @@ const ComingSoonPage = () => {
                     projets tech.
                   </p>
 
-                  {/* Ouverture culturelle */}
+                  {/* //? Ouverture culturelle */}
                   <p className="text-muted-foreground">
                     Passionné de découvertes culturelles&nbsp;— Algérie, Grèce,
                     et bientôt direction le Japon&nbsp;! J&apos;adore explorer
@@ -410,7 +406,7 @@ const ComingSoonPage = () => {
                     et m&apos;inspirer de chaque rencontre.
                   </p>
 
-                  {/* Liste des hobbies sous forme de badges */}
+                  {/* //? Liste des hobbies sous forme de badges */}
                   <div className="flex flex-wrap gap-2 pt-2">
                     {hobbies.map((hobby) => (
                       <Badge
@@ -425,8 +421,8 @@ const ComingSoonPage = () => {
                 </article>
 
                 {/* 
-                  Carte alternance : 
-                  Met en avant la recherche d'alternance avec infos clés pour le SEO
+                  //? Carte alternance : 
+                  //? Met en avant la recherche d'alternance avec infos clés pour le SEO
                 */}
                 <aside className="bg-gradient-to-br backdrop-blur-sm from-primary/5 to-primary/10 rounded-2xl p-6 border border-primary/20 shadow-sm">
                   <div className="flex items-center gap-3 mb-4">
@@ -439,7 +435,7 @@ const ComingSoonPage = () => {
                   </div>
 
                   <div className="space-y-3 text-muted-foreground">
-                    {/* Localisation de l'alternance */}
+                    {/* //? Localisation de l'alternance */}
                     <div className="flex flex-col md:flex-row md:items-center gap-1">
                       <div className="flex items-center gap-1">
                         <MapPin className="w-4 h-4 text-primary" />
@@ -449,7 +445,7 @@ const ComingSoonPage = () => {
                         <strong>Paris, Île-de-France</strong>
                       </span>
                     </div>
-                    {/* Détail du cursus et de la période d'alternance */}
+                    {/* //? Détail du cursus et de la période d'alternance */}
                     <p>
                       Je démarre ma{" "}
                       <strong>
@@ -460,7 +456,7 @@ const ComingSoonPage = () => {
                       recherche activement une{" "}
                       <strong>alternance jusqu&apos;en août 2027</strong>.
                     </p>
-                    {/* Soft skills et motivation */}
+                    {/* //? Soft skills et motivation */}
                     <p>
                       Curieux, impliqué et déjà expérimenté sur le terrain (
                       support IT, réseau, développement full-stack,
@@ -471,7 +467,7 @@ const ComingSoonPage = () => {
                       fond pour apporter des solutions concrètes et faire
                       avancer l&apos;équipe.
                     </p>
-                    {/* Objectifs professionnels */}
+                    {/* //? Objectifs professionnels */}
                     <p>
                       Mon objectif&nbsp;: renforcer mes compétences en
                       <strong> backend</strong>, <strong>automatisation</strong>
@@ -479,7 +475,7 @@ const ComingSoonPage = () => {
                       <strong>support informatique</strong>
                       tout en contribuant activement à vos projets.
                     </p>
-                    {/* Badge de disponibilité */}
+                    {/* //? Badge de disponibilité */}
                     <Badge variant="default" className="text-xs">
                       🚀 Disponible dès septembre 2025
                     </Badge>
@@ -488,8 +484,8 @@ const ComingSoonPage = () => {
               </div>
 
               {/* 
-                Section stack technique : 
-                Liste des technologies maîtrisées et en cours d'apprentissage
+                //? Section stack technique : 
+                //? Liste des technologies maîtrisées et en cours d'apprentissage
               */}
               <section className="bg-muted/30 rounded-2xl p-4 sm:p-6 border backdrop-blur-sm border-border/50 max-w-full sm:max-w-5xl mx-auto">
                 <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
@@ -501,13 +497,13 @@ const ComingSoonPage = () => {
                   </h4>
                 </div>
 
-                {/* Description de la stack */}
+                {/* //? Description de la stack */}
                 <p className="text-xs sm:text-sm text-muted-foreground mb-3 sm:mb-4">
                   Technologies que je maîtrise pour automatiser, développer des
                   applications web et structurer mes projets full-stack :
                 </p>
 
-                {/* Liste des technologies principales sous forme de badges */}
+                {/* //? Liste des technologies principales sous forme de badges */}
                 <div className="flex flex-wrap gap-1.5 sm:gap-2 mb-3 sm:mb-4">
                   {technologies.map((tech, i) => (
                     <Badge
@@ -521,7 +517,7 @@ const ComingSoonPage = () => {
                   ))}
                 </div>
 
-                {/* Liste des technologies en cours d'apprentissage */}
+                {/* //? Liste des technologies en cours d'apprentissage */}
                 <div className="flex flex-col sm:flex-row sm:items-center gap-1.5 sm:gap-2 text-xs text-muted-foreground italic">
                   <span className="shrink-0">
                     Technologies en apprentissage :
@@ -542,8 +538,7 @@ const ComingSoonPage = () => {
             </section>
 
             {/* 
-              //? Section contact : 
-              //? Propose plusieurs moyens de contact et accès au CV
+              //? Section contact : propose plusieurs moyens de contact et accès au CV
             */}
             <section
               className={`text-center space-y-8 transition-all duration-1000 delay-500 ${
