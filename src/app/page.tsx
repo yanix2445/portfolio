@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Script from "next/script";
 
-// Import des Icon
+//? Import des Icon
 import {
   Github,
   Linkedin,
@@ -47,12 +47,12 @@ import {
   SiNestjs,
 } from "react-icons/si";
 
-// Import des composants UI existants
+//? Import des composants UI existants
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 
-// Tableau des technologies avec icônes
+//? Tableau des technologies avec icônes
 const technologies = [
   { name: "Next.js", icon: <RiNextjsLine className="w-4 h-4" /> },
   { name: "React", icon: <Atom className="w-4 h-4" /> },
@@ -77,14 +77,14 @@ const technologies = [
   { name: "Diagnostic réseau", icon: <Network className="w-4 h-4" /> },
 ];
 
-// Tableau des technologies en cours d'apprentissage
+//? Tableau des technologies en cours d'apprentissage
 const currentLearning = [
   { name: "NestJS", icon: <SiNestjs className="w-4 h-4" /> },
   { name: "scripting avancé", icon: <Braces className="w-4 h-4" /> },
   { name: "monitoring", icon: <Gauge className="w-4 h-4" /> },
 ];
 
-// Barre de progression
+//?  Barre de progression
 const ProgressBar = () => {
   // on utilise un état pour savoir si on est côté client
   const [isMounted, setIsMounted] = useState(false);
@@ -161,7 +161,7 @@ const ComingSoonPage = () => {
     setIsVisible(true);
   }, []);
 
-  // --- Liste des liens vers mes réseaux sociaux ---
+  //?  --- Liste des liens vers mes réseaux sociaux ---
   const socialLinks = [
     {
       id: "social-linkedin",
@@ -189,7 +189,7 @@ const ComingSoonPage = () => {
     },
   ];
 
-  // --- Liste de mes hobbies ---
+  //?  --- Liste de mes hobbies ---
   const hobbies = [
     { id: "hobby-volleyball", label: "🏐 Volleyball 8 ans" }, // Sport collectif, persévérance
     { id: "hobby-gaming", label: "🎮 Gaming" }, // Passion jeux vidéo
@@ -202,7 +202,7 @@ const ComingSoonPage = () => {
     { id: "hobby-hardware", label: "🔧 Hardware" }, // Intérêt pour la technique et le DIY
   ];
 
-  // --- Données structurées JSON-LD pour le SEO ---
+  //?  --- Données structurées JSON-LD pour le SEO ---
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "Person",
@@ -240,22 +240,20 @@ const ComingSoonPage = () => {
   return (
     <>
       {/* 
-        Script JSON-LD pour le SEO : 
-        Permet aux moteurs de recherche de mieux comprendre le contenu de la page (données structurées Person)
+        //? Script JSON-LD pour le SEO : 
+        //? Permet aux moteurs de recherche de mieux comprendre le contenu de la page 
       */}
-      <Script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
-      />
+      <Script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} />
 
       {/* 
-        Wrapper principal : 
-        Applique un fond dégradé sur toute la hauteur de l'écran 
+        //? Wrapper principal : 
+        //? Applique un fond dégradé sur toute la hauteur de l'écran 
       */}
       <div className="min-h-screen bg-gradient-to-br from-background/95 via-background/98 to-muted/10">
+
         {/* 
-          Header flottant et toujours visible en haut de page : 
-          Affiche l'avatar, le nom, le titre et un badge "En construction"
+          //? Header flottant et toujours visible en haut de page : 
+          //? Affiche l'avatar, le nom, le titre et un badge "En construction"
         */}
         <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-xl border-b border-border/50">
           <div className="container mx-auto px-6 py-4">
@@ -290,13 +288,13 @@ const ComingSoonPage = () => {
         </header>
 
         {/* 
-          Contenu principal de la page 
+          //? Contenu principal de la page 
         */}
         <main className="pt-32 pb-16 px-6">
           <div className="container mx-auto max-w-4xl backdrop-blur-sm">
             {/* 
-              Section Hero : 
-              Présentation rapide, message d'indisponibilité temporaire et barre de progression
+              //? Section Hero : 
+              P//? présentation rapide, message d'indisponibilité temporaire et barre de progression
             */}
             <section
               className={`text-center backdrop-blur-sm mb-16 transition-all duration-1000 ${
@@ -334,8 +332,8 @@ const ComingSoonPage = () => {
             </section>
 
             {/* 
-              Section "À propos" : 
-              Présentation détaillée, parcours, hobbies, et carte alternance
+              //? Section "À propos" : 
+              //? Présentation détaillée, parcours, hobbies, et carte alternance
             */}
             <section
               className={`mb-24 transition-all duration-1000 delay-300 ${
@@ -542,8 +540,8 @@ const ComingSoonPage = () => {
             </section>
 
             {/* 
-              Section contact : 
-              Propose plusieurs moyens de contact et accès au CV
+              //? Section contact : 
+              //? Propose plusieurs moyens de contact et accès au CV
             */}
             <section
               className={`text-center space-y-8 transition-all duration-1000 delay-500 ${

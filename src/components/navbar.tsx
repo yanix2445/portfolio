@@ -34,8 +34,8 @@ export default function NavBar() {
   return (
     <div>
       {/* 
-        Navbar moderne, fluide, glassmorphism, dark mode ready.
-        Animation d'apparition "slide from top" via la classe CSS globale.
+        //? Navbar moderne, fluide, glassmorphism, dark mode ready.
+        //? Animation d'apparition "slide from top" via la classe CSS globale.
       */}
       <nav
         className={`
@@ -55,13 +55,12 @@ export default function NavBar() {
         `}
         aria-label="Navigation principale"
       >
-            
-            <Badge variant="outline" className="gap-2">
-              <div className="w-2 h-2 bg-orange-500 rounded-full animate-pulse" />
-              En construction
-            </Badge>
-          
-        {/* Logo ou titre du site */}
+        <Badge variant="outline" className="gap-2">
+          <div className="w-2 h-2 bg-orange-500 rounded-full animate-pulse" />
+          En construction
+        </Badge>
+
+        {/*//? Logo ou titre du site */}
         <Link href="/">
           <Avatar className="w-[64px] h-[64px]">
             <AvatarImage
