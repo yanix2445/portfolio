@@ -100,13 +100,13 @@ export default function NavBar() {
                   height={size}
                   className={`rounded-full transition-transform transform hover:scale-110 ${
                     icon === "/github.svg" ? "bg-zinc-950 " : ""
-                  }`} />
+                  }`}
+                />
               </Link>
             </li>
           ))}
           <ModeToggle />
         </ul>
-       
       </nav>
     </div>
   );
