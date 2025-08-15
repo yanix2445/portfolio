@@ -549,22 +549,22 @@ const ComingSoonPage = () => {
               aria-label="Contact Yanis Harrat"
             >
               {/* 
-                Bloc principal de contact : 
-                Email, téléphone, bouton de téléchargement du CV, lien vers page contact
+                //? Bloc principal de contact : 
+                //? Email, téléphone, bouton de téléchargement du CV, lien vers page contact
               */}
               <div className="bg-gradient-to-r from-primary/5 via-primary/10 to-primary/5 rounded-2xl p-8 border border-primary/20 backdrop-blur-sm">
-                {/* Titre de la section contact */}
+                {/* //? Titre de la section contact */}
                 <h3 className="text-3xl font-bold mb-4">
                   Discutons ensemble 💬
                 </h3>
-                {/* Message d'ouverture */}
+                {/* //? Message d'ouverture */}
                 <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
                   Portfolio en travaux, mais moi je suis toujours disponible !
                   Que ce soit pour parler tech, alternance BTS SIO, projets de
                   développement ou juste prendre des nouvelles.
                 </p>
 
-                {/* Boutons de contact direct (email et téléphone) */}
+                {/* //? Boutons de contact direct (email et téléphone) */}
                 <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8">
                   <Button className="gap-2" asChild>
                     <Link
@@ -587,8 +587,8 @@ const ComingSoonPage = () => {
                 </div>
 
                 {/* 
-                  Bouton de téléchargement du CV : 
-                  Nom de fichier optimisé pour le SEO
+                  //? Bouton de téléchargement du CV : 
+                  //? Nom de fichier optimisé pour le SEO
                 */}
                 <div className="mb-8">
                   <Button
@@ -612,7 +612,7 @@ const ComingSoonPage = () => {
                 </div>
 
                 {/* 
-                  Lien vers la page de contact avec formulaire 
+                  //? Lien vers la page de contact avec formulaire 
                 */}
                 <div className="bg-background/50 rounded-xl p-6 border border-border/50">
                   <h4 className="font-semibold mb-2">Formulaire de contact</h4>
@@ -633,8 +633,7 @@ const ComingSoonPage = () => {
               </div>
 
               {/* 
-                Bloc réseaux sociaux : 
-                Affiche les liens vers les différents réseaux avec icônes
+                //? Bloc réseaux sociaux : affiche les liens vers les différents réseaux avec icônes
               */}
               <div>
                 <h4 className="text-xl font-semibold mb-6">
