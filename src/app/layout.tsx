@@ -5,10 +5,10 @@ import { siteMetadata } from "@/lib/metadata";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Toaster } from "@/components/ui/sonner";
-import FloatingDots from "@/components/floatingDots";
 import Script from "next/script";
 import Footer from "@/components/footer";
 import NavBar from "@/components/navbar";
+import AdaptiveBackground from "@/components/adaptive-background";
 
 //? Métadonnées globales pour Next.js
 export const metadata = siteMetadata;
@@ -40,10 +40,12 @@ export default function RootLayout({
         <Analytics />
         <SpeedInsights />
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
-          <NavBar />
-          {children}
-          <Footer />
-          <Toaster />
+          <AdaptiveBackground darkVariant="default" lightVariant="subtle">
+            <NavBar />
+            {children}
+            <Footer />
+            <Toaster />
+          </AdaptiveBackground>
         </ThemeProvider>
       </body>
     </html>

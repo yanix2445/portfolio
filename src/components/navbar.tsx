@@ -1,11 +1,17 @@
 "use client";
 
+// Importation des hooks React pour la gestion d'état et d'effets de bord
 import { useState, useEffect } from "react";
+// Importation du composant Link de Next.js pour la navigation côté client
 import Link from "next/link";
+// Importation du composant de bascule de thème (clair/sombre)
 import { ModeToggle } from "./toogle-theme";
+// Importation des icônes de réseaux sociaux depuis react-icons
 import { FaLinkedin, FaSquareXTwitter, FaGithub } from "react-icons/fa6";
+// Importation du composant menu burger personnalisé
 import { BurgerMenu } from "./menu-burger";
 
+// Définition des liens de navigation principaux de la navbar
 const navLinks = [
   { id: 1, name: "Accueil", href: "/Accueil" },
   { id: 2, name: "Parcours", href: "/Parcours" },
@@ -15,6 +21,7 @@ const navLinks = [
   { id: 6, name: "Blog", href: "/Blog" },
 ];
 
+// Définition des liens vers les réseaux sociaux (icône, url, accessibilité)
 const socialLinks = [
   { href: "https://github.com/yanix2445", icon: FaGithub, alt: "GitHub" },
   { href: "https://x.com/yanix_213", icon: FaSquareXTwitter, alt: "Twitter" },
@@ -25,31 +32,35 @@ const socialLinks = [
   },
 ];
 
+// Composant principal de la barre de navigation
 export default function NavBar() {
+  // État local pour gérer l'animation d'apparition de la navbar
   const [isVisible, setIsVisible] = useState(false);
 
+  // Effet pour déclencher l'animation d'apparition au montage du composant
   useEffect(() => {
     const timeout = setTimeout(() => setIsVisible(true), 0);
     return () => clearTimeout(timeout);
   }, []);
 
-  // Les autres liens seront accessibles via le menu burger.
+  // --- Gestion des liens affichés selon la taille d'écran ---
+
+  // Sur mobile : seuls "Portfolio" et "Contact" sont visibles directement
   const mobileVisibleLinks = navLinks.filter((link) =>
     ["Portfolio", "Contact"].includes(link.name)
   );
-  // Les autres liens ("Ressources", "Blog") passent dans le menu burger.
+  // Sur tablette : "Accueil", "Parcours", "Portfolio", "Contact" sont visibles
   const tabletVisibleLinks = navLinks.filter((link) =>
     ["Accueil", "Parcours", "Portfolio", "Contact"].includes(link.name)
   );
+  // Sur desktop : tous les liens sont affichés
+  const desktopVisibleLinks = navLinks;
 
-  // Sur desktop : tous les liens sont affichés directement dans la navbar.
-  const desktopVisibleLinks = navLinks; // Affichage complet
-
-  // Sur mobile : tous les liens qui ne sont pas dans mobileVisibleLinks vont dans le burger.
+  // Sur mobile : les autres liens vont dans le menu burger
   const mobileBurgerLinks = navLinks.filter(
     (link) => !mobileVisibleLinks.includes(link)
   );
-  // Sur tablette : tous les liens qui ne sont pas dans tabletVisibleLinks vont dans le burger.
+  // Sur tablette : les autres liens vont dans le menu burger
   const tabletBurgerLinks = navLinks.filter(
     (link) => !tabletVisibleLinks.includes(link)
   );
@@ -69,19 +80,24 @@ export default function NavBar() {
       `}
       aria-label="Navigation principale"
     >
-      {/* MOBILE */}
+      {/*//?  === SECTION MOBILE ===
+          Affichage uniquement sur mobile (sm:hidden)
+          - Logo à gauche
+          - Liens principaux visibles au centre
+          - Menu burger à droite pour les autres liens et réseaux sociaux
+      */}
       <div className="flex items-center justify-between w-full sm:hidden">
-        {/* Logo */}
+        {/* Logo (gauche) */}
         <Link href="/" className="flex-shrink-0 max-w-[30%] pl-4">
-          <span className="block logo-font text-lg text-black dark:text-white transform -rotate-12 -ml-1">
+          <span className="block logo-font text-lg text-black dark:text-white transform -rotate-12 lg:-ml-1">
             Yanis
           </span>
-          <span className="block logo-font text-base text-black dark:text-white transform -rotate-12 -mt-0.5 ml-1">
+          <span className="block logo-font text-base text-black dark:text-white transform -rotate-12 lg:-mt-0.5 lg:ml-1">
             Harrat
           </span>
         </Link>
 
-        {/* Liens visibles */}
+        {/* Liens principaux visibles (centre) */}
         <ul className="flex gap-3">
           {mobileVisibleLinks.map((link) => (
             <li key={link.id}>
@@ -90,7 +106,7 @@ export default function NavBar() {
           ))}
         </ul>
 
-        {/* Burger */}
+        {/* Menu burger (droite) pour les autres liens + réseaux sociaux */}
         <BurgerMenu
           navLinks={mobileBurgerLinks}
           socialLinks={socialLinks}
@@ -98,42 +114,14 @@ export default function NavBar() {
         />
       </div>
 
-      {/* TABLETTE */}
+      {/*//? === SECTION TABLETTE ===
+          Affichage sur tablette (sm:flex lg:hidden)
+          - Logo à gauche
+          - Liens principaux visibles au centre
+          - Menu burger à droite pour les liens secondaires et réseaux sociaux
+      */}
       <div className="hidden sm:flex lg:hidden items-center justify-between w-full min-w-0 px-6">
-        {/* Logo */}
-         {/* Logo */}
-         <Link
-          href="/"
-          className="flex-shrink-0 flex flex-col max-w-[20%] min-w-0"
-        >
-          <span className="logo-font text-3xl text-black dark:text-white transform -rotate-12 pl-1 pb-2 truncate">
-            Yanis
-          </span>
-          <span className="logo-font text-2xl text-black dark:text-white transform -rotate-12 -mt-1 pr-0.5 pl-5 truncate">
-            Harrat
-          </span>
-        </Link>
-
-        {/* Liens visibles */}
-        <ul className="flex gap-4 flex-1 justify-center">
-          {tabletVisibleLinks.map((link) => (
-            <li key={link.id}>
-              <Link href={link.href}>{link.name}</Link>
-            </li>
-          ))}
-        </ul>
-
-        {/* Burger */}
-        <BurgerMenu
-          navLinks={tabletBurgerLinks}
-          socialLinks={socialLinks}
-          variant="tablet"
-        />
-      </div>
-
-      {/* DESKTOP */}
-      <div className="hidden lg:flex items-center justify-between w-full max-w-full min-w-0 pl-3">
-        {/* Logo */}
+        {/* Logo (gauche) */}
         <Link
           href="/"
           className="flex-shrink-0 flex flex-col max-w-[20%] min-w-0"
@@ -146,7 +134,44 @@ export default function NavBar() {
           </span>
         </Link>
 
-        {/* Tous les liens */}
+        {/* Liens principaux visibles (centre) */}
+        <ul className="flex gap-4 flex-1 justify-center">
+          {tabletVisibleLinks.map((link) => (
+            <li key={link.id}>
+              <Link href={link.href}>{link.name}</Link>
+            </li>
+          ))}
+        </ul>
+
+        {/* Menu burger (droite) pour les liens secondaires + réseaux sociaux */}
+        <BurgerMenu
+          navLinks={tabletBurgerLinks}
+          socialLinks={socialLinks}
+          variant="tablet"
+        />
+      </div>
+
+      {/*//? === SECTION DESKTOP ===
+          Affichage sur desktop (lg:flex)
+          - Logo à gauche
+          - Tous les liens visibles au centre
+          - Réseaux sociaux + toggle thème à droite
+      */}
+      <div className="hidden lg:flex items-center justify-between w-full max-w-full min-w-0 pl-3">
+        {/* Logo (gauche) */}
+        <Link
+          href="/"
+          className="flex-shrink-0 flex flex-col max-w-[20%] min-w-0"
+        >
+          <span className="logo-font text-3xl text-black dark:text-white transform -rotate-12 pl-1 pb-2 truncate">
+            Yanis
+          </span>
+          <span className="logo-font text-2xl text-black dark:text-white transform -rotate-12 -mt-1 pr-0.5 pl-5 truncate">
+            Harrat
+          </span>
+        </Link>
+
+        {/* Tous les liens de navigation (centre) */}
         <ul className="flex flex-1 flex-wrap justify-center gap-1 overflow-hidden min-w-0">
           {desktopVisibleLinks.map((link) => (
             <li key={link.id} className="flex-shrink-0">
@@ -160,7 +185,7 @@ export default function NavBar() {
           ))}
         </ul>
 
-        {/* Réseaux + toggle */}
+        {/* Réseaux sociaux (icônes) + toggle thème (droite) */}
         <div className="flex gap-3 items-center flex-shrink-0 max-w-[20%] min-w-0 pr-8">
           {socialLinks.map(({ href, icon: Icon, alt }) => (
             <Link
@@ -174,6 +199,7 @@ export default function NavBar() {
             </Link>
           ))}
         </div>
+        {/* Bascule du mode clair/sombre */}
         <ModeToggle />
       </div>
     </nav>
