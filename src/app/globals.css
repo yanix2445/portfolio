@@ -1,5 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Mea+Culpa&display=swap');
 @import "tailwindcss";
 @import "tw-animate-css";
+
 
 @custom-variant dark (&:is(.dark *));
 
@@ -167,4 +169,8 @@ body {
   transition: 
     background-color 0.7s ease, 
     color 0.1s ease !important;
+}
+
+.logo-font {
+  font-family: 'Mea Culpa', cursive;
 }
