@@ -96,9 +96,24 @@ const ProgressBar = () => {
   useEffect(() => {
     setIsMounted(true);
 
-    //? 1. Définition des bornes temporelles du projet
-    const startDate = new Date("2025-07-15T00:00:00");
-    const endDate = new Date("2025-09-15T23:59:59"); //* Fin de journée incluse
+    //? 1. Configuration des dates du projet (modifiez simplement ces valeurs)
+    //? Date de début du projet
+    const PROJECT_START = {
+      year: 2025,
+      month: 8, // Septembre (1-12)
+      day: 15
+    };
+    
+    //? Date de fin du projet
+    const PROJECT_END = {
+      year: 2025,
+      month: 12, // Décembre (1-12)
+      day: 8
+    };
+    
+    //? Construction automatique des dates (début à 00:00, fin à 23:59)
+    const startDate = new Date(PROJECT_START.year, PROJECT_START.month - 1, PROJECT_START.day, 0, 0, 0);
+    const endDate = new Date(PROJECT_END.year, PROJECT_END.month - 1, PROJECT_END.day, 23, 59, 59);
     const currentDate = new Date();
     const maxValue = 100; //? Valeur max de la barre (100%)
 
