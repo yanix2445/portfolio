@@ -248,6 +248,7 @@ const ComingSoonPage = () => {
         //? (Permet aux moteurs de recherche de mieux comprendre le contenu de la page)
       */}
       <Script
+        id="structured-data"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />
