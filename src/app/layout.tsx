@@ -11,7 +11,6 @@ import Footer from "@/components/footer";
 
 // Métadonnées globales pour Next.js
 export const metadata = siteMetadata;
-console.log("Metadata :", siteMetadata);
 
 
 export default function RootLayout({
