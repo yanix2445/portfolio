@@ -18,7 +18,7 @@ export const PortfolioCard = React.memo(function PortfolioCard({ name, descripti
             target="_blank"
             rel="noopener noreferrer"
             className={cn(
-                "group/card relative aspect-video overflow-hidden rounded-lg bg-neutral-900 border border-white/5 hover:border-[#CC9400]/30 transition-all duration-300 block",
+                "group/card relative aspect-video overflow-hidden rounded-lg bg-neutral-900 border border-white/5 hover:border-[#CC9400]/30 transition-[border-color,box-shadow] duration-300 block",
                 className
             )}
         >
@@ -29,18 +29,18 @@ export const PortfolioCard = React.memo(function PortfolioCard({ name, descripti
                     alt={name}
                     fill
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    className="w-full h-full object-cover opacity-80 group-hover/card:scale-110 group-hover/card:opacity-100 transition-all duration-700"
+                    className="w-full h-full object-cover opacity-80 group-hover/card:scale-110 group-hover/card:opacity-100 transition-[transform,opacity] duration-700"
                 />
             </div>
 
             {/* Arrow Icon */}
             <div className="absolute top-3 right-3 z-20">
-                <ArrowUpRight className="text-white/70 w-4 h-4 group-hover/card:text-[#CC9400] group-hover/card:translate-x-1 group-hover/card:-translate-y-1 transition-all" />
+                <ArrowUpRight className="text-white/70 w-4 h-4 group-hover/card:text-[#CC9400] group-hover/card:translate-x-1 group-hover/card:-translate-y-1 transition-[color,transform]" />
             </div>
 
             {/* Text Overlay */}
             <div className="absolute inset-x-0 bottom-0 z-10 p-4 bg-gradient-to-t from-black/90 via-black/40 to-transparent pt-10">
-                <h4 className="text-white font-bold text-base mb-0.5 group-hover/card:text-[#CC9400] transition-colors">
+                <h4 className="text-white font-bold text-base mb-0.5 group-hover/card:text-[#CC9400] transition-colors text-wrap-balance">
                     {name}
                 </h4>
                 <p className="text-gray-400 text-[10px] font-medium uppercase tracking-wider">

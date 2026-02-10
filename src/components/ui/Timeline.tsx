@@ -49,7 +49,7 @@ export function TimelineHeader({ title, period, subtitle, className }: TimelineH
                 <h3 className="text-xl md:text-2xl font-bold text-white uppercase tracking-wide flex items-center gap-2">
                     <span className="text-[#CC9400] mr-2 md:hidden">•</span> {title}
                 </h3>
-                <span className="text-white font-medium text-sm mt-1 md:mt-0">{period}</span>
+                <span className="text-white font-medium text-sm mt-1 md:mt-0 tabular-nums">{period}</span>
             </div>
             {subtitle && (
                 <div className="text-[#CC9400] text-xs font-medium uppercase tracking-wide italic">
