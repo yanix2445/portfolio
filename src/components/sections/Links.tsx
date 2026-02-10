@@ -1,30 +1,31 @@
 import { Mail, Phone } from "lucide-react";
+import { SiLinkedin, SiDribbble, SiX, SiInstagram, SiBehance } from "react-icons/si";
 
 const socialLinks = [
     {
         name: "LinkedIn",
         url: "https://linkedin.com/in/yanis",
-        icon: "https://cdn.simpleicons.org/linkedin/ffffff"
+        Icon: SiLinkedin
     },
     {
         name: "Dribbble",
         url: "https://dribbble.com",
-        icon: "https://cdn.simpleicons.org/dribbble/ffffff"
+        Icon: SiDribbble
     },
     {
         name: "X",
         url: "https://x.com/yanis_dev",
-        icon: "https://cdn.simpleicons.org/x/ffffff"
+        Icon: SiX
     },
     {
         name: "Instagram",
         url: "https://instagram.com",
-        icon: "https://cdn.simpleicons.org/instagram/ffffff"
+        Icon: SiInstagram
     },
     {
         name: "Behance",
         url: "https://behance.net",
-        icon: "https://cdn.simpleicons.org/behance/ffffff"
+        Icon: SiBehance
     }
 ];
 
@@ -44,11 +45,7 @@ export function Links() {
                             rel="noopener noreferrer"
                             className="bg-white/10 hover:bg-[#CC9400] rounded-xl w-12 h-12 flex items-center justify-center transition-all duration-300 group"
                         >
-                            <img
-                                src={link.icon}
-                                alt={link.name}
-                                className="w-6 h-6 object-contain group-hover:brightness-0 transition-all"
-                            />
+                            <link.Icon className="w-6 h-6 text-white group-hover:text-black transition-all" />
                         </a>
                     ))}
                 </div>
