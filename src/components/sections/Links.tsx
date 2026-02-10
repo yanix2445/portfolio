@@ -4,27 +4,27 @@ const socialLinks = [
     {
         name: "LinkedIn",
         url: "https://linkedin.com/in/yanis",
-        icon: "https://cdn.simpleicons.org/linkedin/white"
+        icon: "https://cdn.simpleicons.org/linkedin/ffffff"
     },
     {
         name: "Dribbble",
         url: "https://dribbble.com",
-        icon: "https://cdn.simpleicons.org/dribbble/white"
+        icon: "https://cdn.simpleicons.org/dribbble/ffffff"
     },
     {
         name: "X",
         url: "https://x.com/yanis_dev",
-        icon: "https://cdn.simpleicons.org/x/white"
+        icon: "https://cdn.simpleicons.org/x/ffffff"
     },
     {
         name: "Instagram",
         url: "https://instagram.com",
-        icon: "https://cdn.simpleicons.org/instagram/white"
+        icon: "https://cdn.simpleicons.org/instagram/ffffff"
     },
     {
         name: "Behance",
         url: "https://behance.net",
-        icon: "https://cdn.simpleicons.org/behance/white"
+        icon: "https://cdn.simpleicons.org/behance/ffffff"
     }
 ];
 

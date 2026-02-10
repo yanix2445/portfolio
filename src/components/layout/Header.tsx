@@ -16,7 +16,7 @@ export function Header() {
                 asChild
                 className="bg-[#CC9400] hover:bg-[#CC9400]/90 text-black rounded-full px-6 py-3 text-sm font-bold tracking-wide transition-transform hover:scale-105"
             >
-                <Link href="Cv-alternance-Yanis-Harrat-copie.pdf" target="_blank">
+                <Link href="/Cv-alternance-Yanis-Harrat-copie.pdf" target="_blank">
                     Download CV
                 </Link>
             </Button>
