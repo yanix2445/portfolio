@@ -36,6 +36,18 @@ const schoolProjects = [
                 description: "Centralized legal compliance for tech infrastructure",
                 link: "https://legal.yanis-harrat.com/",
                 image: "/legal-docs.png"
+            },
+            {
+                name: "Personal Linktree",
+                description: "Centralized hub for professional social links",
+                link: "https://linktree.yanis-harrat.com/",
+                image: "/linktree.png"
+            },
+            {
+                name: "VM Network Lab",
+                description: "Cisco routing & Windows Server infrastructure",
+                link: "#",
+                image: "/vm-network.png"
             }
         ]
     },
