@@ -43,20 +43,21 @@ export function Links() {
                             href={link.url}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="bg-white/10 hover:bg-[#CC9400] rounded-xl w-12 h-12 flex items-center justify-center transition-all duration-300 group"
+                            aria-label={`Follow on ${link.name}`}
+                            className="bg-white/10 hover:bg-[#CC9400] rounded-xl w-12 h-12 flex items-center justify-center transition-[background-color,transform] duration-300 group"
                         >
-                            <link.Icon className="w-6 h-6 text-white group-hover:text-black transition-all" />
+                            <link.Icon className="w-6 h-6 text-white group-hover:text-black transition-colors" />
                         </a>
                     ))}
                 </div>
 
                 {/* Contact Info Row */}
                 <div className="flex flex-col md:flex-row gap-8 md:gap-16 text-lg md:text-xl font-medium text-white mb-24">
-                    <a href="mailto:contact@yanis.dev" className="flex items-center gap-4 hover:text-[#CC9400] transition-colors">
+                    <a href="mailto:contact@yanis.dev" className="flex items-center gap-4 hover:text-[#CC9400] transition-colors focus-visible:ring-2 focus-visible:ring-[#CC9400] rounded-lg outline-none">
                         <Mail className="w-6 h-6 text-[#CC9400]" />
                         <span>contact@yanis.dev</span>
                     </a>
-                    <a href="tel:+33612345678" className="flex items-center gap-4 hover:text-[#CC9400] transition-colors">
+                    <a href="tel:+33612345678" className="flex items-center gap-4 hover:text-[#CC9400] transition-colors focus-visible:ring-2 focus-visible:ring-[#CC9400] rounded-lg outline-none">
                         <Phone className="w-6 h-6 text-[#CC9400]" />
                         <span>+33 6 12 34 56 78</span>
                     </a>
