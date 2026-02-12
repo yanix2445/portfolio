@@ -38,7 +38,18 @@ export function FloatingNav() {
         const sections = document.querySelectorAll("section[id]");
         sections.forEach((section) => observer.observe(section));
 
-        return () => sections.forEach((section) => observer.unobserve(section));
+        const handleScroll = () => {
+            if ((window.innerHeight + Math.round(window.scrollY)) >= document.body.offsetHeight - 50) {
+                setActiveSection("links");
+            }
+        };
+
+        window.addEventListener("scroll", handleScroll, { passive: true });
+
+        return () => {
+            sections.forEach((section) => observer.unobserve(section));
+            window.removeEventListener("scroll", handleScroll);
+        };
     }, []);
 
     return (
