@@ -29,12 +29,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   return {
     title: {
-      default: "Yanis Mohamed-Amine Harrat | Portfolio | " + (isFr ? "Systèmes & Réseaux" : "Systems & Networks"),
-      template: "%s | Yanis Mohamed-Amine Harrat"
+      default: isFr
+        ? "Yanis Harrat | Étudiant & Apprenti Ingénieur (SISR / 42 Paris)"
+        : "Yanis Harrat | Student & Apprentice Engineer (SISR / 42 Paris)",
+      template: "%s | Yanis Harrat"
     },
     description: isFr
-      ? "Yanis Mohamed-Amine Harrat - Portfolio professionnel présentant une expertise en Systèmes & Réseaux (BTS SIO SISR) et Logique Logicielle (École 42 Paris)."
-      : "Yanis Mohamed-Amine Harrat - Professional portfolio showcasing expertise in Systems & Networks (BTS SIO SISR) and Software Logic (Ecole 42 Paris).",
+      ? "Découvrez mon parcours d'étudiant passionné en Systèmes & Réseaux et Logique Logicielle. Actuellement en BTS SIO SISR et à l'École 42 Paris, je construis mon expertise technique."
+      : "Explore my journey as a passionate student in Systems & Networks and Software Logic. Currently at BTS SIO SISR and 42 Paris, building my technical expertise.",
+    keywords: isFr
+      ? ["Yanis Harrat", "Étudiant", "BTS SIO", "SISR", "École 42", "Paris", "Systèmes et Réseaux", "Logique Logicielle", "Alternance", "Portfolio"]
+      : ["Yanis Harrat", "Student", "BTS SIO", "SISR", "Ecole 42", "Paris", "Systems and Networks", "Software Logic", "Apprenticeship", "Portfolio"],
     metadataBase: new URL("https://yanis-harrat.com"),
     alternates: {
       canonical: "/",
@@ -44,21 +49,23 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       },
     },
     openGraph: {
-      title: "Yanis Mohamed-Amine Harrat | Portfolio",
+      title: isFr
+        ? "Yanis Harrat | Étudiant & Apprenti Ingénieur"
+        : "Yanis Harrat | Student & Apprentice Engineer",
       description: isFr
-        ? "Spécialiste Systèmes & Réseaux | Ingénieur Logique Logicielle"
-        : "Systems & Networks Specialist | Software Logic Engineer",
+        ? "Parcours en Systèmes & Réseaux (BTS SIO) et Logique Logicielle (42 Paris)"
+        : "Education in Systems & Networks (BTS SIO) and Software Logic (42 Paris)",
       url: "https://yanis-harrat.com",
-      siteName: "Yanis Mohamed-Amine Harrat Portfolio",
+      siteName: "Yanis Harrat Portfolio",
       locale: isFr ? "fr_FR" : "en_US",
       type: "website",
     },
     twitter: {
       card: "summary_large_image",
-      title: "Yanis Mohamed-Amine Harrat | Portfolio",
+      title: "Yanis Harrat | Portfolio Étudiant",
       description: isFr
-        ? "Spécialiste Systèmes & Réseaux | Ingénieur Logique Logicielle"
-        : "Systems & Networks Specialist | Software Logic Engineer",
+        ? "Étudiant passionné en Systèmes & Réseaux et Développement"
+        : "Passionate Student in Systems & Networks and Development",
     },
     robots: {
       index: true,
