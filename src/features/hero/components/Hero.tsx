@@ -3,8 +3,10 @@
 import { Mail, Phone, MapPin, Linkedin } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import { useTranslations } from "next-intl";
 
 export function Hero() {
+    const t = useTranslations("Hero");
     const [scrollConfig, setScrollConfig] = useState({ blur: 0, opacity: 1 });
 
     useEffect(() => {
@@ -62,8 +64,9 @@ export function Hero() {
                     alt="Background"
                     fill
                     sizes="100vw"
-                    className="object-contain brightness-75 transition-[transform,opacity] duration-700"
+                    className="object-contain brightness-75 transition-opacity duration-700"
                     priority
+                    quality={75}
                 />
                 {/* Overlay */}
                 <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent"></div>
@@ -72,39 +75,39 @@ export function Hero() {
             <div className="relative z-10 w-full max-w-[1400px] mx-auto pt-24 md:pt-36 pb-12">
                 <div className="max-w-4xl">
                     <h2 className="mb-4 text-lg md:text-xl font-bold tracking-widest text-[#CC9400] uppercase text-wrap-balance">
-                        Student in Fénelon Sup Paris
+                        {t("subtitle")}
                     </h2>
                     <h1 className="mb-10 text-5xl font-extrabold tracking-tight text-white sm:text-7xl md:text-[6rem] leading-[0.9] text-wrap-balance">
-                        Yanis Harrat
+                        {t("name")}
                     </h1>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-y-4 gap-x-10 text-base font-medium text-white/90 w-fit">
                         <a
-                            href="mailto:contact@yanis.dev"
+                            href="mailto:contact@yanis-harrat.com"
                             className="flex items-center gap-3 transition-colors hover:text-[#CC9400] group"
                         >
                             <Mail className="h-5 w-5 text-[#CC9400] group-hover:scale-110 transition-transform" />
-                            <span>contact@yanis.dev</span>
+                            <span>contact@yanis-harrat.com</span>
                         </a>
                         <a
-                            href="tel:+33612345678"
+                            href="tel:+33768187934"
                             className="flex items-center gap-3 transition-colors hover:text-[#CC9400] group"
                         >
                             <Phone className="h-5 w-5 text-[#CC9400] group-hover:scale-110 transition-transform" />
-                            <span>+33 6 12 34 56 78</span>
+                            <span>+33 7 68 18 79 34</span>
                         </a>
                         <a
-                            href="https://linkedin.com/in/yanis"
+                            href="https://www.linkedin.com/in/yanis-harrat/"
                             target="_blank"
                             rel="noopener noreferrer"
                             className="flex items-center gap-3 transition-colors hover:text-[#CC9400] group"
                         >
                             <Linkedin className="h-5 w-5 text-[#CC9400] group-hover:scale-110 transition-transform" />
-                            <span>linkedin.com/in/yanis</span>
+                            <span>linkedin.com/in/yanis-harrat</span>
                         </a>
                         <div className="flex items-center gap-3 group">
                             <MapPin className="h-5 w-5 text-[#CC9400]" />
-                            <span>Paris, France</span>
+                            <span>Nanterre, Paris, Île-de-France</span>
                         </div>
                     </div>
                 </div>

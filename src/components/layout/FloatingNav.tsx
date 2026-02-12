@@ -1,20 +1,23 @@
 "use client";
 
-import Link from "next/link";
-import { Home, User, Briefcase, Sparkles, Link as LinkIcon } from "lucide-react";
+import { Link } from "@/i18n/navigation";
+import { Home, User, Briefcase, Sparkles, Link as LinkIcon, FolderKanban } from "lucide-react";
 import { useEffect, useState } from "react";
+import { useTranslations } from "next-intl";
 import { cn } from "@/lib/utils";
 
-const navItems = [
-    { name: "Home", href: "#home", icon: Home },
-    { name: "Summary", href: "#summary", icon: User },
-    { name: "Experience", href: "#experience", icon: Briefcase },
-    { name: "Skills", href: "#skills", icon: Sparkles },
-    { name: "Links", href: "#links", icon: LinkIcon },
-];
-
 export function FloatingNav() {
+    const t = useTranslations("Nav");
     const [activeSection, setActiveSection] = useState("home");
+
+    const navItems = [
+        { name: t("home"), href: "#home", icon: Home },
+        { name: t("summary"), href: "#summary", icon: User },
+        { name: t("experience"), href: "#experience", icon: Briefcase },
+        { name: t("projects"), href: "#projects", icon: FolderKanban },
+        { name: t("skills"), href: "#skills", icon: Sparkles },
+        { name: t("links"), href: "#links", icon: LinkIcon },
+    ];
 
     useEffect(() => {
         const observer = new IntersectionObserver(
@@ -41,7 +44,7 @@ export function FloatingNav() {
                     const isActive = activeSection === item.href.substring(1);
                     return (
                         <Link
-                            key={item.name}
+                            key={item.href}
                             href={item.href}
                             onClick={() => setActiveSection(item.href.substring(1))}
                             className={cn(
