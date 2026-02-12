@@ -4,7 +4,7 @@ export default function manifest(): MetadataRoute.Manifest {
     return {
         name: 'Yanis Harrat | Portfolio Étudiant',
         short_name: 'Yanis.dev',
-        description: 'Portfolio de Yanis Harrat - Étudiant en Systèmes & Réseaux et Logique Logicielle.',
+        description: 'Portfolio de Yanis Harrat - Étudiant en Systèmes & Réseaux (BTS SIO SISR).',
         start_url: '/',
         display: 'standalone',
         background_color: '#000000',

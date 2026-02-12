@@ -30,16 +30,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: {
       default: isFr
-        ? "Yanis Harrat | Étudiant & Apprenti Ingénieur (SISR / 42 Paris)"
-        : "Yanis Harrat | Student & Apprentice Engineer (SISR / 42 Paris)",
+        ? "Yanis Harrat | Étudiant en Systèmes & Réseaux (BTS SIO SISR)"
+        : "Yanis Harrat | IT Student | Systems & Networks (BTS SIO SISR)",
       template: "%s | Yanis Harrat"
     },
     description: isFr
-      ? "Découvrez mon parcours d'étudiant passionné en Systèmes & Réseaux et Logique Logicielle. Actuellement en BTS SIO SISR et à l'École 42 Paris, je construis mon expertise technique."
-      : "Explore my journey as a passionate student in Systems & Networks and Software Logic. Currently at BTS SIO SISR and 42 Paris, building my technical expertise.",
+      ? "Explorez le portfolio de Yanis Harrat, étudiant passionné en Systèmes & Réseaux (BTS SIO SISR). Spécialisé en infrastructures informatiques et cybersécurité."
+      : "Explore the portfolio of Yanis Harrat, an IT student specialized in Systems & Networks (BTS SIO SISR). Focusing on IT infrastructure and cybersecurity.",
     keywords: isFr
-      ? ["Yanis Harrat", "Étudiant", "BTS SIO", "SISR", "École 42", "Paris", "Systèmes et Réseaux", "Logique Logicielle", "Alternance", "Portfolio"]
-      : ["Yanis Harrat", "Student", "BTS SIO", "SISR", "Ecole 42", "Paris", "Systems and Networks", "Software Logic", "Apprenticeship", "Portfolio"],
+      ? ["Yanis Harrat", "Étudiant", "BTS SIO", "SISR", "Systèmes et Réseaux", "Informatique", "Cybersécurité", "Infrastructures", "Alternance", "Portfolio"]
+      : ["Yanis Harrat", "IT Student", "BTS SIO", "SISR", "Systems and Networks", "Computing", "Cybersecurity", "Infrastructure", "Apprenticeship", "Portfolio"],
     metadataBase: new URL("https://yanis-harrat.com"),
     alternates: {
       canonical: "/",
@@ -50,11 +50,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     },
     openGraph: {
       title: isFr
-        ? "Yanis Harrat | Étudiant & Apprenti Ingénieur"
-        : "Yanis Harrat | Student & Apprentice Engineer",
+        ? "Yanis Harrat | Étudiant en Systèmes & Réseaux"
+        : "Yanis Harrat | IT Student | Systems & Networks",
       description: isFr
-        ? "Parcours en Systèmes & Réseaux (BTS SIO) et Logique Logicielle (42 Paris)"
-        : "Education in Systems & Networks (BTS SIO) and Software Logic (42 Paris)",
+        ? "Étudiant en BTS SIO SISR spécialisé en infrastructures et réseaux."
+        : "IT Student at BTS SIO SISR specialized in infrastructure and networks.",
       url: "https://yanis-harrat.com",
       siteName: "Yanis Harrat Portfolio",
       locale: isFr ? "fr_FR" : "en_US",
@@ -64,8 +64,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       card: "summary_large_image",
       title: "Yanis Harrat | Portfolio Étudiant",
       description: isFr
-        ? "Étudiant passionné en Systèmes & Réseaux et Développement"
-        : "Passionate Student in Systems & Networks and Development",
+        ? "Étudiant en BTS SIO SISR - Systèmes & Réseaux"
+        : "IT Student at BTS SIO SISR - Systems & Networks",
     },
     robots: {
       index: true,
