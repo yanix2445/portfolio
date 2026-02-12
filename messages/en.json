@@ -1,0 +1,458 @@
+{
+    "Header": {
+        "openToWork": "Open to work",
+        "downloadCv": "Download CV"
+    },
+    "Nav": {
+        "home": "Home",
+        "summary": "Summary",
+        "experience": "Experience",
+        "projects": "Projects",
+        "skills": "Skills",
+        "links": "Links"
+    },
+    "Hero": {
+        "subtitle": "Student at Fénelon Sup Paris",
+        "name": "Yanis Harrat"
+    },
+    "About": {
+        "title": "About Me",
+        "p1": "I'm *Yanis Mohamed-Amine Harrat*, an **energetic and social \"bon vivant\"** with a deep passion for understanding how technology works at its core. My journey is defined by a **double dimension**: balancing the technical rigor of **Systems & Networks (BTS SIO SISR)** with the advanced logic and algorithmic grit of **Ecole 42 Paris**. I don't just use tech; I deconstruct it, build it, and live it.",
+        "p2": "From my first lines of code to **self-hosting** my own ecosystems, I've always been drawn to the **Open Source** philosophy. I believe in technology that is accessible, communal, and transparent. My interests are continuously evolving, currently centered around the frontiers of **AI** and **Cybersecurity**.",
+        "p3": "Outside the terminal, I'm a **hyperactive sports enthusiast**. Whether I'm tackling a complex infrastructure problem or pushing my limits on the field, I bring the same \"all-in\" energy. I thrive on social connection and believe that the best solutions are born from collective intelligence and a positive, high-energy atmosphere."
+    },
+    "Experience": {
+        "title": "Professional Experience",
+        "jobs": {
+            "iut": {
+                "title": "TECHNICAL CONSULTANT & NO-CODE/FULLSTACK BUILDER",
+                "period": "2025 - 2025",
+                "company": "IUT MEAUX",
+                "description": "Advising on technical architecture and building fullstack/no-code solutions to optimize academic and administrative workflows.",
+                "achievements": {
+                    "a1": "Analyzed business needs and functional scoping using Agile methodology.",
+                    "a2": "Architected a complete IS overhaul using a hybrid stack (Airtable + n8n + JS + Python).",
+                    "a3": "Designed relational databases and developed complex custom automations.",
+                    "a4": "Managed secure administration, functional testing, and technical documentation.",
+                    "a5": "Delivered a turnkey system including user training and ongoing maintenance."
+                },
+                "projectName": "Technical Consulting",
+                "projectDescription": "Fullstack & No-Code Development"
+            },
+            "coco": {
+                "title": "Head Waiter",
+                "period": "2023 - 2025",
+                "company": "Coco Rocco",
+                "description": "Delivering high-end hospitality in a fast-paced Italian bistro environment, maintaining rigorous standards of service and operational efficiency.",
+                "achievements": {
+                    "a1": "Welcomed and advised guests to ensure maximum satisfaction.",
+                    "a2": "Managed menu presentation, order taking, and specific guest requests.",
+                    "a3": "Coordinated service workflow with the kitchen for optimal timing.",
+                    "a4": "Supervised and mentored floor staff to ensure mission success.",
+                    "a5": "Handled complex billing and ensured professional guest departures."
+                },
+                "projectName": "Coco Rocco Bistro",
+                "projectDescription": "Authentic Italian Dining in Puteaux"
+            },
+            "fibrouss": {
+                "title": "Fiber Optic Technician",
+                "period": "2022 - 2023",
+                "company": "Fibrouss",
+                "description": "Specialized in the installation and commissioning of subscriber fiber networks and LAN/WAN infrastructure.",
+                "achievements": {
+                    "a1": "Installed and maintained FTTH infrastructure (cabling, PTO, optical splicing).",
+                    "a2": "Commissioned network equipment including routers, ONTs, and modems.",
+                    "a3": "Diagnosed and resolved technical incidents (connectivity, throughput).",
+                    "a4": "Provided L1/L2 technical support and hardware troubleshooting.",
+                    "a5": "Performed performance testing via reflectometry and TCP/IP analysis.",
+                    "a6": "Managed autonomous field interventions and client training."
+                },
+                "projectName": "Fiber Infrastructure",
+                "projectDescription": "Optical Network Deployment"
+            },
+            "golf": {
+                "title": "Head Waiter",
+                "period": "2022 - 2023",
+                "company": "Golf de Saint-Nom-la-Bretèche",
+                "description": "Delivering high-end service in a prestigious and exclusive sporting club environment, ensuring meticulous attention to detail and member satisfaction.",
+                "achievements": {
+                    "a1": "Provided premium table service and member advisory in an exclusive club.",
+                    "a2": "Coordinated orders and timed service with precise kitchen synchronization.",
+                    "a3": "Supervised the floor and monitored service flow for excellence.",
+                    "a4": "Managed floor organization and mentored junior staff members.",
+                    "a5": "Guaranteed member satisfaction through impeccable professional standards."
+                },
+                "projectName": "Saint-Nom-la-Bretèche",
+                "projectDescription": "Full-Service Private Sports Club"
+            }
+        }
+    },
+    "Skills": {
+        "title": "Skills & Tools",
+        "categories": {
+            "sysadmin": "Systems & Network Administration",
+            "lowlevel": "Low-Level & Logic (42 Piscine)",
+            "cloud": "Cloud & Virtualization",
+            "cybersecurity": "Cybersecurity & Infrastructure",
+            "webdev": "Web & App Development",
+            "devops": "DevOps & Automation",
+            "database": "Database Management",
+            "peer": "Peer-to-Peer Learning"
+        },
+        "languages": {
+            "title": "Languages",
+            "french": "French",
+            "frenchLevel": "Native",
+            "arabic": "Arabic",
+            "arabicLevel": "Native (Fluent)",
+            "english": "English",
+            "englishLevel": "Basic (School Level)"
+        },
+        "education": {
+            "title": "Education",
+            "fenelon": "BTS SIO SISR (Systems & Networks)",
+            "fortytwo": "La Piscine (Intensive C/Logic)",
+            "lycee": "Bac Pro SN ARED (Networks & Home Automation)",
+            "obtainedIn": "Obtained in"
+        }
+    },
+    "Projects": {
+        "schoolTitle": "School Projects",
+        "personalTitle": "Personal Projects",
+        "school": {
+            "title": "Systems & Networks Infrastructure",
+            "period": "2025 - 2027",
+            "school": "Fénelon Sup Paris",
+            "description": "Engaging in advanced laboratory projects and real-world simulations focused on core infrastructure management, security, and network orchestration.",
+            "achievements": {
+                "0": "Deployed and optimized enterprise-grade Active Directory Domain Services.",
+                "1": "Integrated complex DNS and DHCP architectures within virtualized environments.",
+                "2": "Automated system administration tasks using modern scripting and logic.",
+                "3": "Documented and managed infrastructure deployments via GitHub."
+            },
+            "items": {
+                "network-infrastructure": {
+                    "name": "Network Infrastructure (Cisco Masterclass)",
+                    "description": "Routing & Switching Architecture: VLAN, OSPF, Security",
+                    "fullDescription": "This project simulates the engineering of a high-performance multi-site enterprise network. The goal is to demonstrate total mastery of the **Cisco IOS** ecosystem: from L2 segmentation via **VLANs** to multi-site interconnectivity via dynamic **OSPF** routing. A true engineering lab, it highlights the design of redundant gateways and the securing of critical end-to-end flows.",
+                    "achievements": {
+                        "0": "Designed a network core segmented into 3 isolated VLANs (Server, Admin, Client)",
+                        "1": "Implemented Inter-VLAN routing via 'Router-on-a-Stick' approach (Dot1Q)",
+                        "2": "Configured a point-to-point WAN link with OSPF Area 0 convergence",
+                        "3": "Secured L2 access and optimized via Spanning-Tree (Portfast)",
+                        "4": "Advanced flow verification via Routing Table inspection (RIB)"
+                    },
+                    "topology": "2R-2S topology simulating a link between two distant entities:\n\n- **Site A (HQ)**: Hosts Router R1 and Switch S1 (VLAN 2: Servers, VLAN 3: Management).\n- **Site B (Branch)**: Hosts Router R2 and Switch S2 (VLAN 4: Clients).\n\n**Technical Flow**: The routers use OSPF to exchange routes dynamically, allowing branch clients to communicate with HQ resources through a secured backbone.",
+                    "steps": {
+                        "0": {
+                            "title": "1. L2 Segmentation (VLANs & Trunks)",
+                            "description": "To prevent service mixing, we create **VLANs** (isolated networks). On switches, user ports are in Access mode, while links between machines are in **Trunk (802.1Q)** mode: a true highway capable of carrying all these networks on a single cable."
+                        },
+                        "1": {
+                            "title": "2. Gateways: Router-on-a-Stick",
+                            "description": "The router acts as the conductor. Using the **Router-on-a-Stick** approach, we transform a physical port into multiple **virtual sub-interfaces**. Each sub-interface becomes the default gateway for a VLAN, allowing traffic to pass from one service to another according to defined rules."
+                        },
+                        "2": {
+                            "title": "3. WAN Backbone: OSPF Routing",
+                            "description": "How to link two distant sites? By using **OSPF (Open Shortest Path First)**. This dynamic routing protocol automatically calculates the best path between HQ and Branch. It propagates routes throughout the network, guaranteeing fast convergence and avoiding tedious manual configurations."
+                        },
+                        "3": {
+                            "title": "4. Diagnostic & End-to-End Flow",
+                            "description": "It's time for the final test. We inspect the **RIB (Routing Table)** to confirm that the sites 'see' each other. A simple Ping then traverses the entire backbone: Branch Switch -> Remote Router -> WAN -> HQ Router -> Server. Connectivity is total."
+                        }
+                    }
+                },
+                "vm-network-lab": {
+                    "name": "Hybrid Infrastructure",
+                    "description": "Physical Cisco Backbone (CLI) & Windows Server Services (GUI)",
+                    "fullDescription": "This hybrid architecture merges the worlds of virtualization and physical hardware. On a **Mac (VMware)**, I deployed a full **Windows Server** environment. The power of this project lies in the interconnection: virtual interfaces join a physical backbone of **2 Cisco routers and 2 switches** to ensure authentication and services across a real multi-site topology.",
+                    "achievements": {
+                        "0": "Hybrid Orchestration: Bridging vNIC/Mac to physical Cisco terminals",
+                        "1": "Backbone Cisco (CLI): Advanced IOS configuration (VLANs, Trunks, OSPF)",
+                        "2": "Access Control (AD DS): Management via Organizational Units (**OU**) and **GPO**",
+                        "3": "Addressing & Resolution: DHCP Scopes and DNS Zones (GUI Management)",
+                        "4": "Inter-Site Resilience: OSPF convergence and cross-backbone authentication"
+                    },
+                    "topology": "Segmented 2R-2S infrastructure connecting two distinct sites:\n\n- **Site A (HQ)**: Physical L2 Switch hosting the virtual AD DS server (the Mac).\n- **Site B (Branch)**: Physical L2 Switch hosting the physical client.\n\n**Service Bridging**: The physical Cisco backbone ensures the transport of identity flows. The client authenticates on the remote server through the WAN tunnel simulated by OSPF.",
+                    "steps": {
+                        "0": {
+                            "title": "1. Network Core: CLI Configuration",
+                            "description": "Everything starts with the hardware. Connected in **console** mode, I configure routers and switches via the terminal (**CLI**). We prepare VLANs, 802.1Q Trunks, and OSPF routing. It is this physical base that will allow virtual data from the Mac to travel to the remote client."
+                        },
+                        "1": {
+                            "title": "2. Identity Services: AD DS",
+                            "description": "Once the network is stable, we deploy the intelligence. On Windows Server, we promote the domain and structure **Active Directory** with **Organizational Units (OU)**. This hierarchy allows applying targeted **GPO** (Group Policy Objects) to harden security and automate client configuration."
+                        },
+                        "2": {
+                            "title": "3. Infrastructure & Resolution (DNS/DHCP)",
+                            "description": "For the client to find the server autonomously, we configure services via their dedicated consoles. **DHCP** distributes IP addresses through physical switches (via 'IP Helper' relay), while **DNS** maps names to IPs. Everything is managed visually for maximum reliability."
+                        },
+                        "3": {
+                            "title": "4. Real/Virtual Synergy: The Flow Test",
+                            "description": "The final test validates hybrid communication: a physical client (Site B) requests its network settings. The request traverses the physical Cisco backbone, reaches the virtual server on the Mac, and receives its IP via the graphical interface. Successful session login confirms architecture integrity."
+                        }
+                    }
+                }
+            }
+        },
+        "personal": {
+            "title": "Personal Projects",
+            "period": "2024 - Present",
+            "school": "Self-Hosted & Open Source",
+            "description": "Professional-grade self-hosting and infrastructure engineering. Designing robust, secure, and automated systems for personal and community use.",
+            "achievements": {
+                "0": "Architected a Zero-Trust homelab environment protected by Cloudflare Tunnel.",
+                "1": "Orchestrated complex Docker stacks with internal routing and strict isolation.",
+                "2": "Implemented 'GitOps-like' workflows for service deployment and maintenance.",
+                "3": "Enforced security-first policies: no open ports, container hardening, and least privilege."
+            },
+            "items": {
+                "portfolio-v2": {
+                    "name": "Portfolio V2",
+                    "description": "High-Precision Engineering (Next.js 16 & React 19)",
+                    "fullDescription": "This second iteration of my portfolio is a technological showcase of my expertise in the modern web. The goal was to build an **ultra-performant**, **scalable**, and **secure** application by exploiting the latest advancements of Next.js 16. The project abandons monolithic architectures for a 'Feature-Oriented' structure, guaranteeing absolute code clarity and simplified maintenance.",
+                    "achievements": {
+                        "0": "High-performance hybrid rendering via React 19 Server Components",
+                        "1": "Aggressive data optimization with new Next.js 16 cache APIs",
+                        "2": "Modular 'Feature-First' architecture for total domain isolation",
+                        "3": "Custom Design System with Tailwind CSS and fluid Framer Motion animations",
+                        "4": "Lighthouse Score 100/100 (Performance, Accessibility, SEO, Best Practices)"
+                    },
+                    "topology": "The architecture rests on three fundamental pillars:\n\n1. **Feature-Based structure**: Code is organized by business domains (Hero, Projects, Skills) rather than technical types.\n2. **Compound Components**: Intensive use of the composition pattern to create rich and flexible interfaces.\n3. **Isomorphic Data Layer**: A typed data flow consumed directly by server components to eliminate unnecessary client requests.",
+                    "steps": {
+                        "0": {
+                            "title": "1. Feature-Based Architecture",
+                            "description": "The project is structured around the `src/features/` folder. Each feature has its own components, types, and internal logic. This allows strict isolation: we can modify the 'Projects' system without risking impact on the 'Skills' system. This is the standard for scalable enterprise applications."
+                        },
+                        "1": {
+                            "title": "2. Next.js 16: The 'use cache' Era",
+                            "description": "I implemented the new `'use cache'` directive of Next.js 16 to optimize data fetching. Coupling this with `cacheLife('max')`, project details are served instantly from Vercel's edge cache, offering reactivity equivalent to a local application."
+                        },
+                        "2": {
+                            "title": "3. Composition Patterns (Radix-Style)",
+                            "description": "For the UI, I used the **Compound Components** pattern (via `Object.assign`). This allows building complex components like `ProjectDetail` or `Skills` declaratively. We keep total control over element order and structure without 'prop drilling'."
+                        },
+                        "3": {
+                            "title": "4. Image Optimization & SEO",
+                            "description": "Each project image is **statically imported** to benefit from Next.js's automatic 'Blur Placeholder'. Combined with the dynamic Metadata API (`generateMetadata`), the site offers a premium visual experience and perfect indexing on search engines."
+                        },
+                        "4": {
+                            "title": "5. User Experience & Framer Motion",
+                            "description": "Although the core is Server Components, interactivity is handled by **Framer Motion**. I use variants to animate section appearances and hover effects, while ensuring JavaScript weight remains minimal thanks to automatic code-splitting."
+                        },
+                        "5": {
+                            "title": "6. Custom Markdown Rendering Engine",
+                            "description": "To keep total flexibility in technical descriptions without depending on a heavy markdown library, I developed a `FormattedText` helper. It intelligently parses bold tags (`**text**`) to highlight key concepts directly in the UI."
+                        }
+                    }
+                },
+                "homelabs": {
+                    "name": "Home Labs",
+                    "description": "Self-Hosted Zero-Trust Infrastructure (Docker, Cloudflare)",
+                    "fullDescription": "Home Labs is a robust and secure self-hosting infrastructure designed to deploy and manage various web services (applications, tools, databases) on a single server. The project philosophy relies on **Security by Default** (no open ports, encrypted tunnel), **Isolation** (containerized services on a dedicated internal network), and **Standardization** (strict folder structure and conventions to ease maintenance).",
+                    "achievements": {
+                        "0": "Zero-Trust Architecture: No open ports (80/443), secure Cloudflare Tunnel",
+                        "1": "Isolation: Each service runs in isolated Docker containers on a dedicated network",
+                        "2": "Scalability: Standardized scaffolding for rapid service deployment",
+                        "3": "Security Hardening: Non-privileged containers and strict resource limits",
+                        "4": "Automation: Operational scripts for system-wide orchestration",
+                        "5": "Monitoring: Integrated logging rotation and health checks"
+                    },
+                    "topology": "The architecture relies on a 5-step secure data flow:\n\n1. **Ingress**: Access via HTTPS to the custom domain.\n2. **Cloudflare Edge**: SSL management, DDoS protection, and WAF.\n3. **Encrypted Tunnel**: Routing via a persistent outbound connection (Cloudflare Tunnel).\n4. **Gateway**: The `cloudflared` container routes the request to the internal service.\n5. **Isolated Service**: The target application processes the request on the private `home-labs` Docker network.",
+                    "steps": {
+                        "0": {
+                            "title": "1. Infrastructure Core & Gateway",
+                            "description": "The core of the system resides in the `infrastructure/gateway/` folder. It orchestrates the Cloudflare Tunnel and defines routing rules (hostname -> service:port). Using CF_TUNNEL_TOKEN tokens in a secure `.env` file allows robust authentication without hardcoded secrets."
+                        },
+                        "1": {
+                            "title": "2. Pattern 1: Image-Based Services",
+                            "description": "For simple services using official images (e.g., Excalidraw), the configuration is minimalist. It focuses on network isolation and data persistence via named volumes, while respecting CPU/RAM resource limits."
+                        },
+                        "2": {
+                            "title": "3. Pattern 2: Built Services (Custom Apps)",
+                            "description": "Home-made applications (e.g., Legal App in Next.js) use a 'Build' pattern. The `docker-compose.yml` points to a local Dockerfile. This optimizes the final image via 'multi-stage builds' to reduce attack surface and image size."
+                        },
+                        "3": {
+                            "title": "4. Pattern 3: Orchestrated Stacks",
+                            "description": "Complex services (Cal.com, Typebot) require orchestrating multiple containers (App + DB + Redis). `healthchecks` and `depends_on` are used to ensure the database is ready before the application launches."
+                        },
+                        "4": {
+                            "title": "5. Operational Procedures",
+                            "description": "Homelab administration is simplified by master scripts. Adding a service follows a strict workflow: scaffolding via script, DNS config in the Gateway, and deployment via Docker Compose. Maintenance includes log rotation and continuous deployment via pulling new images."
+                        }
+                    }
+                },
+                "zsh-boost": {
+                    "name": "ZSH BOOST",
+                    "description": "ZSH Configuration Framework / Dotfiles Manager",
+                    "fullDescription": "ZSH BOOST is a modern, modular, and ultra-fast configuration framework designed to offer a 'ready-to-use' ZSH environment. It automates the installation of high-performance CLI tools (eza, bat, fzf, zoxide) and essential productivity plugins. The project philosophy combines power and simplicity: a single configuration file (`config.zsh`) to drive the entire shell experience, while maintaining optimal startup time through lazy-loading and smart dependency detection.",
+                    "achievements": {
+                        "0": "Zero-Config Onboarding: Interactive installer powered by Gum for instant setup",
+                        "1": "Modular Logic: Granular split between core (Env/Path) and feature modules (Aliases/Utils)",
+                        "2": "Performance First: Optimized boot sequence with intelligent $PATH management and lazy-loading",
+                        "3": "Modern Tooling Integration: Native aliases for eza, bat, fd, ripgrep, and zoxide",
+                        "4": "Extensible Architecture: Private 'local/' layer for custom scripts and sensitive configurations",
+                        "5": "Automated Maintenance: Global 'up' command to keep Homebrew, plugins, and tools updated"
+                    },
+                    "topology": "The loading flow (Boot Sequence) follows a cascading logic:\n\n1. **Bootstrap** (`.zshrc`): Detects `$ZDOTDIR` via symlink and initializes the environment.\n2. **Core Layer** (`core/*`): Defines base variables, ZSH options, and manages `$PATH` without duplicates.\n3. **User Config** (`config.zsh`): Reads user preferences (active modules, themes, plugins).\n4. **Module Activation** (`modules/*`): Loops through chosen modules to load aliases and functions.\n5. **Local Layer** (`local/*`): Loads private customizations and secret tokens outside git.",
+                    "steps": {
+                        "0": {
+                            "title": "1. Intelligent Boot Mechanism",
+                            "description": "The `.zshrc` entry point is designed to be universal. Using `readlink`, it identifies its real location within the file system, allowing ZSH BOOST to be installed anywhere while maintaining robust relative paths for internal dependencies."
+                        },
+                        "1": {
+                            "title": "2. Modular Configuration Management",
+                            "description": "All control is done via the `ZSH_MODULES` array. This approach allows activating or deactivating entire feature sets (Git, Docker, Kubernetes, etc.) without touching the source code, simply by upgrading a line in the user configuration file."
+                        },
+                        "2": {
+                            "title": "3. Interactive Scaffolding (Gum UI)",
+                            "description": "The `install.sh` script transforms dotfiles installation into a premium experience. Powered by Gum, it offers interactive menus, animated spinners, and theme selectors, automatically managing Homebrew dependencies before linking configuration files."
+                        },
+                        "3": {
+                            "title": "4. Modern Alias Ecosystem",
+                            "description": "Aliases are not just shortcuts; they integrate systemic tool checking. If a tool like `eza` is present, `ls` and `ll` commands are augmented; otherwise, the system gracefully falls back to native macOS commands, ensuring the shell never 'breaks'."
+                        },
+                        "4": {
+                            "title": "5. Fully Automated System Update",
+                            "description": "The `up` function centralizes maintenance. It not only updates the macOS system; it also synchronizes Oh My Zsh plugins, refreshes Homebrew tools, and updates global package managers (NPM, PNPM, Bun, Rust) in a single action."
+                        }
+                    }
+                },
+                "portfolio-v1": {
+                    "name": "Portfolio V1",
+                    "description": "Technical Lab: Discovering Next.js & App Router",
+                    "fullDescription": "This project marks my first contact with the **Next.js** ecosystem upon the release of version 13. Designed as a technical laboratory, the goal was to deeply explore the transition from 'Pages' architecture to **App Router**. I tested then-innovative concepts such as **React Server Components (RSC)**, nested layout management, and the early stages of Server Actions. It is on this experimental basis that I forged my understanding of modern React frameworks and server-side performance optimization.",
+                    "achievements": {
+                        "0": "RSC Transition: Experimental migration from client-side architecture to Server Components",
+                        "1": "App Router Lab: Implementation of nested layouts and complex dynamic routes",
+                        "2": "Data Fetching Discovery: Exploration of native fetch with deduplication and granular caching",
+                        "3": "Modern Styling: First steps with Tailwind CSS for a utility-first design system",
+                        "4": "Fluid Interactions: Integration of Framer Motion for smooth page transitions",
+                        "5": "Feature Discovery: Testing of <Image> and <Font> tags for automatic asset optimization"
+                    },
+                    "topology": "The project explores the modular structure of the App Router:\n\n1. **Root Layout**: Centralizing fonts (Next Font) and global metadata.\n2. **Nested Architecture**: Using `page.tsx` and `layout.tsx` to isolate sections without reloading the header.\n3. **Server-First Fetching**: Retrieving data directly in async components without passing through an internal API.\n4. **Optimization Pipeline**: Testing 'Turbopack' and streaming cache for progressive rendering.",
+                    "steps": {
+                        "0": {
+                            "title": "1. App Router & File-Based Routing",
+                            "description": "The major discovery was the `app/` file system. Each folder becomes a route, and each `page.tsx` file an entry point. I explored how shared layouts allow maintaining UI state during navigation."
+                        },
+                        "1": {
+                            "title": "2. React Server Components Discovery",
+                            "description": "The shift to server components radically changed my vision of development. By rendering code on the server, I discovered how to drastically reduce the JS bundle sent to the client while simplifying data access."
+                        },
+                        "2": {
+                            "title": "3. Framer Motion Integration",
+                            "description": "To compensate for the sometimes static aspect of server rendering, I integrated Framer Motion. The goal was to create smooth transitions between routes and 'staggered' list animations for a premium user experience."
+                        },
+                        "3": {
+                            "title": "4. Performance Optimization Experiment",
+                            "description": "I tested the new Next.js APIs for image optimization and local fonts. The objective was to understand how the framework automatically handles Lazy Loading and WebP format without complex configuration."
+                        }
+                    }
+                },
+                "legal-documentation": {
+                    "name": "Legal Platform (LegalApp)",
+                    "description": "Legal Tech & Automation (Next.js & Supabase)",
+                    "fullDescription": "Legal App is a centralized legal document management hub designed for **Black Rise**. The application automates the generation and editing of legal pages (Legal Notices, TOS, Privacy) via a custom WYSIWYG editor. Powered by **Bun** and **Next.js 16**, it uses a 'Pink Noir' aesthetic with an OKLCH design system. The project stands out for its hybrid architecture: content is persisted in MDX on the filesystem for performance, while authentication and audit trails are orchestrated via **Better Auth** and **Supabase**.",
+                    "achievements": {
+                        "0": "Modern Runtime: Powered by Bun 1.x for ultra-fast execution and Next.js 16 standalone build",
+                        "1": "Advanced Auth: Better Auth integration with 6 plugins (Passkeys, OTP, Admin, Multi-provider)",
+                        "2": "WYSIWYG Engine: Custom Tiptap 3.x editor for live MDX content management",
+                        "3": "Optimized Performance: Server-side MDX compilation with targeted invalidation via updateTag",
+                        "4": "Security Hardening: 7-layer defense from Cloudflare Edge to isolated Docker volumes",
+                        "5": "Audit Trail: Full history of content editions tracked in Supabase PostgreSQL"
+                    },
+                    "topology": "The service operates on a highly available 3-tier architecture:\n\n1. **Frontend (Next.js 16)**: Hybrid rendering with static generation (SSG) via `generateStaticParams` and Server Actions for mutations.\n2. **Hybrid Persistence**: Content (.mdx) resides on a persistent Docker volume, while metadata and sessions are in the PostgreSQL database.\n3. **Edge Security**: Deployed in the homelab under Docker, protected by a Cloudflare Tunnel and Better Auth session guards.",
+                    "steps": {
+                        "0": {
+                            "title": "1. Advanced Authentication (Better Auth)",
+                            "description": "The authentication system uses Better Auth with a multi-plugin configuration. It natively supports Passkeys (WebAuthn), email OTP via Resend, and fine-grained role management (Admin/User). Sessions are synchronized with Next.js cookies for immediate SSR."
+                        },
+                        "1": {
+                            "title": "2. MDX 3.0 Content Pipeline",
+                            "description": "Content is not in the database to maximize read performance and portability. `next-mdx-remote` is used to compile Markdown + JSX server-side. A custom pipeline automatically extracts the Table of Contents (TOC) and calculates reading time from frontmatter."
+                        },
+                        "2": {
+                            "title": "3. WYSIWYG Editor with Tiptap",
+                            "description": "Administration features a rich editor based on Tiptap 3.x. It allows editing legal documents with complex components (tables, images, code blocks). Upon saving, HTML code is clean converted to Markdown before being persisted on the Docker volume."
+                        },
+                        "3": {
+                            "title": "4. Multi-Layer Security Architecture",
+                            "description": "Deployment is armored by 7 security layers. The Dockerfile uses 'standalone' mode with a read-only filesystem, drastically limiting the attack surface. All user inputs are validated by ultra-strict Zod schemas before processing."
+                        }
+                    }
+                },
+                "personal-linktree": {
+                    "name": "Personal Linktree",
+                    "description": "Digital Identity & API Aggregator (Next.js 16)",
+                    "fullDescription": "This custom 'Link-in-bio' platform centralizes my digital identity and professional activities. Designed as a high-performance showcase, it dynamically aggregates data from multiple APIs (GitHub, LinkedIn, Instagram, YouTube) to offer a real-time 360° view. Using **React 19** and the **React Compiler**, the project achieves exceptional fluidity while maintaining perfect SEO thanks to Server-Side Rendering (SSR). The minimalist aesthetic relies on **Tailwind CSS v4** and a set of custom **shadcn/ui** components.",
+                    "achievements": {
+                        "0": "Lighthouse Mastery: 100/100 on Performance, Accessibility, SEO, and Best Practices",
+                        "1": "Dynamic Aggregation: Real-time streams via GitHub GraphQL, LinkedIn REST, and Instagram Graph APIs",
+                        "2": "React 19 Ready: Automatic optimizations via the experimental React Compiler",
+                        "3": "Modern Styling: Complete migration to Tailwind CSS v4 with OKLCH design system",
+                        "4": "Interactive Appointment: Self-hosted Cal.com integration via an optimized embed SDK",
+                        "5": "Server-Side Excellence: Hybrid rendering (RSC) with 1-hour smart caching (ISR)"
+                    },
+                    "topology": "The application follows an optimized hybrid rendering model:\n\n1. **Data Layer (RSC)**: Server components (GitHub, LinkedIn, Instagram) retrieve data directly from APIs with a 3600s ISR cache.\n2. **Interactive Layer (Client)**: Carousels (LinkedIn, Projects) and forms use 'use client' for fluid interactivity without sacrificing initial load.\n3. **Edge API**: A dedicated API route handles email sending via Resend with server-side Zod validation.\n4. **Asset Pipeline**: Next/Image optimization with secure remote patterns for external media.",
+                    "steps": {
+                        "0": {
+                            "title": "1. Advanced Identity & Contact",
+                            "description": "The header centralizes identity (BTS SIO, Apprentice) and contact badges. The form uses a POST API Route validated by Zod. Upon success, a rich email is instantly sent via the Resend SDK to the administrator."
+                        },
+                        "1": {
+                            "title": "2. External API Integration (GitHub/Instagram)",
+                            "description": "The data engine aggregates GitHub contributions via GraphQL and the latest Instagram posts via the Graph API. Each section uses Suspense to display a skeleton during asynchronous data loading."
+                        },
+                        "2": {
+                            "title": "3. LinkedIn Carousel & Progress",
+                            "description": "A 'smart' client component displays the latest LinkedIn posts (or a static fallback). It features auto-scrolling with a progress bar synchronized via custom CSS keyframes."
+                        },
+                        "3": {
+                            "title": "4. Cal.com Self-Hosted Embed",
+                            "description": "The floating 'Book Appointment' button dynamically initializes the Cal.com embed module. It is configured to point to my self-hosted instance with a 'dark' theme and a specific namespace for conversion tracking."
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "ProjectDetail": {
+        "backToPortfolio": "Back to Portfolio",
+        "overview": "Overview",
+        "networkTopology": "Network Topology",
+        "configStrategy": "Configuration Strategy",
+        "keyResults": "Key Results",
+        "projectActions": "Project Actions",
+        "visitLiveSite": "Visit Live Site",
+        "viewOnGithub": "View on GitHub",
+        "visitProject": "Visit Project",
+        "linkRestricted": "External Link Restricted",
+        "coreTechnology": "Core Technology",
+        "projectNotFound": "Project Not Found"
+    },
+    "Contact": {
+        "copyright": "© {year} Framer template by Yanis Harrat"
+    },
+    "Error": {
+        "title": "Something went wrong!",
+        "description": "An unexpected error occurred. We've been notified and are looking into it.",
+        "tryAgain": "Try again",
+        "backHome": "Back Home"
+    },
+    "NotFound": {
+        "title": "Page Not Found",
+        "description": "The path you're looking for doesn't exist or has been moved to a new dimension.",
+        "backHome": "Back to Home"
+    },
+    "Loading": {
+        "experience": "Loading Experience...",
+        "schoolProjects": "Loading School Projects...",
+        "personalProjects": "Loading Personal Projects...",
+        "skills": "Loading Skills...",
+        "contact": "Loading Contact..."
+    },
+    "LanguageToggle": {
+        "switchTo": "Switch to {language}"
+    }
+}

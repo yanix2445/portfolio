@@ -1,0 +1,458 @@
+{
+    "Header": {
+        "openToWork": "Disponible",
+        "downloadCv": "Télécharger CV"
+    },
+    "Nav": {
+        "home": "Accueil",
+        "summary": "Profil",
+        "experience": "Expérience",
+        "projects": "Projets",
+        "skills": "Compétences",
+        "links": "Contact"
+    },
+    "Hero": {
+        "subtitle": "Étudiant à Fénelon Sup Paris",
+        "name": "Yanis Harrat"
+    },
+    "About": {
+        "title": "À propos",
+        "p1": "Je suis *Yanis Mohamed-Amine Harrat*, un **bon vivant énergique et sociable** avec une passion profonde pour comprendre le fonctionnement de la technologie dans ses moindres détails. Mon parcours est défini par une **double dimension** : l'équilibre entre la rigueur technique des **Systèmes & Réseaux (BTS SIO SISR)** et la logique avancée et algorithmique de **l'École 42 Paris**. Je ne me contente pas d'utiliser la tech ; je la déconstruis, je la construis et je la vis.",
+        "p2": "De mes premières lignes de code à **l'auto-hébergement** de mes propres écosystèmes, j'ai toujours été attiré par la philosophie **Open Source**. Je crois en une technologie accessible, communautaire et transparente. Mes intérêts évoluent constamment, actuellement centrés sur les frontières de **l'IA** et de la **Cybersécurité**.",
+        "p3": "En dehors du terminal, je suis un **sportif hyperactif**. Que je m'attaque à un problème d'infrastructure complexe ou que je repousse mes limites sur le terrain, j'apporte la même énergie \"à fond\". Je m'épanouis dans les connexions sociales et je crois que les meilleures solutions naissent de l'intelligence collective et d'une atmosphère positive et dynamique."
+    },
+    "Experience": {
+        "title": "Expérience Professionnelle",
+        "jobs": {
+            "iut": {
+                "title": "CONSULTANT TECHNIQUE & NO-CODE/FULLSTACK BUILDER",
+                "period": "2025 - 2025",
+                "company": "IUT MEAUX",
+                "description": "Conseil en architecture technique et développement de solutions fullstack/no-code pour optimiser les flux académiques et administratifs.",
+                "achievements": {
+                    "a1": "Analyse des besoins métier et cadrage fonctionnel en méthodologie Agile.",
+                    "a2": "Architecture d'une refonte complète du SI avec un stack hybride (Airtable + n8n + JS + Python).",
+                    "a3": "Conception de bases de données relationnelles et développement d'automatisations complexes.",
+                    "a4": "Administration sécurisée, tests fonctionnels et documentation technique.",
+                    "a5": "Livraison d'un système clé en main incluant formation utilisateur et maintenance."
+                },
+                "projectName": "Consulting Technique",
+                "projectDescription": "Développement Fullstack & No-Code"
+            },
+            "coco": {
+                "title": "Chef de Rang",
+                "period": "2023 - 2025",
+                "company": "Coco Rocco",
+                "description": "Service haut de gamme dans un bistro italien dynamique, maintien de standards rigoureux de service et d'efficacité opérationnelle.",
+                "achievements": {
+                    "a1": "Accueil et conseil des clients pour garantir une satisfaction maximale.",
+                    "a2": "Gestion de la carte, prise de commandes et demandes spécifiques.",
+                    "a3": "Coordination du service avec la cuisine pour un timing optimal.",
+                    "a4": "Supervision et mentorat de l'équipe de salle.",
+                    "a5": "Gestion de la facturation complexe et départ professionnel des clients."
+                },
+                "projectName": "Coco Rocco Bistro",
+                "projectDescription": "Cuisine Italienne Authentique à Puteaux"
+            },
+            "fibrouss": {
+                "title": "Technicien Fibre Optique",
+                "period": "2022 - 2023",
+                "company": "Fibrouss",
+                "description": "Spécialisé dans l'installation et la mise en service de réseaux fibre abonnés et d'infrastructures LAN/WAN.",
+                "achievements": {
+                    "a1": "Installation et maintenance d'infrastructures FTTH (câblage, PTO, soudure optique).",
+                    "a2": "Mise en service d'équipements réseau : routeurs, ONT et modems.",
+                    "a3": "Diagnostic et résolution d'incidents techniques (connectivité, débit).",
+                    "a4": "Support technique L1/L2 et dépannage matériel.",
+                    "a5": "Tests de performance par réflectométrie et analyse TCP/IP.",
+                    "a6": "Interventions terrain autonomes et formation clients."
+                },
+                "projectName": "Infrastructure Fibre",
+                "projectDescription": "Déploiement Réseau Optique"
+            },
+            "golf": {
+                "title": "Chef de Rang",
+                "period": "2022 - 2023",
+                "company": "Golf de Saint-Nom-la-Bretèche",
+                "description": "Service haut de gamme dans un club sportif prestigieux et exclusif, avec une attention méticuleuse aux détails et à la satisfaction des membres.",
+                "achievements": {
+                    "a1": "Service premium à table et conseil aux membres dans un club exclusif.",
+                    "a2": "Coordination des commandes et timing précis avec la cuisine.",
+                    "a3": "Supervision de la salle et suivi du flux de service.",
+                    "a4": "Organisation de la salle et mentorat des membres juniors.",
+                    "a5": "Garantie de la satisfaction des membres par des standards professionnels impeccables."
+                },
+                "projectName": "Saint-Nom-la-Bretèche",
+                "projectDescription": "Club Sportif Privé Full-Service"
+            }
+        }
+    },
+    "Skills": {
+        "title": "Compétences & Outils",
+        "categories": {
+            "sysadmin": "Administration Systèmes & Réseaux",
+            "lowlevel": "Bas Niveau & Logique (42 Piscine)",
+            "cloud": "Cloud & Virtualisation",
+            "cybersecurity": "Cybersécurité & Infrastructure",
+            "webdev": "Développement Web & Apps",
+            "devops": "DevOps & Automatisation",
+            "database": "Gestion de Bases de Données",
+            "peer": "Apprentissage Pair-à-Pair"
+        },
+        "languages": {
+            "title": "Langues",
+            "french": "Français",
+            "frenchLevel": "Maternel",
+            "arabic": "Arabe",
+            "arabicLevel": "Maternel (Courant)",
+            "english": "Anglais",
+            "englishLevel": "Scolaire (Base)"
+        },
+        "education": {
+            "title": "Formation",
+            "fenelon": "BTS SIO SISR (Systèmes & Réseaux)",
+            "fortytwo": "La Piscine (Intensif C/Logique)",
+            "lycee": "Bac Pro SN ARED (Réseaux & Domotique)",
+            "obtainedIn": "Obtenu en"
+        }
+    },
+    "Projects": {
+        "schoolTitle": "Projets Académiques",
+        "personalTitle": "Projets Personnels",
+        "school": {
+            "title": "Infrastructure Systèmes & Réseaux",
+            "period": "2025 - 2027",
+            "school": "Fénelon Sup Paris",
+            "description": "Participation à des projets de laboratoire avancés et des simulations réelles axés sur la gestion d'infrastructure, la sécurité et l'orchestration réseau.",
+            "achievements": {
+                "0": "Déploiement et optimisation de services Active Directory d'entreprise.",
+                "1": "Intégration d'architectures DNS et DHCP complexes dans des environnements virtualisés.",
+                "2": "Automatisation des tâches d'administration système via scripts modernes.",
+                "3": "Documentation et gestion des déploiements d'infrastructure via GitHub."
+            },
+            "items": {
+                "network-infrastructure": {
+                    "name": "Infrastructure Réseau (Cisco Masterclass)",
+                    "description": "Architecture de Routage & Commutation : VLAN, OSPF, Sécurité",
+                    "fullDescription": "Ce projet simule l'ingénierie d'un réseau d'entreprise multi-sites haute performance. L'objectif est de démontrer une maîtrise totale de l'écosystème **Cisco IOS** : de la segmentation L2 via **VLANs** à l'interconnectivité multi-sites via le routage dynamique **OSPF**. Véritable laboratoire d'ingénierie, il met en lumière la conception de passerelles redondantes et la sécurisation des flux critiques de bout en bout.",
+                    "achievements": {
+                        "0": "Conception d'un cœur de réseau segmenté en 3 VLANs isolés (Serveur, Admin, Client)",
+                        "1": "Mise en œuvre du routage Inter-VLAN via approche 'Router-on-a-Stick' (Dot1Q)",
+                        "2": "Configuration d'un lien WAN point-à-point avec convergence OSPF Area 0",
+                        "3": "Sécurisation de l'accès L2 et optimisation via Spanning-Tree (Portfast)",
+                        "4": "Vérification avancée des flux via inspection de la Table de Routage (RIB)"
+                    },
+                    "topology": "Topologie 2R-2S simulant une liaison entre deux entités distantes :\n\n- **Site A (HQ)** : Héberge le Routeur R1 et le Switch S1 (VLAN 2: Serveurs, VLAN 3: Management).\n- **Site B (Succursale)** : Héberge le Routeur R2 et le Switch S2 (VLAN 4: Clients).\n\n**Flux Technique** : Les routeurs utilisent OSPF pour échanger dynamiquement les routes, permettant aux clients de la succursale de communiquer avec les ressources du HQ à travers un backbone sécurisé.",
+                    "steps": {
+                        "0": {
+                            "title": "1. Segmentation L2 (VLANs & Trunks)",
+                            "description": "Pour éviter le mélange des services, nous créons des **VLANs** (réseaux isolés). Sur les switchs, les ports utilisateurs sont en mode Access, tandis que les liaisons entre machines sont en mode **Trunk (802.1Q)** : une véritable autoroute capable de transporter tous ces réseaux sur un seul câble."
+                        },
+                        "1": {
+                            "title": "2. Passerelles : Router-on-a-Stick",
+                            "description": "Le routeur agit comme le chef d'orchestre. Via l'approche **Router-on-a-Stick**, nous transformons un port physique en multiples **sous-interfaces virtuelles**. Chaque sous-interface devient la passerelle par défaut d'un VLAN, permettant au trafic de passer d'un service à l'autre selon les règles définies."
+                        },
+                        "2": {
+                            "title": "3. Backbone WAN : Routage OSPF",
+                            "description": "Comment lier deux sites distants ? En utilisant **OSPF (Open Shortest Path First)**. Ce protocole de routage dynamique calcule automatiquement le meilleur chemin entre le HQ et la Succursale. Il propage les routes dans tout le réseau, garantissant une convergence rapide et évitant les configurations manuelles fastidieuses."
+                        },
+                        "3": {
+                            "title": "4. Diagnostic & Flux de bout en bout",
+                            "description": "C'est l'heure du test final. Nous inspectons la **RIB (Table de Routage)** pour confirmer que les sites se 'voient'. Un simple Ping traverse alors tout le backbone : Switch Succursale -> Routeur Distant -> WAN -> Routeur HQ -> Serveur. La connectivité est totale."
+                        }
+                    }
+                },
+                "vm-network-lab": {
+                    "name": "Infrastructure Hybride",
+                    "description": "Backbone Physique Cisco (CLI) & Services Windows Server (GUI)",
+                    "fullDescription": "Cette architecture hybride fusionne les mondes de la virtualisation et du matériel physique. Sur un **Mac (VMware)**, j'ai déployé un environnement **Windows Server** complet. La puissance de ce projet réside dans l'interconnexion : des interfaces virtuelles rejoignent un backbone physique de **2 routeurs et 2 switchs Cisco** pour assurer l'authentification et les services à travers une topologie multi-sites réelle.",
+                    "achievements": {
+                        "0": "Orchestration Hybride : Pont vNIC/Mac vers terminaux Cisco physiques",
+                        "1": "Backbone Cisco (CLI) : Configuration IOS avancée (VLANs, Trunks, OSPF)",
+                        "2": "Contrôle d'Accès (AD DS) : Gestion via Unités d'Organisation (**OU**) et **GPO**",
+                        "3": "Adressage & Résolution : Étendues DHCP et Zones DNS (Gestion GUI)",
+                        "4": "Résilience Inter-Sites : Convergence OSPF et authentification cross-backbone"
+                    },
+                    "topology": "Infrastructure segmentée 2R-2S reliant deux sites distincts :\n\n- **Site A (HQ)** : Switch L2 Physique hébergeant le serveur AD DS virtuel (le Mac).\n- **Site B (Succursale)** : Switch L2 Physique hébergeant le client physique.\n\n**Pont de Service** : Le backbone physique Cisco assure le transport des flux d'identité. Le client s'authentifie sur le serveur distant via le tunnel WAN simulé par OSPF.",
+                    "steps": {
+                        "0": {
+                            "title": "1. Cœur de Réseau : Configuration CLI",
+                            "description": "Tout commence avec le matériel. Connecté en mode **console**, je configure routeurs et switchs via le terminal (**CLI**). On prépare les VLANs, les Trunks 802.1Q et le routage OSPF. C'est ce socle physique qui permettra aux données virtuelles du Mac de voyager jusqu'au client distant."
+                        },
+                        "1": {
+                            "title": "2. Services d'Identité : AD DS",
+                            "description": "Une fois le réseau stable, on déploie l'intelligence. Sur Windows Server, on promeut le domaine et on structure **Active Directory** avec des **Unités d'Organisation (OU)**. Cette hiérarchie permet d'appliquer des **GPO** (Group Policy Objects) ciblées pour durcir la sécurité et automatiser la configuration des clients."
+                        },
+                        "2": {
+                            "title": "3. Infrastructure & Résolution (DNS/DHCP)",
+                            "description": "Pour que le client trouve le serveur de manière autonome, on configure les services via leurs consoles dédiées. Le **DHCP** distribue les adresses IP à travers les switchs physiques (via relais 'IP Helper'), tandis que le **DNS** mappe les noms aux IP. Tout est géré visuellement pour une fiabilité maximale."
+                        },
+                        "3": {
+                            "title": "4. Synergie Réel/Virtuel : Le Test de Flux",
+                            "description": "Le test final valide la communication hybride : un client physique (Site B) demande ses paramètres réseau. La requête traverse le backbone physique Cisco, atteint le serveur virtuel sur le Mac, et reçoit son IP via l'interface graphique. L'ouverture de session réussie confirme l'intégrité de l'architecture."
+                        }
+                    }
+                }
+            }
+        },
+        "personal": {
+            "title": "Projets Personnels",
+            "period": "2024 - Présent",
+            "school": "Auto-Hébergement & Open Source",
+            "description": "Auto-hébergement de niveau professionnel et ingénierie d'infrastructure. Conception de systèmes robustes, sécurisés et automatisés pour un usage personnel et communautaire.",
+            "achievements": {
+                "0": "Conception d'un environnement homelab Zero-Trust protégé par Cloudflare Tunnel.",
+                "1": "Orchestration de stacks Docker complexes avec routage interne et isolation stricte.",
+                "2": "Mise en œuvre de workflows 'GitOps-like' pour le déploiement et la maintenance des services.",
+                "3": "Application de politiques 'Securité d'abord' : aucun port ouvert, durcissement des conteneurs et privilèges minimaux."
+            },
+            "items": {
+                "portfolio-v2": {
+                    "name": "Portfolio V2",
+                    "description": "Ingénierie Haute Précision (Next.js 16 & React 19)",
+                    "fullDescription": "Cette seconde itération de mon portfolio est une vitrine technologique de mon expertise dans le web moderne. L'objectif était de construire une application **ultra-performante**, **scalable** et **sécurisée** en exploitant les dernières avancées de Next.js 16. Le projet abandonne les architectures monolithiques pour une structure 'Feature-Oriented', garantissant une clarté de code absolue et une maintenance simplifiée.",
+                    "achievements": {
+                        "0": "Rendu hybride haute performance via React 19 Server Components",
+                        "1": "Optimisation agressive des données avec les nouvelles APIs de cache Next.js 16",
+                        "2": "Architecture modulaire 'Feature-First' pour une isolation totale des domaines",
+                        "3": "Design System personnalisé avec Tailwind CSS et animations fluides Framer Motion",
+                        "4": "Score Lighthouse 100/100 (Performance, Accessibilité, SEO, Best Practices)"
+                    },
+                    "topology": "L'architecture repose sur trois piliers fondamentaux :\n\n1. **Structure Feature-Based** : Le code est organisé par domaines métier (Hero, Projets, Compétences) plutôt que par types techniques.\n2. **Compound Components** : Utilisation intensive du pattern de composition pour créer des interfaces riches et flexibles.\n3. **Isomorphic Data Layer** : Un flux de données typé consommé directement par les Server Components pour éliminer les requêtes client inutiles.",
+                    "steps": {
+                        "0": {
+                            "title": "1. Architecture Feature-Based",
+                            "description": "Le projet est structuré autour du dossier `src/features/`. Chaque fonctionnalité possède ses propres composants, types et logiques internes. Cela permet une isolation stricte : on peut modifier le système 'Projets' sans risquer d'impacter le système 'Compétences'."
+                        },
+                        "1": {
+                            "title": "2. Next.js 16 : L'ère 'use cache'",
+                            "description": "J'ai implémenté la nouvelle directive `'use cache'` de Next.js 16 pour optimiser la récupération de données. Couplé avec `cacheLife('max')`, les détails des projets sont servis instantanément depuis le cache edge de Vercel."
+                        },
+                        "2": {
+                            "title": "3. Patterns de Composition (Style Radix)",
+                            "description": "Pour l'UI, j'ai utilisé le pattern **Compound Components** (via dispatcheur). Cela permet de construire des composants complexes comme `ProjectDetail` ou `Skills` de manière déclarative, gardant un contrôle total sur l'ordre et la structure des éléments."
+                        },
+                        "3": {
+                            "title": "4. Optimisation d'Image & SEO",
+                            "description": "Chaque image de projet est **importée statiquement** pour bénéficier du 'Blur Placeholder' automatique de Next.js. Combiné à l'API Metadata dynamique (`generateMetadata`), le site offre une expérience visuelle premium et une indexation parfaite."
+                        },
+                        "4": {
+                            "title": "5. Expérience Utilisateur & Framer Motion",
+                            "description": "Bien que le cœur soit des Server Components, l'interactivité est gérée par **Framer Motion**. J'utilise des variants pour animer l'apparition des sections et les effets de survol, tout en s'assurant que le poids du JavaScript reste minimal."
+                        },
+                        "5": {
+                            "title": "6. Moteur de Rendu Markdown Personnalisé",
+                            "description": "Pour garder une flexibilité totale dans les descriptions techniques sans dépendre d'une librairie lourde, j'ai développé un helper `FormattedText`. Il parse intelligemment les balises bold (`**texte**`) pour mettre en avant les concepts clés."
+                        }
+                    }
+                },
+                "homelabs": {
+                    "name": "Home Labs",
+                    "description": "Infrastructure Zero-Trust Auto-Hébergée (Docker, Cloudflare)",
+                    "fullDescription": "Home Labs est une infrastructure d'auto-hébergement robuste et sécurisée, conçue pour déployer et gérer divers services web (applications, outils, bases de données) sur un serveur unique. La philosophie du projet repose sur la **Sécurité par défaut** (aucun port ouvert sur Internet, tunnel chiffré), l'**Isolation** (services conteneurisés sur un réseau interne dédié) et la **Standardisation** (structure de dossiers et conventions strictes pour faciliter la maintenance).",
+                    "achievements": {
+                        "0": "Zero-Trust Architecture: No open ports (80/443), secure Cloudflare Tunnel",
+                        "1": "Isolation: Each service runs in isolated Docker containers on a dedicated network",
+                        "2": "Scalability: Standardized scaffolding for rapid service deployment",
+                        "3": "Security Hardening: Non-privileged containers and strict resource limits",
+                        "4": "Automation: Operational scripts for system-wide orchestration",
+                        "5": "Monitoring: Integrated logging rotation and health checks"
+                    },
+                    "topology": "L'architecture repose sur un flux de données sécurisé à 5 étapes :\n\n1. **Ingress** : Accès via HTTPS vers le domaine personnalisé.\n2. **Cloudflare Edge** : Gestion du SSL, protection DDoS et WAF.\n3. **Tunnel chiffré** : Routage via une connexion sortante persistante (Cloudflare Tunnel).\n4. **Gateway** : Le conteneur `cloudflared` route la requête vers le service interne.\n5. **Service Isolé** : L'application cible traite la requête sur le réseau Docker privé `home-labs`.",
+                    "steps": {
+                        "0": {
+                            "title": "1. Infrastructure Core & Gateway",
+                            "description": "Le cœur du système réside dans le dossier `infrastructure/gateway/`. Il orchestre le tunnel Cloudflare et définit les règles de routage (hostname -> service:port). L'utilisation de tokens CF_TUNNEL_TOKEN dans un fichier `.env` sécurisé permet une authentification robuste sans secret en dur."
+                        },
+                        "1": {
+                            "title": "2. Pattern 1: Image-Based Services",
+                            "description": "Pour les services simples utilisant des images officielles (ex: Excalidraw), la configuration est minimaliste. Elle se concentre sur l'isolation réseau et la persistance des données via des volumes nommés, tout en respectant les limites de ressources CPU/RAM."
+                        },
+                        "2": {
+                            "title": "3. Pattern 2: Built Services (Custom Apps)",
+                            "description": "Les applications maison (ex: Legal App en Next.js) utilisent un pattern de 'Build'. Le `docker-compose.yml` pointe vers un Dockerfile local. Cela permet d'optimiser l'image finale via des 'multi-stage builds' pour réduire la surface d'attaque et la taille de l'image."
+                        },
+                        "3": {
+                            "title": "4. Pattern 3: Orchestrated Stacks",
+                            "description": "Les services complexes (Cal.com, Typebot) nécessitent une orchestration de plusieurs conteneurs (App + DB + Redis). On utilise des `healthchecks` et `depends_on` pour garantir que la base de données est prête avant le lancement de l'application."
+                        },
+                        "4": {
+                            "title": "5. Operational Procedures",
+                            "description": "L'administration du homelab est simplifiée par des scripts maîtres. L'ajout d'un service suit un workflow strict : scaffolding via script, config DNS dans le Gateway, et déploiement via Docker Compose. La maintenance inclut la rotation des logs et le déploiement continu via pull de nouvelles images."
+                        }
+                    }
+                },
+                "zsh-boost": {
+                    "name": "ZSH BOOST",
+                    "description": "ZSH Configuration Framework / Dotfiles Manager",
+                    "fullDescription": "ZSH BOOST est un framework de configuration moderne, modulaire et ultra-rapide conçu pour offrir un environnement ZSH 'prêt à l'emploi'. Il automatise l'installation des outils CLI les plus performants (eza, bat, fzf, zoxide) et des plugins de productivité essentiels. La philosophie du projet est d'allier puissance et simplicité : un seul fichier de configuration (`config.zsh`) pour piloter l'ensemble de l'expérience shell, tout en maintenant un temps de démarrage optimal grâce au chargement différé et à une détection intelligente des dépendances.",
+                    "achievements": {
+                        "0": "Zero-Config Onboarding: Interactive installer powered by Gum for instant setup",
+                        "1": "Modular Logic: Granular split between core (Env/Path) and feature modules (Aliases/Utils)",
+                        "2": "Performance First: Optimized boot sequence with intelligent $PATH management and lazy-loading",
+                        "3": "Modern Tooling Integration: Native aliases for eza, bat, fd, ripgrep, and zoxide",
+                        "4": "Extensible Architecture: Private 'local/' layer for custom scripts and sensitive configurations",
+                        "5": "Automated Maintenance: Global 'up' command to keep Homebrew, plugins, and tools updated"
+                    },
+                    "topology": "Le flux de chargement (Boot Sequence) suit une logique en cascade :\n\n1. **Bootstrap** (`.zshrc`) : Détecte le `$ZDOTDIR` via le symlink et initialise l'environnement.\n2. **Core Layer** (`core/*`) : Définit les variables de base, les options ZSH et gère le `$PATH` sans doublon.\n3. **User Config** (`config.zsh`) : Lit les préférences utilisateur (modules actifs, thèmes, plugins).\n4. **Module Activation** (`modules/*`) : Boucle sur les modules choisis pour charger les alias et fonctions.\n5. **Local Layer** (`local/*`) : Charge les personnalisations privées et les tokens secrets hors git.",
+                    "steps": {
+                        "0": {
+                            "title": "1. Intelligent Boot Mechanism",
+                            "description": "Le point d'entrée `.zshrc` est conçu pour être universel. En utilisant `readlink`, il identifie son emplacement réel dans le système de fichiers, ce qui permet à ZSH BOOST d'être installé n'importe où tout en conservant des chemins relatifs robustes pour ses dépendances internes."
+                        },
+                        "1": {
+                            "title": "2. Modular Configuration Management",
+                            "description": "Tout le pilotage se fait via l'array `ZSH_MODULES`. Cette approche permet d'activer ou désactiver des pans entiers de fonctionnalités (Git, Docker, Kubernetes, etc.) sans toucher au code source, simplement en commentant une ligne dans le fichier de configuration utilisateur."
+                        },
+                        "2": {
+                            "title": "3. Interactive Scaffolding (Gum UI)",
+                            "description": "Le script `install.sh` transforme l'installation des dotfiles en une expérience premium. Propulsé par Gum, il propose des menus interactifs, des spinners animés et des sélecteurs de thèmes, gérant automatiquement les dépendances Homebrew avant de lier les fichiers de configuration."
+                        },
+                        "3": {
+                            "title": "4. Modern Alias Ecosystem",
+                            "description": "Les alias ne sont pas de simples raccourcis ; ils intègrent une vérification systémique des outils. Si un outil comme `eza` est présent, les commandes `ls` et `ll` sont augmentées ; sinon, le système retombe élégamment sur les commandes natives macOS, garantissant que le shell ne 'casse' jamais."
+                        },
+                        "4": {
+                            "title": "5. Fully Automated System Update",
+                            "description": "La fonction `up` centralise la maintenance. Elle ne se contente pas de mettre à jour le système macOS ; elle synchronise également les plugins Oh My Zsh, rafraîchit les outils Homebrew, et met à jour les gestionnaires de paquets globaux (NPM, PNPM, Bun, Rust) en une seule action."
+                        }
+                    }
+                },
+                "portfolio-v1": {
+                    "name": "Portfolio V1",
+                    "description": "Lab Technique : Découverte Next.js & App Router",
+                    "fullDescription": "Ce projet marque mon premier contact avec l'écosystème **Next.js** lors de la sortie de la version 13. Conçu comme un laboratoire technique, l'objectif était d'explorer en profondeur le passage de l'architecture 'Pages' vers l'**App Router**. J'y ai testé les concepts alors novateurs tels que les **React Server Components (RSC)**, la gestion des layouts imbriqués, et les balbutiements des Server Actions. C'est sur cette base expérimentale que j'ai forgé ma compréhension des frameworks React modernes et de l'optimisation des performances côté serveur.",
+                    "achievements": {
+                        "0": "RSC Transition: Migration expérimentale d'une architecture client-side vers les Server Components",
+                        "1": "App Router Lab: Implémentation de layouts imbriqués et de routes dynamiques complexes",
+                        "2": "Data Fetching Discovery: Exploration du fetch natif avec déduplication et cache granulaire",
+                        "3": "Modern Styling: Premiers pas avec Tailwind CSS pour un design system utilitaire",
+                        "4": "Fluid Interactions: Intégration de Framer Motion pour des transitions de pages fluides",
+                        "5": "Feature Discovery: Test des balises <Image> et <Font> pour l'optimisation automatique des assets"
+                    },
+                    "topology": "Le projet explore la structure modulaire de l'App Router :\n\n1. **Root Layout** : Centralisation des polices (Next Font) et des métadonnées globales.\n2. **Nested Architecture** : Utilisation de `page.tsx` et `layout.tsx` pour isoler les sections sans recharger le header.\n3. **Server-First Fetching** : Récupération de données directement dans les composants async sans passer par l'API interne.\n4. **Optimization Pipeline** : Test des 'Turbopack' et du cache de streaming pour un rendu progressif.",
+                    "steps": {
+                        "0": {
+                            "title": "1. App Router & File-Based Routing",
+                            "description": "La découverte majeure fut le système de fichiers `app/`. Chaque dossier devient une route, et chaque fichier `page.tsx` un point d'entrée. J'ai exploré comment les layouts partagés permettent de maintenir l'état de l'UI pendant la navigation."
+                        },
+                        "1": {
+                            "title": "2. React Server Components Discovery",
+                            "description": "Le passage aux composants serveur a radicalement changé ma vision du développement. En rendant le code sur le serveur, j'ai découvert comment réduire drastiquement le bundle JS envoyé au client tout en simplifiant l'accès aux données."
+                        },
+                        "2": {
+                            "title": "3. Framer Motion Integration",
+                            "description": "Pour compenser l'aspect parfois statique du rendu serveur, j'ai intégré Framer Motion. L'objectif était de créer des transitions fluides entre les routes et des animations de listes 'staggered' pour une expérience utilisateur premium."
+                        },
+                        "3": {
+                            "title": "4. Performance Optimization Experiment",
+                            "description": "J'ai testé les nouvelles APIs de Next.js pour l'image optimization et les fonts locales. L'objectif était de comprendre comment le framework gère automatiquement le Lazy Loading et le format WebP sans configuration complexe."
+                        }
+                    }
+                },
+                "legal-documentation": {
+                    "name": "Plateforme Juridique (LegalApp)",
+                    "description": "Legal Tech & Automation (Next.js & Supabase)",
+                    "fullDescription": "Legal App est un hub centralisé de gestion documentaire juridique conçu pour **Black Rise**. L'application automatise la génération et l'édition de pages légales (Mentions Légales, CGU, Confidentialité) via un éditeur WYSIWYG sur mesure. Propulsée par **Bun** et **Next.js 16**, elle utilise une esthétique 'Pink Noir' avec un design system en OKLCH. Le projet se distingue par son architecture hybride : le contenu est persisté en MDX sur le filesystem pour la performance, tandis que l'authentification et l'audit trail sont orchestrés via **Better Auth** et **Supabase**.",
+                    "achievements": {
+                        "0": "Modern Runtime: Powered by Bun 1.x for ultra-fast execution and Next.js 16 standalone build",
+                        "1": "Advanced Auth: Better Auth integration with 6 plugins (Passkeys, OTP, Admin, Multi-provider)",
+                        "2": "WYSIWYG Engine: Custom Tiptap 3.x editor for live MDX content management",
+                        "3": "Optimized Performance: Server-side MDX compilation with ciblée invalidation via updateTag",
+                        "4": "Security Hardening: 7-layer defense from Cloudflare Edge to isolated Docker volumes",
+                        "5": "Audit Trail: Full history of content editions tracked in Supabase PostgreSQL"
+                    },
+                    "topology": "Le service opère selon une architecture à 3 couches hautement disponible :\n\n1. **Frontend (Next.js 16)** : Rendu hybride avec génération statique (SSG) via `generateStaticParams` et Server Actions pour les mutations.\n2. **Persistance Hybride** : Le contenu (.mdx) réside sur un volume Docker persistant, tandis que les métadonnées et sessions sont en base PostgreSQL.\n3. **Sécurité Edge** : Déployé dans le homelab sous Docker, protégé par un tunnel Cloudflare et des guards de session Better Auth.",
+                    "steps": {
+                        "0": {
+                            "title": "1. Advanced Authentication (Better Auth)",
+                            "description": "Le système d'authentification utilise Better Auth avec une configuration multi-plugins. Il supporte nativement les Passkeys (WebAuthn), l'authentification par email OTP via Resend, et une gestion fine des rôles (Admin/User). Les sessions sont synchronisées avec les cookies Next.js pour un SSR immédiat."
+                        },
+                        "1": {
+                            "title": "2. MDX 3.0 Content Pipeline",
+                            "description": "Le contenu n'est pas en base de données pour maximiser les performances de lecture et la portabilité. On utilise `next-mdx-remote` pour compiler le Markdown + JSX côté serveur. Un pipeline personnalisé extrait automatiquement la table des matières (TOC) et calcule le temps de lecture depuis le frontmatter."
+                        },
+                        "2": {
+                            "title": "3. WYSIWYG Editor with Tiptap",
+                            "description": "L'administration dispose d'un éditeur riche basé sur Tiptap 3.x. Il permet d'éditer les documents légaux avec des composants complexes (tables, images, blocs de code). Lors de la sauvegarde, le code HTML est converti en Markdown propre avant d'être persisté sur le volume Docker."
+                        },
+                        "3": {
+                            "title": "4. Multi-Layer Security Architecture",
+                            "description": "Le déploiement est blindé par 7 couches de sécurité. Le Dockerfile utilise le mode 'standalone' avec un filesystem en lecture seule (read-only), limitant drastiquement la surface d'attaque. Toutes les entrées utilisateur sont validées par des schémas Zod ultra-stricts avant processing."
+                        }
+                    }
+                },
+                "personal-linktree": {
+                    "name": "Personal Linktree",
+                    "description": "Digital Identity & API Aggregator (Next.js 16)",
+                    "fullDescription": "Cette plateforme 'Link-in-bio' sur mesure centralise mon identité numérique et mes activités professionnelles. Conçue comme une vitrine haute performance, elle agrège dynamiquement des données provenant de multiples APIs (GitHub, LinkedIn, Instagram, YouTube) pour offrir une vue à 360° en temps réel. Utilisant **React 19** et le **React Compiler**, le projet atteint une fluidité exceptionnelle tout en maintenant un SEO parfait grâce au rendu serveur (SSR). L'esthétique minimaliste s'appuie sur **Tailwind CSS v4** et un ensemble de composants **shadcn/ui** personnalisés.",
+                    "achievements": {
+                        "0": "Lighthouse Mastery: 100/100 sur Performance, Accessibilité, SEO et Best Practices",
+                        "1": "Dynamic Aggregation: Flux temps réel via GitHub GraphQL, LinkedIn REST et Instagram Graph APIs",
+                        "2": "React 19 Ready: Optimisations automatiques via le React Compiler expérimental",
+                        "3": "Modern Styling: Migration complète vers Tailwind CSS v4 avec design system OKLCH",
+                        "4": "Interactive Appointment: Intégration Cal.com self-hosted via un SDK embed optimisé",
+                        "5": "Server-Side Excellence: Rendu hybride (RSC) avec cache intelligent (ISR) d'une heure"
+                    },
+                    "topology": "L'application suit un modèle de rendu hybride optimisé :\n\n1. **Data Layer (RSC)** : Les composants serveur (GitHub, LinkedIn, Instagram) récupèrent les données directement depuis les APIs avec un cache ISR de 3600s.\n2. **Interactive Layer (Client)** : Les carrousels (LinkedIn, Projets) et formulaires utilisent 'use client' pour une interactivité fluide sans sacrifier le chargement initial.\n3. **API Edge** : Une route API dédiée gère l'envoi d'emails via Resend avec validation Zod côté serveur.\n4. **Asset Pipeline** : Optimisation Next/Image avec remote patterns sécurisés pour les médias externes.",
+                    "steps": {
+                        "0": {
+                            "title": "1. Advanced Identity & Contact",
+                            "description": "Le header centralise l'identité (BTS SIO, Alternant) et les badges de contact. Le formulaire utilise une API Route POST validée par Zod. En cas de succès, un email riche est envoyé instantanément via le SDK Resend à l'administrateur."
+                        },
+                        "1": {
+                            "title": "2. External API Integration (GitHub/Instagram)",
+                            "description": "Le moteur de données agrège les contributions GitHub via GraphQL et les derniers posts Instagram via l'API Graph. Chaque section utilise Suspense pour afficher un skeleton pendant le chargement asynchrone des données."
+                        },
+                        "2": {
+                            "title": "3. LinkedIn Carousel & Progress",
+                            "description": "Un composant client 'smart' affiche les derniers posts LinkedIn (ou un fallback statique). Il dispose d'un auto-défilement avec une barre de progression synchronisée via des keyframes CSS personnalisées."
+                        },
+                        "3": {
+                            "title": "4. Cal.com Self-Hosted Embed",
+                            "description": "Le bouton flottant 'Prendre RDV' initialise dynamiquement le module d'embed Cal.com. Il est configuré pour pointer vers mon instance auto-hébergée avec un thème 'dark' et un namespace spécifique pour le suivi des conversions."
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "ProjectDetail": {
+        "backToPortfolio": "Retour au Portfolio",
+        "overview": "Aperçu",
+        "networkTopology": "Topologie Réseau",
+        "configStrategy": "Stratégie de Configuration",
+        "keyResults": "Résultats Clés",
+        "projectActions": "Actions du Projet",
+        "visitLiveSite": "Visiter le Site",
+        "viewOnGithub": "Voir sur GitHub",
+        "visitProject": "Voir le Projet",
+        "linkRestricted": "Lien Externe Restreint",
+        "coreTechnology": "Technologies Clés",
+        "projectNotFound": "Projet Non Trouvé"
+    },
+    "Contact": {
+        "copyright": "© {year} Template Framer par Yanis Harrat"
+    },
+    "Error": {
+        "title": "Quelque chose s'est mal passé !",
+        "description": "Une erreur inattendue est survenue. Nous avons été notifiés et nous y travaillons.",
+        "tryAgain": "Réessayer",
+        "backHome": "Retour à l'accueil"
+    },
+    "NotFound": {
+        "title": "Page Non Trouvée",
+        "description": "Le chemin que vous cherchez n'existe pas ou a été déplacé vers une autre dimension.",
+        "backHome": "Retour à l'accueil"
+    },
+    "Loading": {
+        "experience": "Chargement de l'expérience...",
+        "schoolProjects": "Chargement des projets académiques...",
+        "personalProjects": "Chargement des projets personnels...",
+        "skills": "Chargement des compétences...",
+        "contact": "Chargement du contact..."
+    },
+    "LanguageToggle": {
+        "switchTo": "Passer en {language}"
+    }
+}
