@@ -20,16 +20,20 @@ export function FloatingNav() {
     ];
 
     useEffect(() => {
-        const observer = new IntersectionObserver(
-            (entries) => {
-                entries.forEach((entry) => {
-                    if (entry.isIntersecting) {
-                        setActiveSection(entry.target.id);
-                    }
-                });
-            },
-            { threshold: 0.5 }
-        );
+        const handleIntersect = (entries: IntersectionObserverEntry[]) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    setActiveSection(entry.target.id);
+                }
+            });
+        };
+
+        // RootMargin creates a "valid" area in the center of the screen
+        // -40% from top, -40% from bottom means the section must be in the middle 20% to trigger
+        const observer = new IntersectionObserver(handleIntersect, {
+            rootMargin: "-40% 0px -40% 0px",
+            threshold: 0
+        });
 
         const sections = document.querySelectorAll("section[id]");
         sections.forEach((section) => observer.observe(section));
