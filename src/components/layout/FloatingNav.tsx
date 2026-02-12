@@ -41,7 +41,7 @@ export function FloatingNav() {
         <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50">
             <nav className="flex items-center gap-1 rounded-full border border-white/10 bg-black/80 p-1 shadow-lg backdrop-blur-md">
                 {navItems.map((item) => {
-                    const isActive = activeSection === item.href.substring(1);
+                    const isActive = activeSection === item.href.substring(1) || (item.href === "#projects" && activeSection === "personal-projects");
                     return (
                         <Link
                             key={item.href}
