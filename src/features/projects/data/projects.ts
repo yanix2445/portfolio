@@ -2,6 +2,7 @@ import { CategoryConfig } from "../types";
 import { StaticImageData } from "next/image";
 
 // Static Imports for Automatic Blur Optimization
+import techWatchImg from "../../../../public/tech-watch-n8n.png";
 import networkInfraImg from "../../../../public/network-infra.png";
 import portfolioV2Img from "../../../../public/portfolio-v2.png";
 import portfolioV1Img from "../../../../public/portfolio-v1.png";
@@ -13,8 +14,79 @@ import homelabsImg from "../../../../public/homelabs.png";
 
 export const schoolProjectsConfig: CategoryConfig = {
     id: "school",
-    achievementCount: 4,
+    achievementCount: 5,
     projects: [
+        {
+            slug: "tech-watch",
+            image: techWatchImg,
+            link: "https://github.com/yanix2445/Home-labs/tree/main",
+            tech: ["n8n", "Gemini AI", "Docker", "Typebot", "RSS", "SMTP"],
+            achievementCount: 5,
+            topology: {},
+            steps: [
+                {
+                    language: "json",
+                    code: `{
+  "nodes": [
+    {
+      "parameters": {
+        "rule": { "interval": [{ "triggerAtHour": 6 }] }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "name": "Morning Recap Trigger"
+    },
+    {
+      "parameters": {
+        "url": "https://www.google.fr/alerts/feeds/..."
+      },
+      "type": "n8n-nodes-base.rssFeedRead",
+      "name": "Google Alerts RSS"
+    }
+  ]
+}`
+                },
+                {
+                    language: "javascript",
+                    code: `// 🧠 Café IA Markdown Cleaner
+const text = $json.markdown || "";
+
+// Cleaning pipeline
+let cleaned = text
+  .replace(/\\[([^\\]]+)\\]\\((https?:\\/\\/[^\\s)]+)\\)/g, '$1') // Remove links
+  .replace(/https?:\\/\\/[^\\s)]+/g, '') // Remove URLs
+  .replace(/\\b[a-zA-Z0-9.-]+\\.(com|net|...) /g, '') // Remove domains
+  .replace(/<[^>]*>/g, '') // Remove HTML tags
+  .replace(/\\s{2,}/g, ' ')
+  .trim();
+
+return { json: { cleaned_markdown: cleaned } };`
+                },
+                {
+                    language: "markdown",
+                    code: `## OBJECTIVE
+Create a morning news recap that feels like a **casual conversation**, 
+but still **insightful and clean**.
+
+## RULES
+- Language: **French**
+- Tone: **Spartan**, **casual**, **spontaneous**.
+- Style: short, natural sentences.
+- Output: strictly **JSON** with "Titre" and "Contenue" (Markdown).`
+                },
+                {
+                    language: "yaml",
+                    code: `# n8n infrastructure snippet
+services:
+  n8n:
+    image: n8nio/n8n
+    environment:
+      - N8N_AI_ENABLED=true
+      - GENERIC_TIMEZONE=Europe/Paris
+    volumes:
+      - n8n_data:/home/node/.n8n`
+                }
+            ]
+        },
         {
             slug: "network-infrastructure",
             image: networkInfraImg,

@@ -128,9 +128,41 @@
                 "0": "Déploiement et optimisation de services Active Directory d'entreprise.",
                 "1": "Intégration d'architectures DNS et DHCP complexes dans des environnements virtualisés.",
                 "2": "Automatisation des tâches d'administration système via scripts modernes.",
-                "3": "Documentation et gestion des déploiements d'infrastructure via GitHub."
+                "3": "Documentation et gestion des déploiements d'infrastructure via GitHub.",
+                "4": "Mise en place d'agents IA autonomes pour la veille technologique automatisée."
             },
             "items": {
+                "tech-watch": {
+                    "name": "E5 : Opérateur de Veille IA V1",
+                    "description": "Agent Autonome n8n & Gemini Pro",
+                    "fullDescription": "Cette solution de **Veille Technologique 2.0** est un écosystème automatisé complet conçu pour transformer le bruit numérique en expertise actionnable. L'architecture repose sur un pipeline ETL (Extract, Transform, Load) sophistiqué : l'extraction est pilotée par des flux **Google Alerts (RSS)**, le scraping de précision est assuré par **Firecrawl** qui convertit le HTML complexe en Markdown épuré. Le cœur du système est un script **JavaScript sur mesure** qui utilise des expressions régulières avancées pour éliminer le 'boilerplate' (pubs, navigation) avant que **Gemini 2.5 Pro** ne traite l'information. L'IA utilise une stratégie de **Structured Output Parsing** pour garantir une livraison fiable via **Gmail API**. Le déploiement et l'orchestration de l'instance **n8n** sont assurés par mon projet **Home Labs**, une infrastructure open-source librement disponible sur mon GitHub pour être clonée ou forkée.",
+                    "achievements": {
+                        "0": "Pipeline ETL Hybride : Orchestration n8n avec gestion des erreurs et retries automatiques",
+                        "1": "Nettoyage de Données Avancé : Script JS 'Markdown Cleaner' avec filtrage de boilerplate par Regex",
+                        "2": "Ingénierie de Prompt (NLP) : Configuration Gemini pour une synthèse structurée en JSON",
+                        "3": "Scraping Résilient : Utilisation de Firecrawl pour contourner les protections anti-bot et extraire le contenu utile",
+                        "4": "Automatisation Self-Hosted : Déploiement Docker sur Homelab avec protection Zero-Trust"
+                    },
+                    "topology": "Le workflow suit une logique séquentielle événementielle :\n\n1. **Trigger** : Détection de nouveaux items RSS (Polling 15min).\n2. **Scraper** : Firecrawl nettoie la page web (suppresson pubs/nav).\n3. **Intelligence** : Gemini 1.5 Pro analyse le texte (Résumé + Key Points).\n4. **Formatter** : Création d'un template HTML avec les données structurées.\n5. **Delivery** : Envoi via SMTP sécurisé.",
+                    "steps": {
+                        "0": {
+                            "title": "1. Orchestration Low-Code (n8n)",
+                            "description": "Au cœur du système, n8n gère la logique de flux. J'utilise des nœuds Code pour les manipulations de données complexes et des nœuds HTTP pour les appels API externes. La gestion des erreurs est intégrée pour réessayer les scrapes échoués."
+                        },
+                        "1": {
+                            "title": "2. Intelligence Artificielle (Gemini)",
+                            "description": "Le cerveau du système. Le prompt est calibré pour ignorer le bruit marketing et se concentrer sur l'innovation technique. L'API Gemini retourne un JSON structuré (Résumé, Points Clés, Impact) prêt à être consommé."
+                        },
+                        "2": {
+                            "title": "3. Delivery System (Email)",
+                            "description": "L'information n'a de valeur que si elle est consommée. Le système compile les meilleures news de la journée et envoie un récapitulatif propre, formaté en HTML responsive, directement dans ma boîte mail prioritaire."
+                        },
+                        "3": {
+                            "title": "4. Infrastructure Support",
+                            "description": "L'agent tourne dans un conteneur dédié, isolé sur le réseau 'home-labs'. Il partage les volumes de données pour la persistance de l'historique d'exécution et bénéficie de la protection globale du serveur (Firewall, Logs)."
+                        }
+                    }
+                },
                 "network-infrastructure": {
                     "name": "Infrastructure Réseau (Cisco Masterclass)",
                     "description": "Architecture de Routage & Commutation : VLAN, OSPF, Sécurité",
