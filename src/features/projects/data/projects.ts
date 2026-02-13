@@ -2,7 +2,7 @@ import { CategoryConfig } from "../types";
 import { StaticImageData } from "next/image";
 
 // Static Imports for Automatic Blur Optimization
-import techWatchImg from "../../../../public/tech-watch-n8n.png";
+import techWatchImg from "@/../public/tech-watch-v1.png";
 import networkInfraImg from "../../../../public/network-infra.png";
 import portfolioV2Img from "../../../../public/portfolio-v2.png";
 import portfolioV1Img from "../../../../public/portfolio-v1.png";
