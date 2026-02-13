@@ -27,8 +27,8 @@ export function MarkdownText({ content, className }: MarkdownTextProps) {
 }
 
 function parseBold(text: string) {
-    // Split by **...**
-    const parts = text.split(/(\*\*.*?\*\*)/g);
+    // Split by **...** or *...*
+    const parts = text.split(/(\*\*.*?\*\*|\*.*?\*)/g);
 
     return parts.map((part, index) => {
         if (part.startsWith('**') && part.endsWith('**')) {
@@ -38,7 +38,13 @@ function parseBold(text: string) {
                 </strong>
             );
         }
-        // Handle italics if needed, or other simple parsers here
+        if (part.startsWith('*') && part.endsWith('*')) {
+            return (
+                <strong key={index} className="font-bold text-[#CC9400]">
+                    {part.slice(1, -1)}
+                </strong>
+            );
+        }
         return part;
     });
 }
