@@ -36,16 +36,16 @@ export function Header() {
                     data-cal-link="yanis-harrat/premier-contact-15"
                     data-cal-config='{"layout":"month_view"}'
                 >
-                    <Calendar className="w-4 h-4" />
-                    <span>{t("bookMeeting")}</span>
+                    <Calendar className="w-4 h-4 sm:hidden" />
+                    <span className="hidden sm:inline">{t("bookMeeting")}</span>
                 </Button>
                 <Button
                     asChild
                     className="bg-[#CC9400] hover:bg-[#CC9400]/90 text-black rounded-full h-10 px-4 sm:px-6 py-3 text-sm font-bold tracking-wide transition-transform hover:scale-105"
                 >
                     <a href="/Cv-alternance-Yanis-Harrat-copie.pdf" download="Cv-Yanis-Harrat.pdf">
-                        <FileText className="w-4 h-4" />
-                        <span>{t("downloadCv")}</span>
+                        <FileText className="w-4 h-4 sm:hidden" />
+                        <span className="hidden sm:inline">{t("downloadCv")}</span>
                     </a>
                 </Button>
             </div>
