@@ -15,7 +15,7 @@ export function Header() {
         (async function () {
             // @ts-ignore - embedLibUrl is specified in the doc provided by user
             const cal = await getCalApi({ "namespace": "premier-contact-15", "embedLibUrl": "https://cal.yanis-harrat.com/embed/embed.js" });
-            cal("ui", { "hideEventTypeDetails": true, "layout": "column_view" });
+            cal("ui", { "hideEventTypeDetails": true, "layout": "month_view" });
         })();
     }, []);
 
@@ -49,7 +49,7 @@ export function Header() {
                     data-cal-namespace="premier-contact-15"
                     data-cal-link="yanis-harrat/premier-contact-15"
                     data-cal-origin="https://cal.yanis-harrat.com"
-                    data-cal-config='{"layout":"column_view","useSlotsViewOnSmallScreen":"true"}'
+                    data-cal-config='{"layout":"month_view"}'
                 >
                     <Calendar className="w-4 h-4 sm:hidden" />
                     <span className="hidden sm:inline">{t("bookMeeting")}</span>
