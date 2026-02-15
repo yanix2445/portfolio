@@ -1,7 +1,8 @@
 {
     "Header": {
         "openToWork": "Disponible",
-        "downloadCv": "Télécharger CV"
+        "downloadCv": "Télécharger CV",
+        "bookMeeting": "Prendre RDV"
     },
     "Nav": {
         "home": "Accueil",
@@ -133,33 +134,33 @@
             },
             "items": {
                 "tech-watch": {
-                    "name": "E5 : Opérateur de Veille IA V1",
-                    "description": "Agent Autonome n8n & Gemini Pro",
-                    "fullDescription": "Cette solution de **Veille Technologique 2.0** est un écosystème automatisé complet conçu pour transformer le bruit numérique en expertise actionnable. L'architecture repose sur un pipeline ETL (Extract, Transform, Load) sophistiqué : l'extraction est pilotée par des flux **Google Alerts (RSS)**, le scraping de précision est assuré par **Firecrawl** qui convertit le HTML complexe en Markdown épuré. Le cœur du système est un script **JavaScript sur mesure** qui utilise des expressions régulières avancées pour éliminer le 'boilerplate' (pubs, navigation) avant que **Gemini 2.5 Pro** ne traite l'information. L'IA utilise une stratégie de **Structured Output Parsing** pour garantir une livraison fiable via **Gmail API**. Le déploiement et l'orchestration de l'instance **n8n** sont assurés par mon projet **Home Labs**, une infrastructure open-source librement disponible sur mon GitHub pour être clonée ou forkée.",
+                    "name": "E5 : Veille Technologique IA V2",
+                    "description": "Agrégateur Intelligent & Analyste GLM-4.5",
+                    "fullDescription": "Cette nouvelle version de ma **Veille Technologique** marque une évolution majeure vers l'intelligence haute-fidélité. L'architecture agrège désormais des flux diversifiés : **YouTube RSS** (chaînes spécialisées), **Cyberveille (Infosec)**, et les grands médias IT. Le pipeline ETL est optimisé par un filtrage temporel strict (48h) et une agrégation massive des données. L'analyse est confiée à un agent IA piloté par **OpenRouter** utilisant le modèle **GLM-4.5**, capable d'évaluer la pertinence (score 1-5), de catégoriser finement par thématique (IA, DevOps, Cyber, etc.) et de générer un rapport HTML professionnel. Le système est entièrement autonome, s'exécutant chaque matin à 8h pour livrer une synthèse actionnable par email.",
                     "achievements": {
-                        "0": "Pipeline ETL Hybride : Orchestration n8n avec gestion des erreurs et retries automatiques",
-                        "1": "Nettoyage de Données Avancé : Script JS 'Markdown Cleaner' avec filtrage de boilerplate par Regex",
-                        "2": "Ingénierie de Prompt (NLP) : Configuration Gemini pour une synthèse structurée en JSON",
-                        "3": "Scraping Résilient : Utilisation de Firecrawl pour contourner les protections anti-bot et extraire le contenu utile",
-                        "4": "Automatisation Self-Hosted : Déploiement Docker sur Homelab avec protection Zero-Trust"
+                        "0": "Agrégation Multi-Sources : YouTube RSS, Google Alerts, Cyberveille et médias spécialisés IT",
+                        "1": "Filtrage Intelligent : Logique de rétention de 48h automatisée par filtrage par date",
+                        "2": "Analyse Haute Fidélité : Agent IA propulsé par OpenRouter (GLM-4.5) avec scoring de pertinence",
+                        "3": "Catégorisation Automatique : Classement dynamique par domaines (IA, DevOps, Cybersécurité, Cloud)",
+                        "4": "Reporting Professionnel : Génération de templates HTML pur pour une livraison Email (Gmail API) optimisée"
                     },
-                    "topology": "Le workflow suit une logique séquentielle événementielle :\n\n1. **Trigger** : Détection de nouveaux items RSS (Polling 15min).\n2. **Scraper** : Firecrawl nettoie la page web (suppresson pubs/nav).\n3. **Intelligence** : Gemini 1.5 Pro analyse le texte (Résumé + Key Points).\n4. **Formatter** : Création d'un template HTML avec les données structurées.\n5. **Delivery** : Envoi via SMTP sécurisé.",
+                    "topology": "Le flux opère une transformation de données complexe :\n\n1. **Extraction (Multi-Flux)** : 8 sources RSS/YouTube différentes interrogées en parallèle.\n2. **Filtrage (Time-Window)** : Script de filtrage pour ne conserver que les news des dernières 48h.\n3. **Intelligence (GLM-4.5)** : Analyse contextuelle, scoring de 1 à 5 et extraction d'insights actionnables.\n4. **Delivery (HTML/Gmail)** : Mise en forme HTML inline et envoi sécurisé via l'API Gmail.",
                     "steps": {
                         "0": {
-                            "title": "1. Orchestration Low-Code (n8n)",
-                            "description": "Au cœur du système, n8n gère la logique de flux. J'utilise des nœuds Code pour les manipulations de données complexes et des nœuds HTTP pour les appels API externes. La gestion des erreurs est intégrée pour réessayer les scrapes échoués."
+                            "title": "1. Orchestration Multi-Sources",
+                            "description": "Le système interroge simultanément plusieurs flux RSS, incluant des playlists YouTube techniques et des flux de cyberveille spécialisés. Cette approche garantit une couverture exhaustive de l'écosystème tech sans surcharge manuelle."
                         },
                         "1": {
-                            "title": "2. Intelligence Artificielle (Gemini)",
-                            "description": "Le cerveau du système. Le prompt est calibré pour ignorer le bruit marketing et se concentrer sur l'innovation technique. L'API Gemini retourne un JSON structuré (Résumé, Points Clés, Impact) prêt à être consommé."
+                            "title": "2. Analyseur OpenRouter (GLM-4.5)",
+                            "description": "L'agent n8n utilise OpenRouter pour accéder aux modèles de langage les plus récents. Le prompt force une structure rigoureuse (Score, Catégorie, Résumé, Points Clés) pour transformer des articles bruts en expertise utilisable."
                         },
                         "2": {
-                            "title": "3. Delivery System (Email)",
-                            "description": "L'information n'a de valeur que si elle est consommée. Le système compile les meilleures news de la journée et envoie un récapitulatif propre, formaté en HTML responsive, directement dans ma boîte mail prioritaire."
+                            "title": "3. Scoring & Filtrage de Pertinence",
+                            "description": "L'IA ne se contente pas de résumer ; elle évalue. Les articles recevant un score inférieur ou égal à 2 sont automatiquement écartés, garantissant une boîte de réception uniquement remplie d'informations essentielles."
                         },
                         "3": {
-                            "title": "4. Infrastructure Support",
-                            "description": "L'agent tourne dans un conteneur dédié, isolé sur le réseau 'home-labs'. Il partage les volumes de données pour la persistance de l'historique d'exécution et bénéficie de la protection globale du serveur (Firewall, Logs)."
+                            "title": "4. Automated HTML Reporting",
+                            "description": "Plutôt qu'un simple texte, le système génère un code HTML stylisé avec des gradients et des icônes thématiques. Ce rapport est injecté dans l'API Gmail pour une lecture immédiate et confortable sur n'importe quel appareil."
                         }
                     }
                 },

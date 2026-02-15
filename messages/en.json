@@ -1,7 +1,8 @@
 {
     "Header": {
         "openToWork": "Open to work",
-        "downloadCv": "Download CV"
+        "downloadCv": "Download CV",
+        "bookMeeting": "Book a Meeting"
     },
     "Nav": {
         "home": "Home",
@@ -133,33 +134,33 @@
             },
             "items": {
                 "tech-watch": {
-                    "name": "E5 : AI Watch Operator",
-                    "description": "Autonomous n8n & Gemini Pro Agent",
-                    "fullDescription": "This **Tech Watch 2.0** solution is a complete automated ecosystem designed to transform digital noise into actionable expertise. The architecture is built on a sophisticated ETL (Extract, Transform, Load) pipeline: extraction is driven by **Google Alerts (RSS)** feeds, while high-precision scraping is handled by **Firecrawl**, converting complex HTML into clean Markdown. The system's core is a **custom JavaScript script** that uses advanced regular expressions to eliminate boilerplate (ads, navigation) before **Gemini 1.5 Pro** processes the information. The AI utilizes a **Structured Output Parsing** strategy to ensure reliable delivery via the **Gmail API**. The deployment and orchestration of the **n8n** instance are handled by my **Home Labs** project, an open-source infrastructure freely available on my GitHub for anyone to clone or fork.",
+                    "name": "E5 : AI Tech Watch V2",
+                    "description": "Smart Aggregator & GLM-4.5 Analyst",
+                    "fullDescription": "This new version of my **Tech Watch** represents a major shift toward high-fidelity intelligence. The architecture now aggregates diverse feeds: **YouTube RSS** (specialized channels), **Cyberveille (Infosec)**, and major IT media. The ETL pipeline is optimized with a strict 48-hour temporal filter and massive data aggregation. Analysis is handled by an AI agent powered by **OpenRouter** using the **GLM-4.5** model, capable of assessing relevance (score 1-5), categorizing by theme (AI, DevOps, Cyber, etc.), and generating a professional HTML report. The system is fully autonomous, running every morning at 8:00 AM to deliver an actionable synthesis via email.",
                     "achievements": {
-                        "0": "Hybrid ETL Pipeline: n8n orchestration with built-in error handling and automatic retries",
-                        "1": "Advanced Data Cleaning: Custom 'Markdown Cleaner' JS script with Regex boilerplate filtering",
-                        "2": "Prompt Engineering (NLP): Gemini configuration for structured JSON synthesis and specific tone control",
-                        "3": "Resilient Scraping: Using Firecrawl to bypass anti-bot protections and extract meaningful content",
-                        "4": "Self-Hosted Automation: Docker deployment on Homelab with Zero-Trust protection"
+                        "0": "Multi-Source Aggregation: YouTube RSS, Google Alerts, Cyberveille and specialized IT media",
+                        "1": "Smart Filtering: Automated 48-hour retention logic using date-based filtering",
+                        "2": "High-Fidelity Analysis: AI agent powered by OpenRouter (GLM-4.5) with relevance scoring",
+                        "3": "Automated Categorization: Dynamic classification by domain (AI, DevOps, Cybersecurity, Cloud)",
+                        "4": "Professional Reporting: Pure HTML template generation for optimized Email delivery (Gmail API)"
                     },
-                    "topology": "The workflow follows a sequential event-driven logic:\n\n1. **Trigger**: Detection of new RSS items (15min polling).\n2. **Scraper**: Firecrawl cleans the web page (removing ads/nav).\n3. **Intelligence**: Gemini 1.5 Pro analyzes text (Summary + Key Points).\n4. **Formatter**: Creation of an HTML template with structured data.\n5. **Delivery**: Sending via secure SMTP.",
+                    "topology": "The flow operates a complex data transformation:\n\n1. **Extraction (Multi-Feed)**: 8 different RSS/YouTube sources queried in parallel.\n2. **Filtering (Time-Window)**: Filtering script to retain only news from the last 48 hours.\n3. **Intelligence (GLM-4.5)**: Contextual analysis, 1-5 scoring, and actionable insight extraction.\n4. **Delivery (HTML/Gmail)**: Inline HTML formatting and secure sending via the Gmail API.",
                     "steps": {
                         "0": {
-                            "title": "1. Low-Code Orchestration (n8n)",
-                            "description": "At the core of the system, n8n manages flow logic. I use Code nodes for complex data manipulation and HTTP nodes for external API calls. Error handling is built-in to retry failed scrapes."
+                            "title": "1. Multi-Source Orchestration",
+                            "description": "The system simultaneously queries multiple RSS feeds, including technical YouTube playlists and specialized cyber-watch feeds. This approach ensures exhaustive coverage of the tech ecosystem without manual overhead."
                         },
                         "1": {
-                            "title": "2. Artificial Intelligence (Gemini)",
-                            "description": "The brain of the system. The prompt is calibrated to ignore marketing noise and focus on technical innovation. The Gemini API returns structured JSON (Summary, Key Points, Impact) ready for consumption."
+                            "title": "2. OpenRouter Analyzer (GLM-4.5)",
+                            "description": "The n8n agent uses OpenRouter to access the latest language models. The prompt enforces a rigorous structure (Score, Category, Summary, Key Points) to transform raw articles into usable expertise."
                         },
                         "2": {
-                            "title": "3. Delivery System (Email)",
-                            "description": "Information only has value if consumed. The system compiles the day's best news and sends a clean, responsive HTML-formatted recap directly to my priority inbox."
+                            "title": "3. Scoring & Relevance Filtering",
+                            "description": "The AI doesn't just summarize; it evaluates. Articles receiving a score of 2 or less are automatically discarded, ensuring an inbox filled only with essential information."
                         },
                         "3": {
-                            "title": "4. Infrastructure Support",
-                            "description": "The agent runs in a dedicated container, isolated on the 'home-labs' network. It shares data volumes for execution history persistence and benefits from global server protection (Firewall, Logs)."
+                            "title": "4. Automated HTML Reporting",
+                            "description": "Rather than simple text, the system generates styled HTML code with gradients and themed icons. This report is injected into the Gmail API for immediate and comfortable reading on any device."
                         }
                     }
                 },

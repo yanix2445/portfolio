@@ -4,9 +4,18 @@ import { Link } from "@/i18n/navigation";
 import { Button } from "@/components/ui/button";
 import { LanguageToggle } from "./LanguageToggle";
 import { useTranslations } from "next-intl";
+import { getCalApi } from "@calcom/embed-react";
+import { useEffect } from "react";
 
 export function Header() {
     const t = useTranslations("Header");
+
+    useEffect(() => {
+        (async function () {
+            const cal = await getCalApi({ "namespace": "premier-contact-15", "embedJsUrl": "https://cal.yanis-harrat.com/embed/embed.js" });
+            cal("ui", { "hideEventTypeDetails": true, "layout": "month_view" });
+        })();
+    }, []);
 
     return (
         <header className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-6 md:px-12 lg:px-20 bg-gradient-to-b from-black/50 to-transparent backdrop-blur-[2px]">
@@ -20,6 +29,14 @@ export function Header() {
 
             <div className="flex items-center gap-3">
                 <LanguageToggle />
+                <Button
+                    className="bg-[#CC9400] hover:bg-[#CC9400]/90 text-black rounded-full px-6 py-3 text-sm font-bold tracking-wide transition-transform hover:scale-105"
+                    data-cal-namespace="premier-contact-15"
+                    data-cal-link="yanis-harrat/premier-contact-15"
+                    data-cal-config='{"layout":"month_view"}'
+                >
+                    {t("bookMeeting")}
+                </Button>
                 <Button
                     asChild
                     className="bg-[#CC9400] hover:bg-[#CC9400]/90 text-black rounded-full px-6 py-3 text-sm font-bold tracking-wide transition-transform hover:scale-105"
