@@ -48,6 +48,7 @@ export function Header() {
                     className="bg-[#CC9400] hover:bg-[#CC9400]/90 text-black rounded-full h-10 px-4 sm:px-6 py-3 text-sm font-bold tracking-wide transition-transform hover:scale-105"
                     data-cal-namespace="premier-contact-15"
                     data-cal-link="yanis-harrat/premier-contact-15"
+                    data-cal-origin="https://cal.yanis-harrat.com"
                     data-cal-config='{"layout":"column_view","useSlotsViewOnSmallScreen":"true"}'
                 >
                     <Calendar className="w-4 h-4 sm:hidden" />
