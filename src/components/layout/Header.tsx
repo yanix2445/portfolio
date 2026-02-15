@@ -14,7 +14,8 @@ export function Header() {
     useEffect(() => {
         (async function () {
             const cal = await getCalApi({ "namespace": "premier-contact-15", "embedJsUrl": "https://cal.yanis-harrat.com/embed/embed.js" });
-            cal("ui", { "hideEventTypeDetails": true, "layout": "month_view" });
+            cal("floatingButton", { "calLink": "yanis-harrat/premier-contact-15", "calOrigin": "https://cal.yanis-harrat.com", "config": { "layout": "column_view", "useSlotsViewOnSmallScreen": "true" } });
+            cal("ui", { "hideEventTypeDetails": true, "layout": "column_view" });
         })();
     }, []);
 
@@ -47,7 +48,7 @@ export function Header() {
                     className="bg-[#CC9400] hover:bg-[#CC9400]/90 text-black rounded-full h-10 px-4 sm:px-6 py-3 text-sm font-bold tracking-wide transition-transform hover:scale-105"
                     data-cal-namespace="premier-contact-15"
                     data-cal-link="yanis-harrat/premier-contact-15"
-                    data-cal-config='{"layout":"month_view"}'
+                    data-cal-config='{"layout":"column_view"}'
                 >
                     <Calendar className="w-4 h-4 sm:hidden" />
                     <span className="hidden sm:inline">{t("bookMeeting")}</span>
