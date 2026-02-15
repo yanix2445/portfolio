@@ -18,6 +18,19 @@ export function Header() {
         })();
     }, []);
 
+    const handleCvAction = () => {
+        // Preview in new tab
+        window.open("/cv-yanis-harrat.pdf", "_blank");
+
+        // Force download
+        const link = document.createElement("a");
+        link.href = "/cv-yanis-harrat.pdf";
+        link.download = "Cv-Yanis-Harrat.pdf";
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    };
+
     return (
         <header className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-4 py-4 md:px-12 lg:px-20 bg-gradient-to-b from-black/50 to-transparent backdrop-blur-[2px]">
             <div className="flex items-center gap-2 md:gap-3">
@@ -40,13 +53,11 @@ export function Header() {
                     <span className="hidden sm:inline">{t("bookMeeting")}</span>
                 </Button>
                 <Button
-                    asChild
+                    onClick={handleCvAction}
                     className="bg-[#CC9400] hover:bg-[#CC9400]/90 text-black rounded-full h-10 px-4 sm:px-6 py-3 text-sm font-bold tracking-wide transition-transform hover:scale-105"
                 >
-                    <a href="/cv-yanis-harrat.pdf" target="_blank" rel="noopener noreferrer">
-                        <FileText className="w-4 h-4 sm:hidden" />
-                        <span className="hidden sm:inline">{t("downloadCv")}</span>
-                    </a>
+                    <FileText className="w-4 h-4 sm:hidden" />
+                    <span className="hidden sm:inline">{t("downloadCv")}</span>
                 </Button>
             </div>
         </header>
