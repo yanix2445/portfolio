@@ -6,6 +6,7 @@ import { LanguageToggle } from "./LanguageToggle";
 import { useTranslations } from "next-intl";
 import { getCalApi } from "@calcom/embed-react";
 import { useEffect } from "react";
+import { Calendar, FileText } from "lucide-react";
 
 export function Header() {
     const t = useTranslations("Header");
@@ -18,31 +19,33 @@ export function Header() {
     }, []);
 
     return (
-        <header className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-6 md:px-12 lg:px-20 bg-gradient-to-b from-black/50 to-transparent backdrop-blur-[2px]">
-            <div className="flex items-center gap-3">
+        <header className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-4 py-4 md:px-12 lg:px-20 bg-gradient-to-b from-black/50 to-transparent backdrop-blur-[2px]">
+            <div className="flex items-center gap-2 md:gap-3">
                 <span className="relative flex h-2.5 w-2.5">
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
                     <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500"></span>
                 </span>
-                <span className="text-sm font-medium text-white tracking-wide">{t("openToWork")}</span>
+                <span className="hidden sm:block text-sm font-medium text-white tracking-wide">{t("openToWork")}</span>
             </div>
 
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2 md:gap-3">
                 <LanguageToggle />
                 <Button
-                    className="bg-[#CC9400] hover:bg-[#CC9400]/90 text-black rounded-full px-6 py-3 text-sm font-bold tracking-wide transition-transform hover:scale-105"
+                    className="bg-[#CC9400] hover:bg-[#CC9400]/90 text-black rounded-full h-10 px-4 sm:px-6 py-3 text-sm font-bold tracking-wide transition-transform hover:scale-105"
                     data-cal-namespace="premier-contact-15"
                     data-cal-link="yanis-harrat/premier-contact-15"
                     data-cal-config='{"layout":"month_view"}'
                 >
-                    {t("bookMeeting")}
+                    <Calendar className="w-4 h-4 sm:hidden" />
+                    <span className="hidden sm:inline">{t("bookMeeting")}</span>
                 </Button>
                 <Button
                     asChild
-                    className="bg-[#CC9400] hover:bg-[#CC9400]/90 text-black rounded-full px-6 py-3 text-sm font-bold tracking-wide transition-transform hover:scale-105"
+                    className="bg-[#CC9400] hover:bg-[#CC9400]/90 text-black rounded-full h-10 px-4 sm:px-6 py-3 text-sm font-bold tracking-wide transition-transform hover:scale-105"
                 >
                     <Link href="/Cv-alternance-Yanis-Harrat-copie.pdf" target="_blank">
-                        {t("downloadCv")}
+                        <FileText className="w-4 h-4 sm:hidden" />
+                        <span className="hidden sm:inline">{t("downloadCv")}</span>
                     </Link>
                 </Button>
             </div>
