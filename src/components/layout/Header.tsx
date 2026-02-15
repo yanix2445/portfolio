@@ -15,7 +15,6 @@ export function Header() {
         (async function () {
             // @ts-ignore - embedLibUrl is specified in the doc provided by user
             const cal = await getCalApi({ "namespace": "premier-contact-15", "embedLibUrl": "https://cal.yanis-harrat.com/embed/embed.js" });
-            cal("floatingButton", { "calLink": "yanis-harrat/premier-contact-15", "calOrigin": "https://cal.yanis-harrat.com", "config": { "layout": "column_view", "useSlotsViewOnSmallScreen": "true" } });
             cal("ui", { "hideEventTypeDetails": true, "layout": "column_view" });
         })();
     }, []);
