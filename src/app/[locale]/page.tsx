@@ -40,10 +40,6 @@ export default async function Home({ params }: Props) {
       {/* About / Summary Section (Server) */}
       <About />
 
-      {/* Heavy Sections wrapped in Suspense for PPR streaming */}
-      <Suspense fallback={<div className="h-96 flex items-center justify-center text-white/20">...</div>}>
-        <Experience jobs={jobs} />
-      </Suspense>
 
       <Suspense fallback={<div className="h-96 flex items-center justify-center text-white/20">...</div>}>
         <SchoolProjects projects={schoolProjects} />
@@ -51,6 +47,11 @@ export default async function Home({ params }: Props) {
 
       <Suspense fallback={<div className="h-96 flex items-center justify-center text-white/20">...</div>}>
         <PersonalProjects projects={personalProjects} />
+      </Suspense>
+
+      {/* Heavy Sections wrapped in Suspense for PPR streaming */}
+      <Suspense fallback={<div className="h-96 flex items-center justify-center text-white/20">...</div>}>
+        <Experience jobs={jobs} />
       </Suspense>
 
       <Suspense fallback={<div className="h-96 flex items-center justify-center text-white/20">...</div>}>

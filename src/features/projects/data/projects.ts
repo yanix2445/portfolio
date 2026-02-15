@@ -2,7 +2,7 @@ import { CategoryConfig } from "../types";
 import { StaticImageData } from "next/image";
 
 // Static Imports for Automatic Blur Optimization
-import techWatchImg from "@/../public/tech-watch-v1.png";
+import techWatchImg from "../../../../public/tech-watch-v1.png";
 import networkInfraImg from "../../../../public/network-infra.png";
 import portfolioV2Img from "../../../../public/portfolio-v2.png";
 import portfolioV1Img from "../../../../public/portfolio-v1.png";
@@ -20,7 +20,7 @@ export const schoolProjectsConfig: CategoryConfig = {
             slug: "tech-watch",
             image: techWatchImg,
             link: "https://github.com/yanix2445/Home-labs/tree/main",
-            tech: ["n8n", "Gemini AI", "Docker", "Typebot", "RSS", "SMTP"],
+            tech: ["n8n", "OpenRouter (GLM-4.5)", "Docker", "YouTube RSS", "Cyberveille", "Gmail API"],
             achievementCount: 5,
             topology: {},
             steps: [
@@ -30,60 +30,53 @@ export const schoolProjectsConfig: CategoryConfig = {
   "nodes": [
     {
       "parameters": {
-        "rule": { "interval": [{ "triggerAtHour": 6 }] }
+        "rule": { "interval": [{ "triggerAtHour": 8 }] }
       },
       "type": "n8n-nodes-base.scheduleTrigger",
-      "name": "Morning Recap Trigger"
+      "name": "Schedule Trigger"
     },
     {
       "parameters": {
-        "url": "https://www.google.fr/alerts/feeds/..."
+        "model": "z-ai/glm-4.5-air:free"
       },
-      "type": "n8n-nodes-base.rssFeedRead",
-      "name": "Google Alerts RSS"
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "name": "OpenRouter Chat Model"
     }
   ]
 }`
                 },
                 {
                     language: "javascript",
-                    code: `// 🧠 Café IA Markdown Cleaner
-const text = $json.markdown || "";
+                    code: `// 🕒 Filter: Last 48 hours only
+const fortyEightHoursAgo = new Date();
+fortyEightHoursAgo.setHours(fortyEightHoursAgo.getHours() - 48);
 
-// Cleaning pipeline
-let cleaned = text
-  .replace(/\\[([^\\]]+)\\]\\((https?:\\/\\/[^\\s)]+)\\)/g, '$1') // Remove links
-  .replace(/https?:\\/\\/[^\\s)]+/g, '') // Remove URLs
-  .replace(/\\b[a-zA-Z0-9.-]+\\.(com|net|...) /g, '') // Remove domains
-  .replace(/<[^>]*>/g, '') // Remove HTML tags
-  .replace(/\\s{2,}/g, ' ')
-  .trim();
-
-return { json: { cleaned_markdown: cleaned } };`
+return items.filter(item => {
+  const pubDate = new Date(item.json.pubDate);
+  return pubDate >= fortyEightHoursAgo;
+});`
                 },
                 {
                     language: "markdown",
-                    code: `## OBJECTIVE
-Create a morning news recap that feels like a **casual conversation**, 
-but still **insightful and clean**.
-
-## RULES
-- Language: **French**
-- Tone: **Spartan**, **casual**, **spontaneous**.
-- Style: short, natural sentences.
-- Output: strictly **JSON** with "Titre" and "Contenue" (Markdown).`
+                    code: `## SYSTEM PROMPT (GLM-4.5)
+You are an expert tech analyst. 
+1. **Analyze** relevance (Score 1-5)
+2. **Categorize**: IA, DevOps, Cyber, Cloud, Products, Data
+3. **Summarize**: 2-3 sentences
+4. **Actionable Insights**: 3-5 key points
+5. **Output**: Pure HTML for Gmail delivery.`
                 },
                 {
                     language: "yaml",
-                    code: `# n8n infrastructure snippet
+                    code: `# Deployment Snippet
 services:
   n8n:
-    image: n8nio/n8n
+    image: n8nio/n8n:latest
     environment:
-      - N8N_AI_ENABLED=true
-      - GENERIC_TIMEZONE=Europe/Paris
-    volumes:
-      - n8n_data:/home/node/.n8n`
+      - N8N_ENCRYPTION_KEY=\${N8N_KEY}
+      - OPENROUTER_API_KEY=\${OR_KEY}
+    networks:
+      - home-labs`
                 }
             ]
         },

@@ -13,8 +13,8 @@ export function FloatingNav() {
     const navItems = [
         { name: t("home"), href: "#home", icon: Home },
         { name: t("summary"), href: "#summary", icon: User },
-        { name: t("experience"), href: "#experience", icon: Briefcase },
         { name: t("projects"), href: "#projects", icon: FolderKanban },
+        { name: t("experience"), href: "#experience", icon: Briefcase },
         { name: t("skills"), href: "#skills", icon: Sparkles },
         { name: t("links"), href: "#links", icon: LinkIcon },
     ];
