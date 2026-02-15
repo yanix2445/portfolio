@@ -43,7 +43,7 @@ export function Header() {
                     asChild
                     className="bg-[#CC9400] hover:bg-[#CC9400]/90 text-black rounded-full h-10 px-4 sm:px-6 py-3 text-sm font-bold tracking-wide transition-transform hover:scale-105"
                 >
-                    <a href="/cv-yanis-harrat.pdf" download="Cv-Yanis-Harrat.pdf">
+                    <a href="/cv-yanis-harrat.pdf" target="_blank" rel="noopener noreferrer">
                         <FileText className="w-4 h-4 sm:hidden" />
                         <span className="hidden sm:inline">{t("downloadCv")}</span>
                     </a>
