@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { getMessages, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
+import { Analytics } from "@vercel/analytics/next";
 import { routing } from "@/i18n/routing";
 import "../globals.css";
 
@@ -99,6 +100,7 @@ export default async function RootLayout({ children, params }: Props) {
         <NextIntlClientProvider messages={messages}>
           {children}
         </NextIntlClientProvider>
+        <Analytics />
       </body>
     </html>
   );
