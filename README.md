@@ -34,3 +34,13 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+## 📝 Licence et Droit d'auteur
+
+Ce projet est sous licence **MIT**. Voir le fichier [LICENSE](./LICENSE) pour plus de détails.
+
+### Utilisation de la Marque
+L'utilisation du nom **Yanis Harrat** ou de ses logos est strictement interdite sans autorisation préalable.
+
+### Responsabilité
+Le logiciel est fourni "tel quel", sans aucune garantie. L'auteur ne peut en aucun cas être tenu responsable ou poursuivi pour tout dommage résultant de l'utilisation de ce projet.
