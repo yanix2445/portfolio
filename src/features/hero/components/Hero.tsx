@@ -64,7 +64,7 @@ export function Hero() {
                     alt="Background"
                     fill
                     sizes="100vw"
-                    className="object-contain brightness-75 transition-opacity duration-700"
+                    className="object-cover brightness-75 transition-opacity duration-700"
                     priority
                     quality={75}
                 />
