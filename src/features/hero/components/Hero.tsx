@@ -74,7 +74,7 @@ export function Hero() {
 
             <div className="relative z-10 w-full max-w-[1400px] mx-auto pt-24 md:pt-36 pb-12">
                 <div className="max-w-4xl">
-                    <h2 className="mb-4 text-lg md:text-xl font-bold tracking-widest text-[#CC9400] uppercase text-wrap-balance">
+                    <h2 className="mb-4 text-base md:text-lg font-bold tracking-widest text-[#CC9400] uppercase text-wrap-balance">
                         {t("subtitle")}
                     </h2>
                     <h1 className="mb-10 text-5xl font-extrabold tracking-tight text-white sm:text-7xl md:text-[6rem] leading-[0.9] text-wrap-balance">
