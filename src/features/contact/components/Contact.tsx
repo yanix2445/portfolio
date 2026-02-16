@@ -51,7 +51,7 @@ export function Contact() {
                 </div>
 
                 {/* Contact Info Row */}
-                <div className="flex flex-col md:flex-row flex-wrap gap-8 md:gap-x-16 md:gap-y-8 text-lg md:text-xl font-medium text-white mb-24">
+                <div className="flex flex-col md:flex-row flex-wrap gap-4 md:gap-8 md:gap-x-16 md:gap-y-8 text-lg md:text-xl font-medium text-white mb-24">
                     <a href="mailto:contact@yanis-harrat.com" className="flex items-center gap-4 hover:text-[#CC9400] transition-colors focus-visible:ring-2 focus-visible:ring-[#CC9400] rounded-lg outline-none">
                         <Mail className="w-6 h-6 text-[#CC9400]" />
                         <span>contact@yanis-harrat.com</span>
