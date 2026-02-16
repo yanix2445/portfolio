@@ -18,9 +18,9 @@
     },
     "About": {
         "title": "About Me",
-        "p1": "I'm *Yanis Mohamed-Amine Harrat*, an **energetic and social \"bon vivant\"** with a deep passion for understanding how technology works at its core. My journey is defined by a **double dimension**: balancing the technical rigor of **Systems & Networks (BTS SIO SISR)** with the advanced logic and algorithmic grit of **Ecole 42 Paris**. I don't just use tech; I deconstruct it, build it, and live it.",
-        "p2": "From my first lines of code to **self-hosting** my own ecosystems, I've always been drawn to the **Open Source** philosophy. I believe in technology that is accessible, communal, and transparent. My interests are continuously evolving, currently centered around the frontiers of **AI** and **Cybersecurity**.",
-        "p3": "Outside the terminal, I'm a **hyperactive sports enthusiast**. Whether I'm tackling a complex infrastructure problem or pushing my limits on the field, I bring the same \"all-in\" energy. I thrive on social connection and believe that the best solutions are born from collective intelligence and a positive, high-energy atmosphere."
+        "p1": "I'm **Yanis Mohamed-Amine Harrat**, a technology enthusiast who loves understanding how things work under the hood. My journey is driven by a **dual background**: the infrastructure rigor learned in **BTS SIO SISR** and the algorithmic logic forged at **Ecole 42 Paris**. To me, technology isn't just something to use—it's something to build and deconstruct.",
+        "p2": "Early on, I turned toward **self-hosting** and **Open Source**, convinced by a vision of technology that is accessible and transparent. Today, I curiously explore the fields of **AI** and **Cybersecurity** to enrich my \"Builder\" mindset.",
+        "p3": "Outside the terminal, I am a **dynamic athlete**. I bring the same energy to the field as I do when facing a complex infrastructure problem. I firmly believe that the best solutions come from a positive mindset and effective collective work."
     },
     "Experience": {
         "title": "Professional Experience",

@@ -18,9 +18,9 @@
     },
     "About": {
         "title": "À propos",
-        "p1": "Je suis *Yanis Mohamed-Amine Harrat*, un **bon vivant énergique et sociable** avec une passion profonde pour comprendre le fonctionnement de la technologie dans ses moindres détails. Mon parcours est défini par une **double dimension** : l'équilibre entre la rigueur technique des **Systèmes & Réseaux (BTS SIO SISR)** et la logique avancée et algorithmique de **l'École 42 Paris**. Je ne me contente pas d'utiliser la tech ; je la déconstruis, je la construis et je la vis.",
-        "p2": "De mes premières lignes de code à **l'auto-hébergement** de mes propres écosystèmes, j'ai toujours été attiré par la philosophie **Open Source**. Je crois en une technologie accessible, communautaire et transparente. Mes intérêts évoluent constamment, actuellement centrés sur les frontières de **l'IA** et de la **Cybersécurité**.",
-        "p3": "En dehors du terminal, je suis un **sportif hyperactif**. Que je m'attaque à un problème d'infrastructure complexe ou que je repousse mes limites sur le terrain, j'apporte la même énergie \"à fond\". Je m'épanouis dans les connexions sociales et je crois que les meilleures solutions naissent de l'intelligence collective et d'une atmosphère positive et dynamique."
+        "p1": "Je suis **Yanis Harrat**, un passionné de technologie qui aime comprendre comment les choses fonctionnent sous le capot. Mon parcours est porté par une **double culture** : la rigueur des infrastructures apprise en **BTS SIO SISR** et la logique algorithmique forgée à la **Piscine de l'École 42**. Pour moi, la technique ne s'utilise pas, elle se construit et se déconstruit.",
+        "p2": "Très tôt, je me suis tourné vers l'**auto-hébergement** et l'**Open Source**, convaincu par une vision de la technologie accessible et transparente. Aujourd'hui, j'explore avec curiosité les domaines de l'**IA** et de la **Cybersécurité** pour enrichir ma vision de \"Builder\".",
+        "p3": "En dehors du Terminal, je suis un **sportif dynamique**. J'apporte la même énergie sur le terrain que face à un problème d'infrastructure complexe. Je crois fermement que les meilleures solutions naissent d'un esprit positif et d'un travail collectif efficace."
     },
     "Experience": {
         "title": "Expérience Professionnelle",
