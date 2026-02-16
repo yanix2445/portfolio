@@ -96,7 +96,7 @@ function TimelineGallery({ title = "Selected Projects", children, className }: {
     return (
         <div className={cn("mb-8", className)}>
             <div className="mb-3 text-[#CC9400] text-[10px] font-bold uppercase tracking-widest opacity-80">{title}</div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="grid grid-cols-2 sm:grid-cols-2 gap-4">
                 {children}
             </div>
         </div>
