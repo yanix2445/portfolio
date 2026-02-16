@@ -31,7 +31,7 @@ export function SchoolProjects({ projects }: SchoolProjectsProps) {
                             <MarkdownText content={t(`${categoryId}.description`)} />
                         </TimelineContent>
 
-                        <TimelineGallery>
+                        <TimelineGallery enableCarousel={true}>
                             {projects.projects.map((project) => (
                                 <PortfolioCard
                                     key={project.slug}

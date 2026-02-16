@@ -93,21 +93,29 @@ function TimelineContent({ children, className }: { children: React.ReactNode; c
     );
 }
 
-function TimelineGallery({ title = "Selected Projects", children, className }: { title?: string; children: React.ReactNode; className?: string }) {
+function TimelineGallery({ title = "Selected Projects", children, className, enableCarousel = false }: { title?: string; children: React.ReactNode; className?: string; enableCarousel?: boolean }) {
     return (
         <div className={cn("mb-8", className)}>
             <div className="mb-3 text-[#CC9400] text-[10px] font-bold uppercase tracking-widest opacity-80">{title}</div>
 
-            {/* Desktop Grid */}
+            {/* Desktop Grid (Always visible on MD+) */}
             <div className="hidden md:grid md:grid-cols-2 gap-4">
                 {children}
             </div>
 
-            {/* Mobile Carousel */}
-            <div className="md:hidden -mx-6 px-1">
-                <MobileCarousel>
-                    {children}
-                </MobileCarousel>
+            {/* Mobile View: Carousel if enabled, otherwise Stack */}
+            <div className="md:hidden">
+                {enableCarousel ? (
+                    <div className="-mx-6 px-1">
+                        <MobileCarousel>
+                            {children}
+                        </MobileCarousel>
+                    </div>
+                ) : (
+                    <div className="flex flex-col gap-4">
+                        {children}
+                    </div>
+                )}
             </div>
         </div>
     );
