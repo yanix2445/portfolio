@@ -81,7 +81,7 @@ export function Hero() {
                         {t("name")}
                     </h1>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-y-4 gap-x-10 text-base font-medium text-white/90 w-fit">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-y-2 md:gap-y-4 gap-x-10 text-base font-medium text-white/90 w-fit">
                         <a
                             href="mailto:contact@yanis-harrat.com"
                             className="flex items-center gap-3 transition-colors hover:text-[#CC9400] group"
