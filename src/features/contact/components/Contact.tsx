@@ -66,10 +66,6 @@ export function Contact() {
                     </div>
                 </div>
 
-                {/* Copyright */}
-                <div className="text-gray-500 text-sm font-medium">
-                    <p>{t("copyright", { year: new Date().getFullYear() })}</p>
-                </div>
             </div>
         </section>
     );
