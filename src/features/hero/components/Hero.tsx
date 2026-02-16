@@ -64,12 +64,12 @@ export function Hero() {
                     alt="Background"
                     fill
                     sizes="100vw"
-                    className="object-cover brightness-75 transition-opacity duration-700"
+                    className="object-cover object-center brightness-75 transition-opacity duration-700"
                     priority
                     quality={75}
                 />
-                {/* Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent"></div>
+                {/* Responsive Overlay: Vertical on mobile, horizontal on desktop */}
+                <div className="absolute inset-0 bg-gradient-to-b md:bg-gradient-to-r from-black/90 via-black/50 to-transparent"></div>
             </div>
 
             <div className="relative z-10 w-full max-w-[1400px] mx-auto pt-24 md:pt-36 pb-12">
