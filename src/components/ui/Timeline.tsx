@@ -2,6 +2,7 @@
 
 import React, { createContext, useContext, useMemo } from "react";
 import { cn } from "@/lib/utils";
+import { MobileCarousel } from "./MobileCarousel";
 
 /**
  * Vercel Composition Patterns: Timeline Compound Components
@@ -96,8 +97,17 @@ function TimelineGallery({ title = "Selected Projects", children, className }: {
     return (
         <div className={cn("mb-8", className)}>
             <div className="mb-3 text-[#CC9400] text-[10px] font-bold uppercase tracking-widest opacity-80">{title}</div>
-            <div className="grid grid-cols-2 sm:grid-cols-2 gap-4">
+
+            {/* Desktop Grid */}
+            <div className="hidden md:grid md:grid-cols-2 gap-4">
                 {children}
+            </div>
+
+            {/* Mobile Carousel */}
+            <div className="md:hidden -mx-6 px-1">
+                <MobileCarousel>
+                    {children}
+                </MobileCarousel>
             </div>
         </div>
     );
