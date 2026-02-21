@@ -165,33 +165,33 @@
                     }
                 },
                 "network-infrastructure": {
-                    "name": "Infrastructure Réseau (Cisco Masterclass)",
-                    "description": "Architecture de Routage & Commutation : VLAN, OSPF, Sécurité",
-                    "fullDescription": "Ce projet simule l'ingénierie d'un réseau d'entreprise multi-sites haute performance. L'objectif est de démontrer une maîtrise totale de l'écosystème **Cisco IOS** : de la segmentation L2 via **VLANs** à l'interconnectivité multi-sites via le routage dynamique **OSPF**. Véritable laboratoire d'ingénierie, il met en lumière la conception de passerelles redondantes et la sécurisation des flux critiques de bout en bout.",
+                    "name": "Infrastructure Réseau (Cisco Packet Tracer)",
+                    "description": "Lab Cisco & Windows Server : VLANs, Routage et Infra AD",
+                    "fullDescription": "Ce projet simule l'ingénierie d'un réseau d'entreprise classique sur **Cisco Packet Tracer**. L'objectif est de démontrer une maîtrise des concepts fondamentaux : la segmentation de niveau 2 avec des **VLANs**, le **Routage Inter-VLAN** (Router-on-a-Stick), et le déploiement de services centralisés avec **Windows Server** (AD DS, DNS, DHCP). C'est un laboratoire qui valide la compréhension pratique d'une architecture client/serveur sécurisée et isolée, prête pour une évolution vers la haute disponibilité (STP, HSRP).",
                     "achievements": {
-                        "0": "Conception d'un cœur de réseau segmenté en 3 VLANs isolés (Serveur, Admin, Client)",
-                        "1": "Mise en œuvre du routage Inter-VLAN via approche 'Router-on-a-Stick' (Dot1Q)",
-                        "2": "Configuration d'un lien WAN point-à-point avec convergence OSPF Area 0",
-                        "3": "Sécurisation de l'accès L2 et optimisation via Spanning-Tree (Portfast)",
-                        "4": "Vérification avancée des flux via inspection de la Table de Routage (RIB)"
+                        "0": "Conception d'une topologie simplifiée : 1 Routeur, 1 Switch, gérant un réseau de bout en bout.",
+                        "1": "Segmentation en 2 VLANs distincts : VLAN 10 (Serveurs, 172.16.x.x) et VLAN 20 (Clients, 192.168.x.x).",
+                        "2": "Déploiement de rôles critiques sur Windows Server : Active Directory (AD DS), DNS interne et serveur DHCP.",
+                        "3": "Mise en œuvre du routage Inter-VLAN (Dot1Q) pour lier les serveurs aux postes clients de façon sécurisée.",
+                        "4": "Validation des flux via simulation Packet Tracer (Ping, requêtes DHCP, intégration au domaine)."
                     },
-                    "topology": "Topologie 2R-2S simulant une liaison entre deux entités distantes :\n\n- **Site A (HQ)** : Héberge le Routeur R1 et le Switch S1 (VLAN 2: Serveurs, VLAN 3: Management).\n- **Site B (Succursale)** : Héberge le Routeur R2 et le Switch S2 (VLAN 4: Clients).\n\n**Flux Technique** : Les routeurs utilisent OSPF pour échanger dynamiquement les routes, permettant aux clients de la succursale de communiquer avec les ressources du HQ à travers un backbone sécurisé.",
+                    "topology": "Topologie concentrée sur les fondamentaux d'entreprise :\n\n- **Cœur Réseau** : 1 Switch gérant les ports Access (Clients/Serveur) et Trunk, relié à 1 Routeur (Passerelles via Sous-interfaces).\n- **VLAN 10 (Serveurs - 172.16.0.0/24)** : Héberge le Windows Server en IP statique.\n- **VLAN 20 (Clients - 192.168.0.0/24)** : Héberge les terminaux utilisateurs en IP dynamique (DHCP).\n\n**Flux Technique** : Le client Windows obtient son IP dynamiquement, contacte le DNS sur le VLAN Serveur et rejoint le domaine Active Directory en traversant le trafic routé de l'infrastructure.",
                     "steps": {
                         "0": {
-                            "title": "1. Segmentation L2 (VLANs & Trunks)",
-                            "description": "Pour éviter le mélange des services, nous créons des **VLANs** (réseaux isolés). Sur les switchs, les ports utilisateurs sont en mode Access, tandis que les liaisons entre machines sont en mode **Trunk (802.1Q)** : une véritable autoroute capable de transporter tous ces réseaux sur un seul câble."
+                            "title": "1. Isolation & Sécurité (VLANs)",
+                            "description": "Le réseau est divisé en 2 VLANs : le VLAN 10 pour l'infrastructure et le VLAN 20 pour les utilisateurs. Cette segmentation garantit qu'un client n'a pas accès direct au même segment réseau que le contrôleur de domaine, limitant les requêtes de broadcast parasites et renforçant la sécurité globale."
                         },
                         "1": {
-                            "title": "2. Passerelles : Router-on-a-Stick",
-                            "description": "Le routeur agit comme le chef d'orchestre. Via l'approche **Router-on-a-Stick**, nous transformons un port physique en multiples **sous-interfaces virtuelles**. Chaque sous-interface devient la passerelle par défaut d'un VLAN, permettant au trafic de passer d'un service à l'autre selon les règles définies."
+                            "title": "2. Adressage IP & Passerelles",
+                            "description": "Utilisation de classes privées distinctes (172.16.x.x pour l'infra, 192.168.x.x pour le LAN). Les masques en /24 limitent la congestion. Le routeur utilise la convention de la dernière IP disponible (.254) sur ses sous-interfaces GigabitEthernet pour servir de passerelle à chaque VLAN."
                         },
                         "2": {
-                            "title": "3. Backbone WAN : Routage OSPF",
-                            "description": "Comment lier deux sites distants ? En utilisant **OSPF (Open Shortest Path First)**. Ce protocole de routage dynamique calcule automatiquement le meilleur chemin entre le HQ et la Succursale. Il propage les routes dans tout le réseau, garantissant une convergence rapide et évitant les configurations manuelles fastidieuses."
+                            "title": "3. Cœur de Services (Windows Server)",
+                            "description": "La gestion des identités est centralisée via **Active Directory (AD DS)**. Le serveur héberge aussi le rôle **DNS** (indispensable pour l'AD) et le rôle **DHCP**, supprimant le besoin de configurer chaque PC client manuellement tout en assurant leur connectivité au domaine."
                         },
                         "3": {
-                            "title": "4. Diagnostic & Flux de bout en bout",
-                            "description": "C'est l'heure du test final. Nous inspectons la **RIB (Table de Routage)** pour confirmer que les sites se 'voient'. Un simple Ping traverse alors tout le backbone : Switch Succursale -> Routeur Distant -> WAN -> Routeur HQ -> Serveur. La connectivité est totale."
+                            "title": "4. Évolutivité & Redondance Future",
+                            "description": "Bien que la maquette utilise un seul switch et routeur (KISS principle), l'architecture est pensée pour évoluer. On pourrait implémenter un 2ème switch avec STP/LACP pour la résilience L2, et un second routeur avec HSRP/VRRP pour éviter tout point de défaillance unique."
                         }
                     }
                 },

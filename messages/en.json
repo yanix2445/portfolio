@@ -165,33 +165,33 @@
                     }
                 },
                 "network-infrastructure": {
-                    "name": "Network Infrastructure (Cisco Masterclass)",
-                    "description": "Routing & Switching Architecture: VLAN, OSPF, Security",
-                    "fullDescription": "This project simulates the engineering of a high-performance multi-site enterprise network. The goal is to demonstrate total mastery of the **Cisco IOS** ecosystem: from L2 segmentation via **VLANs** to multi-site interconnectivity via dynamic **OSPF** routing. A true engineering lab, it highlights the design of redundant gateways and the securing of critical end-to-end flows.",
+                    "name": "Network Infrastructure (Cisco Packet Tracer)",
+                    "description": "Cisco Lab & Windows Server: VLANs, Routing & AD Infra",
+                    "fullDescription": "This project simulates the engineering of a classic enterprise network on **Cisco Packet Tracer**. The goal is to demonstrate mastery of fundamental concepts: Layer 2 segmentation using **VLANs**, **Inter-VLAN Routing** (Router-on-a-Stick), and the deployment of centralized services with **Windows Server** (AD DS, DNS, DHCP). This lab validates practical understanding of a secure and isolated client/server architecture, ready for high-availability upgrades (STP, HSRP).",
                     "achievements": {
-                        "0": "Designed a network core segmented into 3 isolated VLANs (Server, Admin, Client)",
-                        "1": "Implemented Inter-VLAN routing via 'Router-on-a-Stick' approach (Dot1Q)",
-                        "2": "Configured a point-to-point WAN link with OSPF Area 0 convergence",
-                        "3": "Secured L2 access and optimized via Spanning-Tree (Portfast)",
-                        "4": "Advanced flow verification via Routing Table inspection (RIB)"
+                        "0": "Designed a focused topology: 1 Router, 1 Switch managing end-to-end networking.",
+                        "1": "Segmented into 2 distinct VLANs: VLAN 10 (Servers, 172.16.x.x) and VLAN 20 (Clients, 192.168.x.x).",
+                        "2": "Deployed critical roles on Windows Server: Active Directory (AD DS), Internal DNS, and DHCP server.",
+                        "3": "Implemented Inter-VLAN routing (Dot1Q) to connect servers and clients securely.",
+                        "4": "Validated traffic flows using Packet Tracer simulation (Ping, DHCP requests, domain joining)."
                     },
-                    "topology": "2R-2S topology simulating a link between two distant entities:\n\n- **Site A (HQ)**: Hosts Router R1 and Switch S1 (VLAN 2: Servers, VLAN 3: Management).\n- **Site B (Branch)**: Hosts Router R2 and Switch S2 (VLAN 4: Clients).\n\n**Technical Flow**: The routers use OSPF to exchange routes dynamically, allowing branch clients to communicate with HQ resources through a secured backbone.",
+                    "topology": "Topology focused on enterprise fundamentals:\n\n- **Network Core**: 1 Switch managing Access (Clients/Server) and Trunk ports, connected to 1 Router (Gateways via Sub-interfaces).\n- **VLAN 10 (Servers - 172.16.0.0/24)**: Hosts the Windows Server with static routing.\n- **VLAN 20 (Clients - 192.168.0.0/24)**: Hosts user terminals with dynamic IPs (DHCP).\n\n**Technical Flow**: The Windows client receives its IP dynamically, contacts the DNS on the Server VLAN, and joins the Active Directory domain by traversing the infrastructure's routed traffic.",
                     "steps": {
                         "0": {
-                            "title": "1. L2 Segmentation (VLANs & Trunks)",
-                            "description": "To prevent service mixing, we create **VLANs** (isolated networks). On switches, user ports are in Access mode, while links between machines are in **Trunk (802.1Q)** mode: a true highway capable of carrying all these networks on a single cable."
+                            "title": "1. Isolation & Security (VLANs)",
+                            "description": "The network is split into 2 VLANs: VLAN 10 for infrastructure and VLAN 20 for users. This segmentation ensures clients do not share the same broadcast domain as the domain controller, mitigating broadcast storms and strengthening overall security."
                         },
                         "1": {
-                            "title": "2. Gateways: Router-on-a-Stick",
-                            "description": "The router acts as the conductor. Using the **Router-on-a-Stick** approach, we transform a physical port into multiple **virtual sub-interfaces**. Each sub-interface becomes the default gateway for a VLAN, allowing traffic to pass from one service to another according to defined rules."
+                            "title": "2. IP Addressing & Gateways",
+                            "description": "Utilization of distinct private classes (172.16.x.x for infra, 192.168.x.x for LAN). Classic /24 subnet masks limit congestion. The router follows the convention of using the last available IP (.254) on its GigabitEthernet sub-interfaces to serve as the gateway for each VLAN."
                         },
                         "2": {
-                            "title": "3. WAN Backbone: OSPF Routing",
-                            "description": "How to link two distant sites? By using **OSPF (Open Shortest Path First)**. This dynamic routing protocol automatically calculates the best path between HQ and Branch. It propagates routes throughout the network, guaranteeing fast convergence and avoiding tedious manual configurations."
+                            "title": "3. Core Services (Windows Server)",
+                            "description": "Identity management is centralized via **Active Directory (AD DS)**. The server also hosts the **DNS** role (mandatory for AD) and the **DHCP** role, eliminating the need to manually configure each client PC while ensuring domain connectivity."
                         },
                         "3": {
-                            "title": "4. Diagnostic & End-to-End Flow",
-                            "description": "It's time for the final test. We inspect the **RIB (Routing Table)** to confirm that the sites 'see' each other. A simple Ping then traverses the entire backbone: Branch Switch -> Remote Router -> WAN -> HQ Router -> Server. Connectivity is total."
+                            "title": "4. Scalability & Future Redundancy",
+                            "description": "Although the lab uses a single switch and router (KISS principle), the architecture is designed to scale. It easily supports a second switch with STP/LACP for L2 resilience, and a second router with HSRP/VRRP to prevent any single point of failure."
                         }
                     }
                 },
