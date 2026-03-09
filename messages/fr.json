@@ -165,33 +165,41 @@
                     }
                 },
                 "network-infrastructure": {
-                    "name": "Infrastructure Réseau (Cisco Packet Tracer)",
-                    "description": "Lab Cisco & Windows Server : VLANs, Routage et Infra AD",
-                    "fullDescription": "Ce projet simule l'ingénierie d'un réseau d'entreprise classique sur **Cisco Packet Tracer**. L'objectif est de démontrer une maîtrise des concepts fondamentaux : la segmentation de niveau 2 avec des **VLANs**, le **Routage Inter-VLAN** (Router-on-a-Stick), et le déploiement de services centralisés avec **Windows Server** (AD DS, DNS, DHCP). C'est un laboratoire qui valide la compréhension pratique d'une architecture client/serveur sécurisée et isolée, prête pour une évolution vers la haute disponibilité (STP, HSRP).",
+                    "name": "Architecture Réseau (Cisco & Windows Server)",
+                    "description": "VLANs, Router-on-a-Stick, NAT/PAT, DHCP Relay & AD DS",
+                    "fullDescription": "Ce projet simule l'ingénierie d'un réseau d'entreprise structuré sur Cisco Packet Tracer. L'objectif est de démontrer une maîtrise approfondie des topologies LAN/WAN et de la connectivité client/serveur. L'architecture s'articule autour d'un Switch L2 gérant la segmentation (VLANs), d'un Routeur agissant comme passerelle inter-VLAN et pare-feu NAT, et d'un environnement Windows Server centralisant les services critiques (AD DS, DNS, DHCP). Chaque choix technologique a été pensé pour répondre aux standards de sécurité, d'évolutivité et d'optimisation des flux de diffusion.",
                     "achievements": {
-                        "0": "Conception d'une topologie simplifiée : 1 Routeur, 1 Switch, gérant un réseau de bout en bout.",
-                        "1": "Segmentation en 2 VLANs distincts : VLAN 10 (Serveurs, 172.16.x.x) et VLAN 20 (Clients, 192.168.x.x).",
-                        "2": "Déploiement de rôles critiques sur Windows Server : Active Directory (AD DS), DNS interne et serveur DHCP.",
-                        "3": "Mise en œuvre du routage Inter-VLAN (Dot1Q) pour lier les serveurs aux postes clients de façon sécurisée.",
-                        "4": "Validation des flux via simulation Packet Tracer (Ping, requêtes DHCP, intégration au domaine)."
+                        "0": "Pourquoi 2 VLANs ? Isolation du domaine de diffusion et sécurité : le VLAN 10 (Serveur) héberge l'infrastructure critique, le VLAN 20 (Client) isole les utilisateurs.",
+                        "1": "Adressage IP réfléchi : Le serveur utilise une classe B privée (`172.16.x.x`) statique, tandis que le LAN client utilise un classique `192.168.x.x` en dynamique (DHCP) avec des masques en `/24` pour limiter le broadcast à 254 hôtes.",
+                        "2": "Pourquoi 1 Routeur et 1 Switch ? C'est le principe du `Router-on-a-Stick`. Un seul lien physique (Trunk) suffit pour router les paquets entre les VLANs via des sous-interfaces (`.2`, `.3`).",
+                        "3": "Passerelles (`.254`) : L'utilisation de la dernière IP disponible (`.254`) pour les passerelles est une convention professionnelle facilitant l'identification rapide de l'équipement de routage.",
+                        "4": "DHCP Relay (IP Helper) : Le client étant sur un broadcast domain différent du serveur DHCP, le routeur agit comme relais (`ip helper-address`) pour encapsuler les requêtes DHCP."
                     },
-                    "topology": "Topologie concentrée sur les fondamentaux d'entreprise :\n\n- **Cœur Réseau** : 1 Switch gérant les ports Access (Clients/Serveur) et Trunk, relié à 1 Routeur (Passerelles via Sous-interfaces).\n- **VLAN 10 (Serveurs - 172.16.0.0/24)** : Héberge le Windows Server en IP statique.\n- **VLAN 20 (Clients - 192.168.0.0/24)** : Héberge les terminaux utilisateurs en IP dynamique (DHCP).\n\n**Flux Technique** : Le client Windows obtient son IP dynamiquement, contacte le DNS sur le VLAN Serveur et rejoint le domaine Active Directory en traversant le trafic routé de l'infrastructure.",
+                    "topology": "Topologie optimisée `Router-on-a-Stick` :\n\n- **Switch (L2)** : Ports d'accès assignés aux VLANs (`f0/1-5` -> VLAN 2 ; `f0/6-10` -> VLAN 3) et lien Trunk (`g0/1`) vers le routeur.\n- **Routeur (Passerelles & NAT)** : Sous-interfaces virtuelles `g0/0.2` (`192.168.10.254`) et `g0/0.3` (`192.168.20.254`) pour le routage Inter-VLAN. Interface physique externe `g0/1` (`172.16.1.254`) connectée au WAN/Serveur.\n- **Translation d'Adresses (NAT/PAT)** : Une Access-List (`ACL 1`) autorise les réseaux `192.168.10.0` et `192.168.20.0` à être traduits (Overload) sur l'interface de sortie `g0/1` pour masquer l'adressage interne.",
                     "steps": {
                         "0": {
-                            "title": "1. Isolation & Sécurité (VLANs)",
-                            "description": "Le réseau est divisé en 2 VLANs : le VLAN 10 pour l'infrastructure et le VLAN 20 pour les utilisateurs. Cette segmentation garantit qu'un client n'a pas accès direct au même segment réseau que le contrôleur de domaine, limitant les requêtes de broadcast parasites et renforçant la sécurité globale."
+                            "title": "1. Segmentation L2 (VLANs & Trunk)",
+                            "description": "La première étape consiste à séparer logiquement le réseau matériellement unique. Les serveurs sont isolés sur le VLAN 2, et les clients sur le VLAN 3. Le port `g0/1` du switch est configuré en mode `Trunk` (norme 802.1Q) afin de laisser transiter les trames de tous les VLANs marqués vers le routeur."
                         },
                         "1": {
-                            "title": "2. Adressage IP & Passerelles",
-                            "description": "Utilisation de classes privées distinctes (172.16.x.x pour l'infra, 192.168.x.x pour le LAN). Les masques en /24 limitent la congestion. Le routeur utilise la convention de la dernière IP disponible (.254) sur ses sous-interfaces GigabitEthernet pour servir de passerelle à chaque VLAN."
+                            "title": "2. Routage Inter-VLAN (Sub-interfaces)",
+                            "description": "Puisque les clients et serveurs sont sur des sous-réseaux différents, ils ne peuvent 'voir' directement. Le routeur découpe son interface physique `g0/0` en sous-interfaces (`g0/0.2` et `g0/0.3`). Il décapsule le trafic d'un VLAN, le route, et le ré-encapsule pour l'autre VLAN. C'est le cœur de l'échange de données."
                         },
                         "2": {
-                            "title": "3. Cœur de Services (Windows Server)",
-                            "description": "La gestion des identités est centralisée via **Active Directory (AD DS)**. Le serveur héberge aussi le rôle **DNS** (indispensable pour l'AD) et le rôle **DHCP**, supprimant le besoin de configurer chaque PC client manuellement tout en assurant leur connectivité au domaine."
+                            "title": "3. DHCP Relay (IP Helper & Services AD)",
+                            "description": "Un client Windows sur le VLAN 3 (`192.168.20.0`) a besoin d'une IP. Ses requêtes DHCP (broadcast) sont bloquées par le routeur. La commande `ip helper-address 192.168.10.1` sur la passerelle client intercepte le broadcast et l'envoie directement en unicast au Windows Server (VLAN 2) qui héberge l'AD DS, le DNS et le DHCP."
                         },
                         "3": {
-                            "title": "4. Évolutivité & Redondance Future",
-                            "description": "Bien que la maquette utilise un seul switch et routeur (KISS principle), l'architecture est pensée pour évoluer. On pourrait implémenter un 2ème switch avec STP/LACP pour la résilience L2, et un second routeur avec HSRP/VRRP pour éviter tout point de défaillance unique."
+                            "title": "4. NAT PAT & Sécurité d'Accès (ACL)",
+                            "description": "Pour simuler l'accès à un réseau externe (WAN ou DMZ sur `172.16.1.x`), le routeur utilise le NAT Overload (PAT). L'Access-List `access-list 1` définit strictement qui a le droit de sortir (uniquement les réseaux 192.x). L'interface interne pointe vers `ip nat inside` et l'externe vers `ip nat outside` combiné à une route par défaut `ip route 0.0.0.0 0.0.0.0 172.16.1.1`."
+                        },
+                        "4": {
+                            "title": "5. Évolutions & Haute Disponibilité",
+                            "description": "Cette maquette pose les bases, mais en production on élimine tout SPOF (Single Point Of Failure). Pour la redondance : un 2ème Routeur et un 2ème Switch sont synchronisés. Si le routeur principal crashe, les protocoles HSRP/VRRP basculent automatiquement la passerelle vers le routeur de secours sans perte de connexion. Côté Switch, le protocole STP combiné à l'Etherchannel garantit que si une liaison ou un Switch tombe, le trafic emprunte le chemin secondaire instantanément. Pour la scalabilité : l'ajout massif de PC clients ou l'intégration de clusters de serveurs (Proxmox, Docker) nécessiterait une évolution vers une topologie `Spine-Leaf` ou l'utilisation de Switches de niveau 3 (`L3`) pour délester le routeur du routage Inter-VLAN et garantir des débits de plusieurs dizaines de Gbps en cœur de réseau."
+                        },
+                        "5": {
+                            "title": "6. Validation Globale (Le test du Ping)",
+                            "description": "L'ultime vérification s'effectue en mode `Simulation` sur Packet Tracer. On observe l'ordinateur client envoyer un broadcast DHCP (DORA). Une fois l'IP `192.168.20.x` reçue via le relais IP Helper, un simple `ping 172.16.1.1` valide toute la pile : traversée du VLAN 20, routage par le Trunk vers `g0/0.3`, traduction par le NAT, et réponse depuis l'extérieur."
                         }
                     }
                 },

@@ -14,18 +14,21 @@ interface ProjectDetailProps {
     className?: string;
 }
 
-// Simple formatter for basic markdown-like bold syntax
+// Simple formatter for basic markdown-like bold syntax and inline code
 function FormattedText({ text }: { text: string }) {
     if (!text) return null;
 
-    // Split by **text** and map to <strong> tags
-    const parts = text.split(/(\*\*.*?\*\*)/g);
+    // Split by **text** or `code`
+    const parts = text.split(/(\*\*.*?\*\*|`.*?`)/g);
 
     return (
         <>
             {parts.map((part, i) => {
                 if (part.startsWith("**") && part.endsWith("**")) {
                     return <strong key={i} className="font-bold text-white">{part.slice(2, -2)}</strong>;
+                }
+                if (part.startsWith("`") && part.endsWith("`")) {
+                    return <code key={i} className="bg-white/10 text-[#CC9400] px-1.5 py-0.5 rounded-md font-mono text-sm">{part.slice(1, -1)}</code>;
                 }
                 return part;
             })}

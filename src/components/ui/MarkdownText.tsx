@@ -27,10 +27,17 @@ export function MarkdownText({ content, className }: MarkdownTextProps) {
 }
 
 function parseBold(text: string) {
-    // Split by **...** or *...*
-    const parts = text.split(/(\*\*.*?\*\*|\*.*?\*)/g);
+    // Split by **...**, *...*, or `...`
+    const parts = text.split(/(\*\*.*?\*\*|\*.*?\*|`.*?`)/g);
 
     return parts.map((part, index) => {
+        if (part.startsWith('`') && part.endsWith('`')) {
+            return (
+                <code key={index} className="bg-white/10 text-[#CC9400] px-1.5 py-0.5 rounded-md font-mono text-sm">
+                    {part.slice(1, -1)}
+                </code>
+            );
+        }
         if (part.startsWith('**') && part.endsWith('**')) {
             return (
                 <strong key={index} className="font-bold text-[#CC9400]">

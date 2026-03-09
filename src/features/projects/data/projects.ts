@@ -90,60 +90,72 @@ services:
             steps: [
                 {
                     language: "cisco",
-                    code: `! --- ISOLATION CREATION ---
-vlan 2
- name SERVER_FARM ! The core of the system
-vlan 3
- name MGMT_NET    ! Administration network
-exit
+                    code: `! --- SWITCH CONFIGURATION ---
+conf t
 
-! --- TRUNK CONFIGURATION (High-Speed Link) ---
-interface GigabitEthernet0/1
- switchport trunk encapsulation dot1q
- switchport mode trunk
-
-! --- PORT OPTIMIZATION ---
-interface GigabitEthernet0/2
+int range f0/1-5
  switchport mode access
  switchport access vlan 2
- spanning-tree portfast  ! Instant connection without STP delay`
+
+int range f0/6-10
+ switchport mode access
+ switchport access vlan 3
+
+int g0/1
+ switchport mode trunk
+
+end
+wr mem`
                 },
                 {
                     language: "cisco",
-                    code: `! ON THE ROUTER
-interface GigabitEthernet0/1
- no shutdown
+                    code: `! --- ROUTER CONFIGURATION ---
+conf t
+int g0/0
+ no shut
+exit
 
-! --- GATEWAY CONFIGURATION ---
-interface GigabitEthernet0/1.2          ! Gateway for VLAN 2
- encapsulation dot1Q 2                  ! Decoding VLAN 2 tags
- ip address 192.168.20.1 255.255.255.0
- description GW_SERVER_VLAN2
+int g0/0.2
+ encapsulation dot1q 2
+ ip address 192.168.10.254 255.255.255.0
+ ip nat inside
 
-interface GigabitEthernet0/1.3          ! Gateway for VLAN 3
- encapsulation dot1Q 3                  ! Decoding VLAN 3 tags
- ip address 192.168.10.1 255.255.255.0
- description GW_MGMT_VLAN3`
+int g0/0.3
+ encapsulation dot1q 3
+ ip address 192.168.20.254 255.255.255.0
+ ip helper-address 192.168.10.1
+ ip nat inside`
                 },
+                {}, // Step 3: DHCP Relay (Text Only)
                 {
+                    // Step 4: NAT & Routing
                     language: "cisco",
-                    code: `! --- NETWORK BRAIN CONFIGURATION (OSPF) ---
-router ospf 1
- router-id 1.1.1.1
- network 192.168.10.0 0.0.0.255 area 0 ! Local Announcement (Site A)
- network 192.168.20.0 0.0.0.255 area 0 ! Local Announcement (Site A)
- network 10.10.1.0 0.0.0.3 area 0      ! Point-to-Point WAN Link`
+                    code: `! --- NAT & ROUTING ---
+int g0/1
+ ip address 172.16.1.254 255.255.255.0
+ ip nat outside
+ no shut
+
+access-list 1 permit 192.168.10.0 0.0.0.255
+access-list 1 permit 192.168.20.0 0.0.0.255
+
+ip nat inside source list 1 interface g0/1 overload
+ip route 0.0.0.0 0.0.0.0 172.16.1.1
+
+end
+wr mem`
                 },
+                {}, // Step 5: Evolutions & Redundancy (Text Only)
                 {
+                    // Step 6: Validation
                     language: "bash",
-                    code: `# ROUTING TABLE VERIFICATION
-R1# show ip route
-! Validating presence of remote routes (marked 'O')
-# O  192.168.30.0/24 [110/2] via 10.10.1.2
+                    code: `PC_CLIENT> ip dhcp
+! IP Address: 192.168.20.10
+! Subnet Mask: 255.255.255.0
+! Default Gateway: 192.168.20.254
 
-# REAL CONNECTIVITY TEST
-PC_CLIENT> ping 192.168.20.10
-! Reply: Stable communication across the entire infrastructure`
+PC_CLIENT> ping 172.16.1.1
+! Reply from 172.16.1.1: bytes=32 time=1ms TTL=127`
                 }
             ]
         },
