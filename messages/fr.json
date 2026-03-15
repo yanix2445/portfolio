@@ -111,11 +111,18 @@
         },
         "education": {
             "title": "Formation",
-            "fenelon": "BTS SIO SISR (Systèmes & Réseaux)",
+            "fenelon": "BTS services informatiques aux organisations option A solutions d'infrastructure, systèmes et réseaux (SIO SISR)",
             "fortytwo": "La Piscine (Intensif C/Logique)",
-            "lycee": "Bac Pro SN ARED (Réseaux & Domotique)",
+            "lycee": "Bac Pro SN - Option Audiovisuels, réseau et équipements domestiques (ARED)",
             "obtainedIn": "Obtenu en"
+        },
+        "certifications": {
+            "title": "Certifications"
         }
+    },
+    "Certifications": {
+        "title": "Certifications",
+        "description": "Validation de mon expertise technique via des certifications reconnues par l'industrie."
     },
     "Projects": {
         "schoolTitle": "Projets Académiques",

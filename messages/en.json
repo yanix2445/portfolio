@@ -111,11 +111,18 @@
         },
         "education": {
             "title": "Education",
-            "fenelon": "BTS SIO SISR (Systems & Networks)",
-            "fortytwo": "La Piscine (Intensive C/Logic)",
-            "lycee": "Bac Pro SN ARED (Networks & Home Automation)",
-            "obtainedIn": "Obtained in"
+            "fenelon": "HND in IT Services for Organizations – Infrastructure, Systems & Networks",
+            "fortytwo": "La Piscine – Intensive Coding Bootcamp",
+            "lycee": "Vocational Baccalaureate in Digital Systems – Audiovisual, Networks & Home Equipment",
+            "obtainedIn": "Awarded"
+        },
+        "certifications": {
+            "title": "Certifications"
         }
+    },
+    "Certifications": {
+        "title": "Certifications",
+        "description": "Validation of my technical expertise through industry-recognized certifications."
     },
     "Projects": {
         "schoolTitle": "School Projects",

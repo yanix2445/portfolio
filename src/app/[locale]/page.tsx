@@ -4,6 +4,7 @@ import { About } from "@/features/about";
 import { Experience, getExperience } from "@/features/experience";
 import { SchoolProjects, PersonalProjects, getSchoolProjects, getPersonalProjects } from "@/features/projects";
 import { Skills, getSkillsData } from "@/features/skills";
+import { Certifications, getCertificationsData } from "@/features/certifications";
 import { Contact } from "@/features/contact";
 import { FloatingNav } from "@/components/layout/FloatingNav";
 import { Footer } from "@/components/layout/Footer";
@@ -19,11 +20,12 @@ export default async function Home({ params }: Props) {
   setRequestLocale(locale);
 
   // Parallel data fetching with locale
-  const [jobs, skillsData, schoolProjects, personalProjects] = await Promise.all([
+  const [jobs, skillsData, schoolProjects, personalProjects, certificationsData] = await Promise.all([
     getExperience(locale),
     getSkillsData(locale),
     getSchoolProjects(),
-    getPersonalProjects()
+    getPersonalProjects(),
+    getCertificationsData(locale)
   ]);
 
   return (
@@ -60,6 +62,10 @@ export default async function Home({ params }: Props) {
           languages={skillsData.languages}
           education={skillsData.education}
         />
+      </Suspense>
+
+      <Suspense fallback={<div className="h-40 flex items-center justify-center text-white/20">...</div>}>
+        <Certifications items={certificationsData.items} />
       </Suspense>
 
       <Suspense fallback={<div className="h-40 flex items-center justify-center text-white/20">...</div>}>
