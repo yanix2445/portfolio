@@ -10,21 +10,21 @@ const certificationsEn: Certification[] = [
         issuer: "Google / Coursera",
         date: "2025",
         image: googleBadge,
-        link: "/Certification/GOOGLE/Foundations of Cybersecurity.pdf"
+        link: "https://www.coursera.org/account/accomplishments/professional-cert/N4BB50WZXZTE"
     },
     {
         name: "Google IT Support Professional Certificate",
         issuer: "Google / Coursera",
         date: "2025",
         image: googleItBadge,
-        link: googleItBadge // Link to badge if no PDF
+        link: "https://www.coursera.org/account/accomplishments/professional-cert/N4BB50WZXZTE"
     },
     {
         name: "Introduction to Cybersecurity",
         issuer: "Cisco Networking Academy",
         date: "2026",
         image: ciscoBadge,
-        link: "/Certification/CISC0/I2CSUpdate20260315-33-lds15j.pdf"
+        link: "https://www.credly.com/users/yanis-harrat"
     }
 ];
 
@@ -34,21 +34,21 @@ const certificationsFr: Certification[] = [
         issuer: "Google / Coursera",
         date: "2025",
         image: googleBadge,
-        link: "/Certification/GOOGLE/Foundations of Cybersecurity.pdf"
+        link: "https://www.coursera.org/account/accomplishments/professional-cert/N4BB50WZXZTE"
     },
     {
         name: "Certificat Professionnel Google Support IT",
         issuer: "Google / Coursera",
         date: "2025",
         image: googleItBadge,
-        link: googleItBadge
+        link: "https://www.coursera.org/account/accomplishments/professional-cert/N4BB50WZXZTE"
     },
     {
         name: "Introduction à la Cybersécurité",
         issuer: "Cisco Networking Academy",
         date: "2026",
         image: ciscoBadge,
-        link: "/Certification/CISC0/I2CSUpdate20260315-33-lds15j.pdf"
+        link: "https://www.credly.com/users/yanis-harrat"
     }
 ];
 
