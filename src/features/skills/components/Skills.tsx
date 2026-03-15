@@ -168,9 +168,11 @@ export default function SkillsSection({ categories, languages, education }: Skil
                     ))}
                 </SkillsRoot.Grid>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-20 border-t border-white/5 pt-12">
-                    <SkillsRoot.LanguageList languages={languages} />
-                    <SkillsRoot.EducationList education={education} />
+                <div className="max-w-5xl mx-auto">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-24 border-t border-white/5 pt-12">
+                        <SkillsRoot.LanguageList languages={languages} />
+                        <SkillsRoot.EducationList education={education} />
+                    </div>
                 </div>
             </SkillsRoot>
         </SkillsRoot.Provider>

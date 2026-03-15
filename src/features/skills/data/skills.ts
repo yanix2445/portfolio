@@ -175,25 +175,25 @@ const languagesFr: Language[] = [
 const educationEn: Education[] = [
     {
         school: "Fénelon Sup Paris",
-        degree: "BTS SIO SISR (Systems & Networks)",
-        year: "2025 - 2027"
+        degree: "HND in IT Services for Organizations – Infrastructure, Systems & Networks",
+        year: "2025 – 2027"
     },
     {
         school: "42 Paris",
-        degree: "La Piscine (Intensive C/Logic)",
+        degree: "La Piscine – Intensive Coding Bootcamp",
         year: "2024"
     },
     {
-        school: "Lycée Polyvalent",
-        degree: "Bac Pro SN ARED (Networks & Home Automation)",
-        year: "Obtained in 2022"
+        school: "Polyvalent High School",
+        degree: "Vocational Baccalaureate in Digital Systems – Audiovisual, Networks & Home Equipment",
+        year: "Awarded 2022"
     }
 ];
 
 const educationFr: Education[] = [
     {
         school: "Fénelon Sup Paris",
-        degree: "BTS SIO SISR (Systèmes & Réseaux)",
+        degree: "BTS services informatiques aux organisations option A solutions d'infrastructure, systèmes et réseaux (SIO SISR)",
         year: "2025 - 2027"
     },
     {
@@ -203,7 +203,7 @@ const educationFr: Education[] = [
     },
     {
         school: "Lycée Polyvalent",
-        degree: "Bac Pro SN ARED (Réseaux & Domotique)",
+        degree: "Bac Pro SN - Option Audiovisuels, réseau et équipements domestiques (ARED)",
         year: "Obtenu en 2022"
     }
 ];
