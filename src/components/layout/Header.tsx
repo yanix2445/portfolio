@@ -21,11 +21,11 @@ export function Header() {
 
     const handleCvAction = () => {
         // Preview in new tab
-        window.open("/cv-yanis-harrat.pdf", "_blank");
+        window.open("/assets/documents/cv-yanis-harrat.pdf", "_blank");
 
         // Force download
         const link = document.createElement("a");
-        link.href = "/cv-yanis-harrat.pdf";
+        link.href = "/assets/documents/cv-yanis-harrat.pdf";
         link.download = "Cv-Yanis-Harrat.pdf";
         document.body.appendChild(link);
         link.click();

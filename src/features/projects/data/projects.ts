@@ -2,15 +2,15 @@ import { CategoryConfig } from "../types";
 import { StaticImageData } from "next/image";
 
 // Static Imports for Automatic Blur Optimization
-import techWatchImg from "../../../../public/tech-watch-v1.png";
-import networkInfraImg from "../../../../public/network-infra-pt.png";
-import portfolioV2Img from "../../../../public/portfolio-v2.png";
-import portfolioV1Img from "../../../../public/portfolio-v1.png";
-import legalDocsImg from "../../../../public/legal-docs.png";
-import linktreeImg from "../../../../public/linktree.png";
-import vmNetworkImg from "../../../../public/vm-network.png";
-import zshBoostImg from "../../../../public/zsh-boost.png";
-import homelabsImg from "../../../../public/homelabs.png";
+import techWatchImg from "../../../../public/assets/images/projects/tech-watch-v1.png";
+import networkInfraImg from "../../../../public/assets/images/projects/network-infra-pt.png";
+import portfolioV2Img from "../../../../public/assets/images/projects/portfolio-v2.png";
+import portfolioV1Img from "../../../../public/assets/images/projects/portfolio-v1.png";
+import legalDocsImg from "../../../../public/assets/images/projects/legal-docs.png";
+import linktreeImg from "../../../../public/assets/images/projects/linktree.png";
+import vmNetworkImg from "../../../../public/assets/images/projects/vm-network.png";
+import zshBoostImg from "../../../../public/assets/images/projects/zsh-boost.png";
+import homelabsImg from "../../../../public/assets/images/projects/homelabs.png";
 
 export const schoolProjectsConfig: CategoryConfig = {
     id: "school",

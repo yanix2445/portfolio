@@ -1,8 +1,8 @@
 import { Certification } from "../types";
 
-const googleBadge = "/Certification/GOOGLE/badge certificat google cybersecurtite.png";
-const ciscoBadge = "/Certification/CISC0/badge introduction-to-cybersecurity.png";
-const googleItBadge = "/Certification/GOOGLE/google certificate IT support certificat .png";
+const googleBadge = "/assets/images/certifications/google-cybersecurity.png";
+const ciscoBadge = "/assets/images/certifications/cisco-cybersecurity.png";
+const googleItBadge = "/assets/images/certifications/google-it-support.png";
 
 const certificationsEn: Certification[] = [
     {

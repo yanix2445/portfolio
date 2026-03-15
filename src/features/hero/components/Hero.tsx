@@ -60,7 +60,7 @@ export function Hero() {
                 }}
             >
                 <Image
-                    src="/bg-v2.png"
+                    src="/assets/images/background/bg-v2.png"
                     alt="Background"
                     fill
                     sizes="100vw"
