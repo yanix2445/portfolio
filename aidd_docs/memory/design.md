@@ -4,7 +4,7 @@ Le langage visuel : design system, tokens, conventions d'UI et règles d'animati
 
 ## System
 
-- shadcn/ui (style `new-york`) : les composants sont copiés dans `src/components/ui/`, on peut les modifier.
+- shadcn/ui (base Radix, preset `nova`, style `radix-nova`) : les composants sont copiés dans `src/components/ui/`, on peut les modifier.
 - Tailwind CSS, utilisé en classes utilitaires. Pour fusionner les classes, utiliser `cn()` depuis `src/lib/utils.ts`.
 - Les animations d'entrée shadcn passent par `tw-animate-css` (et non `tailwindcss-animate`), les toasts par `sonner`.
 

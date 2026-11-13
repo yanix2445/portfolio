@@ -8,8 +8,8 @@ La vérification rapide.
 
 | Ordre | Commande         | Vérifie                     |
 | ----- | ---------------- | --------------------------- |
-| 1     | `pnpm typecheck` | typage TypeScript (`tsc --noEmit`) |
-| 2     | `pnpm lint`      | règles ESLint               |
+| 1     | `pnpm typecheck` | typage TypeScript (`next typegen && tsc --noEmit`, `next typegen` génère les types de routes `PageProps`/`LayoutProps`) |
+| 2     | `pnpm lint`      | règles ESLint via la CLI `eslint` (flat config `eslint.config.mjs`, `next lint` est supprimé en Next 16) |
 
 ## Before push
 
