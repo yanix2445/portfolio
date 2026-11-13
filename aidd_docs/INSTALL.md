@@ -45,7 +45,7 @@ Le site s'adresse aux recruteurs, aux entreprises qui cherchent un alternant et 
 
 - **Front-end :**
   - `next` 16.4.x (Turbopack), `react` / `react-dom` 19.3.x, TypeScript
-  - `tailwindcss` 4.x, shadcn CLI 4.x (style `new-york`, `tw-animate-css`, `sonner` pour les toasts)
+  - `tailwindcss` 4.x, shadcn CLI 4.x (base Radix, preset `nova` : style `radix-nova`, `tw-animate-css`, `sonner` pour les toasts)
   - `gsap` 3.15.x + `@gsap/react` 2.x (licence gratuite, y compris les plugins), `motion` 14.x
   - `@next/mdx` 16.4.x
 - **Back-end :** Server Actions Next.js (`"use server"`), validation du formulaire, client `resend` 6.x
