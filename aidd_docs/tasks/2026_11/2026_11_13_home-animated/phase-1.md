@@ -26,7 +26,7 @@ status: implemented
 
 | Scenario | Action | Observable outcome | Actor |
 | -------- | ------ | ------------------ | ----- |
-| Setup | Installer `gsap@3.15.1`, `@gsap/react@2.1.2`, `motion@14.13.0` | Présents dans `dependencies` | cli |
+| Setup | Installer `gsap@3.15.1`, `@gsap/react@2.1.2`, `motion@14.12.0` | Présents dans `dependencies` | cli |
 | Happy path | `pnpm test` | Le test du profil passe : 6 groupes de compétences, 6 étapes de parcours triées par date, certifications non vides | cli |
 | Happy path | `pnpm build && pnpm test:e2e` | Toutes les pages existantes répondent comme avant, en thème sombre | cli |
 | Edge case | Page de détail MDX en sombre | Le texte `prose` reste lisible (inversé) | browser |
@@ -37,7 +37,7 @@ status: implemented
 
 > Disposer de GSAP et Motion.
 
-1. `pnpm add gsap@3.15.1 @gsap/react@2.1.2 motion@14.13.0` via Portly.
+1. `pnpm add gsap@3.15.1 @gsap/react@2.1.2 motion@14.12.0` via Portly.
 
 ### `2)` Thème sombre et accent
 

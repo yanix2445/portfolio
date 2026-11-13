@@ -54,7 +54,7 @@ status: implemented
 > Aligner la mémoire sur le code.
 
 1. `design.md` : thème sombre global, token `brand`, composants d'animation réels.
-2. `codebase-map.md` : `src/components/home/`, `src/components/animations/`, `src/content/profile.ts`.
+2. `codebase-map.md` : `src/components/home/`, `src/components/animations/`, `src/lib/profile.ts`.
 3. `testing.md` : `home.spec.ts` et la mesure Lighthouse.
 
 ## Test acceptance criteria

@@ -29,7 +29,10 @@ Le langage visuel : design system, tokens, conventions d'UI et règles d'animati
   - `scroll-reveal.tsx` : révélation en cascade des `[data-reveal]` (`ScrollTrigger.batch`, `once`).
   - `timeline-scroll.tsx` : au-dessus de 768 px, parcours épinglé qui défile horizontalement ; en dessous, révélation verticale.
   - `marquee.tsx` : bande de certifications en animation CSS, en pause au survol, au focus et via un bouton ; grille en mouvement réduit.
-  - `motion-card.tsx` : `MotionConfig reducedMotion="user"` + `LazyMotion`, soulèvement et lueur ambre au survol et au focus.
+  - `motion-provider.tsx` : un seul `MotionConfig reducedMotion="user"` + `LazyMotion` par page (l'accueil l'enveloppe).
+  - `motion-card.tsx` : soulèvement et lueur ambre au survol et au focus, réservés aux cartes **cliquables** ; en mouvement réduit, seule la lueur reste.
+- Le hero ne rejoue son intro que si le JS s'hydrate dans les 1,5 premières secondes : sur un appareil lent, le nom déjà affiché n'est jamais masqué.
+- Focus clavier : `:focus-visible` global en ambre (`globals.css`, `@layer base`), sur tout le site.
 
 ## Accessibility
 
