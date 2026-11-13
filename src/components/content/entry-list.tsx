@@ -1,6 +1,7 @@
 import Link from "next/link";
 
-import { formatDate, type Collection, type ContentEntry } from "@/lib/content";
+import { EntryMeta } from "@/components/content/entry-meta";
+import type { Collection, ContentEntry } from "@/lib/content";
 
 export function EntryList({
   collection,
@@ -23,14 +24,7 @@ export function EntryList({
           >
             <h3 className="text-lg font-semibold">{metadata.title}</h3>
             <p className="mt-1 text-muted-foreground">{metadata.summary}</p>
-            <div className="mt-3 flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
-              <time dateTime={metadata.date}>{formatDate(metadata.date)}</time>
-              {metadata.tags.map((tag) => (
-                <span key={tag} className="rounded-md bg-muted px-2 py-0.5 text-xs">
-                  {tag}
-                </span>
-              ))}
-            </div>
+            <EntryMeta metadata={metadata} />
           </Link>
         </li>
       ))}

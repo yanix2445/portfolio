@@ -4,6 +4,7 @@ import { Analytics } from "@vercel/analytics/next";
 
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
+import { SITE_NAME, SITE_URL } from "@/lib/site";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -16,14 +17,22 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const DESCRIPTION =
+  "Portfolio de Yanis Harrat, étudiant en BTS SIO option SISR : projets infrastructure et réseau, veille technologique et CV.";
+
 export const metadata: Metadata = {
-  metadataBase: new URL("https://yanis-harrat.com"),
+  metadataBase: new URL(SITE_URL),
   title: {
-    default: "Yanis Harrat · Portfolio BTS SIO SISR",
-    template: "%s · Yanis Harrat",
+    default: `${SITE_NAME} · Portfolio BTS SIO SISR`,
+    template: `%s · ${SITE_NAME}`,
   },
-  description:
-    "Portfolio de Yanis Harrat, étudiant en BTS SIO option SISR : projets infrastructure et réseau, veille technologique et CV.",
+  description: DESCRIPTION,
+  openGraph: {
+    type: "website",
+    locale: "fr_FR",
+    siteName: SITE_NAME,
+    description: DESCRIPTION,
+  },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
