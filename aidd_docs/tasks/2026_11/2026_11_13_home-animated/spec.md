@@ -24,7 +24,7 @@ La page d'accueil présente en un défilement l'identité, les compétences, les
 
 ## Non-goals
 
-- Restyler les autres pages (projets, veille, contact, mentions légales).
+- Changer la mise en page des autres pages (projets, veille, contact, mentions légales). Le passage de tout le site au thème sombre est accepté (décision de Yanis du 2026-11-13) : seules leurs couleurs changent.
 - Remplacer le contenu d'exemple des projets et de la veille.
 - Régénérer le CV PDF (e-mail et téléphone perso à corriger côté Yanis).
 - Ajouter le formulaire de contact.
