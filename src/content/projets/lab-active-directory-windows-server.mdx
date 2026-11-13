@@ -1,0 +1,61 @@
+export const metadata = {
+  title: "Lab Active Directory sous Windows Server 2025",
+  summary:
+    "Un domaine Active Directory monté de A à Z : AD DS, DNS, DHCP, OU, groupes AGDLP, GPO et partages DFS répliqués entre deux serveurs de fichiers.",
+  date: "2026-11-13",
+  tags: ["Windows Server 2025", "Active Directory", "GPO", "DFS", "AGDLP"],
+};
+
+## Contexte
+
+Ce lab est né d'un TP du BTS SIO SISR à AURLOM, que j'ai ensuite remonté chez moi pour aller plus loin.
+
+- **En TP** : machines virtuelles sous VMware Workstation.
+- **En homelab** : les mêmes rôles sur mon serveur Proxmox (voir le projet [Homelab Proxmox / Docker](/projets/homelab-proxmox-docker)).
+
+Période : *à compléter*.
+
+## Objectif
+
+Reproduire l'infrastructure Windows d'une petite entreprise sur un seul site : un annuaire central, des postes clients gérés par stratégies de groupe, et des partages de fichiers accessibles par un chemin unique et répliqués sur deux serveurs.
+
+## Environnement
+
+- 1 contrôleur de domaine sous **Windows Server 2025**, sur 1 site.
+- 2 serveurs de fichiers membres du domaine, sous Windows Server 2025.
+- Postes clients **Windows 10** et **Windows 11** joints au domaine.
+- Hyperviseurs : VMware Workstation (TP), Proxmox (homelab).
+
+Schéma réseau : *à compléter*.
+
+## Réalisation
+
+J'ai configuré moi-même chacun de ces rôles :
+
+1. **Forêt et domaine AD DS** : promotion du contrôleur de domaine, avec le **DNS** intégré à l'annuaire.
+2. **DHCP** : distribution des adresses aux postes clients.
+3. **Unités d'organisation** : une arborescence d'OU pour ranger utilisateurs, groupes et ordinateurs, et y lier les GPO.
+4. **Groupes selon AGDLP** : les comptes (A) vont dans des groupes globaux (G) par service, eux-mêmes membres de groupes locaux de domaine (DL) qui portent les permissions (P) sur les partages. Les droits **NTFS** ne sont donnés qu'aux groupes locaux de domaine, jamais aux utilisateurs.
+5. **GPO** : stratégies de groupe appliquées aux OU. Liste des GPO déployées : *à compléter*.
+6. **DFS-N** : un espace de noms donne aux utilisateurs un chemin unique vers les partages, quel que soit le serveur qui les héberge.
+7. **DFS-R** : réplication des dossiers partagés entre les deux serveurs de fichiers.
+
+J'ai documenté le lab avec une procédure écrite, des scripts PowerShell et un schéma réseau. Captures et extraits : *à compléter*.
+
+## Difficultés
+
+La partie la plus délicate a été la **réplication DFS-R** entre les deux serveurs de fichiers. Nature exacte du problème et résolution : *à compléter*.
+
+## Résultat
+
+Un domaine fonctionnel sur un site, avec des postes Windows 10 et 11 joints, des droits gérés par groupes selon AGDLP et des partages DFS répliqués. Le même lab tourne aussi en dehors du TP, sur mon homelab.
+
+## Compétences
+
+Référentiel BTS SIO :
+
+- **Bloc 2 SISR** : concevoir, installer, tester et déployer une solution d'infrastructure réseau ; l'exploiter et la dépanner.
+- **Bloc 1** : mettre à disposition des utilisateurs un service informatique.
+- **Bloc 3** : sécuriser les équipements et les usages des utilisateurs (droits d'accès, stratégies de groupe).
+
+Outils et notions : Windows Server 2025, AD DS, DNS, DHCP, OU, AGDLP, NTFS, GPO, DFS-N, DFS-R, PowerShell, VMware Workstation, Proxmox.
