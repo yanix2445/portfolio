@@ -2,10 +2,11 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 import { Prose } from "@/components/mdx/prose";
+import { SITE_HOST } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Mentions légales",
-  description: "Mentions légales et politique de confidentialité du site yanis-harrat.com.",
+  description: `Mentions légales et politique de confidentialité du site ${SITE_HOST}.`,
 };
 
 export default function MentionsLegalesPage() {

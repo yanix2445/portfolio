@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import { EntryMeta } from "@/components/content/entry-meta";
 import { Prose } from "@/components/mdx/prose";
 import { getEntry, getSlugs, type Collection } from "@/lib/content";
-import { SITE_NAME } from "@/lib/site";
+import { BASE_OPEN_GRAPH } from "@/lib/site";
 
 export async function entryStaticParams(collection: Collection) {
   const slugs = await getSlugs(collection);
@@ -20,8 +20,7 @@ export async function entryMetadata(collection: Collection, slug: string): Promi
     title,
     description: summary,
     alternates: { canonical: url },
-    // openGraph d'une page remplace celui du layout : on reprend locale et siteName.
-    openGraph: { type: "article", locale: "fr_FR", siteName: SITE_NAME, title, description: summary, url },
+    openGraph: { ...BASE_OPEN_GRAPH, type: "article", title, description: summary, url },
   };
 }
 

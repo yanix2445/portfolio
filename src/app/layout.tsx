@@ -4,7 +4,7 @@ import { Analytics } from "@vercel/analytics/next";
 
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
-import { SITE_NAME, SITE_URL } from "@/lib/site";
+import { BASE_OPEN_GRAPH, SITE_NAME, SITE_URL } from "@/lib/site";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -27,12 +27,7 @@ export const metadata: Metadata = {
     template: `%s · ${SITE_NAME}`,
   },
   description: DESCRIPTION,
-  openGraph: {
-    type: "website",
-    locale: "fr_FR",
-    siteName: SITE_NAME,
-    description: DESCRIPTION,
-  },
+  openGraph: { ...BASE_OPEN_GRAPH, type: "website" },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
