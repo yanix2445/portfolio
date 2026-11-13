@@ -14,9 +14,18 @@ export function SkillsSection() {
 
         <dl className="mt-12 max-w-[68rem] text-[1.375rem]/[1.45] text-bone sm:mt-16 sm:text-[1.75rem]/[1.4] lg:text-[2rem]/[1.38]">
           {SKILL_GROUPS.map(({ title, items }) => (
-            <div key={title} className="inline">
+            // Mobile : un groupe par paragraphe. Desktop : texte courant.
+            // Un nom d'un seul mot (DFS-N, TCP/IP) ne se coupe jamais ; les noms composés passent à la ligne entre leurs mots.
+            <div key={title} className="mb-5 block last:mb-0 sm:mb-0 sm:inline">
               <dt className="inline font-medium text-ash">{title}&nbsp;: </dt>
-              <dd className="inline tracking-[-0.01em]">{items.join(", ")}. </dd>
+              <dd className="inline tracking-[-0.01em]">
+                {items.map((item, index) => (
+                  <span key={item}>
+                    <span className={item.includes(" ") ? undefined : "whitespace-nowrap"}>{item}</span>
+                    {index < items.length - 1 ? ", " : ". "}
+                  </span>
+                ))}
+              </dd>
             </div>
           ))}
         </dl>
