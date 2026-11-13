@@ -2,6 +2,7 @@ import Link from "next/link";
 
 import { EntryList } from "@/components/content/entry-list";
 import { CV_PATH } from "@/components/layout/site-header";
+import { PersonJsonLd } from "@/components/seo/person-json-ld";
 import { getEntries } from "@/lib/content";
 
 export default async function HomePage() {
@@ -9,6 +10,7 @@ export default async function HomePage() {
 
   return (
     <div className="mx-auto w-full max-w-3xl px-4 py-16">
+      <PersonJsonLd />
       <section className="mb-16">
         <h1 className="text-4xl font-semibold tracking-tight sm:text-5xl">Yanis Harrat</h1>
         <p className="mt-4 text-lg text-muted-foreground">

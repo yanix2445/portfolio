@@ -8,3 +8,19 @@ export const BASE_OPEN_GRAPH = {
   locale: "fr_FR",
   siteName: SITE_NAME,
 } as const;
+
+export const OWNER = {
+  firstName: "Yanis",
+  lastName: "HARRAT",
+  fullName: "Yanis HARRAT",
+  jobTitle: "Étudiant en BTS SIO option SISR",
+} as const;
+
+export const CONTACT = {
+  email: "yanis@yanis-harrat.com",
+  phone: "07 68 18 79 34",
+  // Format E.164 pour les liens tel: et le balisage schema.org.
+  phoneE164: "+33768187934",
+  linkedin: "https://www.linkedin.com/in/yanis-harrat/",
+  github: "https://github.com/yanix2445",
+} as const;
