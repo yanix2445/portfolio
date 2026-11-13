@@ -21,12 +21,12 @@ flowchart TD
 ## Areas
 
 - `src/app` : les routes de l'App Router (accueil, projets, veille, contact, mentions légales) ainsi que `sitemap.ts` et `robots.ts`. L'image OpenGraph est à venir.
-- `src/components` : `layout/` (header, footer), `content/` (liste de cartes, métadonnées et page de détail partagées par projets et veille) et `mdx/` (rendu `prose`). À venir : `ui/` pour les composants shadcn ajoutés via la CLI, et `animations/` (GSAP et Motion, toujours en `"use client"`).
+- `src/components` : `layout/` (header, footer), `content/` (liste de cartes, métadonnées et page de détail partagées par projets et veille), `mdx/` (rendu `prose`), `home/` (les six sections de l'accueil, en Server Components) et `animations/` (GSAP, Motion et marquee CSS, toujours en `"use client"`). À venir : `ui/` pour les composants shadcn ajoutés via la CLI.
 - `src/types` : les déclarations de modules, dont `*.mdx` (qui type `export const metadata`).
 - `src/content` : un fichier MDX par projet ou article de veille. On ajoute du contenu ici.
 - `src/actions` (à venir) : les Server Actions, à commencer par le formulaire de contact.
-- `src/lib` : le listing du contenu MDX (`content.ts`), les constantes du site (`site.ts` : `SITE_URL`, `BASE_OPEN_GRAPH`) et `cn()`. À venir : le client Resend et l'appel Turnstile.
-- `public` : le CV en PDF et les images des projets.
+- `src/lib` : le listing du contenu MDX (`content.ts`), les constantes du site (`site.ts` : `SITE_URL`, `BASE_OPEN_GRAPH`), le contenu du CV affiché sur l'accueil (`profile.ts` : accroche, compétences, certifications, parcours) et `cn()`. `profile.ts` n'est pas dans `src/content/`, que Vitest redirige vers les fixtures. À venir : le client Resend et l'appel Turnstile.
+- `public` : le CV en PDF, le portrait (`images/yanis-harrat.png`) et les images des projets.
 
 ## Entry points
 
