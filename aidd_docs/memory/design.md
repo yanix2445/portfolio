@@ -14,7 +14,7 @@ Le langage visuel : monde « Opérationnel dès lundi », tokens, conventions d'
 - Palette tirée du portrait : `ground` #121114 (fond), `raised` #1C1A1A (surface surélevée), `bone` #EFE9E1 (texte), `ash` #9C948B (texte secondaire, contraste 6,3:1), `tungsten` #F5B66A (UNE couleur d'action, en aplat), `rule` / `rule-strong` (filets os à 10 % / 22 %).
 - Le tungstène est réservé aux actions (bouton « Appeler ») et à l'état vivant (ticket « En cours », démo « En direct »), à la sélection et au focus. Jamais en décor.
 - Les tokens shadcn (`background`, `card`, `muted-foreground`, `border`, `ring`…) sont remappés sur cette palette : les autres pages en héritent.
-- Coins : 6 px (`--radius: 0.375rem`) ; seule la pastille portrait est arrondie à fond.
+- Coins : 6 px (`rounded-md`, base `--radius: 0.46875rem`) ; seuls la pastille portrait et les points de statut sont ronds.
 - Utilitaires maison : `page-container` (marges du site, 84rem max), `pixel` (police pixel, chiffres tabulaires), `focus-ring`.
 
 ## Typography
@@ -22,7 +22,7 @@ Le langage visuel : monde « Opérationnel dès lundi », tokens, conventions d'
 - Trois voix auto-hébergées via `next/font/local` (fichiers et licences OFL dans `public/fonts/`) :
   - **Archivo** (variable `wdth` + `wght`) : titres serrés (`[font-stretch:80–88%]`, graisse 680–760, interlettrage jusqu'à -0,04em) et texte courant.
   - **Bodoni Moda italique** (`font-serif italic`, composant `Voice`) : les mots humains glissés dans les titres (« dès lundi. », « sans arrondir. »), les lieux, les groupes de compétences.
-  - **Departure Mono** (`font-pixel` / `pixel`) : uniquement chiffres et identifiants (INC-2041, N1/N2, heures). Tailles multiples de 11 px quand c'est possible.
+  - **Departure Mono** (`font-pixel` / `pixel`) : uniquement chiffres et identifiants (INC-2041, N1/N2, heures). Corps multiples de 11 px (11 px dans la file, 110–154 px pour les chiffres).
 - Titres de section : composant `SectionTitle` (`src/components/home/home-ui.tsx`).
 - Typo française : espace insécable avant « : » et « ? » (`&nbsp;`, `&#8239;`), chiffre et unité inséparables (« 3 j »).
 

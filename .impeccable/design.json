@@ -1,0 +1,135 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-13T12:00:00.000Z",
+  "title": "Design System: Yanis Harrat",
+  "extensions": {
+    "colorMeta": {
+      "tungsten": { "role": "primary", "displayName": "Tungsten Bokeh", "canonical": "#F5B66A", "tonalRamp": ["oklch(15% 0.03 70)", "oklch(26% 0.05 70)", "oklch(38% 0.07 70)", "oklch(50% 0.09 70)", "oklch(62% 0.1 70)", "oklch(74% 0.11 70)", "oklch(85% 0.09 70)", "oklch(95% 0.04 70)"] },
+      "tungsten-hover": { "role": "primary", "displayName": "Tungsten Warmed", "canonical": "#F8C88C" },
+      "tungsten-ink": { "role": "primary", "displayName": "Tungsten Ink", "canonical": "#121114" },
+      "ground": { "role": "neutral", "displayName": "Portrait Graphite", "canonical": "#121114", "tonalRamp": ["oklch(15% 0.005 300)", "oklch(26% 0.006 300)", "oklch(38% 0.007 300)", "oklch(50% 0.007 300)", "oklch(62% 0.007 300)", "oklch(74% 0.006 300)", "oklch(85% 0.004 300)", "oklch(95% 0.002 300)"] },
+      "raised": { "role": "neutral", "displayName": "Raised Graphite", "canonical": "#1C1A1A", "tonalRamp": ["oklch(15% 0.004 20)", "oklch(26% 0.005 20)", "oklch(38% 0.006 20)", "oklch(50% 0.006 20)", "oklch(62% 0.006 20)", "oklch(74% 0.005 20)", "oklch(85% 0.004 20)", "oklch(95% 0.002 20)"] },
+      "bone": { "role": "neutral", "displayName": "Bone", "canonical": "#EFE9E1", "tonalRamp": ["oklch(15% 0.006 75)", "oklch(26% 0.008 75)", "oklch(38% 0.01 75)", "oklch(50% 0.012 75)", "oklch(62% 0.013 75)", "oklch(74% 0.013 75)", "oklch(85% 0.012 75)", "oklch(95% 0.01 75)"] },
+      "ash": { "role": "neutral", "displayName": "Warm Ash", "canonical": "#9C948B", "tonalRamp": ["oklch(15% 0.008 70)", "oklch(26% 0.011 70)", "oklch(38% 0.014 70)", "oklch(50% 0.016 70)", "oklch(62% 0.017 70)", "oklch(74% 0.015 70)", "oklch(85% 0.011 70)", "oklch(95% 0.006 70)"] },
+      "rule": { "role": "neutral", "displayName": "Hairline", "canonical": "rgb(239 233 225 / 0.1)" },
+      "rule-strong": { "role": "neutral", "displayName": "Hairline Strong", "canonical": "rgb(239 233 225 / 0.22)" }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "Home H1 and closing H2 only; double-voice with the italic serif." },
+      "headline": { "displayName": "Headline", "purpose": "Every section title, one shared scale." },
+      "title": { "displayName": "Title", "purpose": "Project titles in ruled lists." },
+      "voice": { "displayName": "Voice", "purpose": "Italic serif for human words; inherits size from context." },
+      "body": { "displayName": "Body", "purpose": "Lead and summary paragraphs, usually in ash." },
+      "label": { "displayName": "Label", "purpose": "Dates, sources, tags and nav, in ash." },
+      "figure": { "displayName": "Figure", "purpose": "Departure Mono for numbers and ticket IDs, at multiples of 11px." }
+    },
+    "shadows": [],
+    "motion": [
+      { "name": "ease-out-expo", "value": "cubic-bezier(0.16, 1, 0.3, 1)", "purpose": "The only curve: H1 rise, pill opening, queue rows." },
+      { "name": "rise-from-mask", "value": "900ms, stagger 90ms + 60ms", "purpose": "H1 lines translate up from 105% inside an overflow mask, CSS only." },
+      { "name": "pill-open", "value": "1100ms, delay 380ms, clip-path inset(0 46% round 999px) to none", "purpose": "Portrait pill widens open inside the H1." },
+      { "name": "queue-row", "value": "700ms ease-out-expo, transform + opacity", "purpose": "Ticket rows sliding in the queue demo." },
+      { "name": "figure-tick", "value": "900ms, ease-out quart, once at 60% visibility", "purpose": "Figures count up once in the pixel face." },
+      { "name": "ui-feedback", "value": "150ms ease-out, color / border-color", "purpose": "Hover and state feedback on links and buttons." }
+    ],
+    "breakpoints": [
+      { "name": "sm", "value": "640px" },
+      { "name": "md", "value": "768px" },
+      { "name": "lg", "value": "1024px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Call Action",
+      "kind": "button",
+      "refersTo": "button-call",
+      "description": "The site's primary action: call Yanis. The only tungsten fill.",
+      "html": "<a class=\"ds-btn-call\" href=\"#\"><svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z\"/></svg><span>Appeler · 07 68 18 79 34</span></a>",
+      "css": ".ds-btn-call { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 52px; padding: 0 24px; border-radius: 6px; background: var(--tungsten, #F5B66A); color: var(--tungsten-ink, #121114); font-family: Archivo, ui-sans-serif, system-ui, sans-serif; font-size: 16px; font-weight: 600; text-decoration: none; transition: background-color 150ms ease-out; } .ds-btn-call:hover { background: #F8C88C; } .ds-btn-call:focus-visible { outline: 2px solid var(--tungsten, #F5B66A); outline-offset: 3px; }"
+    },
+    {
+      "name": "Outline Action",
+      "kind": "button",
+      "refersTo": "button-outline",
+      "description": "Secondary actions (CV PDF, e-mail): hairline border, bone text.",
+      "html": "<a class=\"ds-btn-outline\" href=\"#\">CV (PDF)<svg width=\"17\" height=\"17\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#9C948B\" stroke-width=\"1.75\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M12 17V3\"/><path d=\"m6 11 6 6 6-6\"/><path d=\"M19 21H5\"/></svg></a>",
+      "css": ".ds-btn-outline { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 52px; padding: 0 24px; border-radius: 6px; border: 1px solid rgb(239 233 225 / 0.22); background: transparent; color: #EFE9E1; font-family: Archivo, ui-sans-serif, system-ui, sans-serif; font-size: 16px; font-weight: 600; text-decoration: none; transition: border-color 150ms ease-out; } .ds-btn-outline:hover { border-color: rgb(239 233 225 / 0.6); } .ds-btn-outline:focus-visible { outline: 2px solid #F5B66A; outline-offset: 3px; }"
+    },
+    {
+      "name": "Site Navigation",
+      "kind": "nav",
+      "refersTo": "nav-link",
+      "description": "Slim header: name left, ash links, small outline CV button.",
+      "html": "<header class=\"ds-nav\"><a class=\"ds-nav-name\" href=\"#\">Yanis <span>HARRAT</span></a><ul><li><a class=\"ds-nav-link\" href=\"#\">Projets</a></li><li><a class=\"ds-nav-link\" href=\"#\">Veille</a></li><li><a class=\"ds-nav-link\" href=\"#\">Contact</a></li><li><a class=\"ds-nav-cv\" href=\"#\">CV</a></li></ul></header>",
+      "css": ".ds-nav { display: flex; align-items: center; justify-content: space-between; min-height: 56px; padding: 0 24px; border-bottom: 1px solid rgb(239 233 225 / 0.1); background: #121114; font-family: Archivo, ui-sans-serif, system-ui, sans-serif; } .ds-nav ul { display: flex; align-items: center; gap: 8px; list-style: none; margin: 0; padding: 0; font-size: 14px; } .ds-nav-name { color: #EFE9E1; font-weight: 600; font-size: 15px; letter-spacing: -0.01em; text-decoration: none; } .ds-nav-name span { font-stretch: 88%; } .ds-nav-link { display: block; padding: 8px; border-radius: 4.5px; color: #9C948B; text-decoration: none; transition: color 150ms; } .ds-nav-link:hover { color: #EFE9E1; } .ds-nav-cv { margin-left: 12px; padding: 6px 12px; border: 1px solid rgb(239 233 225 / 0.22); border-radius: 6px; color: #EFE9E1; font-weight: 500; text-decoration: none; transition: border-color 150ms; } .ds-nav-cv:hover { border-color: rgb(239 233 225 / 0.6); } .ds-nav a:focus-visible { outline: 2px solid #F5B66A; outline-offset: 3px; }"
+    },
+    {
+      "name": "Example Tag",
+      "kind": "chip",
+      "refersTo": "tag",
+      "description": "Small hairline tag marking demo content as an example.",
+      "html": "<span class=\"ds-tag\">exemple</span>",
+      "css": ".ds-tag { display: inline-block; padding: 2px 6px; border: 1px solid rgb(239 233 225 / 0.22); border-radius: 4.5px; color: #9C948B; font-family: Archivo, ui-sans-serif, system-ui, sans-serif; font-size: 12px; }"
+    },
+    {
+      "name": "Double-Voice Headline",
+      "kind": "custom",
+      "refersTo": "display",
+      "description": "Condensed grotesque headline that switches into the italic serif for the human words.",
+      "html": "<h2 class=\"ds-headline\">On en parle <span class=\"ds-voice\">lundi ?</span></h2>",
+      "css": ".ds-headline { margin: 0; color: #EFE9E1; font-family: Archivo, ui-sans-serif, system-ui, sans-serif; font-size: 72px; font-weight: 760; font-stretch: 80%; line-height: 0.92; letter-spacing: -0.04em; } .ds-voice { font-family: 'Bodoni Moda', ui-serif, Georgia, serif; font-style: italic; font-weight: 500; font-stretch: 100%; letter-spacing: -0.015em; }"
+    },
+    {
+      "name": "Pixel Figure",
+      "kind": "custom",
+      "refersTo": "figure",
+      "description": "A ruled figure row: pixel number on the 11px grid, statement with an italic human word, ash source.",
+      "html": "<div class=\"ds-figure\"><p class=\"ds-figure-n\">4</p><p class=\"ds-figure-s\"><em>mois</em> de helpdesk N1/N2 en production.</p><p class=\"ds-figure-src\">Source · période</p></div>",
+      "css": ".ds-figure { border-top: 1px solid rgb(239 233 225 / 0.1); padding-top: 32px; font-family: Archivo, ui-sans-serif, system-ui, sans-serif; } .ds-figure-n { margin: 0; color: #EFE9E1; font-family: 'Departure Mono', ui-monospace, monospace; font-size: 110px; line-height: 0.8; letter-spacing: 0; font-variant-numeric: tabular-nums; } .ds-figure-s { margin: 32px 0 0; max-width: 28rem; color: #EFE9E1; font-size: 20px; line-height: 1.375; } .ds-figure-s em { font-family: 'Bodoni Moda', ui-serif, Georgia, serif; font-style: italic; font-weight: 500; } .ds-figure-src { margin: 12px 0 0; color: #9C948B; font-size: 14px; }"
+    },
+    {
+      "name": "Ticket Queue Row",
+      "kind": "card",
+      "refersTo": "queue-panel",
+      "description": "The single raised panel: support queue with pixel IDs and status dots.",
+      "html": "<div class=\"ds-queue\"><div class=\"ds-queue-head\"><strong>File de support</strong><span class=\"ds-queue-live\"><i></i>En direct</span></div><div class=\"ds-queue-row\"><span class=\"ds-queue-id\">INC-1042</span><span class=\"ds-queue-title\">Réinitialiser un mot de passe AD</span><span class=\"ds-queue-status\"><i></i>En cours</span></div></div>",
+      "css": ".ds-queue { overflow: hidden; border: 1px solid rgb(239 233 225 / 0.1); border-radius: 6px; background: #1C1A1A; font-family: Archivo, ui-sans-serif, system-ui, sans-serif; } .ds-queue-head { display: flex; align-items: center; justify-content: space-between; min-height: 52px; padding: 0 20px; border-bottom: 1px solid rgb(239 233 225 / 0.1); color: #EFE9E1; font-size: 14px; } .ds-queue-live { display: flex; align-items: center; gap: 8px; color: #9C948B; } .ds-queue-live i, .ds-queue-status i { width: 8px; height: 8px; border-radius: 9999px; background: #F5B66A; display: inline-block; } .ds-queue-row { display: grid; grid-template-columns: 4.75rem minmax(0,1fr) 8.5rem; align-items: center; gap: 16px; height: 68px; padding: 0 20px; border-bottom: 1px solid rgb(239 233 225 / 0.1); transition: transform 700ms cubic-bezier(0.16,1,0.3,1); } .ds-queue-id { color: #9C948B; font-family: 'Departure Mono', ui-monospace, monospace; font-size: 11px; letter-spacing: 0; } .ds-queue-title { color: #EFE9E1; font-size: 15px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; } .ds-queue-status { display: flex; align-items: center; gap: 8px; color: #EFE9E1; font-size: 14px; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Monday Launch",
+    "overview": "The site reads like a product launch whose product is a person ready for day one. The palette is lifted from the portrait itself: the graphite of its background becomes the ground, its skin-and-shirt highlights become bone type, and the one warm bokeh light becomes the only colour that acts. Everything else is typography, hairlines and space.\n\nThree type voices share one system: a tight variable grotesque carries the claims, an italic didone speaks the human words, and a pixel face carries numbers and identifiers as if they came off a console. Density is low at the top and rises as the proof arrives: the giant headline, then a working ticket queue, then figures, skills, path and projects as ruled lists, never as tiles.\n\nThe world is flat and quiet. Depth comes from two dark tones and hairline rules, not from shadow. Motion is a scarce resource spent on three moments and switched off entirely under reduced motion.",
+    "keyCharacteristics": [
+      "One dark theme, taken from the portrait; no light mode.",
+      "One flat action colour (tungsten) for actions and live state only.",
+      "Three type voices with fixed jobs; never a fourth.",
+      "Hairline-ruled lists instead of cards.",
+      "Square-ish corners; full round only for the portrait pill and status dots.",
+      "Three motion moments, one expo-out curve, static under reduced motion."
+    ],
+    "rules": [
+      { "name": "The One Light Rule", "body": "Tungsten is used only for an action someone can take or a state that is live right now. If it is neither, it is bone, ash or a rule.", "section": "colors" },
+      { "name": "The Flat Fill Rule", "body": "Every colour is a flat fill or a flat line. No gradients, no glows, no translucent glass.", "section": "colors" },
+      { "name": "The Three Voices Rule", "body": "Grotesque for claims, italic serif for human words, pixel for numbers and identifiers. A word never borrows another voice's job.", "section": "typography" },
+      { "name": "The Double-Voice Headline Rule", "body": "A headline that switches into the italic voice mid-line exists only at three moments: the hero (\"dès lundi.\"), the queue demo (\"je prends la file.\") and the close (\"lundi ?\"). Other section titles stay single-voice. Below headline scale, the italic voice still marks human words: the noun beside a figure (\"mois\"), a workplace name in the path, the city in the footer.", "section": "typography" },
+      { "name": "The Eleven Grid Rule", "body": "Departure Mono is drawn on an 11px grid; set it at multiples of 11px with zero tracking and tabular figures.", "section": "typography" },
+      { "name": "The No-Lift Rule", "body": "Surfaces never cast shadows or glow. Hover changes a colour, a border or an underline, never elevation.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do keep tungsten (#F5B66A) for the call action, focus, selection and live state; everything else is bone, ash or a rule.",
+      "Do set every section title with the shared headline scale (720, wdth 84%, -0.032em).",
+      "Do put human words in the italic voice and numbers and ticket IDs in the pixel voice at multiples of 11px.",
+      "Do separate content with 1px hairlines (bone at 10%) and present lists as ruled rows.",
+      "Do keep the H1 fully rendered in server HTML; entrance motion is CSS and is removed under reduced motion.",
+      "Do use the one container (max 1344px, gutters 16 / 24 / 40px)."
+    ],
+    "donts": [
+      "Don't use gradients, glows, glass or box-shadows.",
+      "Don't wrap content in cards or tile grids; the queue panel is the single raised surface.",
+      "Don't add a second accent colour or use tungsten as decoration.",
+      "Don't round anything fully except the portrait pill and status dots.",
+      "Don't add a fourth typeface or set prose in the pixel face.",
+      "Don't animate beyond the three motion moments."
+    ]
+  }
+}
