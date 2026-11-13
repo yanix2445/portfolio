@@ -1,11 +1,8 @@
 import { ArrowRight, ArrowUpRight } from "lucide-react";
 import Link from "next/link";
 
-import { MotionCard } from "@/components/animations/motion-card";
-import { ScrollReveal } from "@/components/animations/scroll-reveal";
-import { CONTAINER, SectionHeading } from "@/components/home/section-heading";
+import { SectionTitle, Voice } from "@/components/home/home-ui";
 import { formatDate, getEntries } from "@/lib/content";
-import { cn } from "@/lib/utils";
 
 const LATEST_COUNT = 3;
 
@@ -13,71 +10,55 @@ export async function ProjectsSection() {
   const projects = (await getEntries("projets")).slice(0, LATEST_COUNT);
 
   return (
-    <section aria-labelledby="projects-title" className={cn(CONTAINER, "py-24 md:py-36")}>
-      <ScrollReveal>
-        <SectionHeading
-          id="projects-title"
-          index="04"
-          title="Projets récents"
-          lead="Réalisations professionnelles menées en formation et en stage."
-          action={
-            <Link
-              href="/projets"
-              className="focus-ring group inline-flex items-center gap-2 rounded-full border border-white/15 px-5 py-2.5 text-sm font-medium transition-colors duration-150 ease-out hover:border-brand/50"
-            >
-              Tous les projets
-              <ArrowRight
-                aria-hidden
-                className="size-4 transition-transform duration-200 ease-out motion-safe:group-hover:translate-x-0.5"
-              />
-            </Link>
-          }
-        />
+    <section aria-labelledby="projects-title" className="border-t border-rule">
+      <div className="page-container py-24 sm:py-32 lg:py-40">
+        <div className="flex flex-wrap items-end justify-between gap-6">
+          <SectionTitle id="projects-title">
+            Projets <Voice>récents.</Voice>
+          </SectionTitle>
+          <Link
+            href="/projets"
+            className="group inline-flex items-center gap-2 rounded-sm py-1 text-base text-bone underline decoration-rule-strong underline-offset-[0.3em] transition-colors duration-150 hover:decoration-bone"
+          >
+            Tous les projets
+            <ArrowRight
+              aria-hidden
+              className="size-4 transition-transform duration-200 ease-out motion-safe:group-hover:translate-x-0.5"
+            />
+          </Link>
+        </div>
 
         {projects.length === 0 ? (
-          <p className="mt-14 text-muted-foreground">Aucun projet publié pour le moment.</p>
+          <p className="mt-14 text-lg text-ash">Les fiches projets arrivent.</p>
         ) : (
-          <ul className="mt-14 grid gap-4 md:grid-cols-3">
-            {projects.map(({ slug, metadata }, index) => (
-              <li key={slug} data-reveal className="flex">
-                <MotionCard>
-                  <Link
-                    href={`/projets/${slug}`}
-                    className="focus-ring glow-card group flex w-full flex-col p-6"
-                  >
-                    <div className="flex items-center justify-between font-mono text-xs text-muted-foreground">
-                      <span aria-hidden className="text-brand">
-                        {String(index + 1).padStart(2, "0")}
-                      </span>
-                      <time dateTime={metadata.date}>{formatDate(metadata.date)}</time>
-                    </div>
-                    <h3 className="mt-10 text-2xl font-semibold tracking-tight text-balance">
-                      {metadata.title}
-                    </h3>
-                    <p className="mt-3 text-pretty text-muted-foreground">{metadata.summary}</p>
-                    <div className="mt-auto flex items-end justify-between gap-4 pt-8">
-                      <ul className="flex flex-wrap gap-1.5">
-                        {metadata.tags.map((tag) => (
-                          <li
-                            key={tag}
-                            className="rounded-md border border-white/10 px-2 py-0.5 font-mono text-[11px] text-foreground/75"
-                          >
-                            {tag}
-                          </li>
-                        ))}
-                      </ul>
-                      <ArrowUpRight
-                        aria-hidden
-                        className="size-5 shrink-0 text-brand transition-transform duration-200 ease-out motion-safe:group-hover:translate-x-0.5 motion-safe:group-hover:-translate-y-0.5"
-                      />
-                    </div>
-                  </Link>
-                </MotionCard>
+          <ul className="mt-14 border-t border-rule sm:mt-20">
+            {projects.map(({ slug, metadata }) => (
+              <li key={slug}>
+                <Link
+                  href={`/projets/${slug}`}
+                  className="group grid gap-x-12 gap-y-3 border-b border-rule py-8 transition-colors duration-150 hover:bg-raised/60 sm:grid-cols-[11rem_1fr] lg:grid-cols-12"
+                >
+                  <time dateTime={metadata.date} className="text-sm text-ash sm:pt-2 lg:col-span-2">
+                    {formatDate(metadata.date)}
+                  </time>
+                  <h3 className="text-2xl/tight font-[680] tracking-[-0.02em] text-balance text-bone [font-stretch:88%] sm:text-[1.75rem]/tight lg:col-span-5">
+                    {metadata.title}
+                  </h3>
+                  <div className="sm:col-start-2 lg:col-span-4 lg:col-start-auto lg:pt-1.5">
+                    <p className="text-base/relaxed text-pretty text-ash">{metadata.summary}</p>
+                    <p className="mt-3 text-sm text-ash">{metadata.tags.join(" · ")}</p>
+                  </div>
+                  <ArrowUpRight
+                    aria-hidden
+                    className="hidden size-6 justify-self-end text-ash transition-[color,translate] duration-200 ease-out group-hover:text-bone motion-safe:group-hover:translate-x-0.5 motion-safe:group-hover:-translate-y-0.5 lg:col-span-1 lg:mt-1 lg:block"
+                    strokeWidth={1.5}
+                  />
+                </Link>
               </li>
             ))}
           </ul>
         )}
-      </ScrollReveal>
+      </div>
     </section>
   );
 }
