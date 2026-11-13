@@ -141,7 +141,7 @@ function StatusCell({ ticket }: { ticket: Ticket }) {
         <span className="flex items-center gap-1.5 text-bone">
           <Check aria-hidden className="size-3.5" strokeWidth={2.25} />
           Résolu
-          <span className="pixel ml-1 text-[0.8125rem] text-ash">{formatClock(ticket.resolvedAt ?? 0)}</span>
+          <span className="pixel ml-1 text-[11px] text-ash">{formatClock(ticket.resolvedAt ?? 0)}</span>
         </span>
       );
   }
@@ -270,15 +270,15 @@ export function TicketQueue() {
                 (entering || index >= VISIBLE_ROWS) && "opacity-0",
               )}
             >
-              <span className="pixel hidden text-[0.8125rem] text-ash [grid-area:id] sm:block">INC-{ticket.id}</span>
+              <span className="pixel hidden text-[11px] text-ash [grid-area:id] sm:block">INC-{ticket.id}</span>
               <span className="line-clamp-2 text-[0.9375rem]/snug text-bone [grid-area:title] sm:line-clamp-none sm:truncate">
                 {info.title}
               </span>
               <span className="flex min-w-0 items-center gap-2 text-[0.8125rem] whitespace-nowrap text-ash [grid-area:meta]">
-                <span className="pixel shrink-0 sm:hidden">INC-{ticket.id}</span>
+                <span className="pixel shrink-0 text-[11px] sm:hidden">INC-{ticket.id}</span>
                 {qualified ? (
                   <>
-                    <span className="pixel shrink-0">{info.level}</span>
+                    <span className="pixel shrink-0 text-[11px]">{info.level}</span>
                     <span className="truncate">{info.category}</span>
                   </>
                 ) : (

@@ -105,7 +105,8 @@
   --chart-3: var(--ash);
   --chart-4: #6b645d;
   --chart-5: #3a3632;
-  --radius: 0.375rem;
+  /* rounded-md = 6 px, le coin du contrat. */
+  --radius: 0.46875rem;
   --sidebar: var(--raised);
   --sidebar-foreground: var(--bone);
   --sidebar-primary: var(--tungsten);
