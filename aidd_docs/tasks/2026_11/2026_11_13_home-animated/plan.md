@@ -1,6 +1,6 @@
 ---
 objective: "L'accueil présente les six sections du CV dans une mise en scène sombre et richement animée, lisible sans JS et sans mouvement, sans régression des autres pages."
-status: pending
+status: implemented
 ---
 
 # Plan: Accueil complet et animé

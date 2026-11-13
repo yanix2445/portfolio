@@ -4,9 +4,11 @@ Comment le projet est vérifié : deux niveaux de tests automatisés, en plus du
 
 ## Strategy
 
-- **Unitaires (Vitest)** : la logique pure, c'est-à-dire le listing et le tri du contenu (`src/lib/content.ts`), le sitemap et les métadonnées SEO des entrées. Ils tournent sur des **fixtures**, jamais sur le vrai contenu éditorial, qui change souvent.
+- **Unitaires (Vitest)** : la logique pure, c'est-à-dire le listing et le tri du contenu (`src/lib/content.ts`), le sitemap et les métadonnées SEO des entrées. Ils tournent sur des **fixtures**, jamais sur le vrai contenu éditorial, qui change souvent. Exception : `tests/unit/profile.test.ts` vérifie la structure de `src/lib/profile.ts` (comptes, ordre du parcours, champs non vides).
 - **E2E (Playwright)** : un smoke test du **build de production** (`next build` puis `next start`). C'est la seule façon fiable de vérifier les statuts 404, le prérendu, le sitemap et `robots.txt` sous Cache Components.
-- **Manuel** : responsive mobile, animations (y compris avec `prefers-reduced-motion`) et Lighthouse sur l'accueil.
+- **E2E accueil** (`tests/e2e/home.spec.ts`) : ordre des six sections, H1 et nom accessible, absence d'erreur console, parcours épinglé sur desktop, navigation client sans ScrollTrigger orphelin, focus clavier du hero, rendu sans JavaScript, `reducedMotion: 'reduce'` (tout visible, rien d'épinglé) et absence de débordement à 375 px.
+- **Performance** : Lighthouse mobile sur l'accueil, plancher 75 (spec de l'accueil animé). Lancé à la main sur le build de production (`pnpm start -p 3200`) via `portly temp`, avec `CHROME_PATH` sur le Chromium de Playwright. Résoudre ce chemin par un glob zsh : `ls` est coloré dans ce shell et injecte des codes ANSI.
+- **Manuel** : rendu visuel des animations et ressenti sur un vrai téléphone.
 
 ## Tools
 
@@ -17,7 +19,8 @@ Comment le projet est vérifié : deux niveaux de tests automatisés, en plus du
 
 - `tests/unit/*.test.ts` : chaque fichier importe d'abord `./setup-content`. Ce fichier neutralise `cacheLife` de `next/cache` et pointe `process.cwd()` sur `tests/fixtures/`.
 - Dans `vitest.config.mts`, l'alias `@/content/*` est redirigé vers `tests/fixtures/src/content/` avant l'alias `@/*`.
-- `tests/e2e/*.spec.ts` : assertions sur des invariants, sans titres de contenu codés en dur, pour que les tests survivent aux changements de MDX.
+- `tests/e2e/*.spec.ts` : assertions sur des invariants, sans titres de contenu codés en dur, pour que les tests survivent aux changements de MDX. Les textes du profil sont importés de `src/lib/profile.ts` et `src/lib/site.ts`.
+- Les erreurs console de `/_vercel/` sont ignorées en e2e : le script Vercel Analytics n'est servi que sur Vercel.
 - On teste le comportement visible (statuts HTTP, rôles ARIA, URL), jamais les détails d'implémentation.
 - `EntryList` vide (« Aucun contenu pour le moment ») : volontairement non testé, c'est du rendu trivial.
 
