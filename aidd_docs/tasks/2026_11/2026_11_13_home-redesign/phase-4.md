@@ -1,5 +1,5 @@
 ---
-status: in_progress
+status: done
 ---
 
 # Instruction: Finition Impeccable et documentation
