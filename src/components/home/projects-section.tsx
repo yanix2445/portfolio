@@ -1,20 +1,23 @@
 import { ArrowRight, ArrowUpRight } from "lucide-react";
 import Link from "next/link";
 
-import { SectionTitle, Voice } from "@/components/home/home-ui";
+import { SectionTitle } from "@/components/home/home-ui";
 import { formatDate, getEntries } from "@/lib/content";
 
 const LATEST_COUNT = 3;
 
 export async function ProjectsSection() {
-  const projects = (await getEntries("projets")).slice(0, LATEST_COUNT);
+  // Les fiches étiquetées « exemple » ne doivent jamais atteindre le recruteur.
+  const projects = (await getEntries("projets"))
+    .filter(({ metadata }) => !metadata.tags.includes("exemple"))
+    .slice(0, LATEST_COUNT);
 
   return (
     <section aria-labelledby="projects-title" className="border-t border-rule">
       <div className="page-container py-24 sm:py-32 lg:py-40">
         <div className="flex flex-wrap items-end justify-between gap-6">
           <SectionTitle id="projects-title">
-            Projets <Voice>récents.</Voice>
+            Projets récents.
           </SectionTitle>
           <Link
             href="/projets"
@@ -29,7 +32,7 @@ export async function ProjectsSection() {
         </div>
 
         {projects.length === 0 ? (
-          <p className="mt-14 text-lg text-ash">Les fiches projets arrivent.</p>
+          <p className="mt-8 max-w-[36rem] text-lg/relaxed text-ash">Les fiches détaillées de mes réalisations sont en cours de rédaction.</p>
         ) : (
           <ul className="mt-14 border-t border-rule sm:mt-20">
             {projects.map(({ slug, metadata }) => (

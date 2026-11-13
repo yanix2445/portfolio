@@ -1,4 +1,4 @@
-import { SectionTitle, Voice } from "@/components/home/home-ui";
+import { SectionTitle } from "@/components/home/home-ui";
 import { TIMELINE, TIMELINE_KIND_LABEL } from "@/lib/profile";
 
 // Parcours en table à filets, du plus récent au plus ancien.
@@ -9,7 +9,7 @@ export function PathSection() {
     <section aria-labelledby="path-title" className="border-t border-rule">
       <div className="page-container py-24 sm:py-32 lg:py-40">
         <SectionTitle id="path-title">
-          Le parcours, <Voice>du plus récent.</Voice>
+          Le parcours, du plus récent.
         </SectionTitle>
 
         <ol className="mt-14 border-t border-rule sm:mt-20">
@@ -24,7 +24,7 @@ export function PathSection() {
               </p>
               <div className="lg:col-span-5">
                 <h3 className="text-xl/snug font-semibold tracking-[-0.01em] text-bone sm:text-2xl/snug">{title}</h3>
-                <p className="mt-1 font-serif text-lg text-ash italic">{place}</p>
+                <p className="mt-1.5 font-serif text-xl/snug font-medium text-bone/85 italic">{place}</p>
               </div>
               <p className="text-base/relaxed text-ash sm:col-start-2 lg:col-span-5 lg:col-start-auto lg:pt-1">
                 {summary}

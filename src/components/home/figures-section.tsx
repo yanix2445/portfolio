@@ -33,7 +33,7 @@ const FIGURES: readonly Figure[] = [
     value: SERVICE_MONTHS,
     statement: (
       <>
-        <Voice>mois</Voice> en salle comme chef de rang : le client, la pression, l&apos;équipe.
+        <Voice>mois</Voice> en salle comme chef de rang&nbsp;: le client, la pression, l&apos;équipe.
       </>
     ),
     source: `${SERVICE.place} · ${SERVICE.period}`,
@@ -59,26 +59,21 @@ const FIGURES: readonly Figure[] = [
   },
 ];
 
+// Second moment composé de la page : la voix pixel passe à l'échelle display.
+// Corps multiples de 11 px, la grille de dessin de Departure Mono.
 export function FiguresSection() {
   return (
     <section aria-labelledby="figures-title" className="border-t border-rule">
-      <div className="page-container grid gap-12 py-24 sm:py-32 lg:grid-cols-12 lg:gap-x-12 lg:py-40">
-        <SectionTitle id="figures-title" className="lg:col-span-4">
-          Les chiffres, <Voice>sans arrondir.</Voice>
-        </SectionTitle>
-        <ul className="border-t border-rule lg:col-span-8">
+      <div className="page-container py-24 sm:py-32 lg:py-40">
+        <SectionTitle id="figures-title">Les chiffres, sans arrondir.</SectionTitle>
+        <ul className="mt-14 grid gap-x-12 sm:mt-20 md:grid-cols-2">
           {FIGURES.map(({ value, statement, source }) => (
-            <li
-              key={source}
-              className="grid grid-cols-[5.5rem_1fr] items-baseline gap-x-5 border-b border-rule py-7 sm:grid-cols-[9rem_1fr] sm:gap-x-8 sm:py-9"
-            >
-              <p className="pixel text-[3.4375rem] leading-none text-bone sm:text-[5.5rem]">
+            <li key={source} className="border-t border-rule pt-8 pb-14 sm:pb-20">
+              <p className="pixel text-[6.875rem] leading-[0.8] text-bone sm:text-[8.25rem] lg:text-[9.625rem]">
                 <TickFigure value={value} />
               </p>
-              <div>
-                <p className="text-xl/snug text-pretty text-bone sm:text-2xl/snug">{statement}</p>
-                <p className="mt-2 text-sm text-ash">{source}</p>
-              </div>
+              <p className="mt-8 max-w-[28rem] text-xl/snug text-pretty text-bone sm:text-2xl/snug">{statement}</p>
+              <p className="mt-3 text-sm text-ash">{source}</p>
             </li>
           ))}
         </ul>

@@ -8,11 +8,11 @@ function step(title: string): TimelineStep {
   return found;
 }
 
-/** Mois écoulés entre deux mois `YYYY-MM` (fin exclue). */
-function monthsBetween(start: string, end: string): number {
+/** Mois calendaires couverts par une période `YYYY-MM` → `YYYY-MM`, bornes incluses (« juin – sept. » = 4). */
+function monthsCovered(start: string, end: string): number {
   const [startYear, startMonth] = start.split("-").map(Number);
   const [endYear, endMonth] = end.split("-").map(Number);
-  return (endYear - startYear) * 12 + (endMonth - startMonth);
+  return (endYear - startYear) * 12 + (endMonth - startMonth) + 1;
 }
 
 export const HELPDESK = step("Technicien helpdesk N1/N2");
@@ -20,10 +20,10 @@ export const SERVICE = step("Chef de rang");
 export const PISCINE = step("Piscine École 42");
 export const IUT = step("Consultant IT junior & développeur");
 
-// Fins lues dans le libellé `period` du parcours : « Juin – sept. 2026 » se termine fin septembre,
-// « Sept. 2023 – janv. 2025 » début janvier. À corriger ici si une date du CV change.
-export const HELPDESK_MONTHS = monthsBetween(HELPDESK.start, "2026-10");
-export const SERVICE_MONTHS = monthsBetween(SERVICE.start, "2025-01");
+// Une seule règle pour toutes les durées : mois calendaires couverts, bornes incluses.
+// Fins lues dans le libellé `period` du parcours (« Juin – sept. 2026 », « Sept. 2023 – janv. 2025 »).
+export const HELPDESK_MONTHS = monthsCovered(HELPDESK.start, "2026-09");
+export const SERVICE_MONTHS = monthsCovered(SERVICE.start, "2025-01");
 
 const ISSUERS = [...new Set(CERTIFICATIONS.map(({ issuer }) => issuer))];
 

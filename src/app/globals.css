@@ -175,6 +175,8 @@
     @apply bg-background text-foreground;
     caret-color: var(--tungsten);
     font-synthesis: none;
+    /* Bodoni Moda : l'axe opsz épaissit les déliés en petit corps. */
+    font-optical-sizing: auto;
   }
   ::selection {
     background-color: var(--tungsten);

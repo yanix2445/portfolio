@@ -247,9 +247,10 @@ export function TicketQueue() {
         ) : null}
       </div>
 
+      {/* Mobile : quatre lignes hautes, titre sur deux lignes et statut sur la ligne méta. Desktop : cinq lignes. */}
       <ol
         aria-label="Tickets d'exemple"
-        className="relative h-[calc(var(--row)*5)] overflow-hidden [--row:4.25rem]"
+        className="relative h-[calc(var(--row)*4)] overflow-hidden [--row:5.75rem] sm:h-[calc(var(--row)*5)] sm:[--row:4.25rem]"
       >
         {state.tickets.map((ticket, index) => {
           const info = ticketInfo(ticket.id);
@@ -262,33 +263,29 @@ export function TicketQueue() {
               aria-hidden={index >= VISIBLE_ROWS || undefined}
               style={{ transform: `translateY(${(entering ? -1 : index) * 100}%)` }}
               className={cn(
-                "absolute inset-x-0 top-0 flex h-(--row) items-center gap-4 border-b border-rule px-4 sm:px-5",
+                "absolute inset-x-0 top-0 grid h-(--row) content-center items-center gap-x-4 gap-y-1.5 border-b border-rule px-4 sm:px-5",
+                "grid-cols-[minmax(0,1fr)_auto] [grid-template-areas:'title_title'_'meta_status']",
+                "sm:grid-cols-[4.75rem_minmax(0,1fr)_8.5rem] sm:gap-y-1 sm:[grid-template-areas:'id_title_status'_'id_meta_status']",
                 "motion-safe:transition-[transform,opacity] motion-safe:duration-700 motion-safe:ease-out-expo",
                 (entering || index >= VISIBLE_ROWS) && "opacity-0",
               )}
             >
-              <span className="pixel hidden w-[4.75rem] shrink-0 text-[0.8125rem] text-ash sm:block">
-                INC-{ticket.id}
+              <span className="pixel hidden text-[0.8125rem] text-ash [grid-area:id] sm:block">INC-{ticket.id}</span>
+              <span className="line-clamp-2 text-[0.9375rem]/snug text-bone [grid-area:title] sm:line-clamp-none sm:truncate">
+                {info.title}
               </span>
-              <span className="min-w-0 flex-1">
-                <span className="block truncate text-[0.9375rem] text-bone">{info.title}</span>
-                <span className="mt-1 flex min-w-0 items-center gap-2 text-[0.8125rem] whitespace-nowrap text-ash">
-                  <span className="pixel shrink-0 sm:hidden">INC-{ticket.id}</span>
-                  <span aria-hidden className="sm:hidden">
-                    ·
-                  </span>
-                  {qualified ? (
-                    <>
-                      <span className="pixel shrink-0">{info.level}</span>
-                      <span aria-hidden>·</span>
-                      <span className="truncate">{info.category}</span>
-                    </>
-                  ) : (
-                    <span>à qualifier</span>
-                  )}
-                </span>
+              <span className="flex min-w-0 items-center gap-2 text-[0.8125rem] whitespace-nowrap text-ash [grid-area:meta]">
+                <span className="pixel shrink-0 sm:hidden">INC-{ticket.id}</span>
+                {qualified ? (
+                  <>
+                    <span className="pixel shrink-0">{info.level}</span>
+                    <span className="truncate">{info.category}</span>
+                  </>
+                ) : (
+                  <span>à qualifier</span>
+                )}
               </span>
-              <span className="w-[7rem] shrink-0 text-[0.8125rem] sm:w-[8.5rem] sm:text-sm">
+              <span className="text-[0.8125rem] [grid-area:status] sm:text-sm">
                 <StatusCell ticket={ticket} />
               </span>
             </li>
