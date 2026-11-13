@@ -10,6 +10,7 @@ La vérification rapide.
 | ----- | ---------------- | --------------------------- |
 | 1     | `pnpm typecheck` | typage TypeScript (`next typegen && tsc --noEmit`, `next typegen` génère les types de routes `PageProps`/`LayoutProps`) |
 | 2     | `pnpm lint`      | règles ESLint via la CLI `eslint` (flat config `eslint.config.mjs`, `next lint` est supprimé en Next 16) |
+| 3     | `pnpm test`      | tests unitaires Vitest (contenu, sitemap, métadonnées) |
 
 ## Before push
 
@@ -18,6 +19,7 @@ La vérification complète.
 | Ordre | Commande     | Vérifie                                   |
 | ----- | ------------ | ----------------------------------------- |
 | 1     | `pnpm build` | build Next.js complet, prérendu de toutes les pages (MDX compris) |
+| 2     | `pnpm test:e2e` | smoke test Playwright sur le build de production (statuts 200/404, sitemap, robots, navigation) |
 
 ## Behavior
 
