@@ -4,7 +4,7 @@ La forme technique d'ensemble : la stack, comment les pièces s'emboîtent et le
 
 ## Stack
 
-- TypeScript + Next.js (App Router), entièrement en SSG : le SEO est important et le site n'a pas de contenu dynamique.
+- TypeScript + Next.js (App Router) avec Cache Components (le défaut de Next 16.4) : toutes les pages sont prérendues au build, et le SEO est important. Les helpers de contenu sont en `'use cache'` + `cacheLife('max')`, d'où la revalidation « 30d / 1y » affichée au build. Les `[slug]` ont un shell de repli (◐) pour les slugs inconnus, qui répondent 404 grâce à `ensureStatic = 'navigation'`.
 - Contenu en MDX via `@next/mdx`, versionné dans le repo. Il n'y a ni CMS ni base de données.
 - UI : shadcn/ui + Tailwind CSS. Animations : GSAP (`@gsap/react`, ScrollTrigger) et Motion.
 - Package manager : PNPM.
@@ -13,7 +13,7 @@ La forme technique d'ensemble : la stack, comment les pièces s'emboîtent et le
 
 ```mermaid
 flowchart LR
-  MDX["Contenu MDX"] --> Build["next build (SSG)"]
+  MDX["Contenu MDX"] --> Build["next build (prérendu)"]
   Build --> CDN["CDN Vercel"]
   CDN --> Browser["Navigateur"]
   Browser -->|formulaire| Action["Server Action contact"]

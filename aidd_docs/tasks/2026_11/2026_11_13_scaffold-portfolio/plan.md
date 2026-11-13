@@ -1,6 +1,6 @@
 ---
 objective: "Le portfolio est un projet Next.js qui build en prérendu statique avec toutes ses routes squelettes, son contenu MDX d'exemple, son SEO de base et son outillage (lint, typecheck, Dependabot)."
-status: pending
+status: implemented
 ---
 
 # Plan: Scaffold initial du portfolio yanis-harrat.com
