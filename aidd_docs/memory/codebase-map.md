@@ -20,12 +20,12 @@ flowchart TD
 
 ## Areas
 
-- `src/app` : les routes de l'App Router (accueil, projets, veille, contact, mentions légales) ainsi que `sitemap.ts`, `robots.ts` et l'image OpenGraph.
-- `src/components` : `ui/` pour les composants shadcn, `layout/`, `content/` (liste de cartes, métadonnées et page de détail partagées par projets et veille), `animations/` (GSAP et Motion, toujours en `"use client"`), et `mdx/` pour les composants utilisables dans le MDX.
+- `src/app` : les routes de l'App Router (accueil, projets, veille, contact, mentions légales) ainsi que `sitemap.ts` et `robots.ts`. L'image OpenGraph est à venir.
+- `src/components` : `layout/` (header, footer), `content/` (liste de cartes, métadonnées et page de détail partagées par projets et veille) et `mdx/` (rendu `prose`). À venir : `ui/` pour les composants shadcn ajoutés via la CLI, et `animations/` (GSAP et Motion, toujours en `"use client"`).
 - `src/types` : les déclarations de modules, dont `*.mdx` (qui type `export const metadata`).
 - `src/content` : un fichier MDX par projet ou article de veille. On ajoute du contenu ici.
-- `src/actions` : les Server Actions. Pour l'instant, il n'y a que le formulaire de contact.
-- `src/lib` : le listing du contenu MDX (`content.ts`), les constantes du site (`site.ts`, dont `SITE_URL`), le client Resend, l'appel Turnstile et `cn()`.
+- `src/actions` (à venir) : les Server Actions, à commencer par le formulaire de contact.
+- `src/lib` : le listing du contenu MDX (`content.ts`), les constantes du site (`site.ts` : `SITE_URL`, `BASE_OPEN_GRAPH`) et `cn()`. À venir : le client Resend et l'appel Turnstile.
 - `public` : le CV en PDF et les images des projets.
 
 ## Entry points

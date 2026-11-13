@@ -13,7 +13,7 @@ La forme technique d'ensemble : la stack, comment les pièces s'emboîtent et le
 
 ```mermaid
 flowchart LR
-  MDX["Contenu MDX"] --> Build["next build (SSG)"]
+  MDX["Contenu MDX"] --> Build["next build (prérendu)"]
   Build --> CDN["CDN Vercel"]
   CDN --> Browser["Navigateur"]
   Browser -->|formulaire| Action["Server Action contact"]

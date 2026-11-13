@@ -17,7 +17,7 @@ La vérification complète.
 
 | Ordre | Commande     | Vérifie                                   |
 | ----- | ------------ | ----------------------------------------- |
-| 1     | `pnpm build` | build Next.js complet, génération SSG de toutes les pages MDX |
+| 1     | `pnpm build` | build Next.js complet, prérendu de toutes les pages (MDX compris) |
 
 ## Behavior
 
