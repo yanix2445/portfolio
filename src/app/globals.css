@@ -50,7 +50,6 @@
   --radius-2xl: calc(var(--radius) * 1.8);
   --radius-3xl: calc(var(--radius) * 2.2);
   --radius-4xl: calc(var(--radius) * 2.6);
-  --ease-out-strong: cubic-bezier(0.23, 1, 0.32, 1);
   --animate-marquee: marquee var(--marquee-duration, 40s) linear infinite;
 
   @keyframes marquee {
@@ -184,5 +183,10 @@
   }
   html {
     @apply font-sans;
+  }
+  /* Focus clavier ambre partout (contraste ≥ 3:1 sur fond sombre), pas seulement sur l'accueil. */
+  :focus-visible {
+    outline: 2px solid var(--brand);
+    outline-offset: 3px;
   }
 }

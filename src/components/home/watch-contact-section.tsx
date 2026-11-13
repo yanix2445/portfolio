@@ -27,7 +27,7 @@ export async function WatchContactSection() {
               Toute la veille
               <ArrowRight
                 aria-hidden
-                className="size-4 transition-transform duration-200 ease-out group-hover:translate-x-0.5"
+                className="size-4 transition-transform duration-200 ease-out motion-safe:group-hover:translate-x-0.5"
               />
             </Link>
           }
@@ -36,25 +36,25 @@ export async function WatchContactSection() {
         <div className="mt-14 grid gap-4 lg:grid-cols-[0.8fr_1.2fr]">
           {latestArticle ? (
             <div data-reveal className="flex">
-            <MotionCard>
-              <Link
-                href={`/veille/${latestArticle.slug}`}
-                className="focus-ring glow-card group flex flex-col p-6 md:p-8"
-              >
-                <p className="font-mono text-xs tracking-[0.2em] text-brand uppercase">Dernier article de veille</p>
-                <h3 className="mt-8 text-2xl font-semibold tracking-tight text-balance">
-                  {latestArticle.metadata.title}
-                </h3>
-                <p className="mt-3 text-pretty text-muted-foreground">{latestArticle.metadata.summary}</p>
-                <div className="mt-auto flex items-center justify-between gap-4 pt-10 text-sm text-muted-foreground">
-                  <time dateTime={latestArticle.metadata.date}>{formatDate(latestArticle.metadata.date)}</time>
-                  <ArrowUpRight
-                    aria-hidden
-                    className="size-5 text-brand transition-transform duration-200 ease-out group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-                  />
-                </div>
-              </Link>
-            </MotionCard>
+              <MotionCard>
+                <Link
+                  href={`/veille/${latestArticle.slug}`}
+                  className="focus-ring glow-card group flex flex-col p-6 md:p-8"
+                >
+                  <p className="font-mono text-xs tracking-[0.2em] text-brand uppercase">Dernier article de veille</p>
+                  <h3 className="mt-8 text-2xl font-semibold tracking-tight text-balance">
+                    {latestArticle.metadata.title}
+                  </h3>
+                  <p className="mt-3 text-pretty text-muted-foreground">{latestArticle.metadata.summary}</p>
+                  <div className="mt-auto flex items-center justify-between gap-4 pt-10 text-sm text-muted-foreground">
+                    <time dateTime={latestArticle.metadata.date}>{formatDate(latestArticle.metadata.date)}</time>
+                    <ArrowUpRight
+                      aria-hidden
+                      className="size-5 text-brand transition-transform duration-200 ease-out motion-safe:group-hover:translate-x-0.5 motion-safe:group-hover:-translate-y-0.5"
+                    />
+                  </div>
+                </Link>
+              </MotionCard>
             </div>
           ) : (
             <div className="glow-card p-6 text-muted-foreground md:p-8">
@@ -70,17 +70,17 @@ export async function WatchContactSection() {
               </span>
             </h3>
             <p className="mt-6 max-w-md text-pretty text-foreground/80">
-              Vous cherchez un {HERO.role.toLowerCase()} en alternance, {HERO.rhythm}&nbsp;? Écrivez-moi.
+              Vous cherchez un {HERO.role.toLowerCase()} en alternance ({HERO.rhythm})&nbsp;? Écrivez-moi.
             </p>
             <div className="mt-10 flex flex-wrap gap-3">
               <Link
                 href="/contact"
-                className="focus-ring group inline-flex h-12 items-center gap-2 rounded-full bg-brand px-6 font-medium text-brand-foreground transition-[transform,background-color] duration-150 ease-out hover:bg-brand/90 active:scale-[0.97]"
+                className="focus-ring group inline-flex h-12 items-center gap-2 rounded-full bg-brand px-6 font-medium text-brand-foreground transition-[transform,background-color] duration-150 ease-out hover:bg-brand/90 motion-safe:active:scale-[0.97]"
               >
                 Me contacter
                 <ArrowRight
                   aria-hidden
-                  className="size-4 transition-transform duration-200 ease-out group-hover:translate-x-0.5"
+                  className="size-4 transition-transform duration-200 ease-out motion-safe:group-hover:translate-x-0.5"
                 />
               </Link>
               <a

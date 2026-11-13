@@ -1,3 +1,4 @@
+import { MotionProvider } from "@/components/animations/motion-provider";
 import { CertificationsSection } from "@/components/home/certifications-section";
 import { HeroSection } from "@/components/home/hero-section";
 import { ProjectsSection } from "@/components/home/projects-section";
@@ -8,7 +9,7 @@ import { PersonJsonLd } from "@/components/seo/person-json-ld";
 
 export default function HomePage() {
   return (
-    <>
+    <MotionProvider>
       <PersonJsonLd />
       <HeroSection />
       <SkillsSection />
@@ -16,6 +17,6 @@ export default function HomePage() {
       <TimelineSection />
       <ProjectsSection />
       <WatchContactSection />
-    </>
+    </MotionProvider>
   );
 }

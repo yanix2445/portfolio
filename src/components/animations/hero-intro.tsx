@@ -6,6 +6,8 @@ import { EASE_ENTER, MOTION_OK, gsap, useGSAP } from "@/components/animations/gs
 
 // Le contenu est rendu visible côté serveur : l'intro ne fait que le rejouer à l'hydratation,
 // en transform et opacity, et jamais sur la boîte du H1 lui-même.
+const INTRO_MAX_DELAY_MS = 1500;
+
 export function HeroIntro({ children, className }: { children: ReactNode; className?: string }) {
   const scope = useRef<HTMLDivElement>(null);
 
@@ -13,11 +15,15 @@ export function HeroIntro({ children, className }: { children: ReactNode; classN
     () => {
       const mm = gsap.matchMedia();
       mm.add(MOTION_OK, () => {
-        gsap
-          .timeline({ defaults: { ease: EASE_ENTER } })
-          .from("[data-hero-letter]", { yPercent: 105, duration: 1.1, stagger: 0.04 })
-          .from("[data-hero-photo]", { y: 48, scale: 0.94, opacity: 0, duration: 1.3 }, 0.1)
-          .from("[data-hero-reveal]", { y: 24, opacity: 0, duration: 0.9, stagger: 0.08 }, 0.3);
+        // Hydratation tardive (téléphone lent) : le nom est déjà lu, on ne le fait pas disparaître
+        // pour le rejouer. L'intro n'a lieu que si le JS arrive dans la première seconde et demie.
+        if (performance.now() < INTRO_MAX_DELAY_MS) {
+          gsap
+            .timeline({ defaults: { ease: EASE_ENTER } })
+            .from("[data-hero-letter]", { yPercent: 105, duration: 1.1, stagger: 0.04 })
+            .from("[data-hero-photo]", { y: 48, scale: 0.94, opacity: 0, duration: 1.3 }, 0.1)
+            .from("[data-hero-reveal]", { y: 24, opacity: 0, duration: 0.9, stagger: 0.08 }, 0.3);
+        }
 
         // Profondeur au scroll : la photo glisse dans son cadre, le halo et le texte dérivent.
         const scrub = { trigger: scope.current, start: "top top", end: "bottom top", scrub: true };

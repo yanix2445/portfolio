@@ -28,7 +28,7 @@ export async function ProjectsSection() {
               Tous les projets
               <ArrowRight
                 aria-hidden
-                className="size-4 transition-transform duration-200 ease-out group-hover:translate-x-0.5"
+                className="size-4 transition-transform duration-200 ease-out motion-safe:group-hover:translate-x-0.5"
               />
             </Link>
           }
@@ -68,7 +68,7 @@ export async function ProjectsSection() {
                       </ul>
                       <ArrowUpRight
                         aria-hidden
-                        className="size-5 shrink-0 text-brand transition-transform duration-200 ease-out group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                        className="size-5 shrink-0 text-brand transition-transform duration-200 ease-out motion-safe:group-hover:translate-x-0.5 motion-safe:group-hover:-translate-y-0.5"
                       />
                     </div>
                   </Link>

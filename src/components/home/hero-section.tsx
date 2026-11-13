@@ -85,19 +85,19 @@ export function HeroSection() {
             <div data-hero-reveal className="mt-10 flex flex-wrap gap-3">
               <Link
                 href="/projets"
-                className="focus-ring group inline-flex h-12 items-center gap-2 rounded-full bg-brand px-6 font-medium text-brand-foreground transition-[transform,background-color] duration-150 ease-out hover:bg-brand/90 active:scale-[0.97]"
+                className="focus-ring group inline-flex h-12 items-center gap-2 rounded-full bg-brand px-6 font-medium text-brand-foreground transition-[transform,background-color] duration-150 ease-out hover:bg-brand/90 motion-safe:active:scale-[0.97]"
               >
                 Voir les projets
                 <ArrowRight
                   aria-hidden
-                  className="size-4 transition-transform duration-200 ease-out group-hover:translate-x-0.5"
+                  className="size-4 transition-transform duration-200 ease-out motion-safe:group-hover:translate-x-0.5"
                 />
               </Link>
               <a
                 href={CV_PATH}
                 target="_blank"
                 rel="noopener"
-                className="focus-ring inline-flex h-12 items-center gap-2 rounded-full border border-white/15 bg-white/[0.04] px-6 font-medium transition-[transform,border-color,background-color] duration-150 ease-out hover:border-brand/50 hover:bg-white/[0.07] active:scale-[0.97]"
+                className="focus-ring inline-flex h-12 items-center gap-2 rounded-full border border-white/15 bg-white/[0.04] px-6 font-medium transition-[transform,border-color,background-color] duration-150 ease-out hover:border-brand/50 hover:bg-white/[0.07] motion-safe:active:scale-[0.97]"
               >
                 <Download aria-hidden className="size-4" />
                 Télécharger le CV
