@@ -5,15 +5,31 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/*
+ * Monde « Opérationnel dès lundi » : palette tirée du portrait.
+ * Fond graphite du portrait, blanc os, gris chaud, et UNE couleur d'action
+ * (tungstène, la lumière du bokeh) en aplat. Aucun dégradé, aucune lueur, aucun verre.
+ */
 @theme inline {
   --color-background: var(--background);
-  --color-brand: var(--brand);
-  --color-brand-foreground: var(--brand-foreground);
-  --color-brand-deep: var(--brand-deep);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-sans);
-  --font-mono: var(--font-geist-mono);
-  --font-heading: var(--font-sans);
+  --color-ground: var(--ground);
+  --color-raised: var(--raised);
+  --color-bone: var(--bone);
+  --color-ash: var(--ash);
+  --color-tungsten: var(--tungsten);
+  --color-tungsten-ink: var(--tungsten-ink);
+  --color-rule: var(--rule);
+  --color-rule-strong: var(--rule-strong);
+
+  --font-sans: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
+  --font-heading: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-bodoni), ui-serif, Georgia, serif;
+  --font-pixel: var(--font-departure), ui-monospace, monospace;
+  --font-mono: var(--font-departure), ui-monospace, monospace;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -50,127 +66,98 @@
   --radius-2xl: calc(var(--radius) * 1.8);
   --radius-3xl: calc(var(--radius) * 2.2);
   --radius-4xl: calc(var(--radius) * 2.6);
-  --animate-marquee: marquee var(--marquee-duration, 40s) linear infinite;
-
-  @keyframes marquee {
-    to {
-      transform: translateX(-50%);
-    }
-  }
 }
 
-:root {
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --radius: 0.625rem;
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
-  /* Accent ambre : reprend la lumière chaude du portrait. */
-  --brand: oklch(0.66 0.17 52);
-  --brand-foreground: oklch(0.99 0.01 80);
-  --brand-deep: oklch(0.55 0.18 40);
-}
-
+/* Le site n'a qu'un thème : sombre, celui du portrait. */
+:root,
 .dark {
   color-scheme: dark;
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
-  --brand: oklch(0.8 0.15 68);
-  --brand-foreground: oklch(0.2 0.04 50);
-  --brand-deep: oklch(0.68 0.19 45);
+
+  --ground: #121114;
+  --raised: #1c1a1a;
+  --bone: #efe9e1;
+  --ash: #9c948b;
+  --tungsten: #f5b66a;
+  --tungsten-ink: #121114;
+  --rule: rgb(239 233 225 / 0.1);
+  --rule-strong: rgb(239 233 225 / 0.22);
+
+  --background: var(--ground);
+  --foreground: var(--bone);
+  --card: var(--raised);
+  --card-foreground: var(--bone);
+  --popover: var(--raised);
+  --popover-foreground: var(--bone);
+  --primary: var(--bone);
+  --primary-foreground: var(--ground);
+  --secondary: var(--raised);
+  --secondary-foreground: var(--bone);
+  --muted: var(--raised);
+  --muted-foreground: var(--ash);
+  --accent: #26231f;
+  --accent-foreground: var(--bone);
+  --destructive: #e5806b;
+  --border: var(--rule);
+  --input: var(--rule-strong);
+  --ring: var(--tungsten);
+  --chart-1: var(--tungsten);
+  --chart-2: var(--bone);
+  --chart-3: var(--ash);
+  --chart-4: #6b645d;
+  --chart-5: #3a3632;
+  --radius: 0.375rem;
+  --sidebar: var(--raised);
+  --sidebar-foreground: var(--bone);
+  --sidebar-primary: var(--tungsten);
+  --sidebar-primary-foreground: var(--tungsten-ink);
+  --sidebar-accent: #26231f;
+  --sidebar-accent-foreground: var(--bone);
+  --sidebar-border: var(--rule);
+  --sidebar-ring: var(--tungsten);
 }
 
-/* Focus clavier net et cohérent, en ambre. */
+/* Focus clavier : contour tungstène net, contraste ≥ 3:1 sur le fond. */
 @utility focus-ring {
   &:focus-visible {
-    outline: 2px solid var(--brand);
+    outline: 2px solid var(--tungsten);
     outline-offset: 3px;
   }
 }
 
-/* Carte sombre à bordure lumineuse : filet ambré sur l'arête haute. */
-@utility glow-card {
-  position: relative;
-  isolation: isolate;
-  overflow: hidden;
-  border-radius: var(--radius-2xl);
-  border: 1px solid rgb(255 255 255 / 0.09);
-  background-image: linear-gradient(to bottom, rgb(255 255 255 / 0.055), rgb(255 255 255 / 0.015));
-  &::before {
-    content: "";
-    position: absolute;
-    inset-inline: 1.5rem;
-    top: 0;
-    height: 1px;
-    background-image: linear-gradient(to right, transparent, color-mix(in oklab, var(--brand) 70%, transparent), transparent);
+/* Conteneur de page : une seule grille de marges pour tout le site. */
+@utility page-container {
+  margin-inline: auto;
+  width: 100%;
+  max-width: 84rem;
+  padding-inline: 1rem;
+  @media (width >= 40rem) {
+    padding-inline: 1.5rem;
+  }
+  @media (width >= 64rem) {
+    padding-inline: 2.5rem;
   }
 }
 
-/* Grain photographique, statique : un seul calque, aucun coût au scroll. */
-@utility grain {
-  &::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    opacity: 0.07;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+/* Chiffres pixel : Departure Mono est dessinée sur une grille de 11 px. */
+@utility pixel {
+  font-family: var(--font-pixel);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0;
+}
+
+/*
+ * Entrée du titre, en CSS pour fonctionner sans JavaScript et sans masquer le H1 en SSR :
+ * chaque ligne monte depuis un masque, puis la pastille s'ouvre. Rien en mouvement réduit.
+ */
+@keyframes rise-from-mask {
+  from {
+    transform: translateY(105%);
+  }
+}
+
+@keyframes pill-open {
+  from {
+    clip-path: inset(0 46% round 999px);
   }
 }
 
@@ -178,15 +165,37 @@
   * {
     @apply border-border outline-ring/50;
   }
-  body {
-    @apply bg-background text-foreground;
-  }
   html {
     @apply font-sans;
+    background-color: var(--ground);
+    scrollbar-color: var(--rule-strong) var(--ground);
+    text-rendering: optimizeLegibility;
   }
-  /* Focus clavier ambre partout (contraste ≥ 3:1 sur fond sombre), pas seulement sur l'accueil. */
+  body {
+    @apply bg-background text-foreground;
+    caret-color: var(--tungsten);
+    font-synthesis: none;
+  }
+  ::selection {
+    background-color: var(--tungsten);
+    color: var(--tungsten-ink);
+  }
+  a {
+    text-underline-offset: 0.2em;
+    text-decoration-thickness: 1px;
+  }
   :focus-visible {
-    outline: 2px solid var(--brand);
+    outline: 2px solid var(--tungsten);
     outline-offset: 3px;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    [data-rise] {
+      animation: rise-from-mask 900ms var(--ease-out-expo) both;
+      animation-delay: calc(var(--rise-index, 0) * 90ms + 60ms);
+    }
+    [data-pill] {
+      animation: pill-open 1100ms var(--ease-out-expo) 380ms both;
+    }
   }
 }
