@@ -73,3 +73,60 @@ test("la navigation principale mène aux sections", async ({ page }) => {
     await page.goto("/");
   }
 });
+
+test.describe("contact", () => {
+  test("la page contact expose l'e-mail, le téléphone et les profils", async ({ page }) => {
+    await page.goto("/contact");
+    const main = page.getByRole("main");
+
+    await expect(main.getByRole("link", { name: "yanis@yanis-harrat.com" })).toHaveAttribute(
+      "href",
+      "mailto:yanis@yanis-harrat.com",
+    );
+    await expect(main.getByRole("link", { name: "07 68 18 79 34" })).toHaveAttribute(
+      "href",
+      "tel:+33768187934",
+    );
+    await expect(main.getByRole("link", { name: /linkedin/i })).toHaveAttribute(
+      "href",
+      "https://www.linkedin.com/in/yanis-harrat/",
+    );
+    await expect(main.getByRole("link", { name: /github/i })).toHaveAttribute(
+      "href",
+      "https://github.com/yanix2445",
+    );
+  });
+
+  test("le footer pointe vers les vrais profils", async ({ page }) => {
+    await page.goto("/");
+    const footer = page.getByRole("contentinfo");
+
+    await expect(footer.getByRole("link", { name: "GitHub" })).toHaveAttribute(
+      "href",
+      "https://github.com/yanix2445",
+    );
+    await expect(footer.getByRole("link", { name: "LinkedIn" })).toHaveAttribute(
+      "href",
+      "https://www.linkedin.com/in/yanis-harrat/",
+    );
+  });
+
+  test("le CV est téléchargeable", async ({ request }) => {
+    const response = await request.get("/cv/yanis-harrat-cv.pdf");
+
+    expect(response.status()).toBe(200);
+    expect(response.headers()["content-type"]).toContain("application/pdf");
+  });
+
+  test("l'accueil déclare la personne en JSON-LD", async ({ page }) => {
+    await page.goto("/");
+    const raw = await page.locator('script[type="application/ld+json"]').textContent();
+    const person = JSON.parse(raw ?? "{}");
+
+    expect(person).toMatchObject({
+      "@type": "Person",
+      name: "Yanis HARRAT",
+      sameAs: ["https://www.linkedin.com/in/yanis-harrat/", "https://github.com/yanix2445"],
+    });
+  });
+});

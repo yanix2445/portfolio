@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 import { Prose } from "@/components/mdx/prose";
-import { SITE_HOST } from "@/lib/site";
+import { CONTACT, OWNER, SITE_HOST } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Mentions légales",
@@ -17,8 +17,11 @@ export default function MentionsLegalesPage() {
 
         <h2>Éditeur</h2>
         <p>
-          Ce site est édité par Yanis Harrat, à titre personnel et non commercial. Pour toute
-          question, utilisez la page <Link href="/contact">Contact</Link>.
+          Ce site est édité par {OWNER.fullName}, à titre personnel et non commercial.
+          <br />
+          E-mail : <a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a>
+          <br />
+          Téléphone : <a href={`tel:${CONTACT.phoneE164}`}>{CONTACT.phone}</a>
         </p>
 
         <h2>Hébergeur</h2>
@@ -58,8 +61,9 @@ export default function MentionsLegalesPage() {
         <p>
           Conformément au Règlement général sur la protection des données, vous disposez
           d&apos;un droit d&apos;accès, de rectification, d&apos;effacement, de limitation et
-          d&apos;opposition au traitement de vos données. Pour les exercer, utilisez la page{" "}
-          <Link href="/contact">Contact</Link>. Vous pouvez aussi introduire une réclamation
+          d&apos;opposition au traitement de vos données. Pour les exercer, écrivez à{" "}
+          <a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a> (voir aussi la page{" "}
+          <Link href="/contact">Contact</Link>). Vous pouvez aussi introduire une réclamation
           auprès de la{" "}
           <a href="https://www.cnil.fr" target="_blank" rel="noopener noreferrer">
             CNIL
