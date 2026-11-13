@@ -27,6 +27,7 @@ Un accueil mis en scène comme un générique de film, pour qu'un recruteur d'al
 - **Compétences** : « Fiche technique », un tableau fixe et lisible, par familles.
 - **Certifications** : une couronne de laurier par certification, avec au centre le badge officiel et le nom.
 - **Fin** : « Prochain rôle : dans votre équipe. », avec appel, e-mail et CV. Validée. L'accent de « ÉQUIPE » ne doit jamais être masqué.
+- **Faits confirmés par Yanis** le 2026-11-13 : BTS en 1re année, alternance à partir de septembre 2027, à Paris, 16 mois chez Coco Rocco.
 - **Rejeté** : le générique défilant pour les certifications, formations et outils.
 
 ## Assumed
