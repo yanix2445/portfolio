@@ -1,5 +1,5 @@
 ---
-status: pending
+status: in_progress
 ---
 
 # Instruction: Finition Impeccable et documentation

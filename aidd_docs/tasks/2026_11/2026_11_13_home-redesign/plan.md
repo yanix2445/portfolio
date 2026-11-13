@@ -1,6 +1,6 @@
 ---
 objective: "L'accueil `/` est reconstruit selon le contrat « Opérationnel dès lundi », vérifié par les suites de tests, Lighthouse, la relecture finale Impeccable et documenté dans DESIGN.md."
-status: pending
+status: in_progress
 ---
 
 # Plan: Refonte de l'accueil « Opérationnel dès lundi »

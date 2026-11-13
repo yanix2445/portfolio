@@ -1,5 +1,5 @@
 ---
-status: pending
+status: done
 ---
 
 # Instruction: Accueil : titre trois voix, démo de file, chiffres, sections
