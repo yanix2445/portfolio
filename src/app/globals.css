@@ -7,6 +7,9 @@
 
 @theme inline {
   --color-background: var(--background);
+  --color-brand: var(--brand);
+  --color-brand-foreground: var(--brand-foreground);
+  --color-brand-deep: var(--brand-deep);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-sans);
   --font-mono: var(--font-geist-mono);
@@ -47,6 +50,14 @@
   --radius-2xl: calc(var(--radius) * 1.8);
   --radius-3xl: calc(var(--radius) * 2.2);
   --radius-4xl: calc(var(--radius) * 2.6);
+  --ease-out-strong: cubic-bezier(0.23, 1, 0.32, 1);
+  --animate-marquee: marquee var(--marquee-duration, 40s) linear infinite;
+
+  @keyframes marquee {
+    to {
+      transform: translateX(-50%);
+    }
+  }
 }
 
 :root {
@@ -82,9 +93,14 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
+  /* Accent ambre : reprend la lumière chaude du portrait. */
+  --brand: oklch(0.66 0.17 52);
+  --brand-foreground: oklch(0.99 0.01 80);
+  --brand-deep: oklch(0.55 0.18 40);
 }
 
 .dark {
+  color-scheme: dark;
   --background: oklch(0.145 0 0);
   --foreground: oklch(0.985 0 0);
   --card: oklch(0.205 0 0);
@@ -116,6 +132,47 @@
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
+  --brand: oklch(0.8 0.15 68);
+  --brand-foreground: oklch(0.2 0.04 50);
+  --brand-deep: oklch(0.68 0.19 45);
+}
+
+/* Focus clavier net et cohérent, en ambre. */
+@utility focus-ring {
+  &:focus-visible {
+    outline: 2px solid var(--brand);
+    outline-offset: 3px;
+  }
+}
+
+/* Carte sombre à bordure lumineuse : filet ambré sur l'arête haute. */
+@utility glow-card {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  border-radius: var(--radius-2xl);
+  border: 1px solid rgb(255 255 255 / 0.09);
+  background-image: linear-gradient(to bottom, rgb(255 255 255 / 0.055), rgb(255 255 255 / 0.015));
+  &::before {
+    content: "";
+    position: absolute;
+    inset-inline: 1.5rem;
+    top: 0;
+    height: 1px;
+    background-image: linear-gradient(to right, transparent, color-mix(in oklab, var(--brand) 70%, transparent), transparent);
+  }
+}
+
+/* Grain photographique, statique : un seul calque, aucun coût au scroll. */
+@utility grain {
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.07;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
 }
 
 @layer base {
