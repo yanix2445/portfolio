@@ -115,7 +115,9 @@ test.describe("accueil sans JavaScript", () => {
     await page.goto("/");
 
     await expect(page.getByRole("heading", { level: 1, name: OWNER.fullName })).toBeVisible();
-    await expect(page.getByText(OPENING.synopsis).first()).toBeVisible();
+    // La copie lue du synopsis suit le hero ; celle du hero est décorative et posée par l'animation.
+    await expect(page.locator("[data-hero-synopsis-flow]")).toContainText(OPENING.synopsis);
+    await expect(page.locator("[data-hero-synopsis-flow]")).toBeVisible();
     await expect(page.getByRole("img", { name: `Portrait de ${OWNER.fullName}` })).toBeVisible();
     expect(await sectionIds(page)).toEqual(SECTION_IDS);
     for (const act of ACTS) {
