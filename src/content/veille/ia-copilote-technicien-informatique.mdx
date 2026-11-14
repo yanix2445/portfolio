@@ -1,0 +1,81 @@
+export const metadata = {
+  title: "L'IA comme copilote du technicien informatique",
+  summary:
+    "Développer, administrer et dépanner une infrastructure avec un agent IA dans un homelab : ce que je lui confie, ce que recommandent l'ANSSI et l'OWASP, et où placer la limite.",
+  date: "2026-11-13",
+  tags: ["IA", "Claude Code", "Sécurité", "ANSSI", "Homelab"],
+};
+
+## Problématique
+
+Jusqu'où peut-on collaborer avec une IA pour développer, administrer et dépanner une infrastructure, tout en gardant la maîtrise des actions et de la sécurité ?
+
+Les assistants IA ne se contentent plus de répondre à des questions : des agents comme Claude Code lisent des fichiers, exécutent des commandes et modifient des systèmes. Pour un technicien, la question n'est plus « l'IA sait-elle faire ? », mais « que lui laisse-t-on faire, et avec quels garde-fous ? ».
+
+## Ma pratique dans mon homelab
+
+Sur mon [homelab Proxmox / Docker](/projets/homelab-proxmox-docker) et pour mon app [AppKite](/projets/appkite-app-macos), j'utilise l'IA pour :
+
+- **écrire des fichiers docker compose** pour mes services ;
+- **diagnostiquer des pannes** à partir de messages d'erreur et de journaux ;
+- **générer des scripts** PowerShell et Bash d'administration ;
+- **agir directement sur mes serveurs** : l'agent s'y connecte en SSH et exécute lui-même des commandes ;
+- **développer** une application macOS, en pilotant l'agent avec une méthode structurée (spécification, plan, revue).
+
+Mes garde-fous :
+
+- un **snapshot** Proxmox ou une sauvegarde avant toute modification ;
+- **aucun secret** (mot de passe, clé, jeton) donné à l'IA ;
+- pour le code : **branches, pull requests et hooks** qui bloquent tout travail direct sur la branche principale.
+
+Je ne valide pas chaque commande une par une. C'est précisément le point que les références ci-dessous interrogent.
+
+## Ce que disent les références
+
+### ANSSI : pas d'action critique automatisée
+
+Le guide [*Recommandations de sécurité pour un système d'IA générative*](https://messervices.cyber.gouv.fr/guides/recommandations-de-securite-pour-un-systeme-dia-generative) (ANSSI, 29 avril 2024) contient 35 recommandations. Quatre concernent directement mon usage :
+
+- **R9, proscrire l'usage automatisé de systèmes d'IA pour des actions critiques sur le SI.** L'ANSSI cite en exemple la reconfiguration de composants réseau, la création d'utilisateurs à privilèges et le déploiement de serveurs virtuels : exactement les tâches d'un technicien systèmes et réseaux. Une IA ne doit pas prendre ce type de décision sans contrôle humain.
+- **R27, limiter les actions automatiques depuis un système d'IA traitant des entrées non maîtrisées**, comme des données venues d'Internet ou de mails.
+- **R29, journaliser l'ensemble des traitements** réalisés au sein du système d'IA.
+- **R30, contrôler systématiquement le code source généré par IA.**
+
+En octobre 2024, l'ANSSI et son homologue allemand, le BSI, ont aussi publié des [recommandations communes sur les assistants de programmation IA](https://cyber.gouv.fr/nous-connaitre/publications/publications-internationales/ai-coding-assistants/).
+
+### OWASP : l'« agentivité excessive »
+
+Le [Top 10 OWASP des risques des applications LLM](https://genai.owasp.org/llmrisk/llm062025-excessive-agency/) classe l'**agentivité excessive** (*Excessive Agency*, LLM06:2025) parmi les risques majeurs : un système à base de LLM peut causer des dégâts quand sa sortie est inattendue, ambiguë ou manipulée, par exemple par une hallucination ou une injection de prompt. L'OWASP en distingue trois causes :
+
+- **trop de fonctionnalités** : l'agent dispose d'outils dont la tâche n'a pas besoin, comme un accès shell généraliste ;
+- **trop de permissions** : ses accès dépassent le nécessaire ;
+- **trop d'autonomie** : des actions à fort impact s'exécutent sans validation humaine.
+
+Les parades proposées : réduire les outils au strict nécessaire, accorder le moindre privilège, faire approuver les actions à fort impact par un humain, et appliquer les autorisations dans les systèmes cibles plutôt que de demander à l'IA si une action est permise.
+
+### L'éditeur de l'outil
+
+La [documentation sécurité de Claude Code](https://code.claude.com/docs/en/security) (consultée le 13 novembre 2026) va dans le même sens. Dans le mode manuel, l'agent démarre en lecture seule et demande avant de modifier un fichier ou d'exécuter une commande ; un bac à sable peut isoler les commandes du système de fichiers et du réseau. La documentation rappelle que **l'utilisateur reste responsable** de la vérification des commandes qu'il approuve, et recommande d'exécuter scripts et appels d'outils dans des **machines virtuelles**, surtout face à des contenus externes.
+
+## Confrontation avec ma pratique
+
+Ce qui est conforme :
+
+- **Le réseau de sécurité existe.** Le snapshot avant modification limite l'impact d'une erreur ; il ne l'empêche pas, mais il rend le retour arrière possible.
+- **Les secrets restent hors de l'IA**, ce qui réduit le risque d'exfiltration identifié par l'ANSSI.
+- **Pour le code**, branches, pull requests et hooks imposent une relecture avant intégration, dans l'esprit de la R30.
+
+Ce qui ne passerait pas en entreprise :
+
+- **Un agent en SSH sans validation commande par commande** relève exactement de l'autonomie excessive décrite par l'OWASP, et de l'automatisation d'actions critiques que la R9 de l'ANSSI proscrit. Dans un homelab, l'impact reste limité à mes propres machines et le snapshot permet de revenir en arrière. Sur le SI d'une organisation, il faudrait une validation humaine des actions critiques, des droits réduits pour le compte utilisé par l'agent, et une journalisation de ce qu'il exécute (R29).
+
+## Ce que j'en retiens
+
+L'IA est un copilote efficace pour écrire, diagnostiquer et documenter. La limite ne tient pas à ses compétences mais au **périmètre d'action** qu'on lui donne : moins d'outils, moins de droits, et une validation humaine pour ce qui touche au réseau, aux comptes à privilèges et à la production. Mon homelab est le bon endroit pour expérimenter cette autonomie. En entreprise, j'appliquerais les recommandations ANSSI et OWASP ci-dessus.
+
+## Sources
+
+- ANSSI, [*Recommandations de sécurité pour un système d'IA générative*](https://messervices.cyber.gouv.fr/guides/recommandations-de-securite-pour-un-systeme-dia-generative), 29 avril 2024.
+- ANSSI et BSI, [*AI Coding Assistants*](https://cyber.gouv.fr/nous-connaitre/publications/publications-internationales/ai-coding-assistants/), 4 octobre 2024.
+- OWASP GenAI Security Project, [*LLM06:2025 Excessive Agency*](https://genai.owasp.org/llmrisk/llm062025-excessive-agency/), Top 10 for LLM Applications 2025.
+- Anthropic, [*Claude Code : Security*](https://code.claude.com/docs/en/security), consulté le 13 novembre 2026.
