@@ -5,7 +5,7 @@ Les grandes zones du code et ce que contient chacune. C'est une carte pour s'ori
 ```mermaid
 flowchart TD
   App["src/app · routes et pages"]
-  Components["src/components · UI et animations"]
+  Components["src/components · sections, catalogue et animations"]
   Content["src/content · projets et veille en MDX"]
   Actions["src/actions · Server Actions"]
   Lib["src/lib · helpers et clients"]
@@ -20,13 +20,21 @@ flowchart TD
 
 ## Areas
 
-- `src/app` : les routes de l'App Router (accueil, projets, veille, contact, mentions légales) ainsi que `sitemap.ts` et `robots.ts`. L'image OpenGraph est à venir.
-- `src/components` : `layout/` (header, footer), `content/` (liste de cartes, métadonnées et page de détail partagées par projets et veille), `mdx/` (rendu `prose`), `home/` (les six sections de l'accueil, en Server Components) et `animations/` (GSAP, Motion et marquee CSS, toujours en `"use client"`). À venir : `ui/` pour les composants shadcn ajoutés via la CLI.
+- `src/app` : les routes de l'App Router (accueil, projets, veille, contact, mentions légales), `sitemap.ts`, `robots.ts` et `fonts/` (les trois polices locales). L'image OpenGraph est à venir.
+- `src/components/home` : les six sections de l'accueil « Générique », en Server Components (`hero`, `acts`, `bill`, `sheet`, `awards`, `finale`), l'affiche de projet (`poster.tsx`, `status-badge.tsx`), la couronne (`laurel.tsx`) et leur CSS (`home.css`, `poster.css`).
+- `src/components/projects` : le catalogue filtrable de `/projets` (`catalog.tsx`, composant client).
+- `src/components/animations` : la mise en scène GSAP, toujours en `"use client"` (`hero-scroll`, `acts-scroll`, `reveal`, `gsap.ts`).
+- `src/components` (autres) : `layout/` (header fixe, footer), `content/` (liste, métadonnées et page de détail, utilisées par la veille et les fiches projet), `mdx/` (rendu `prose`) et `seo/` (JSON-LD de la personne). À venir : `ui/` pour les composants shadcn.
 - `src/types` : les déclarations de modules, dont `*.mdx` (qui type `export const metadata`).
 - `src/content` : un fichier MDX par projet ou article de veille. On ajoute du contenu ici.
 - `src/actions` (à venir) : les Server Actions, à commencer par le formulaire de contact.
-- `src/lib` : le listing du contenu MDX (`content.ts`), les constantes du site (`site.ts` : `SITE_URL`, `BASE_OPEN_GRAPH`), le contenu du CV affiché sur l'accueil (`profile.ts` : accroche, compétences, certifications, parcours) et `cn()`. `profile.ts` n'est pas dans `src/content/`, que Vitest redirige vers les fixtures. À venir : le client Resend et l'appel Turnstile.
-- `public` : le CV en PDF, le portrait (`images/yanis-harrat.png`) et les images des projets.
+- `src/lib` :
+  - `content.ts` : listing du contenu MDX, côté serveur (`getProjects`, `getFeaturedProjects`).
+  - `projects.ts` : modèle d'un projet, utilisable côté client (statuts, domaines, `pickFeatured`).
+  - `profile.ts` : le contenu de l'accueil (`OPENING`, `ACTS`, `SHEET`, `CERTIFICATIONS`). Il n'est pas dans `src/content/`, que Vitest redirige vers les fixtures.
+  - `site.ts` : constantes du site (`SITE_URL`, `OWNER`, `CONTACT`, `CV_PATH`, `BASE_OPEN_GRAPH`), et `utils.ts` pour `cn()`.
+  - À venir : le client Resend et l'appel Turnstile.
+- `public` : le CV en PDF (`cv/`), le portrait et les images des projets. Les badges officiels des certifications iront dans `images/certifs/`.
 
 ## Entry points
 

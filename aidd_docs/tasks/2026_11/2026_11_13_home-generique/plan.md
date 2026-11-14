@@ -1,6 +1,6 @@
 ---
 objective: "L'accueil et le catalogue /projets reproduisent la maquette « Générique » validée, lisibles sur mobile, sans animation et sans JavaScript, sans casser le reste du site."
-status: pending
+status: implemented
 ---
 
 # Plan: Accueil « Générique » et catalogue de projets
