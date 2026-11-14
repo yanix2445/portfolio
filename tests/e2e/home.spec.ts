@@ -1,7 +1,7 @@
 import { expect, test, type Page } from "@playwright/test";
 
 import { CERTIFICATIONS, HERO } from "../../src/lib/profile";
-import { OWNER, SITE_NAME } from "../../src/lib/site";
+import { OWNER } from "../../src/lib/site";
 
 const SECTION_IDS = [
   "hero-title",
@@ -64,7 +64,7 @@ test.describe("accueil", () => {
     await nav.getByRole("link", { name: "Projets" }).click();
     await expect(page).toHaveURL("/projets");
     await expect(page.locator(".pin-spacer")).toHaveCount(0);
-    await page.getByRole("banner").getByRole("link", { name: SITE_NAME, exact: true }).click();
+    await page.getByRole("banner").getByRole("link", { name: OWNER.fullName, exact: true }).click();
     await expect(page).toHaveURL("/");
     await expect(page.locator(".pin-spacer")).toHaveCount(1);
     await scrollThrough(page);

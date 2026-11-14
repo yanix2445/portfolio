@@ -1,6 +1,7 @@
 export const SITE_URL = "https://yanis-harrat.com";
 export const SITE_HOST = new URL(SITE_URL).host;
 export const SITE_NAME = "Yanis Harrat";
+export const CV_PATH = "/cv/yanis-harrat-cv.pdf";
 
 // Next fusionne openGraph de façon superficielle : chaque page qui définit le sien
 // repart de cette base. Pas de description ici, pour qu'elle ne fuie pas sur les autres pages.

@@ -2,13 +2,21 @@ import "./setup-content";
 
 import { describe, expect, it } from "vitest";
 
-import { formatDate, getEntries, getEntry, getSlugs } from "@/lib/content";
+import {
+  formatDate,
+  getEntries,
+  getEntry,
+  getFeaturedProjects,
+  getProjects,
+  getSlugs,
+} from "@/lib/content";
+import { pickFeatured, presentDomains } from "@/lib/projects";
 
 describe("getSlugs", () => {
   it("ne liste que les fichiers MDX d'une collection", async () => {
     const slugs = await getSlugs("projets");
 
-    expect(slugs.sort()).toEqual(["ancien-projet", "projet-recent"]);
+    expect(slugs.sort()).toEqual(["ancien-projet", "projet-a-venir", "projet-recent"]);
   });
 });
 
@@ -16,7 +24,11 @@ describe("getEntries", () => {
   it("renvoie toutes les entrées, de la plus récente à la plus ancienne", async () => {
     const entries = await getEntries("projets");
 
-    expect(entries.map((entry) => entry.slug)).toEqual(["projet-recent", "ancien-projet"]);
+    expect(entries.map((entry) => entry.slug)).toEqual([
+      "projet-recent",
+      "projet-a-venir",
+      "ancien-projet",
+    ]);
     expect(entries[0].metadata).toMatchObject({ title: "Projet récent", date: "2026-03-01" });
   });
 
@@ -48,5 +60,53 @@ describe("formatDate", () => {
 
   it("ne décale pas le jour selon le fuseau horaire", () => {
     expect(formatDate("2026-01-01")).toBe("1 janvier 2026");
+  });
+});
+
+describe("projets", () => {
+  it("applique les valeurs par défaut à une fiche sans champs optionnels", async () => {
+    const projects = await getProjects();
+    const ancien = projects.find((project) => project.slug === "ancien-projet");
+
+    expect(ancien).toMatchObject({
+      featured: false,
+      status: "released",
+      domain: "autre",
+      poster: "Ancien projet",
+    });
+  });
+
+  it("reprend le statut, le domaine et le titre d'affiche d'une fiche", async () => {
+    const projects = await getProjects();
+
+    expect(projects.find((project) => project.slug === "projet-recent")).toMatchObject({
+      featured: true,
+      status: "in-progress",
+      domain: "systemes",
+      poster: "Récent",
+    });
+    expect(projects.find((project) => project.slug === "projet-a-venir")?.status).toBe("upcoming");
+  });
+
+  it("met 3 projets à la une : les marqués d'abord, complétés par les plus récents", async () => {
+    const featured = await getFeaturedProjects();
+
+    expect(featured.map((project) => project.slug)).toEqual([
+      "projet-recent",
+      "projet-a-venir",
+      "ancien-projet",
+    ]);
+  });
+
+  it("ne dépasse jamais le nombre de projets à la une demandé", async () => {
+    const projects = await getProjects();
+    const allFeatured = projects.map((project) => ({ ...project, featured: true }));
+
+    expect(pickFeatured(allFeatured, 2)).toHaveLength(2);
+    expect(pickFeatured([], 3)).toEqual([]);
+  });
+
+  it("ne propose que les domaines qui ont un projet, dans l'ordre d'affichage", async () => {
+    expect(presentDomains(await getProjects())).toEqual(["systemes", "reseau", "autre"]);
   });
 });

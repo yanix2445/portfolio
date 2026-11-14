@@ -3,10 +3,9 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { HeroIntro } from "@/components/animations/hero-intro";
-import { CV_PATH } from "@/components/layout/site-header";
 import { CONTAINER } from "@/components/home/section-heading";
 import { HERO } from "@/lib/profile";
-import { OWNER } from "@/lib/site";
+import { CV_PATH, OWNER } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
 const PORTRAIT_ALT = `Portrait de ${OWNER.fullName}, souriant, en veste sombre devant des lumières ambrées.`;

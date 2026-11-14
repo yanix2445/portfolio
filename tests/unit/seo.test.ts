@@ -28,7 +28,7 @@ describe("sitemap", () => {
       url: `${SITE_URL}/veille/article-veille`,
       lastModified: "2026-02-15",
     });
-    expect(routes).toHaveLength(8);
+    expect(routes).toHaveLength(9);
     expect(urls.every((url) => url.startsWith(SITE_URL))).toBe(true);
   });
 });

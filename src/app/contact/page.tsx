@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 
-import { CV_PATH } from "@/components/layout/site-header";
-import { CONTACT, OWNER } from "@/lib/site";
+import { CONTACT, CV_PATH, OWNER } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Contact",
