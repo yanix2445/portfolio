@@ -69,8 +69,9 @@ export function toProject({ slug, metadata }: ProjectSource): Project {
     tags: metadata.tags,
     featured: metadata.featured ?? false,
     rank: metadata.rank ?? Number.POSITIVE_INFINITY,
-    status: metadata.status ?? "released",
-    domain: metadata.domain ?? "autre",
+    // Une valeur inconnue (faute de frappe dans une fiche) retombe sur le défaut.
+    status: metadata.status && metadata.status in STATUS_LABEL ? metadata.status : "released",
+    domain: metadata.domain && metadata.domain in DOMAIN_LABEL ? metadata.domain : "autre",
   };
 }
 

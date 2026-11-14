@@ -32,7 +32,7 @@ A systems & network technician profile with traits a typical BTS SIO SISR studen
 
 ## Capabilities and Constraints
 
-- Next.js 16 (App Router, Cache Components), TypeScript, Tailwind CSS 4, shadcn/ui, MDX content, GSAP and Motion available. Hosted on Vercel Hobby (non-commercial use), 0 €/month budget.
+- Next.js 16 (App Router, Cache Components), TypeScript, Tailwind CSS 4, shadcn/ui, MDX content, GSAP for all animation. Hosted on Vercel Hobby (non-commercial use), 0 €/month budget.
 - Content is MDX in the repo (`src/content/`); profile data lives in `src/lib/profile.ts`; contact data in `src/lib/site.ts`.
 - Pages: home, `/projets`, `/veille`, `/contact`, `/mentions-legales`, CV PDF.
 - Must stay fast, indexable (SEO matters for the name « Yanis Harrat ») and GDPR-compliant.
@@ -50,7 +50,7 @@ A systems & network technician profile with traits a typical BTS SIO SISR studen
 ## Evidence on Hand
 
 - CV (skills, certifications, experiences, education): `public/cv/yanis-harrat-cv.pdf`.
-- Real projects Yanis can document: Windows Server / Active Directory labs, a Proxmox / Docker homelab, a macOS app. Not yet written up: the site still shows example MDX entries that must not be presented as real.
+- Real projects Yanis can document: Windows Server / Active Directory labs, a Proxmox / Docker homelab, a macOS app. They are written up as MDX project pages; a few sections are still marked « à compléter ».
 - Absent: testimonials, employer quotes, metrics, logos of companies. Do not fabricate them.
 
 ## Product Principles

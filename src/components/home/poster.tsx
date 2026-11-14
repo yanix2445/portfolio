@@ -8,8 +8,15 @@ import { StatusBadge } from "./status-badge";
 
 const VARIANTS = [s.hot, s.cream, s.dark] as const;
 
-// Une affiche de projet. Le titre court est en grand ; le titre complet nomme le lien.
-export function Poster({ project, index }: { project: Project; index: number }) {
+type PosterProps = {
+  project: Project;
+  index: number;
+  /** Niveau du titre : `h3` sous le titre d'une section, `h2` directement sous le titre de la page. */
+  heading?: "h2" | "h3";
+};
+
+// Une affiche de projet. Le titre court est en grand ; le titre complet de la fiche est dans `data-title`.
+export function Poster({ project, index, heading: Heading = "h3" }: PosterProps) {
   return (
     <Link
       href={`/projets/${project.slug}`}
@@ -22,7 +29,7 @@ export function Poster({ project, index }: { project: Project; index: number }) 
         <StatusBadge status={project.status} />
       </div>
       <div>
-        <h3 className={s.title}>{project.poster}</h3>
+        <Heading className={s.title}>{project.poster}</Heading>
         <p className={s.cast}>{project.summary}</p>
       </div>
       <div className={cn(s.label, s.foot)}>

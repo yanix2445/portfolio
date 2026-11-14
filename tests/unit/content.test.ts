@@ -6,11 +6,10 @@ import {
   formatDate,
   getEntries,
   getEntry,
-  getFeaturedProjects,
   getProjects,
   getSlugs,
 } from "@/lib/content";
-import { pickFeatured, presentDomains } from "@/lib/projects";
+import { pickFeatured, presentDomains, toProject } from "@/lib/projects";
 
 describe("getSlugs", () => {
   it("ne liste que les fichiers MDX d'une collection", async () => {
@@ -89,13 +88,44 @@ describe("projets", () => {
   });
 
   it("met 3 projets à la une : les marqués d'abord, complétés par les plus récents", async () => {
-    const featured = await getFeaturedProjects();
+    const featured = pickFeatured(await getProjects());
 
     expect(featured.map((project) => project.slug)).toEqual([
       "projet-recent",
       "projet-a-venir",
       "ancien-projet",
     ]);
+  });
+
+  it("ordonne les projets à la une par rang, sans rang en dernier", async () => {
+    const [first, second, third] = (await getProjects()).map((project) => ({ ...project, featured: true }));
+    const ranked = [
+      { ...first, slug: "troisieme", rank: Number.POSITIVE_INFINITY },
+      { ...second, slug: "deuxieme", rank: 2 },
+      { ...third, slug: "premier", rank: 1 },
+    ];
+
+    expect(pickFeatured(ranked).map((project) => project.slug)).toEqual([
+      "premier",
+      "deuxieme",
+      "troisieme",
+    ]);
+  });
+
+  it("retombe sur le statut et le domaine par défaut quand une fiche porte une valeur inconnue", () => {
+    const project = toProject({
+      slug: "faute-de-frappe",
+      metadata: {
+        title: "Titre",
+        summary: "Résumé",
+        date: "2026-01-01",
+        tags: [],
+        status: "relased" as never,
+        domain: "systeme" as never,
+      },
+    });
+
+    expect(project).toMatchObject({ status: "released", domain: "autre" });
   });
 
   it("ne dépasse jamais le nombre de projets à la une demandé", async () => {

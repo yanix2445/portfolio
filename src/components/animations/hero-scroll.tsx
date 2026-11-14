@@ -16,22 +16,34 @@ export function HeroScroll({ children }: { children: ReactNode }) {
     () => {
       const mm = gsap.matchMedia();
 
+      // Les états de départ sont posés d'un coup, puis chaque élément rejoint sa place :
+      // rien ne reste affiché pour disparaître ensuite.
       mm.add(MOTION_OK, () => {
         if (performance.now() > INTRO_MAX_DELAY_MS) return;
+        gsap.set("[data-hero-photo]", { scale: 1.22, opacity: 0 });
+        gsap.set("[data-hero-line]", { yPercent: 108 });
+        gsap.set("[data-hero-kicker]", { opacity: 0, x: -20 });
+        gsap.set("[data-hero-slate]", { opacity: 0, y: 18 });
+        gsap.set("[data-hero-cue]", { opacity: 0 });
         gsap
           .timeline({ defaults: { ease: EASE_ENTER } })
-          .from("[data-hero-photo]", { scale: 1.22, opacity: 0, duration: 2.2, ease: "power3.out" }, 0)
-          .from("[data-hero-line]", { yPercent: 108, duration: 1.5, stagger: 0.12 }, 0.25)
-          .from("[data-hero-kicker]", { opacity: 0, x: -20, duration: 1 }, 0.9)
-          .from("[data-hero-slate]", { opacity: 0, y: 18, duration: 0.9, stagger: 0.07 }, 1)
-          .from("[data-hero-cue]", { opacity: 0, duration: 1 }, 1.2);
+          .to("[data-hero-photo]", { scale: 1, opacity: 1, duration: 2.2, ease: "power3.out" }, 0)
+          .to("[data-hero-line]", { yPercent: 0, duration: 1.5, stagger: 0.12 }, 0.25)
+          .to("[data-hero-kicker]", { opacity: 1, x: 0, duration: 1 }, 0.9)
+          .to("[data-hero-slate]", { opacity: 1, y: 0, duration: 0.9, stagger: 0.07 }, 1)
+          .to("[data-hero-cue]", { opacity: 1, duration: 1 }, 1.2);
       });
 
       // Grand écran : la photo se range en affiche à droite, le nom rétrécit, le synopsis arrive.
       mm.add(WIDE, () => {
         const ease = "power2.inOut";
+        const hero = scope.current?.querySelector<HTMLElement>("[data-hero]");
+        const photo = scope.current?.querySelector<HTMLElement>("[data-hero-photo]");
+        const flow = scope.current?.querySelector<HTMLElement>("[data-hero-synopsis-flow]");
+        if (!hero || !photo || !flow) return;
         gsap.set("[data-hero-synopsis]", { display: "block", opacity: 0 });
-        gsap.set("[data-hero-synopsis-flow]", { display: "none" });
+        // La copie du flux quitte l'écran mais reste lue par les lecteurs d'écran.
+        flow.setAttribute("data-collapsed", "");
 
         gsap
           .timeline({
@@ -41,6 +53,7 @@ export function HeroScroll({ children }: { children: ReactNode }) {
               end: "+=170%",
               pin: true,
               scrub: 0.7,
+              // Les cotes de la photo sont recalculées à chaque redimensionnement.
               invalidateOnRefresh: true,
             },
           })
@@ -52,8 +65,17 @@ export function HeroScroll({ children }: { children: ReactNode }) {
           )
           // Le haut de la photo se cale sur le haut du cadre : la tête reste entière,
           // c'est le buste qui est rogné.
-          .to(
+          .fromTo(
             "[data-hero-photo]",
+            // Départ : le cadre CSS de la photo, relu à chaque redimensionnement.
+            {
+              width: () => 0.66 * hero.clientWidth,
+              height: () => hero.offsetHeight,
+              top: 0,
+              right: 0,
+              objectPosition: () =>
+                `50% ${getComputedStyle(hero).getPropertyValue("--photo-y").trim() || "16%"}`,
+            },
             {
               width: "36.6vw",
               right: "3.4vw",
@@ -68,7 +90,14 @@ export function HeroScroll({ children }: { children: ReactNode }) {
           .to("[data-hero-shade]", { opacity: 0, ease, duration: 0.8 }, 0)
           .to("[data-hero-title]", { scale: 0.44, ease, duration: 1 }, 0)
           .to("[data-hero-fill]", { color: "#f2ebdd", duration: 0.5 }, 0.5)
-          .to("[data-hero-kicker], [data-hero-cue]", { autoAlpha: 0, duration: 0.25 }, 0)
+          // `filter` et non `opacity` : l'intro anime déjà l'opacité de ces deux éléments,
+          // et elle peut encore être en cours au premier défilement.
+          .fromTo(
+            "[data-hero-kicker], [data-hero-cue]",
+            { filter: "opacity(1)" },
+            { filter: "opacity(0)", duration: 0.25, immediateRender: false },
+            0,
+          )
           .fromTo(
             "[data-hero-synopsis]",
             { opacity: 0, y: 50 },
@@ -76,6 +105,14 @@ export function HeroScroll({ children }: { children: ReactNode }) {
             0.55,
           )
           .to({}, { duration: 0.35 });
+
+        // En repassant sur petit écran, la photo retrouve exactement son cadre CSS.
+        return () => {
+          flow.removeAttribute("data-collapsed");
+          for (const property of ["width", "height", "top", "right", "object-position"]) {
+            photo.style.removeProperty(property);
+          }
+        };
       });
 
       // Les polices changent les hauteurs : on recalcule les repères une fois chargées.

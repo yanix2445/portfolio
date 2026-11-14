@@ -22,11 +22,11 @@ function Award({ certification }: { certification: Certification }) {
     <li className={s.laurel} data-reveal="laurel">
       <Laurel />
       {verifyUrl ? (
-        <a href={verifyUrl} target="_blank" rel="noopener noreferrer" className={s.laurelBody}>
+        <a href={verifyUrl} target="_blank" rel="noopener noreferrer" className={s.laurelBody} data-laurel-body>
           {body}
         </a>
       ) : (
-        <div className={s.laurelBody}>{body}</div>
+        <div className={s.laurelBody} data-laurel-body>{body}</div>
       )}
     </li>
   );

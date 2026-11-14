@@ -30,7 +30,8 @@ test.describe("catalogue des projets", () => {
     await expect(domain).toHaveAttribute("aria-pressed", "true");
     const filtered = await posters.count();
     expect(filtered).toBeGreaterThan(0);
-    expect(filtered).toBeLessThanOrEqual(PROJECT_COUNT);
+    // Dès qu'il y a plusieurs domaines, un filtre retire au moins un projet.
+    if ((await filters.count()) > 2) expect(filtered).toBeLessThan(PROJECT_COUNT);
     for (const poster of await posters.all()) {
       await expect(poster).toContainText(new RegExp(label, "i"));
     }

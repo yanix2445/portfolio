@@ -23,6 +23,27 @@
   min-height: 34rem;
   margin-top: calc(var(--header-h) * -1);
   overflow: hidden;
+  /* Cadrage vertical du portrait. Plus l'écran est large, plus le cadre est bas :
+     on remonte l'image pour que le haut de la tête ne soit jamais rogné. */
+  --photo-y: 16%;
+}
+
+@media (min-aspect-ratio: 17/10) {
+  .gn-open {
+    --photo-y: 13%;
+  }
+}
+
+@media (min-aspect-ratio: 2/1) {
+  .gn-open {
+    --photo-y: 10%;
+  }
+}
+
+@media (min-aspect-ratio: 12/5) {
+  .gn-open {
+    --photo-y: 8%;
+  }
 }
 
 .gn-plate {
@@ -38,7 +59,7 @@
   height: 100%;
   max-width: none;
   object-fit: cover;
-  object-position: 50% 16%;
+  object-position: 50% var(--photo-y);
   transform-origin: 60% 30%;
 }
 
@@ -70,12 +91,13 @@
 .gn-title {
   position: absolute;
   left: 3.1vw;
-  bottom: calc(3.4vw + 10.5vh);
+  bottom: calc(min(3.4vw, 6vh) + 10.5vh);
   transform-origin: left bottom;
 }
 
 .gn-name {
-  font-size: 21.5vw;
+  /* Bornée par la hauteur : sur un écran bas, le nom ne monte pas sur la légende. */
+  font-size: min(21.5vw, 34.5svh);
   line-height: 0.8;
 }
 
@@ -104,7 +126,7 @@
 }
 
 .gn-synopsis {
-  font-size: 2.55vw;
+  font-size: min(2.55vw, 4.2vh);
   line-height: 1.18;
   letter-spacing: -0.02em;
   font-weight: 500;
@@ -118,6 +140,18 @@
 .gn-synopsisFlow {
   padding: 12vh 3.4vw;
   border-top: 1px solid var(--border);
+}
+
+/* Pendant le hero épinglé, la copie décorative la remplace à l'écran : elle reste lue, sans être vue. */
+.gn-synopsisFlow[data-collapsed] {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  border: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
 }
 
 .gn-synopsisFlow .gn-synopsis {
@@ -283,7 +317,8 @@
 }
 
 .gn-acts[data-orientation="horizontal"] .gn-num {
-  font-size: 62vh;
+  /* Bornée par la largeur : en portrait, l'acte ne dépasse pas l'écran. */
+  font-size: min(62vh, 40vw);
 }
 
 .gn-acts[data-orientation="horizontal"] .gn-reel {
@@ -316,6 +351,8 @@
 .gn-bill {
   padding: 17vh 3.4vw 15vh;
   border-top: 1px solid var(--border);
+  /* Les affiches arrivent inclinées : elles ne doivent pas élargir la page. */
+  overflow-x: clip;
 }
 
 .gn-billHead {
@@ -368,7 +405,7 @@
 
 .gn-posters {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 1.6vw;
 }
 
@@ -446,6 +483,8 @@
   display: grid;
   place-items: center;
   text-align: center;
+  /* Le texte se dimensionne sur la couronne, pour ne jamais toucher les feuilles. */
+  container-type: inline-size;
 }
 
 .gn-wreath {
@@ -459,7 +498,7 @@
 
 .gn-laurelBody {
   position: relative;
-  width: 46%;
+  width: 52%;
   display: grid;
   justify-items: center;
 }
@@ -471,7 +510,7 @@
 }
 
 .gn-issuer {
-  font-size: 2.5vw;
+  font-size: 10cqi;
   line-height: 0.9;
   font-weight: 800;
   letter-spacing: 0.01em;
@@ -757,10 +796,6 @@
 
   .gn-laurel {
     flex-basis: calc((100% - 1vw) / 2);
-  }
-
-  .gn-issuer {
-    font-size: 6.4vw;
   }
 
   .gn-certTitle {

@@ -3,7 +3,7 @@ import path from "node:path";
 import { cacheLife } from "next/cache";
 import type { ComponentType } from "react";
 
-import { pickFeatured, toProject, type Project, type ProjectFields } from "@/lib/projects";
+import { toProject, type Project, type ProjectFields } from "@/lib/projects";
 
 export type Collection = "projets" | "veille";
 
@@ -74,11 +74,6 @@ export async function getProjects(): Promise<Project[]> {
   // À date égale, le rang des projets à la une départage : l'accueil et le catalogue
   // présentent ainsi les mêmes projets dans le même ordre.
   return projects.toSorted((a, b) => b.date.localeCompare(a.date) || a.rank - b.rank);
-}
-
-/** Les 3 projets de l'accueil. */
-export async function getFeaturedProjects(): Promise<Project[]> {
-  return pickFeatured(await getProjects());
 }
 
 export function formatDate(date: string): string {

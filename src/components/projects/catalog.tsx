@@ -41,7 +41,7 @@ export function Catalog({ projects }: { projects: readonly Project[] }) {
       <ul className="gc-grid">
         {visible.map((project) => (
           <li key={project.slug}>
-            <Poster project={project} index={projects.indexOf(project)} />
+            <Poster project={project} index={projects.indexOf(project)} heading="h2" />
           </li>
         ))}
       </ul>
