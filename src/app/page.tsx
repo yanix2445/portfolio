@@ -1,22 +1,21 @@
-import { MotionProvider } from "@/components/animations/motion-provider";
-import { CertificationsSection } from "@/components/home/certifications-section";
+import { ActsSection } from "@/components/home/acts-section";
+import { AwardsSection } from "@/components/home/awards-section";
+import { BillSection } from "@/components/home/bill-section";
+import { FinaleSection } from "@/components/home/finale-section";
 import { HeroSection } from "@/components/home/hero-section";
-import { ProjectsSection } from "@/components/home/projects-section";
-import { SkillsSection } from "@/components/home/skills-section";
-import { TimelineSection } from "@/components/home/timeline-section";
-import { WatchContactSection } from "@/components/home/watch-contact-section";
+import { SheetSection } from "@/components/home/sheet-section";
 import { PersonJsonLd } from "@/components/seo/person-json-ld";
 
 export default function HomePage() {
   return (
-    <MotionProvider>
+    <>
       <PersonJsonLd />
       <HeroSection />
-      <SkillsSection />
-      <CertificationsSection />
-      <TimelineSection />
-      <ProjectsSection />
-      <WatchContactSection />
-    </MotionProvider>
+      <ActsSection />
+      <BillSection />
+      <SheetSection />
+      <AwardsSection />
+      <FinaleSection />
+    </>
   );
 }

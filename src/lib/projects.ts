@@ -8,6 +8,8 @@ export type ProjectDomain = "systemes" | "reseau" | "securite" | "virtualisation
 export type ProjectFields = {
   /** Projet mis en avant sur l'accueil. */
   featured?: boolean;
+  /** Ordre parmi les projets à la une : 1 en premier. Sans rang, après les autres. */
+  rank?: number;
   status?: ProjectStatus;
   domain?: ProjectDomain;
   /** Titre court pour l'affiche. À défaut, le titre de la fiche. */
@@ -46,6 +48,7 @@ export type Project = {
   date: string;
   tags: string[];
   featured: boolean;
+  rank: number;
   status: ProjectStatus;
   domain: ProjectDomain;
 };
@@ -65,6 +68,7 @@ export function toProject({ slug, metadata }: ProjectSource): Project {
     date: metadata.date,
     tags: metadata.tags,
     featured: metadata.featured ?? false,
+    rank: metadata.rank ?? Number.POSITIVE_INFINITY,
     status: metadata.status ?? "released",
     domain: metadata.domain ?? "autre",
   };
@@ -73,11 +77,13 @@ export function toProject({ slug, metadata }: ProjectSource): Project {
 export const FEATURED_COUNT = 3;
 
 /**
- * Les projets à la une : ceux marqués `featured` d'abord, complétés par les plus récents.
+ * Les projets à la une : ceux marqués `featured` d'abord (par `rank`), complétés par les plus récents.
  * `projects` est attendu du plus récent au plus ancien.
  */
 export function pickFeatured(projects: readonly Project[], count = FEATURED_COUNT): Project[] {
-  const featured = projects.filter((project) => project.featured);
+  const featured = projects
+    .filter((project) => project.featured)
+    .toSorted((a, b) => a.rank - b.rank);
   const others = projects.filter((project) => !project.featured);
   return [...featured, ...others].slice(0, count);
 }

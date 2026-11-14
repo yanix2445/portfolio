@@ -20,6 +20,7 @@ export function EntryList({
         <li key={slug}>
           <Link
             href={`/${collection}/${slug}`}
+            data-title={metadata.title}
             className="block rounded-xl border bg-card p-5 text-card-foreground transition-colors hover:bg-muted focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
           >
             <h3 className="text-lg font-semibold">{metadata.title}</h3>

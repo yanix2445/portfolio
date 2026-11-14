@@ -18,7 +18,9 @@ test.describe("contenu MDX", () => {
   test("une entrée listée ouvre sa page de détail avec son corps", async ({ page }) => {
     await page.goto("/projets");
     const firstEntry = page.getByRole("main").getByRole("listitem").getByRole("link").first();
-    const title = await firstEntry.getByRole("heading").innerText();
+    // L'affiche montre un titre court : le titre complet de la fiche est porté par le lien.
+    const title = (await firstEntry.getAttribute("data-title")) ?? "";
+    expect(title).not.toBe("");
 
     await firstEntry.click();
 
