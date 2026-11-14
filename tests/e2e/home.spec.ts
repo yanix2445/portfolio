@@ -108,6 +108,112 @@ test.describe("accueil", () => {
   });
 });
 
+// Fin d'une section épinglée : le bas de son espace d'épinglage arrive en bas de l'écran.
+async function scrollToPinEnd(page: Page, selector: string) {
+  await page.evaluate((target) => {
+    const spacer = document.querySelector(target)?.closest(".pin-spacer") as HTMLElement | null;
+    if (!spacer) throw new Error(`Pas d'épinglage pour ${target}`);
+    const top = spacer.getBoundingClientRect().top + window.scrollY;
+    window.scrollTo(0, top + spacer.offsetHeight - window.innerHeight - 4);
+  }, selector);
+  await page.waitForTimeout(1600);
+}
+
+test.describe("mise en scène sur grand écran", () => {
+  test.use({ viewport: { width: 1440, height: 900 } });
+
+  test("la photo se range en affiche sans rogner la tête", async ({ page }) => {
+    await page.goto("/");
+    await expect(page.locator(".pin-spacer")).toHaveCount(2);
+
+    await scrollToPinEnd(page, "[data-hero]");
+
+    const photo = page.locator("[data-hero-photo]");
+    const frame = await photo.evaluate((element) => {
+      const rect = element.getBoundingClientRect();
+      return {
+        top: rect.top,
+        height: rect.height,
+        position: getComputedStyle(element).objectPosition,
+        viewport: window.innerHeight,
+      };
+    });
+    // Le haut de l'image coïncide avec le haut du cadre (13 % de l'écran) : rien n'est coupé en haut.
+    expect(Math.abs(frame.top - frame.viewport * 0.13)).toBeLessThan(6);
+    expect(Math.abs(frame.height - frame.viewport * 0.7)).toBeLessThan(6);
+    expect(frame.position).toBe("50% 0%");
+    await expect(page.locator("[data-hero-synopsis]")).toBeVisible();
+    await expect(page.locator("[data-hero-synopsis]")).toContainText(OPENING.synopsisAccent);
+  });
+
+  test("les actes sont épinglés et défilent jusqu'au dernier", async ({ page }) => {
+    await page.goto("/");
+    const acts = page.locator("[data-acts]");
+    await expect(acts).toHaveAttribute("data-orientation", "horizontal");
+
+    // Le premier acte est lisible dès que la section est épinglée, avant tout défilement horizontal.
+    await page.evaluate(() => {
+      const spacer = document.querySelector("[data-acts]")?.closest(".pin-spacer") as HTMLElement;
+      window.scrollTo(0, spacer.getBoundingClientRect().top + window.scrollY);
+    });
+    const first = page.getByRole("heading", { level: 3, name: ACTS[0].place });
+    await expect(first).toBeInViewport();
+    await expect.poll(() => first.evaluate((element) => getComputedStyle(element).opacity)).toBe("1");
+
+    await scrollToPinEnd(page, "[data-acts]");
+
+    const last = ACTS[ACTS.length - 1];
+    await expect(page.getByRole("heading", { level: 3, name: last.place })).toBeInViewport();
+    await expect(page.locator("[data-acts-count]")).toHaveText(`Acte ${ACTS.length} / ${ACTS.length}`);
+  });
+
+  test("les affiches finissent droites et gardent leur survol", async ({ page }) => {
+    await page.goto("/");
+    const poster = page.locator("[data-reveal='poster']").first();
+    await poster.scrollIntoViewIfNeeded();
+    await page.waitForTimeout(2200);
+
+    expect(await poster.evaluate((element) => element.getAttribute("style") ?? "")).toBe("");
+  });
+
+  test("ne laisse aucun épinglage orphelin après une navigation client", async ({ page }) => {
+    const errors = collectErrors(page);
+    await page.goto("/");
+
+    await page
+      .getByRole("navigation", { name: "Navigation principale" })
+      .getByRole("link", { name: "Projets" })
+      .click();
+    await expect(page).toHaveURL("/projets");
+    await expect(page.locator(".pin-spacer")).toHaveCount(0);
+    await page.getByRole("banner").getByRole("link", { name: OWNER.fullName, exact: true }).click();
+    await expect(page).toHaveURL("/");
+    await expect(page.locator(".pin-spacer")).toHaveCount(2);
+    await scrollThrough(page);
+    expect(errors).toEqual([]);
+  });
+});
+
+test.describe("accueil avec moins de mouvement", () => {
+  test.use({ reducedMotion: "reduce", viewport: { width: 1440, height: 900 } });
+
+  test("rien n'est épinglé ni masqué, les actes restent en colonne", async ({ page }) => {
+    await page.goto("/");
+    await scrollThrough(page);
+
+    await expect(page.locator(".pin-spacer")).toHaveCount(0);
+    await expect(page.locator("[data-acts]")).not.toHaveAttribute("data-orientation", "horizontal");
+    await expect(page.locator("[data-hero-synopsis-flow]")).toBeVisible();
+    for (const act of ACTS) {
+      await expect(page.getByRole("heading", { level: 3, name: act.place })).toBeVisible();
+    }
+    const hidden = await page
+      .locator("[data-reveal], [data-act-item], [data-hero-line]")
+      .evaluateAll((elements) => elements.filter((element) => getComputedStyle(element).opacity !== "1").length);
+    expect(hidden).toBe(0);
+  });
+});
+
 test.describe("accueil sans JavaScript", () => {
   test.use({ javaScriptEnabled: false });
 

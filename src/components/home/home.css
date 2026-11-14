@@ -591,6 +591,8 @@
     height: 68svh;
     min-height: 22rem;
     margin: 0 -1rem;
+    /* Le zoom d'entrée de la photo ne doit pas élargir la page. */
+    overflow: hidden;
   }
 
   .gn-photo {
