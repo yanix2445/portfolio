@@ -3,6 +3,7 @@
 @import "shadcn/tailwind.css";
 @import "../components/home/home.css";
 @import "../components/home/poster.css";
+@import "../components/projects/catalog.css";
 @plugin "@tailwindcss/typography";
 
 @custom-variant dark (&:is(.dark *));

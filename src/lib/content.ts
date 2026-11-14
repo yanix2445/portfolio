@@ -70,7 +70,10 @@ export async function getEntry(
 
 /** Tous les projets, du plus récent au plus ancien, avec leurs valeurs par défaut. */
 export async function getProjects(): Promise<Project[]> {
-  return (await getEntries("projets")).map(toProject);
+  const projects = (await getEntries("projets")).map(toProject);
+  // À date égale, le rang des projets à la une départage : l'accueil et le catalogue
+  // présentent ainsi les mêmes projets dans le même ordre.
+  return projects.toSorted((a, b) => b.date.localeCompare(a.date) || a.rank - b.rank);
 }
 
 /** Les 3 projets de l'accueil. */
