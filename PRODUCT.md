@@ -28,11 +28,11 @@ A systems & network technician profile with traits a typical BTS SIO SISR studen
 
 - Visitors read the site on desktop (recruiter at work) and on mobile (from LinkedIn or email).
 - The CV PDF (`public/cv/yanis-harrat-cv.pdf`) is downloaded and forwarded internally.
-- Contact happens by email or phone; a contact form (Turnstile + Resend) is planned, not shipped.
+- Contact happens by email, phone or the contact form on `/contact` (Turnstile + Resend, nothing stored). The form only renders once its keys are configured.
 
 ## Capabilities and Constraints
 
-- Next.js 16 (App Router, Cache Components), TypeScript, Tailwind CSS 4, shadcn/ui, MDX content, GSAP for all animation. Hosted on Vercel Hobby (non-commercial use), 0 €/month budget.
+- Next.js 16 (App Router, Cache Components), TypeScript, Tailwind CSS 4 with design tokens, shadcn/ui primitives, MDX content, GSAP for all animation. The design system is described in `DESIGN.md`. Hosted on Vercel Hobby (non-commercial use), 0 €/month budget.
 - Content is MDX in the repo (`src/content/`); profile data lives in `src/lib/profile.ts`; contact data in `src/lib/site.ts`.
 - Pages: home, `/projets`, `/veille`, `/contact`, `/mentions-legales`, CV PDF.
 - Must stay fast, indexable (SEO matters for the name « Yanis Harrat ») and GDPR-compliant.

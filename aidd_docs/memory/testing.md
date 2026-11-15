@@ -12,7 +12,12 @@ Comment le projet est vérifié : deux niveaux de tests automatisés, en plus du
   - Autres tailles : portable 16:9 (1366 × 650), ultra-large (2560 × 1080) et tablette en portrait (768 × 1024) sans chevauchement ni débordement ; téléphone en paysage sans épinglage ; mobile 375 px sans débordement, actes en colonne, couronnes lisibles.
   - Avec `reducedMotion: 'reduce'` : rien d'épinglé ni de masqué, actes en colonne.
 - **E2E catalogue** (`tests/e2e/projects.spec.ts`) : tous les projets avec leur statut, filtres par domaine et compteur.
-- **Performance** : Lighthouse mobile sur l'accueil, planchers 85 en performance et 100 en accessibilité (mesuré le 2026-11-14 : 93 à 95 et 100). Lancé à la main sur le build de production (`pnpm start -p 3200`) via `portly temp`, avec `CHROME_PATH` sur le Chromium de Playwright. Résoudre ce chemin par un glob zsh : `ls` est coloré dans ce shell et injecte des codes ANSI.
+- **Formulaire de contact** :
+  - Unitaires (`contact.test.ts`, `contact-services.test.ts`) : validation, ordre de traitement de l'action avec Turnstile et Resend simulés (aucun mail si un champ est invalide ou si le jeton est refusé, jamais d'exception), et les deux clients avec `fetch` et le SDK simulés.
+  - E2E (`contact.spec.ts`) : champs étiquetés, erreurs reliées aux champs, focus, clavier, 375 px. Le build de test porte la clé de site de test Turnstile ; le script de Cloudflare est bloqué, aucun message n'est envoyé.
+  - Le vrai envoi se vérifie à la main, avec de vraies clés.
+- **Rendu** (`tests/visual/`) : avant une réécriture de styles, `capture.mjs` prend 54 captures (accueil à plusieurs instants du défilement, sections, autres pages, en 1440, 768 et 375 px) ; `compare.mjs` liste celles qui diffèrent. `HIDE=<sélecteur>` masque un élément dont le changement est voulu. Les actes épinglés ont une tolérance plus large : leur numéro en contour glisse au sous-pixel.
+- **Performance** : Lighthouse mobile sur l'accueil, planchers 85 en performance et 100 en accessibilité, sur l'accueil et sur `/contact` (mesuré le 2026-11-15 : 93 à 95 et 100). Lancé à la main sur le build de production (`pnpm start -p 3200`) via `portly temp`, avec `CHROME_PATH` sur le Chromium de Playwright. Résoudre ce chemin par un glob zsh : `ls` est coloré dans ce shell et injecte des codes ANSI. Dans un script zsh, ne pas nommer une variable `path` : elle est liée à `PATH`.
 - **Manuel** : rendu visuel des animations et ressenti sur un vrai téléphone.
 
 ## Tools

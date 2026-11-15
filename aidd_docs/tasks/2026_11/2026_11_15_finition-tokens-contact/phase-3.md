@@ -1,5 +1,5 @@
 ---
-status: pending
+status: implemented
 ---
 
 # Instruction: Architecture : Tailwind dans les composants, dossiers rangés

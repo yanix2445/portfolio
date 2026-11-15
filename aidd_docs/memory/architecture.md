@@ -33,6 +33,7 @@ flowchart LR
 
 ## Gotchas
 
-- Les CSS modules ne sont pas disponibles : la règle Turbopack `*.css` de `next.config.ts` envoie tout au loader Tailwind. Utiliser du CSS global préfixé.
+- Les CSS modules ne sont pas disponibles : la règle Turbopack `*.css` de `next.config.ts` envoie tout au loader Tailwind. Le style passe par des classes Tailwind et les tokens de `globals.css`.
+- `cn()` vient du paquet `cn` de shadcn (remplaçant de `clsx` + `tailwind-merge`), configuré dans `src/lib/utils.ts` avec les tailles de texte du thème.
 - `next-mdx-remote` est archivé : ne pas l'utiliser. Sous Turbopack, les plugins remark/rehype se déclarent sous forme de *strings* dans `next.config.ts`.
 - Next.js publie des security releases fréquentes : Dependabot doit rester actif, et ses PR doivent être traitées vite.

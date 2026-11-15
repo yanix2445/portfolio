@@ -32,5 +32,5 @@ Ce qu'est le projet, le problème qu'il résout et son vocabulaire. Le « pourqu
 - Une page dédiée par projet ou réalisation, écrite en MDX.
 - Section veille technologique, écrite en MDX.
 - CV téléchargeable en PDF.
-- Formulaire de contact protégé par Turnstile, envoyé par mail via Resend, sans stockage (à venir).
+- Formulaire de contact protégé par Turnstile, envoyé par mail via Resend, sans stockage.
 - Page mentions légales et confidentialité (RGPD).

@@ -1,6 +1,6 @@
 ---
 objective: "Le site « Générique » garde son rendu validé, repose sur des tokens et les primitives shadcn/ui dans une architecture lisible, avec un final lisible, des boutons à coins arrondis et un formulaire de contact en service."
-status: pending
+status: implemented
 ---
 
 # Plan: Finition : tokens, primitives shadcn, architecture et formulaire de contact
@@ -65,3 +65,8 @@ Source: [spec.md](./spec.md), maquettes du final [mockup/](./mockup/)
 | Formulaire non rendu si la clé de site Turnstile est absente | Une prévisualisation sans clés ne doit pas montrer un formulaire qui échoue |
 | L'envoi réel n'est testé automatiquement qu'avec Resend et Turnstile simulés ; le vrai envoi est vérifié à la main sur la prévisualisation | Aucune clé ne doit entrer dans le repo, et un test ne doit pas dépendre d'un service externe |
 | `DESIGN.md` est généré depuis le code final | Demande de Yanis de « définir le design » ; une seule description de référence des tokens et composants |
+| Exécution : les phases 1 à 3 ont été menées ensemble, section par section | Remplacer les valeurs en dur dans des feuilles vouées à disparaître aurait été du travail jeté. Les tokens ont été déclarés, puis chaque section réécrite directement en classes Tailwind avec ses primitives, et comparée à la référence |
+| Pas de dossier `typography/` : deux `@utility` (`type-poster`, `type-label`) et des tokens `text-*` | Un composant polymorphe pour chaque balise aurait été plus lourd que deux classes |
+| Les coordonnées de `/contact` sont une liste à filets, pas des cartes | Même forme que la fiche technique de l'accueil ; quatre cartes identiques n'apportaient rien |
+| `sonner` est rendu par le formulaire, pas par le layout | Les autres pages ne chargent pas la bibliothèque |
+| La référence visuelle a été refaite depuis le commit d'avant la passe, bouton de l'en-tête masqué | La comparaison ne signale ainsi que les écarts hors périmètre voulu |
