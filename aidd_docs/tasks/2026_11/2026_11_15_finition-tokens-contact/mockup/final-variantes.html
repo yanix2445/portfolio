@@ -1,0 +1,49 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+@font-face{font-family:"Big Shoulders";src:url(../../../../../src/app/fonts/big-shoulders.woff2) format("woff2");font-weight:100 900}
+@font-face{font-family:"Hanken";src:url(../../../../../src/app/fonts/hanken-grotesk.woff2) format("woff2");font-weight:100 900}
+@font-face{font-family:"Geist Mono";src:url(../../../../../src/app/fonts/geist-mono.woff2) format("woff2");font-weight:100 900}
+:root{--bg:#0b0a09;--ink:#f2ebdd;--mute:#9a9082;--hot:#ff5b2e;--hot-ink:#170a04;--line:rgba(242,235,221,.18);--radius:.625rem}
+*{box-sizing:border-box;margin:0;padding:0}
+html{background:var(--bg);color:var(--ink);font-family:Hanken,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+.mono{font-family:"Geist Mono",monospace;font-size:clamp(10px,.8vw,13px);letter-spacing:.16em;text-transform:uppercase}
+.poster{font-family:"Big Shoulders",sans-serif;font-weight:900;text-transform:uppercase;letter-spacing:-.005em}
+section{display:none;min-height:100svh;place-items:center;padding:12vh 3.4vw;text-align:center;border-top:1px solid var(--line);position:relative}
+section.on{display:grid}
+.tag{position:absolute;left:3.4vw;top:3vh;color:var(--mute)}
+.out{color:transparent;-webkit-text-stroke:.012em var(--ink)}
+.hot{color:var(--hot)}
+.btns{display:flex;flex-wrap:wrap;justify-content:center;gap:max(1vw,.6rem);margin-top:6vh}
+.btn{display:inline-flex;align-items:center;height:4.2em;padding:0 2em;border-radius:calc(var(--radius)*1.4);font-weight:600;font-size:clamp(.9375rem,1.25vw,1.25rem)}
+.btn.h{background:var(--hot);color:var(--hot-ink)}
+.btn.g{border:1px solid var(--line)}
+h2 span{display:block}
+/* l'accent de la ligne ne touche jamais la ligne du dessus */
+h2 .out,h2 .acc{margin-top:.13em}
+/* A : une seule phrase d'affiche, trois lignes à la même échelle */
+.a h2{font-size:min(13.2vw,27svh);line-height:.98}
+/* B : carton en deux temps */
+.b .pre{font-size:min(5.6vw,11svh);line-height:1;color:var(--hot);display:flex;align-items:center;justify-content:center;gap:.5em}
+.b .pre::before,.b .pre::after{content:"";height:.06em;width:1.6em;background:currentColor;opacity:.7}
+.b h2{font-size:min(15vw,31svh);line-height:.94;margin-top:3vh}
+/* C : phrase complète */
+.c h2{font-size:min(10.4vw,24svh);line-height:.98}
+@media (max-width:767px){
+  section{min-height:0;padding:5.5rem 1rem}
+  .a h2{font-size:19vw}.b .pre{font-size:9.5vw}.b h2{font-size:22vw}.c h2{font-size:17.5vw}
+  .btn{font-size:.9375rem;height:3.6em;padding:0 1.4em}
+}
+</style></head><body>
+<section class="a" id="a"><p class="mono tag">Variante A · une phrase, une échelle</p><div>
+<h2 class="poster"><span class="hot">Prochain rôle :</span><span>dans votre</span><span class="out">équipe.</span></h2>
+<div class="btns"><a class="btn h">Appeler · 07 68 18 79 34</a><a class="btn g">Écrire un e-mail</a><a class="btn g">CV (PDF)</a></div></div></section>
+<section class="b" id="b"><p class="mono tag">Variante B · carton en deux temps</p><div>
+<p class="poster pre">Prochain rôle</p>
+<h2 class="poster"><span>dans votre</span><span class="out">équipe.</span></h2>
+<div class="btns"><a class="btn h">Appeler · 07 68 18 79 34</a><a class="btn g">Écrire un e-mail</a><a class="btn g">CV (PDF)</a></div></div></section>
+<section class="c" id="c"><p class="mono tag">Variante C · phrase complète</p><div>
+<h2 class="poster"><span>Mon prochain rôle</span><span>se joue dans</span><span class="hot acc">votre équipe.</span></h2>
+<div class="btns"><a class="btn h">Appeler · 07 68 18 79 34</a><a class="btn g">Écrire un e-mail</a><a class="btn g">CV (PDF)</a></div></div></section>
+<script>const v=new URLSearchParams(location.search).get("v")||"a";document.getElementById(v).classList.add("on")</script>
+</body></html>
