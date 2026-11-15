@@ -62,7 +62,8 @@ describe("envoi par Resend", () => {
     expect(await sendContactMail(FIELDS)).toBe(true);
     const mail = send.mock.calls[0][0];
     expect(mail).toMatchObject({ to: "moi@example.com", replyTo: FIELDS.email });
-    expect(mail.from).toContain("send.yanis-harrat.com");
+    // Le domaine vérifié chez Resend est le domaine racine, pas le sous-domaine `send.`.
+    expect(mail.from).toBe("Portfolio <contact@yanis-harrat.com>");
     expect(mail.html).not.toContain("<script>");
     expect(mail.html).toContain("&lt;script&gt;");
   });

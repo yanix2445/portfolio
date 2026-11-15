@@ -5,9 +5,10 @@ import { Resend } from "resend";
 import type { ContactFields } from "@/lib/contact";
 import { SITE_HOST } from "@/lib/site";
 
-// Expéditeur sur le sous-domaine d'envoi vérifié chez Resend. `CONTACT_FROM_EMAIL` le remplace
-// en développement, tant que le domaine n'est pas vérifié.
-const DEFAULT_FROM = `Portfolio <contact@send.${SITE_HOST}>`;
+// Expéditeur sur le domaine vérifié chez Resend, qui est le domaine racine. Le sous-domaine
+// `send.` ne sert qu'aux enregistrements DNS de Resend (SPF, retour des rebonds) : une adresse
+// en `@send.…` serait refusée. `CONTACT_FROM_EMAIL` remplace cette valeur au besoin.
+const DEFAULT_FROM = `Portfolio <contact@${SITE_HOST}>`;
 
 function escapeHtml(value: string): string {
   return value
