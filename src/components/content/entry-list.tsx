@@ -1,6 +1,7 @@
 import Link from "next/link";
 
 import { EntryMeta } from "@/components/content/entry-meta";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import type { Collection, ContentEntry } from "@/lib/content";
 
 export function EntryList({
@@ -21,11 +22,19 @@ export function EntryList({
           <Link
             href={`/${collection}/${slug}`}
             data-title={metadata.title}
-            className="block rounded-xl border bg-card p-5 text-card-foreground transition-colors hover:bg-muted focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
+            className="group/entry block rounded-xl"
           >
-            <h3 className="text-lg font-semibold">{metadata.title}</h3>
-            <p className="mt-1 text-muted-foreground">{metadata.summary}</p>
-            <EntryMeta metadata={metadata} />
+            <Card className="transition-colors group-hover/entry:bg-muted">
+              <CardHeader>
+                <CardTitle>
+                  <h3>{metadata.title}</h3>
+                </CardTitle>
+                <CardDescription>{metadata.summary}</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <EntryMeta metadata={metadata} />
+              </CardContent>
+            </Card>
           </Link>
         </li>
       ))}

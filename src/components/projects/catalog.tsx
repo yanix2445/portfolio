@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 
-import { Poster } from "@/components/home/poster";
+import { Poster } from "@/components/projects/poster";
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { DOMAIN_LABEL, presentDomains, type Project, type ProjectDomain } from "@/lib/projects";
 
 type Filter = ProjectDomain | "all";
@@ -20,25 +21,28 @@ export function Catalog({ projects }: { projects: readonly Project[] }) {
 
   return (
     <>
-      <div className="gc-bar">
-        <div role="group" aria-label="Filtrer par domaine" className="gc-filters">
+      <div className="mt-10 mb-6 flex flex-wrap items-center justify-between gap-x-8 gap-y-4 border-t border-border pt-[2.4vh] md:mt-[7vh] md:mb-[4vh]">
+        <ToggleGroup
+          type="single"
+          variant="outline"
+          size="label"
+          aria-label="Filtrer par domaine"
+          className="flex-wrap"
+          value={filter}
+          // Un filtre reste toujours actif : recliquer sur le filtre courant ne le retire pas.
+          onValueChange={(value) => value && setFilter(value as Filter)}
+        >
           {filters.map(({ value, label }) => (
-            <button
-              key={value}
-              type="button"
-              aria-pressed={filter === value}
-              onClick={() => setFilter(value)}
-              className="gc-label gc-filter"
-            >
+            <ToggleGroupItem key={value} value={value}>
               {label}
-            </button>
+            </ToggleGroupItem>
           ))}
-        </div>
-        <p aria-live="polite" className="gc-label gc-count" data-catalog-count>
+        </ToggleGroup>
+        <p aria-live="polite" className="type-label text-muted-foreground" data-catalog-count>
           {visible.length} {visible.length > 1 ? "projets" : "projet"}
         </p>
       </div>
-      <ul className="gc-grid">
+      <ul className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 lg:gap-[1.6vw]">
         {visible.map((project) => (
           <li key={project.slug}>
             <Poster project={project} index={projects.indexOf(project)} heading="h2" />

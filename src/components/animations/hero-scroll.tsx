@@ -41,9 +41,13 @@ export function HeroScroll({ children }: { children: ReactNode }) {
         const photo = scope.current?.querySelector<HTMLElement>("[data-hero-photo]");
         const flow = scope.current?.querySelector<HTMLElement>("[data-hero-synopsis-flow]");
         if (!hero || !photo || !flow) return;
+        // Les couleurs et le rayon viennent du thème : rien n'est écrit en dur ici.
+        const theme = getComputedStyle(document.documentElement);
+        const rem = parseFloat(theme.fontSize);
+        const frameRadius = parseFloat(theme.getPropertyValue("--radius")) * 1.8 * rem;
         gsap.set("[data-hero-synopsis]", { display: "block", opacity: 0 });
         // La copie du flux quitte l'écran mais reste lue par les lecteurs d'écran.
-        flow.setAttribute("data-collapsed", "");
+        flow.classList.add("sr-only");
 
         gsap
           .timeline({
@@ -59,8 +63,8 @@ export function HeroScroll({ children }: { children: ReactNode }) {
           })
           .fromTo(
             "[data-hero-plate]",
-            { clipPath: "inset(0vh 0vw 0vh 0vw round 0vw)" },
-            { clipPath: "inset(13vh 3.4vw 17vh 60vw round 1.1vw)", ease, duration: 1 },
+            { clipPath: "inset(0vh 0vw 0vh 0vw round 0px)" },
+            { clipPath: `inset(13vh 3.4vw 17vh 60vw round ${frameRadius}px)`, ease, duration: 1 },
             0,
           )
           // Le haut de la photo se cale sur le haut du cadre : la tête reste entière,
@@ -74,7 +78,7 @@ export function HeroScroll({ children }: { children: ReactNode }) {
               top: 0,
               right: 0,
               objectPosition: () =>
-                `50% ${getComputedStyle(hero).getPropertyValue("--photo-y").trim() || "16%"}`,
+                `50% ${getComputedStyle(hero).getPropertyValue("--portrait-y").trim()}`,
             },
             {
               width: "36.6vw",
@@ -89,7 +93,7 @@ export function HeroScroll({ children }: { children: ReactNode }) {
           )
           .to("[data-hero-shade]", { opacity: 0, ease, duration: 0.8 }, 0)
           .to("[data-hero-title]", { scale: 0.44, ease, duration: 1 }, 0)
-          .to("[data-hero-fill]", { color: "#f2ebdd", duration: 0.5 }, 0.5)
+          .to("[data-hero-fill]", { color: theme.getPropertyValue("--foreground").trim(), duration: 0.5 }, 0.5)
           // `filter` et non `opacity` : l'intro anime déjà l'opacité de ces deux éléments,
           // et elle peut encore être en cours au premier défilement.
           .fromTo(
@@ -108,7 +112,7 @@ export function HeroScroll({ children }: { children: ReactNode }) {
 
         // En repassant sur petit écran, la photo retrouve exactement son cadre CSS.
         return () => {
-          flow.removeAttribute("data-collapsed");
+          flow.classList.remove("sr-only");
           for (const property of ["width", "height", "top", "right", "object-position"]) {
             photo.style.removeProperty(property);
           }

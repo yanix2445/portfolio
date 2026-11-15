@@ -66,6 +66,9 @@ test.describe("accueil", () => {
 
     expect(await sectionIds(page)).toEqual(SECTION_IDS);
     await expect(page.getByRole("heading", { level: 1, name: OWNER.fullName })).toBeVisible();
+    await expect(
+      page.getByRole("heading", { level: 2, name: "Mon prochain rôle se joue dans votre équipe." }),
+    ).toBeAttached();
     await scrollThrough(page);
     expect(errors).toEqual([]);
   });

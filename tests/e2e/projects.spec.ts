@@ -20,14 +20,16 @@ test.describe("catalogue des projets", () => {
 
   test("un filtre réduit la liste à son domaine, « Tous » la rétablit", async ({ page }) => {
     await page.goto("/projets");
-    const filters = page.getByRole("group", { name: "Filtrer par domaine" }).getByRole("button");
+    const filters = page.getByRole("radiogroup", { name: "Filtrer par domaine" }).getByRole("radio");
     const posters = page.locator("[data-poster]");
     const domain = filters.nth(1);
     const label = (await domain.innerText()).trim();
 
+    await expect(filters.first()).toBeChecked();
     await domain.click();
 
-    await expect(domain).toHaveAttribute("aria-pressed", "true");
+    await expect(domain).toBeChecked();
+    await expect(filters.first()).not.toBeChecked();
     const filtered = await posters.count();
     expect(filtered).toBeGreaterThan(0);
     // Dès qu'il y a plusieurs domaines, un filtre retire au moins un projet.
@@ -37,20 +39,22 @@ test.describe("catalogue des projets", () => {
     }
     await expect(page.locator("[data-catalog-count]")).toContainText(String(filtered));
 
+    // Recliquer sur le filtre actif ne le retire pas : un filtre reste toujours choisi.
+    await domain.click();
+    await expect(domain).toBeChecked();
+
     await filters.first().click();
     await expect(posters).toHaveCount(PROJECT_COUNT);
   });
 
   test("les filtres s'utilisent au clavier, avec un focus visible", async ({ page }) => {
     await page.goto("/projets");
-    const domain = page
-      .getByRole("group", { name: "Filtrer par domaine" })
-      .getByRole("button")
-      .nth(1);
+    const filters = page.getByRole("radiogroup", { name: "Filtrer par domaine" }).getByRole("radio");
+    const domain = filters.nth(1);
 
-    await domain.focus();
-    await page.keyboard.press("Shift+Tab");
-    await page.keyboard.press("Tab");
+    // Le groupe se parcourt aux flèches : Tab y entre, la flèche passe au filtre suivant.
+    await filters.first().focus();
+    await page.keyboard.press("ArrowRight");
     await expect(domain).toBeFocused();
     const outline = await domain.evaluate((element) => {
       const style = getComputedStyle(element);
@@ -60,7 +64,7 @@ test.describe("catalogue des projets", () => {
     expect(outline.width).toBeGreaterThanOrEqual(2);
 
     await page.keyboard.press("Enter");
-    await expect(domain).toHaveAttribute("aria-pressed", "true");
+    await expect(domain).toBeChecked();
   });
 });
 

@@ -34,7 +34,7 @@ export async function EntryPage({ collection, slug }: { collection: Collection; 
     <article className="mx-auto w-full max-w-3xl px-4 py-12">
       <header className="mb-8">
         <h1 className="text-3xl font-semibold tracking-tight">{metadata.title}</h1>
-        <p className="mt-2 text-muted-foreground">{metadata.summary}</p>
+        <p className="mt-2 mb-3 text-muted-foreground">{metadata.summary}</p>
         <EntryMeta metadata={metadata} />
       </header>
       <Prose>

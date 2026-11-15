@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
+import { Button } from "@/components/ui/button";
 import { CONTACT, OWNER } from "@/lib/site";
 
 const NAV_LINKS = [
@@ -26,14 +27,14 @@ export function SiteHeader() {
   return (
     <header
       data-scrolled={scrolled}
-      className="type-label fixed inset-x-0 top-0 z-50 h-(--header-h) transition-colors duration-300 data-[scrolled=true]:bg-background/85 data-[scrolled=true]:backdrop-blur-md"
+      className="type-label fixed inset-x-0 top-0 z-50 h-header transition-colors duration-300 data-[scrolled=true]:bg-background/85 data-[scrolled=true]:backdrop-blur-md"
     >
-      <div className="flex h-full items-center justify-between gap-3 px-4 sm:px-[3.4vw]">
+      <div className="flex h-full items-center justify-between gap-3 px-gutter">
         <Link href="/" className="rounded-sm whitespace-nowrap">
           {OWNER.fullName}
         </Link>
         <nav aria-label="Navigation principale">
-          <ul className="flex items-center gap-3 sm:gap-[2.4vw]">
+          <ul className="flex items-center gap-3 md:gap-[2.4vw]">
             {NAV_LINKS.map(({ href, label }) => (
               <li key={href}>
                 <Link
@@ -45,12 +46,9 @@ export function SiteHeader() {
               </li>
             ))}
             <li className="max-sm:hidden">
-              <a
-                href={`tel:${CONTACT.phoneE164}`}
-                className="rounded-full border border-border px-[1.2em] py-[0.7em] transition-colors duration-200 hover:bg-foreground hover:text-background"
-              >
-                Appeler
-              </a>
+              <Button asChild variant="outline" size="label">
+                <a href={`tel:${CONTACT.phoneE164}`}>Appeler</a>
+              </Button>
             </li>
           </ul>
         </nav>

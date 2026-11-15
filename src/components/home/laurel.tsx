@@ -1,5 +1,3 @@
-import s from "./home.styles";
-
 const LEAF = "M0,0 Q4.2,-6.5 0,-14 Q-4.2,-6.5 0,0";
 const LEAVES = 12;
 const RADIUS = 37;
@@ -27,9 +25,9 @@ function branch(): string[] {
 const BRANCH = branch();
 
 /** Couronne de laurier décorative, dessinée en SVG côté serveur. */
-export function Laurel() {
+export function Laurel({ className }: { className?: string }) {
   return (
-    <svg viewBox="0 0 100 100" fill="currentColor" aria-hidden className={s.wreath}>
+    <svg viewBox="0 0 100 100" fill="currentColor" aria-hidden className={className}>
       <g>
         {BRANCH.map((transform) => (
           <path key={transform} d={LEAF} transform={transform} />

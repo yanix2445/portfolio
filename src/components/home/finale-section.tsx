@@ -1,38 +1,52 @@
+import { Button } from "@/components/ui/button";
 import { CONTACT, CV_PATH } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
-import s from "./home.styles";
+// Une phrase, trois lignes d'affiche. La dernière, en orange, garde une marge haute :
+// l'accent de « équipe » ne touche pas la ligne du dessus.
+const LINES = [
+  { text: "Mon prochain rôle" },
+  { text: "se joue dans" },
+  { text: "votre équipe.", accent: true },
+] as const;
 
 // La fin : l'appel à rejoindre une équipe, avec les trois moyens de contact.
 export function FinaleSection() {
   return (
-    <section aria-labelledby="finale-title" className={s.end} data-reveal-group>
+    <section
+      aria-labelledby="finale-title"
+      className="grid place-items-center border-t border-border px-gutter py-22 text-center md:min-h-svh md:py-[12vh]"
+      data-reveal-group
+    >
       <div>
-        <p className={cn(s.label, s.sectionLabel)}>Prochain rôle</p>
-        <h2 id="finale-title" aria-label="Dans votre équipe." className={cn(s.poster, s.endTitle)}>
-          <span aria-hidden data-reveal="finale">
-            Dans votre
-          </span>
-          <span aria-hidden className={s.endOutline} data-reveal="finale">
-            équipe.
-          </span>
+        <h2
+          id="finale-title"
+          aria-label={LINES.map(({ text }) => text).join(" ")}
+          className="type-poster text-display-finale"
+        >
+          {LINES.map((line) => (
+            <span
+              key={line.text}
+              aria-hidden
+              className={cn("block", "accent" in line && "mt-[0.13em] text-primary")}
+              data-reveal="finale"
+            >
+              {line.text}
+            </span>
+          ))}
         </h2>
-        <div className={s.btns}>
-          <a href={`tel:${CONTACT.phoneE164}`} className={cn(s.btn, s.btnHot)} data-reveal="button">
-            Appeler · {CONTACT.phone}
-          </a>
-          <a href={`mailto:${CONTACT.email}`} className={cn(s.btn, s.btnGhost)} data-reveal="button">
-            Écrire un e-mail
-          </a>
-          <a
-            href={CV_PATH}
-            target="_blank"
-            rel="noopener"
-            className={cn(s.btn, s.btnGhost)}
-            data-reveal="button"
-          >
-            CV (PDF)
-          </a>
+        <div className="mt-[6vh] flex flex-wrap justify-center gap-2.5 md:gap-[1vw]">
+          <Button asChild size="xl" data-reveal="button">
+            <a href={`tel:${CONTACT.phoneE164}`}>Appeler · {CONTACT.phone}</a>
+          </Button>
+          <Button asChild variant="outline" size="xl" data-reveal="button">
+            <a href={`mailto:${CONTACT.email}`}>Écrire un e-mail</a>
+          </Button>
+          <Button asChild variant="outline" size="xl" data-reveal="button">
+            <a href={CV_PATH} target="_blank" rel="noopener">
+              CV (PDF)
+            </a>
+          </Button>
         </div>
       </div>
     </section>

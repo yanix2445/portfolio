@@ -1,9 +1,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
-@import "../components/home/home.css";
-@import "../components/home/poster.css";
-@import "../components/projects/catalog.css";
 @plugin "@tailwindcss/typography";
 
 @custom-variant dark (&:is(.dark *));
@@ -14,7 +11,8 @@
   --font-sans: var(--font-hanken);
   --font-mono: var(--font-geist-mono);
   --font-display: var(--font-big-shoulders);
-  --font-heading: var(--font-big-shoulders);
+  /* Titres d'interface (cartes, champs) : en sans. Le lettrage d'affiche passe par `type-poster`. */
+  --font-heading: var(--font-hanken);
   --color-soft: var(--soft);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
@@ -52,7 +50,92 @@
   --radius-2xl: calc(var(--radius) * 1.8);
   --radius-3xl: calc(var(--radius) * 2.2);
   --radius-4xl: calc(var(--radius) * 2.6);
+
+  /* Espacements du site. Les valeurs fluides sont résolues plus bas, par taille d'écran. */
+  --spacing-gutter: var(--gutter);
+  --spacing-header: var(--header-h);
+  --spacing-poster: clamp(1.25rem, 2.2vw, 2.5rem);
+  --spacing-control-xl: clamp(3.5rem, 5.25vw, 5.25rem);
+
+  /* Échelle de texte. Chaque rôle porte sa taille, son interligne, son approche et sa graisse. */
+  --text-label: clamp(0.625rem, 0.8vw, 0.8125rem);
+  --text-label--letter-spacing: 0.16em;
+  --text-caption: var(--fs-caption);
+  --text-caption--line-height: 1.35;
+  --text-meta: var(--fs-meta);
+  --text-meta--font-weight: 500;
+  --text-action: clamp(0.75rem, 1.15vw, 1.125rem);
+  --text-action--font-weight: 600;
+  --text-button: var(--fs-button);
+  --text-button--font-weight: 600;
+  --text-body-sm: var(--fs-body-sm);
+  --text-body-sm--line-height: 1.4;
+  --text-body-sm--font-weight: 500;
+  --text-body: var(--fs-body);
+  --text-body--line-height: 1.45;
+  --text-lead: var(--fs-lead);
+  --text-lead--line-height: 1.35;
+  --text-lead--letter-spacing: -0.01em;
+  --text-lead--font-weight: 500;
+  --text-subtitle: var(--fs-subtitle);
+  --text-subtitle--letter-spacing: -0.02em;
+  --text-subtitle--font-weight: 500;
+  --text-synopsis: var(--fs-synopsis);
+  --text-synopsis--line-height: 1.18;
+  --text-synopsis--letter-spacing: -0.02em;
+  --text-synopsis--font-weight: 500;
+  --text-synopsis-pinned: min(2.55vw, 4.2vh);
+  --text-synopsis-pinned--line-height: 1.18;
+  --text-synopsis-pinned--letter-spacing: -0.02em;
+  --text-synopsis-pinned--font-weight: 500;
+  --text-wreath: 10cqi;
+  --text-wreath--line-height: 0.9;
+  --text-wreath--letter-spacing: 0.01em;
+  --text-wreath--font-weight: 800;
+
+  /* Lettrage d'affiche : du titre de carte au nom plein écran. */
+  --text-display-poster: var(--fs-display-poster);
+  --text-display-poster--line-height: 0.84;
+  --text-display-md: var(--fs-display-md);
+  --text-display-md--line-height: 0.86;
+  --text-display-lg: var(--fs-display-lg);
+  --text-display-lg--line-height: 0.82;
+  --text-display-xl: var(--fs-display-xl);
+  --text-display-xl--line-height: 0.82;
+  --text-display-finale: var(--fs-display-finale);
+  --text-display-finale--line-height: 0.98;
+  --text-display-name: var(--fs-display-name);
+  --text-display-name--line-height: 0.8;
+  --text-display-numeral: var(--fs-display-numeral);
+  --text-display-numeral--line-height: 0.74;
+  --text-display-numeral-wide: min(62vh, 40vw);
+  --text-display-numeral-wide--line-height: 0.74;
+
+  /* Mouvement. */
+  --ease-poster: cubic-bezier(0.2, 0.9, 0.2, 1);
+  --animate-cue: cue 1.8s ease-in-out infinite;
+
+  @keyframes cue {
+    0% {
+      transform: scaleY(0);
+      transform-origin: top;
+    }
+    50% {
+      transform: scaleY(1);
+      transform-origin: top;
+    }
+    51% {
+      transform-origin: bottom;
+    }
+    100% {
+      transform: scaleY(0);
+      transform-origin: bottom;
+    }
+  }
 }
+
+/* Actes en rangée : l'animation pose `data-orientation="horizontal"` sur la section, sur grand écran. */
+@custom-variant horizontal (&:where([data-orientation="horizontal"], [data-orientation="horizontal"] *));
 
 :root {
   --header-h: 4.25rem;
@@ -91,14 +174,98 @@
   --sidebar-accent-foreground: #f2ebdd;
   --sidebar-border: rgb(242 235 221 / 0.18);
   --sidebar-ring: #ff5b2e;
+
+  /* Valeurs fluides : téléphone d'abord, grand écran dans la requête ci-dessous. */
+  --gutter: 1rem;
+  --portrait-y: 12%;
+  --outline-thin: 0.012em;
+  --outline-numeral: 1px;
+  --fs-caption: 0.6875rem;
+  --fs-meta: 0.9375rem;
+  --fs-button: 0.9375rem;
+  --fs-body-sm: 1rem;
+  --fs-body: 1rem;
+  --fs-lead: 1.0625rem;
+  --fs-subtitle: 1.1875rem;
+  --fs-synopsis: 1.625rem;
+  --fs-display-poster: 17vw;
+  --fs-display-md: 17vw;
+  --fs-display-lg: 21vw;
+  --fs-display-xl: 21vw;
+  --fs-display-finale: 17.5vw;
+  --fs-display-name: 30vw;
+  --fs-display-numeral: 36vw;
+}
+
+@media (min-width: 48rem) {
+  :root {
+    --gutter: 3.4vw;
+    --portrait-y: 16%;
+    --outline-numeral: 1.5px;
+    --fs-caption: clamp(0.625rem, 0.98vw, 0.9375rem);
+    --fs-meta: clamp(0.6875rem, 1.12vw, 1.125rem);
+    --fs-button: clamp(0.8125rem, 1.25vw, 1.25rem);
+    --fs-body-sm: clamp(0.8125rem, 1.25vw, 1.25rem);
+    --fs-body: clamp(0.8125rem, 1.4vw, 1.375rem);
+    --fs-lead: clamp(0.8125rem, 1.55vw, 1.5625rem);
+    --fs-subtitle: clamp(0.9375rem, 2.1vw, 2.125rem);
+    --fs-synopsis: clamp(1.5rem, 3.4vw, 3.5rem);
+    --fs-display-poster: clamp(2.5rem, 5.9vw, 7rem);
+    --fs-display-md: 8.2vw;
+    --fs-display-lg: 9.6vw;
+    --fs-display-xl: 11.5vw;
+    --fs-display-finale: min(10.4vw, 24svh);
+    /* Bornées par la hauteur : sur un écran bas, le nom ne monte pas sur la légende. */
+    --fs-display-name: min(21.5vw, 34.5svh);
+    --fs-display-numeral: min(62vh, 30vw);
+  }
+
+  /* Cadrage vertical du portrait. Plus l'écran est large, plus le cadre est bas :
+     on remonte l'image pour que le haut de la tête ne soit jamais rogné. */
+  @media (min-aspect-ratio: 17/10) {
+    :root {
+      --portrait-y: 13%;
+    }
+  }
+
+  @media (min-aspect-ratio: 2/1) {
+    :root {
+      --portrait-y: 10%;
+    }
+  }
+
+  @media (min-aspect-ratio: 12/5) {
+    :root {
+      --portrait-y: 8%;
+    }
+  }
 }
 
 /* Légende : petites capitales mono espacées. */
 @utility type-label {
   font-family: var(--font-mono);
-  font-size: clamp(0.625rem, 0.8vw, 0.8125rem);
-  letter-spacing: 0.16em;
+  font-size: var(--text-label);
+  letter-spacing: var(--text-label--letter-spacing);
   text-transform: uppercase;
+}
+
+/* Lettrage d'affiche : capitales condensées. La taille vient d'un `text-display-*`. */
+@utility type-poster {
+  font-family: var(--font-display);
+  font-weight: 900;
+  letter-spacing: -0.005em;
+  text-transform: uppercase;
+}
+
+/* Lettres en contour : filet crème, ou filet orange pour les numéros d'acte. */
+@utility text-outline {
+  color: transparent;
+  -webkit-text-stroke: var(--outline-thin) var(--color-foreground);
+}
+
+@utility text-outline-accent {
+  color: transparent;
+  -webkit-text-stroke: var(--outline-numeral) var(--color-primary);
 }
 
 @layer base {

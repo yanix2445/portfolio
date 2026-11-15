@@ -50,7 +50,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     >
       <body className="flex min-h-full flex-col">
         <SiteHeader />
-        <main className="flex flex-1 flex-col pt-(--header-h)">{children}</main>
+        <main className="flex flex-1 flex-col pt-header">{children}</main>
         <SiteFooter />
         <Analytics />
       </body>

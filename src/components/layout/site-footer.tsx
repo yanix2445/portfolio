@@ -12,7 +12,7 @@ const LINK = "rounded-sm transition-colors duration-200 hover:text-foreground";
 export function SiteFooter() {
   return (
     <footer className="type-label border-t border-border text-muted-foreground">
-      <div className="flex flex-wrap items-center justify-between gap-x-8 gap-y-4 px-4 py-7 sm:px-[3.4vw]">
+      <div className="flex flex-wrap items-center justify-between gap-x-8 gap-y-4 px-gutter py-7">
         <p>© {OWNER.fullName}</p>
         <ul className="flex flex-wrap items-center gap-x-6 gap-y-3">
           <li>

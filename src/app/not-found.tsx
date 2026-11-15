@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 
+import { Button } from "@/components/ui/button";
+
 export const metadata: Metadata = {
   title: "Page introuvable",
 };
@@ -12,12 +14,9 @@ export default function NotFound() {
       <p className="mt-4 text-muted-foreground">
         La page demandée n&apos;existe pas ou a été déplacée.
       </p>
-      <Link
-        href="/"
-        className="mt-8 inline-block rounded-md border px-4 py-2 text-sm font-medium hover:bg-muted"
-      >
-        Retour à l&apos;accueil
-      </Link>
+      <Button asChild variant="outline" size="lg" className="mt-8">
+        <Link href="/">Retour à l&apos;accueil</Link>
+      </Button>
     </section>
   );
 }
