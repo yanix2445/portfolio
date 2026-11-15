@@ -15,9 +15,10 @@ Où tourne le site et comment il est livré.
 - Local : `http://localhost:3000`.
 - Les variables d'environnement sont déclarées dans Vercel, séparément pour Preview et Production, et dans `.env.local` en local (non commité).
 - Variables du formulaire de contact, saisies le 2026-11-16 par les CLI (`vercel env add`, `resend api-keys create`, `wrangler turnstile widget create`) :
-  - **Preview** : clés de test Turnstile de Cloudflare (le widget marche sur toutes les URL de prévisualisation et affiche un bandeau « test »), clé Resend `portfolio-preview`, destinataire `CONTACT_TO_EMAIL`.
+  - **Preview** : widget Turnstile `portfolio-contact-preview` (hôtes `portfolio-git-claude-home-generique-yanis-harrat.vercel.app` et `localhost`), clé Resend `portfolio-preview`, destinataire `CONTACT_TO_EMAIL`. Choix de Yanis du 2026-11-16 : un vrai widget plutôt que les clés de test. Le widget ne marche donc que sur l'URL fixe de cette branche ; une URL par commit ou une autre branche affiche un widget en erreur tant que son hôte n'est pas ajouté (`wrangler turnstile widget update`).
   - **Production** : widget Turnstile `portfolio-contact` (hôtes `yanis-harrat.com`, `www`, `portfolio-peach-chi-42.vercel.app`, `localhost`), clé Resend `portfolio-production`, même destinataire.
   - Les deux clés Resend sont en envoi seul, limitées au domaine `yanis-harrat.com`.
+  - Widgets Turnstile de l'ancien portfolio supprimés le 2026-11-16 sur confirmation de Yanis : `portfolio-prod-2026-10-15`, `portfolio-dev-2026-10-15`, `yanis-harrat.com`. Restent : `portfolio-contact`, `portfolio-contact-preview`, `portfolio-waitlist` (page d'attente en ligne, ne pas supprimer) et `polaris` (autre projet).
   - `/contact` est prérendue : après un changement de variable, il faut un nouveau déploiement pour que le formulaire apparaisse ou disparaisse.
   - En local : `vercel env pull --environment preview --project portfolio --scope yanis-harrat` écrit `.env.local`.
 
