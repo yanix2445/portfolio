@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 
+import { ContactForm } from "@/components/contact/contact-form";
 import { CONTACT, CV_PATH, OWNER } from "@/lib/site";
+import { cn } from "@/lib/utils";
 
 export const metadata: Metadata = {
   title: "Contact",
@@ -11,45 +13,67 @@ export const metadata: Metadata = {
 const CHANNELS = [
   { label: "E-mail", value: CONTACT.email, href: `mailto:${CONTACT.email}` },
   { label: "Téléphone", value: CONTACT.phone, href: `tel:${CONTACT.phoneE164}` },
-  { label: "LinkedIn", value: "linkedin.com/in/yanis-harrat", href: CONTACT.linkedin, external: true },
-  { label: "GitHub", value: "github.com/yanix2445", href: CONTACT.github, external: true },
+  { label: "LinkedIn", value: "linkedin.com/in/yanis-harrat", href: CONTACT.linkedin, rel: "noopener noreferrer me" },
+  { label: "GitHub", value: "github.com/yanix2445", href: CONTACT.github, rel: "noopener noreferrer me" },
+  { label: "CV", value: "Télécharger le PDF", href: CV_PATH, rel: "noopener" },
 ] as const;
 
+// Le formulaire n'est proposé que si la clé de site Turnstile est configurée : sans elle
+// (prévisualisation sans clés, par exemple), la page garde ses coordonnées directes.
 export default function ContactPage() {
+  const siteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
+
   return (
-    <section className="mx-auto w-full max-w-3xl px-4 py-12">
-      <h1 className="mb-4 text-3xl font-semibold tracking-tight">Contact</h1>
-      <p className="mb-8 text-muted-foreground">
+    <section
+      aria-labelledby="contact-title"
+      className="px-gutter pt-12 pb-20 md:pt-[12vh] md:pb-[14vh]"
+    >
+      <h1 id="contact-title" className="type-poster pt-[0.1em] text-display-xl">
+        Contact
+      </h1>
+      <p className="mt-[3vh] max-w-[44ch] text-body text-soft">
         Je recherche un stage ou une alternance en administration systèmes et réseaux.
         N&apos;hésitez pas à me contacter directement.
       </p>
 
-      <dl className="grid gap-4 sm:grid-cols-2">
-        {CHANNELS.map((channel) => (
-          <div key={channel.label} className="rounded-xl border bg-card p-5 text-card-foreground">
-            <dt className="text-sm text-muted-foreground">{channel.label}</dt>
-            <dd className="mt-1 font-medium">
-              <a
-                href={channel.href}
-                className="hover:underline"
-                {...("external" in channel
-                  ? { target: "_blank", rel: "noopener noreferrer me" }
-                  : {})}
-              >
-                {channel.value}
-              </a>
-            </dd>
+      <div
+        className={cn(
+          "mt-10 grid gap-12 md:mt-[7vh]",
+          siteKey && "md:grid-cols-[1.15fr_0.85fr] md:items-start md:gap-[6vw]",
+        )}
+      >
+        {siteKey ? (
+          <div>
+            <ContactForm siteKey={siteKey} />
+            <noscript>
+              <p className="mt-6 text-body-sm text-soft">
+                Le formulaire a besoin de JavaScript. Vous pouvez aussi m&apos;écrire directement à{" "}
+                {CONTACT.email}.
+              </p>
+            </noscript>
           </div>
-        ))}
-      </dl>
+        ) : null}
 
-      <p className="mt-8 text-sm text-muted-foreground">
-        Mon CV est aussi{" "}
-        <a href={CV_PATH} target="_blank" rel="noopener" className="font-medium underline">
-          téléchargeable en PDF
-        </a>
-        . Un formulaire de contact arrivera prochainement.
-      </p>
+        <dl className={cn(!siteKey && "md:max-w-[60vw]")} data-contact-channels>
+          {CHANNELS.map((channel) => (
+            <div
+              key={channel.label}
+              className="grid items-baseline gap-1.5 border-t border-border py-4.5 last:border-b md:grid-cols-[9rem_1fr] md:gap-6"
+            >
+              <dt className="type-label text-muted-foreground">{channel.label}</dt>
+              <dd className="text-lead">
+                <a
+                  href={channel.href}
+                  className="underline-offset-4 hover:underline"
+                  {...("rel" in channel ? { target: "_blank", rel: channel.rel } : {})}
+                >
+                  {channel.value}
+                </a>
+              </dd>
+            </div>
+          ))}
+        </dl>
+      </div>
     </section>
   );
 }

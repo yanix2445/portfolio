@@ -278,6 +278,15 @@
   html {
     @apply font-sans;
   }
+  /* Surfaces du navigateur : la sélection et le curseur de saisie prennent l'accent. */
+  ::selection {
+    background-color: var(--primary);
+    color: var(--primary-foreground);
+  }
+  input,
+  textarea {
+    caret-color: var(--primary);
+  }
   /* Focus clavier à l'accent partout (contraste ≥ 3:1 sur fond sombre). */
   :focus-visible {
     outline: 2px solid var(--primary);

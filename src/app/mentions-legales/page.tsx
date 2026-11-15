@@ -35,16 +35,16 @@ export default function MentionsLegalesPage() {
 
         <h2>Formulaire de contact</h2>
         <p>
-          Le formulaire de contact n&apos;est pas encore en service. Une fois en ligne, les
-          informations saisies (nom, adresse e-mail, message) serviront uniquement à répondre à
-          votre demande. Elles ne seront pas stockées par le site : elles seront transmises par
-          e-mail via le service <strong>Resend</strong>, qui les conserve sur des serveurs
-          situés aux États-Unis pendant une durée de <strong>30 jours</strong>.
+          Les informations saisies dans le formulaire de contact (nom, adresse e-mail, message)
+          servent uniquement à répondre à votre demande. Elles ne sont pas stockées par le
+          site : elles sont transmises par e-mail via le service <strong>Resend</strong>, qui
+          les conserve sur des serveurs situés aux États-Unis pendant une durée de{" "}
+          <strong>30 jours</strong>.
         </p>
 
         <h2>Protection anti-spam</h2>
         <p>
-          Le formulaire sera protégé par <strong>Cloudflare Turnstile</strong>, qui analyse
+          Le formulaire est protégé par <strong>Cloudflare Turnstile</strong>, qui analyse
           des signaux techniques du navigateur pour distinguer les humains des robots. Ce
           traitement repose sur l&apos;intérêt légitime de l&apos;éditeur à protéger le site
           contre le spam et les abus.
