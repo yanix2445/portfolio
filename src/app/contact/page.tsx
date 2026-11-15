@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 
 import { ContactForm } from "@/components/contact/contact-form";
+import { PageHeader } from "@/components/layout/page-header";
+import { contactSiteKey } from "@/lib/contact";
 import { CONTACT, CV_PATH, OWNER } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
@@ -18,23 +20,21 @@ const CHANNELS = [
   { label: "CV", value: "Télécharger le PDF", href: CV_PATH, rel: "noopener" },
 ] as const;
 
-// Le formulaire n'est proposé que si la clé de site Turnstile est configurée : sans elle
+// Le formulaire n'est proposé que si Turnstile et Resend sont configurés : sinon
 // (prévisualisation sans clés, par exemple), la page garde ses coordonnées directes.
+// La page est prérendue : seul ce choix est figé au build, aucun secret n'en sort.
 export default function ContactPage() {
-  const siteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
+  const siteKey = contactSiteKey(process.env);
 
   return (
     <section
       aria-labelledby="contact-title"
       className="px-gutter pt-12 pb-20 md:pt-[12vh] md:pb-[14vh]"
     >
-      <h1 id="contact-title" className="type-poster pt-[0.1em] text-display-xl">
-        Contact
-      </h1>
-      <p className="mt-[3vh] max-w-[44ch] text-body text-soft">
+      <PageHeader id="contact-title" title="Contact">
         Je recherche un stage ou une alternance en administration systèmes et réseaux.
         N&apos;hésitez pas à me contacter directement.
-      </p>
+      </PageHeader>
 
       <div
         className={cn(

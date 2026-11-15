@@ -10,8 +10,8 @@ Comment le site s'intègre aux services externes. La carte de tous les outils se
 
 ## Calling conventions
 
-- Les secrets restent côté serveur : `RESEND_API_KEY`, `TURNSTILE_SECRET_KEY`, `CONTACT_TO_EMAIL`. Seule la clé de site `NEXT_PUBLIC_TURNSTILE_SITE_KEY` est exposée au client ; sans elle, le formulaire n'est pas affiché. La liste des variables est dans `.env.example`.
+- Les secrets restent côté serveur : `RESEND_API_KEY`, `TURNSTILE_SECRET_KEY`, `CONTACT_TO_EMAIL`. Seule la clé de site `NEXT_PUBLIC_TURNSTILE_SITE_KEY` est exposée au client. S'il manque une des quatre variables, le formulaire n'est pas affiché. La liste des variables est dans `.env.example`.
 - On n'envoie jamais de mail si la vérification Turnstile échoue.
-- Si Resend ou Turnstile est indisponible, l'utilisateur reçoit une erreur générique l'invitant à réessayer plus tard. Aucune relance automatique. Les deux clients renvoient `false` pour tout échec et ne lèvent jamais.
+- Si Resend ou Turnstile est indisponible, l'utilisateur reçoit une erreur générique l'invitant à réessayer plus tard. Aucune relance automatique. Les deux clients renvoient `false` pour tout échec et ne lèvent jamais. Ils importent `server-only` : un composant client qui les importerait casserait le build.
 - Clés de test Turnstile (publiques, dans `.env.example`) pour le développement et les tests e2e. Aucune clé Resend n'entre dans le repo.
 - RGPD : Resend (stockage aux États-Unis, rétention de 30 jours), Turnstile (intérêt légitime) et Vercel Analytics doivent être déclarés dans `/mentions-legales`. Tout nouveau service doit y être ajouté.

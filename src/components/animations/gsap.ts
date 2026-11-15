@@ -12,7 +12,8 @@ export const MOTION_OK = "(prefers-reduced-motion: no-preference)";
 
 // Épinglage et défilement horizontal : il faut de la largeur et assez de hauteur pour le hero
 // (un téléphone en paysage n'en a pas). Sinon, tout reste en colonne.
-const ROOMY = "(min-width: 768px) and (min-height: 35rem)";
+// En rem comme le `md:` de Tailwind : la mise en page et l'animation basculent au même endroit.
+const ROOMY = "(min-width: 48rem) and (min-height: 35rem)";
 export const WIDE = `${ROOMY} and ${MOTION_OK}`;
 export const NARROW = `(not (${ROOMY})) and ${MOTION_OK}`;
 

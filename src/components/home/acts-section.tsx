@@ -5,32 +5,32 @@ import { cn } from "@/lib/utils";
 const ROMAN = ["I", "II", "III", "IV", "V", "VI", "VII", "VIII"] as const;
 
 // Un acte par expérience, dans l'ordre chronologique. En colonne par défaut :
-// l'animation les met en rangée sur grand écran (variante `horizontal:`).
+// l'animation les met en rangée sur grand écran (variante `acts-row:`).
 export function ActsSection() {
   return (
     <section
       aria-labelledby="acts-title"
-      className="relative border-t border-border horizontal:h-screen horizontal:overflow-hidden"
+      className="relative border-t border-border acts-row:h-screen acts-row:overflow-hidden"
       data-acts
     >
       <h2 id="acts-title" className="sr-only">
         Mon parcours
       </h2>
       <div
-        className="flex flex-col horizontal:h-full horizontal:w-max horizontal:flex-row horizontal:will-change-transform"
+        className="flex flex-col acts-row:h-full acts-row:w-max acts-row:flex-row acts-row:will-change-transform"
         data-acts-track
       >
         {ACTS.map((act, index) => (
           <article
             key={act.place}
-            className="relative grid items-end gap-5 border-b border-border px-gutter py-14 md:grid-cols-[0.85fr_1.15fr] md:gap-[4vw] md:py-[12vh] horizontal:h-full horizontal:flex-[0_0_100vw] horizontal:border-b-0 horizontal:pt-[15vh]"
+            className="relative grid items-end gap-5 border-b border-border px-gutter py-14 md:grid-cols-[0.85fr_1.15fr] md:gap-[4vw] md:py-[12vh] acts-row:h-full acts-row:flex-[0_0_100vw] acts-row:border-b-0 acts-row:pt-[15vh]"
             data-act
           >
             <div
               aria-hidden
               className={cn(
-                "type-poster text-display-numeral horizontal:text-display-numeral-wide",
-                act.current ? "text-primary" : "text-outline-accent",
+                "type-poster text-display-numeral acts-row:text-display-numeral-wide",
+                act.current ? "text-primary" : "type-outline-accent",
               )}
               data-act-num
             >
@@ -63,7 +63,7 @@ export function ActsSection() {
       </div>
       <div
         aria-hidden
-        className="type-label absolute inset-x-gutter bottom-[3.6vh] hidden items-center gap-[1.4vw] text-muted-foreground horizontal:flex"
+        className="type-label absolute inset-x-gutter bottom-[3.6vh] hidden items-center gap-[1.4vw] text-muted-foreground acts-row:flex"
       >
         <span data-acts-count>Acte 1 / {ACTS.length}</span>
         <div className="relative h-px flex-1 bg-border">

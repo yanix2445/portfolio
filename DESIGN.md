@@ -143,16 +143,16 @@ Every size is a named token (`--text-*`). Each role carries its own size, line h
 | Action, button | `text-action`, `text-button` | Links and controls |
 | Label | `type-label` | Mono captions |
 
-Outlined letters use `text-outline` (cream hairline) and `text-outline-accent` (orange, act numbers).
+Outlined letters use `type-outline` (cream hairline) and `type-outline-accent` (orange, act numbers).
 
-New text sizes are added to `--text-*` in `globals.css` and to `TEXT_SIZES` in `src/lib/utils.ts`, or `cn()` would treat them as colors.
+New text sizes and spacing tokens are added to `globals.css` and to `TEXT_SIZES` or `SPACINGS` in `src/lib/utils.ts`, or `cn()` would not merge them correctly.
 
 ## Layout
 
 - **Gutter**: `px-gutter`, 3.4vw on wide screens and 1rem on phones.
 - **Rhythm**: sections are separated by a top rule (`border-t border-border`) and screen-relative padding. Scene-specific measures (a title pinned 16vh from the top) stay as viewport units in the classes; they are composition, not tokens.
-- **Breakpoint**: one, at 768 px (`md:`). Below it everything stacks in a column.
-- **Pinned scenes**: the hero and the acts are pinned and scrubbed on screens at least 768 px wide and 35 rem tall. Elsewhere, and with reduced motion, nothing is pinned.
+- **Breakpoints**: `md:` (48 rem) is the one that reshapes pages; below it everything stacks in a column. `lg:` only adds a third column to the catalog grid, and `max-sm:` hides the header call button.
+- **Pinned scenes**: the hero and the acts are pinned and scrubbed on screens at least 48 rem wide and 35 rem tall. Elsewhere, and with reduced motion, nothing is pinned.
 - **Portrait**: the head is never cropped. `--portrait-y` lowers the vertical framing as the screen gets wider.
 
 ## Elevation & Depth

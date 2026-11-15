@@ -3,7 +3,14 @@ import "./setup-content";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { sendContact } from "@/actions/contact";
-import { CONTACT_LIMITS, CONTACT_MESSAGES, TURNSTILE_FIELD, validateContact } from "@/lib/contact";
+import {
+  CONTACT_LIMITS,
+  CONTACT_MESSAGES,
+  TURNSTILE_FIELD,
+  contactSiteKey,
+  readContactFields,
+  validateContact,
+} from "@/lib/contact";
 import { sendContactMail } from "@/lib/resend";
 import { verifyTurnstile } from "@/lib/turnstile";
 
@@ -48,6 +55,36 @@ describe("validation du formulaire de contact", () => {
     expect(
       validateContact({ ...VALID, message: "a".repeat(CONTACT_LIMITS.message + 1) }),
     ).toHaveProperty("message");
+  });
+});
+
+describe("affichage du formulaire de contact", () => {
+  const ENV = {
+    NEXT_PUBLIC_TURNSTILE_SITE_KEY: "site",
+    TURNSTILE_SECRET_KEY: "secret",
+    RESEND_API_KEY: "re_test",
+    CONTACT_TO_EMAIL: "moi@example.com",
+  };
+
+  it("donne la clé de site quand Turnstile et Resend sont configurés", () => {
+    expect(contactSiteKey(ENV)).toBe("site");
+  });
+
+  it("ne propose pas le formulaire s'il manque une seule variable", () => {
+    for (const missing of Object.keys(ENV)) {
+      expect(contactSiteKey({ ...ENV, [missing]: undefined }), missing).toBeNull();
+      expect(contactSiteKey({ ...ENV, [missing]: "" }), missing).toBeNull();
+    }
+    expect(contactSiteKey({})).toBeNull();
+  });
+});
+
+describe("lecture des champs du formulaire", () => {
+  it("compte les retours à la ligne comme le navigateur, CRLF ou non", () => {
+    const data = new FormData();
+    data.set("message", "Bonjour,\r\nà bientôt\rCamille");
+
+    expect(readContactFields(data).message).toBe("Bonjour,\nà bientôt\nCamille");
   });
 });
 
@@ -101,6 +138,12 @@ describe("action du formulaire de contact", () => {
       message: CONTACT_MESSAGES.failure,
       fields: VALID,
     });
+  });
+
+  it("ne lève pas non plus si l'appel n'est pas un formulaire", async () => {
+    const result = await sendContact(null, null as unknown as FormData);
+
+    expect(result).toMatchObject({ status: "error", message: CONTACT_MESSAGES.failure });
   });
 
   it("ne lève jamais, même si un service plante", async () => {

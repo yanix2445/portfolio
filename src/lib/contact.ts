@@ -26,6 +26,21 @@ export const CONTACT_MESSAGES = {
   failure: "Le message n'a pas pu être envoyé. Réessayez plus tard, ou écrivez-moi par e-mail.",
 } as const;
 
+const REQUIRED_ENV = [
+  "NEXT_PUBLIC_TURNSTILE_SITE_KEY",
+  "TURNSTILE_SECRET_KEY",
+  "RESEND_API_KEY",
+  "CONTACT_TO_EMAIL",
+] as const;
+
+/**
+ * La clé de site Turnstile si le formulaire peut fonctionner de bout en bout, sinon `null`.
+ * Il faut les quatre variables : un formulaire affiché sans clé d'envoi échouerait toujours.
+ */
+export function contactSiteKey(env: Record<string, string | undefined>): string | null {
+  return REQUIRED_ENV.every((name) => env[name]) ? (env.NEXT_PUBLIC_TURNSTILE_SITE_KEY ?? null) : null;
+}
+
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 function text(value: unknown): string {
@@ -37,7 +52,8 @@ export function readContactFields(form: FormData): ContactFields {
   return {
     name: text(form.get("name")).replace(/\s+/g, " "),
     email: text(form.get("email")),
-    message: text(form.get("message")),
+    // Un navigateur envoie les retours à la ligne en CRLF : on compte comme lui, en LF.
+    message: text(form.get("message")).replace(/\r\n?/g, "\n"),
   };
 }
 

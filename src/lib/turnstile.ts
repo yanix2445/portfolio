@@ -1,3 +1,5 @@
+import "server-only";
+
 const SITEVERIFY_URL = "https://challenges.cloudflare.com/turnstile/v0/siteverify";
 const TIMEOUT_MS = 8000;
 

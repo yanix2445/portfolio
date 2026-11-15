@@ -69,4 +69,6 @@ Source: [spec.md](./spec.md), maquettes du final [mockup/](./mockup/)
 | Pas de dossier `typography/` : deux `@utility` (`type-poster`, `type-label`) et des tokens `text-*` | Un composant polymorphe pour chaque balise aurait été plus lourd que deux classes |
 | Les coordonnées de `/contact` sont une liste à filets, pas des cartes | Même forme que la fiche technique de l'accueil ; quatre cartes identiques n'apportaient rien |
 | `sonner` est rendu par le formulaire, pas par le layout | Les autres pages ne chargent pas la bibliothèque |
+| Revue indépendante du 2026-11-15 : formulaire affiché seulement avec les quatre clés, variantes shadcn inutilisées retirées, points de rupture JS en rem, bouton d'envoi en `aria-disabled`, résultat affiché sous le bouton, `cn()` étendu aux espacements | Corrections demandées par la revue ; détail dans le commit |
+| Écart assumé hors des tailles capturées : entre 640 et 767 px, la gouttière de l'en-tête et du pied passe de 3,4vw à 1 rem | Elle suit maintenant celle des sections |
 | La référence visuelle a été refaite depuis le commit d'avant la passe, bouton de l'en-tête masqué | La comparaison ne signale ainsi que les écarts hors périmètre voulu |

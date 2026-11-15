@@ -5,6 +5,7 @@ import {
   TURNSTILE_FIELD,
   readContactFields,
   validateContact,
+  type ContactFields,
   type ContactResult,
 } from "@/lib/contact";
 import { sendContactMail } from "@/lib/resend";
@@ -19,9 +20,10 @@ export async function sendContact(
   _previous: ContactResult | null,
   form: FormData,
 ): Promise<ContactResult> {
-  const fields = readContactFields(form);
+  let fields: ContactFields | undefined;
 
   try {
+    fields = readContactFields(form);
     const errors = validateContact(fields);
     if (Object.keys(errors).length > 0) {
       return { status: "error", message: CONTACT_MESSAGES.invalid, errors, fields };

@@ -21,6 +21,7 @@ import {
   type ContactErrors,
   type ContactFields,
 } from "@/lib/contact";
+import { cn } from "@/lib/utils";
 
 const FIELD_ORDER: (keyof ContactFields)[] = ["name", "email", "message"];
 
@@ -51,6 +52,11 @@ export function ContactForm({ siteKey }: { siteKey: string }) {
   }, [state]);
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    // Le bouton reste focalisable pendant l'envoi (`aria-disabled`) : on refuse ici le double envoi.
+    if (pending) {
+      event.preventDefault();
+      return;
+    }
     const data = new FormData(event.currentTarget);
     const errors = validateContact(readContactFields(data));
     if (Object.keys(errors).length > 0) {
@@ -121,17 +127,33 @@ export function ContactForm({ siteKey }: { siteKey: string }) {
           {errors.message ? <FieldError id="message-error">{errors.message}</FieldError> : null}
         </Field>
 
-        <Turnstile
-          ref={turnstile}
-          siteKey={siteKey}
-          options={{ theme: "dark", language: "fr", size: "flexible" }}
-        />
+        {/* Le widget fait au moins 300 px de large : sur un écran plus étroit, il défile
+            dans son cadre au lieu d'élargir la page. */}
+        <div className="overflow-x-auto">
+          <Turnstile
+            ref={turnstile}
+            siteKey={siteKey}
+            options={{ theme: "dark", language: "fr", size: "flexible" }}
+          />
+        </div>
 
         <Field>
-          <Button type="submit" size="xl" disabled={pending} className="md:w-fit">
+          <Button type="submit" size="xl" aria-disabled={pending} className="md:w-fit">
             {pending ? <Spinner data-icon="inline-start" aria-label="Envoi en cours" /> : null}
             Envoyer le message
           </Button>
+          {/* Le résultat reste affiché ici : le toast, lui, disparaît (et n'existe pas sans JavaScript). */}
+          {state ? (
+            <p
+              className={cn(
+                "text-body-sm",
+                state.status === "success" ? "text-foreground" : "text-destructive",
+              )}
+              data-contact-result={state.status}
+            >
+              {state.message}
+            </p>
+          ) : null}
           <FieldDescription>
             Votre message m&apos;est transmis par e-mail et n&apos;est pas conservé par le site.{" "}
             <Link href="/mentions-legales">Mentions légales et confidentialité</Link>

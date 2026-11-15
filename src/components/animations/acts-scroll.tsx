@@ -23,7 +23,7 @@ export function ActsScroll({ children }: { children: ReactNode }) {
 
       mm.add(WIDE, () => {
         // La mise en rangée est posée avant toute mesure.
-        root.dataset.orientation = "horizontal";
+        root.dataset.actsRow = "";
         if (progress) gsap.set(progress, { scaleX: 0 });
         const distance = () => Math.max(0, track.scrollWidth - window.innerWidth);
 
@@ -84,7 +84,7 @@ export function ActsScroll({ children }: { children: ReactNode }) {
         }
 
         return () => {
-          delete root.dataset.orientation;
+          delete root.dataset.actsRow;
         };
       });
 

@@ -55,7 +55,7 @@ export function HeroSection() {
               <span
                 key={word}
                 aria-hidden
-                className={cn("block overflow-hidden pt-[0.04em] pb-[0.035em]", index === 0 && "text-outline")}
+                className={cn("block overflow-hidden pt-[0.04em] pb-[0.035em]", index === 0 && "type-outline")}
               >
                 <span className="block" data-hero-line data-hero-fill={index === 0 ? "" : undefined}>
                   {word}

@@ -1,8 +1,8 @@
 import { createCn } from "cn/config";
 
-// Les tailles de texte du thème (`--text-*` de `globals.css`). Sans cette liste, la fusion
-// de classes les prendrait pour des couleurs et supprimerait l'une des deux (`text-button`
-// face à `text-primary-foreground`, par exemple).
+// Les tokens maison de `globals.css` que la fusion de classes doit connaître. Sans eux, elle
+// prendrait une taille de texte pour une couleur (`text-button` face à `text-primary-foreground`)
+// et ne saurait pas qu'un `h-8` passé en `className` remplace un `h-control-xl`.
 const TEXT_SIZES = [
   "label",
   "caption",
@@ -26,6 +26,8 @@ const TEXT_SIZES = [
   "display-numeral-wide",
 ];
 
+const SPACINGS = ["gutter", "header", "poster", "control-xl"];
+
 export const cn = createCn({
-  extend: { classGroups: { "font-size": [{ text: TEXT_SIZES }] } },
+  extend: { theme: { text: TEXT_SIZES, spacing: SPACINGS } },
 });

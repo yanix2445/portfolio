@@ -17,8 +17,14 @@ export default defineConfig({
     url: `http://localhost:${PORT}`,
     reuseExistingServer: false,
     timeout: 180_000,
-    // Clé de site de test Turnstile (publique, documentée par Cloudflare) : le formulaire de
-    // contact est rendu. Aucune clé Resend : les tests n'envoient jamais de mail.
-    env: { NEXT_PUBLIC_TURNSTILE_SITE_KEY: "1x00000000000000000000AA" },
+    // Le formulaire de contact n'est rendu que si ses quatre variables existent. Les clés
+    // Turnstile sont celles de test, publiques et documentées par Cloudflare ; la clé secrète
+    // choisie refuse toujours le jeton, donc aucun test ne peut aller jusqu'à l'envoi.
+    env: {
+      NEXT_PUBLIC_TURNSTILE_SITE_KEY: "1x00000000000000000000AA",
+      TURNSTILE_SECRET_KEY: "2x0000000000000000000000000000000AA",
+      RESEND_API_KEY: "re_test_cle_factice",
+      CONTACT_TO_EMAIL: "test@example.com",
+    },
   },
 });

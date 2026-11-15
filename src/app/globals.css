@@ -134,8 +134,8 @@
   }
 }
 
-/* Actes en rangée : l'animation pose `data-orientation="horizontal"` sur la section, sur grand écran. */
-@custom-variant horizontal (&:where([data-orientation="horizontal"], [data-orientation="horizontal"] *));
+/* Actes en rangée : l'animation pose `data-acts-row` sur la section, sur grand écran. */
+@custom-variant acts-row (&:where([data-acts-row], [data-acts-row] *));
 
 :root {
   --header-h: 4.25rem;
@@ -258,12 +258,12 @@
 }
 
 /* Lettres en contour : filet crème, ou filet orange pour les numéros d'acte. */
-@utility text-outline {
+@utility type-outline {
   color: transparent;
   -webkit-text-stroke: var(--outline-thin) var(--color-foreground);
 }
 
-@utility text-outline-accent {
+@utility type-outline-accent {
   color: transparent;
   -webkit-text-stroke: var(--outline-numeral) var(--color-primary);
 }

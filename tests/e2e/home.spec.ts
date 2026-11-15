@@ -250,7 +250,7 @@ test.describe("mise en scène sur grand écran", () => {
   test("les actes sont épinglés et défilent jusqu'au dernier", async ({ page }) => {
     await page.goto("/");
     const acts = page.locator("[data-acts]");
-    await expect(acts).toHaveAttribute("data-orientation", "horizontal");
+    await expect(acts).toHaveAttribute("data-acts-row", "");
 
     // Le premier acte est lisible dès que la section est épinglée, avant tout défilement horizontal.
     await scrollToPin(page, "[data-acts]", 0);
@@ -290,7 +290,7 @@ test.describe("mise en scène sur grand écran", () => {
     await page.setViewportSize({ width: 600, height: 800 });
 
     await expect(page.locator(".pin-spacer")).toHaveCount(0);
-    await expect(page.locator("[data-acts]")).not.toHaveAttribute("data-orientation", "horizontal");
+    await expect(page.locator("[data-acts]")).not.toHaveAttribute("data-acts-row");
     await expect(page.locator("[data-hero-synopsis-flow]")).toBeVisible();
     await expect(async () => {
       const photo = await box(page, "[data-hero-photo]");
@@ -370,7 +370,7 @@ test.describe("accueil sur téléphone en paysage", () => {
     await scrollThrough(page);
 
     await expect(page.locator(".pin-spacer")).toHaveCount(0);
-    await expect(page.locator("[data-acts]")).not.toHaveAttribute("data-orientation", "horizontal");
+    await expect(page.locator("[data-acts]")).not.toHaveAttribute("data-acts-row");
     await expect(page.locator("[data-hero-synopsis-flow]")).toBeVisible();
     expect(await overflowsHorizontally(page)).toBe(false);
   });
@@ -384,7 +384,7 @@ test.describe("accueil avec moins de mouvement", () => {
     await scrollThrough(page);
 
     await expect(page.locator(".pin-spacer")).toHaveCount(0);
-    await expect(page.locator("[data-acts]")).not.toHaveAttribute("data-orientation", "horizontal");
+    await expect(page.locator("[data-acts]")).not.toHaveAttribute("data-acts-row");
     await expect(page.locator("[data-hero-synopsis-flow]")).toBeVisible();
     for (const act of ACTS) {
       await expect(page.getByRole("heading", { level: 3, name: act.place })).toBeVisible();

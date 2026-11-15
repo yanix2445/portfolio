@@ -44,6 +44,7 @@ export function HeroScroll({ children }: { children: ReactNode }) {
         // Les couleurs et le rayon viennent du thème : rien n'est écrit en dur ici.
         const theme = getComputedStyle(document.documentElement);
         const rem = parseFloat(theme.fontSize);
+        // Même rayon que les affiches de projet (`rounded-2xl`, soit 1,8 × `--radius`).
         const frameRadius = parseFloat(theme.getPropertyValue("--radius")) * 1.8 * rem;
         gsap.set("[data-hero-synopsis]", { display: "block", opacity: 0 });
         // La copie du flux quitte l'écran mais reste lue par les lecteurs d'écran.

@@ -5,7 +5,7 @@ La surface serveur du site. Il n'y a pas d'API publique, seulement des Server Ac
 ## Style
 
 - Server Actions Next.js (`"use server"`) dans `src/actions/`. Il n'y a ni route REST ni Route Handler `POST`.
-- Les seules routes `GET` sont générées au build : `sitemap.ts`, `robots.ts` et `opengraph-image.tsx`.
+- Les seules routes `GET` sont générées au build : `sitemap.ts` et `robots.ts`. `opengraph-image.tsx` est à venir.
 
 ## Resources
 
