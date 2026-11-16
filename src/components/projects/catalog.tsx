@@ -45,7 +45,7 @@ export function Catalog({ projects }: { projects: readonly Project[] }) {
       <ul className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 lg:gap-[1.6vw]">
         {visible.map((project) => (
           <li key={project.slug}>
-            <Poster project={project} index={projects.indexOf(project)} heading="h2" />
+            <Poster project={project} index={projects.indexOf(project)} heading="h2" plain />
           </li>
         ))}
       </ul>
