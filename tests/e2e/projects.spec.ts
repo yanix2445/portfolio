@@ -53,9 +53,12 @@ test.describe("catalogue des projets", () => {
     const domain = filters.nth(1);
 
     // Le groupe se parcourt aux flèches : Tab y entre, la flèche passe au filtre suivant.
-    await filters.first().focus();
-    await page.keyboard.press("ArrowRight");
-    await expect(domain).toBeFocused();
+    // Les flèches n'agissent qu'une fois la page hydratée : on réessaie jusque-là.
+    await expect(async () => {
+      await filters.first().focus();
+      await page.keyboard.press("ArrowRight");
+      await expect(domain).toBeFocused({ timeout: 500 });
+    }).toPass();
     const outline = await domain.evaluate((element) => {
       const style = getComputedStyle(element);
       return { style: style.outlineStyle, width: parseFloat(style.outlineWidth) };
