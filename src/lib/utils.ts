@@ -20,6 +20,7 @@ const TEXT_SIZES = [
   "display-md",
   "display-lg",
   "display-xl",
+  "display-fit",
   "display-finale",
   "display-name",
   "display-numeral",

@@ -102,6 +102,8 @@
   --text-display-lg--line-height: 0.82;
   --text-display-xl: var(--fs-display-xl);
   --text-display-xl--line-height: 0.82;
+  --text-display-fit: var(--fs-display-fit);
+  --text-display-fit--line-height: 0.82;
   --text-display-finale: var(--fs-display-finale);
   --text-display-finale--line-height: 0.98;
   --text-display-name: var(--fs-display-name);
@@ -192,6 +194,7 @@
   --fs-display-md: 17vw;
   --fs-display-lg: 21vw;
   --fs-display-xl: 21vw;
+  --fs-display-fit: 17vw;
   --fs-display-finale: 17.5vw;
   --fs-display-name: 30vw;
   --fs-display-numeral: 36vw;
@@ -214,6 +217,8 @@
     --fs-display-md: 8.2vw;
     --fs-display-lg: 9.6vw;
     --fs-display-xl: 11.5vw;
+    /* Titre d'une page qui tient en un écran : borné par la hauteur. */
+    --fs-display-fit: min(9.6vw, 14svh);
     --fs-display-finale: min(10.4vw, 24svh);
     /* Bornées par la hauteur : sur un écran bas, le nom ne monte pas sur la légende. */
     --fs-display-name: min(21.5vw, 34.5svh);

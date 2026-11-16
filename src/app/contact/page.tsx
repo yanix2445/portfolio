@@ -27,19 +27,27 @@ export default function ContactPage() {
   const siteKey = contactSiteKey(process.env);
 
   return (
+    // Avec le formulaire, la page tient en un écran sur ordinateur, pied de page compris :
+    // titre borné par la hauteur, coordonnées resserrées, marges en hauteur d'écran.
     <section
       aria-labelledby="contact-title"
-      className="px-gutter pt-12 pb-20 md:pt-[12vh] md:pb-[14vh]"
+      className={cn(
+        "flex flex-col gap-8 px-gutter",
+        // Le contenu est centré dans la hauteur libre : pas de grand vide sous le formulaire.
+        siteKey
+          ? "pt-8 pb-12 md:flex-1 md:justify-center md:gap-[4svh] md:py-[3svh]"
+          : "pt-12 pb-20 md:pt-[12vh] md:pb-[14vh]",
+      )}
     >
-      <PageHeader id="contact-title" title="Contact">
+      <PageHeader id="contact-title" title="Contact" compact={Boolean(siteKey)}>
         Je recherche un stage ou une alternance en administration systèmes et réseaux.
         N&apos;hésitez pas à me contacter directement.
       </PageHeader>
 
       <div
         className={cn(
-          "mt-10 grid gap-12 md:mt-[7vh]",
-          siteKey && "md:grid-cols-[1.15fr_0.85fr] md:items-start md:gap-[6vw]",
+          "grid gap-10",
+          siteKey ? "md:grid-cols-[1.15fr_0.85fr] md:items-start md:gap-[6vw]" : "md:mt-[3vh]",
         )}
       >
         {siteKey ? (
@@ -58,7 +66,10 @@ export default function ContactPage() {
           {CHANNELS.map((channel) => (
             <div
               key={channel.label}
-              className="grid items-baseline gap-1.5 border-t border-border py-4.5 last:border-b md:grid-cols-[9rem_1fr] md:gap-6"
+              className={cn(
+                "grid items-baseline gap-1.5 border-t border-border last:border-b md:grid-cols-[9rem_1fr] md:gap-6",
+                siteKey ? "py-3 md:py-[1.4svh]" : "py-4.5",
+              )}
             >
               <dt className="type-label text-muted-foreground">{channel.label}</dt>
               <dd className="text-lead">

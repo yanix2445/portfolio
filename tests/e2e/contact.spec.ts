@@ -101,6 +101,26 @@ test.describe("formulaire de contact", () => {
   });
 });
 
+// Sur ordinateur, la page du formulaire tient en un écran, pied de page compris.
+for (const viewport of [
+  { width: 1440, height: 900 },
+  { width: 1366, height: 650 },
+  { width: 768, height: 1024 },
+]) {
+  test(`la page tient en un écran sans défiler en ${viewport.width} × ${viewport.height}`, async ({
+    page,
+  }) => {
+    await page.setViewportSize(viewport);
+    await page.goto("/contact");
+
+    await expect(page.getByRole("button", { name: "Envoyer le message" })).toBeInViewport();
+    await expect(page.getByRole("contentinfo")).toBeInViewport();
+    expect(
+      await page.evaluate(() => document.documentElement.scrollHeight - window.innerHeight),
+    ).toBeLessThanOrEqual(0);
+  });
+}
+
 test.describe("contact sur le plus petit téléphone", () => {
   test.use({ viewport: { width: 320, height: 568 } });
 

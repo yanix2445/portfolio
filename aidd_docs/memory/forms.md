@@ -18,6 +18,7 @@ Comment les formulaires sont construits et validés. Le site n'en a qu'un : le f
 - Après une erreur, la saisie est conservée : l'action renvoie les champs, repris en `defaultValue`.
 - Le retour global passe par un toast `sonner` et reste affiché sous le bouton (`data-contact-result`), en succès comme en erreur. Le message est générique : on n'expose jamais la réponse brute de Resend ou de Turnstile.
 - Pendant l'envoi, le bouton est en `aria-disabled` et non `disabled` : il garde le focus clavier. Le double envoi est refusé dans `handleSubmit`.
-- Le widget Turnstile fait au moins 300 px de large : son cadre défile en interne sur un écran plus étroit.
+- Le widget Turnstile est discret (choix de Yanis, 2026-11-16) : `appearance: "interaction-only"`, il reste invisible et n'apparaît (300 × 65 px) que si Cloudflare demande une interaction. Si le visiteur envoie avant l'arrivée du jeton, le formulaire attend le jeton (20 s au plus) puis s'envoie seul ; si le widget n'a pas pu se charger, l'erreur s'affiche tout de suite. Son cadre défile en interne sur un écran de moins de 300 px.
+- Sur ordinateur et tablette, `/contact` tient en un écran sans défiler, pied de page compris (titre `text-display-fit` borné par la hauteur, nom et e-mail côte à côte, message à 16svh). Sur téléphone, le formulaire et son bouton tiennent dans le premier écran ; les coordonnées et le pied de page suivent en dessous.
 - Le `Toaster` est rendu par le formulaire, pas par le layout : les autres pages ne chargent pas `sonner`.
 - Le formulaire renvoie vers la page mentions légales pour l'information RGPD.

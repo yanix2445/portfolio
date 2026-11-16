@@ -25,6 +25,10 @@ import { cn } from "@/lib/utils";
 
 const FIELD_ORDER: (keyof ContactFields)[] = ["name", "email", "message"];
 
+// Le widget est invisible tant que Cloudflare n'a pas besoin d'une interaction. S'il faut
+// cliquer, on laisse ce temps au visiteur avant d'abandonner l'envoi.
+const CHALLENGE_TIMEOUT_MS = 20_000;
+
 function focusFirstInvalid(form: HTMLFormElement | null, errors: ContactErrors) {
   const first = FIELD_ORDER.find((field) => errors[field]);
   const control = first ? form?.elements.namedItem(first) : null;
@@ -36,8 +40,22 @@ function focusFirstInvalid(form: HTMLFormElement | null, errors: ContactErrors) 
 export function ContactForm({ siteKey }: { siteKey: string }) {
   const [state, formAction, pending] = useActionState(sendContact, null);
   const [clientErrors, setClientErrors] = useState<ContactErrors | null>(null);
+  const [waiting, setWaiting] = useState(false);
+  const [widgetReady, setWidgetReady] = useState(false);
   const form = useRef<HTMLFormElement>(null);
   const turnstile = useRef<TurnstileInstance>(null);
+  const challengeTimer = useRef<ReturnType<typeof setTimeout>>(undefined);
+  const busy = pending || waiting;
+
+  // Fin de l'attente du jeton : on envoie s'il est arrivé, sinon on le dit.
+  function stopWaiting(submit: boolean) {
+    clearTimeout(challengeTimer.current);
+    setWaiting(false);
+    if (submit) form.current?.requestSubmit();
+    else toast.error(CONTACT_MESSAGES.challenge);
+  }
+
+  useEffect(() => () => clearTimeout(challengeTimer.current), []);
 
   useEffect(() => {
     if (!state) return;
@@ -53,7 +71,7 @@ export function ContactForm({ siteKey }: { siteKey: string }) {
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     // Le bouton reste focalisable pendant l'envoi (`aria-disabled`) : on refuse ici le double envoi.
-    if (pending) {
+    if (busy) {
       event.preventDefault();
       return;
     }
@@ -68,7 +86,14 @@ export function ContactForm({ siteKey }: { siteKey: string }) {
     setClientErrors(null);
     if (!data.get(TURNSTILE_FIELD)) {
       event.preventDefault();
-      toast.error(CONTACT_MESSAGES.challenge);
+      // Widget absent (script bloqué ou en échec) : inutile d'attendre.
+      if (!widgetReady) {
+        toast.error(CONTACT_MESSAGES.challenge);
+        return;
+      }
+      // Le jeton arrive d'habitude en une seconde : on l'attend, puis on envoie tout seul.
+      setWaiting(true);
+      challengeTimer.current = setTimeout(() => stopWaiting(false), CHALLENGE_TIMEOUT_MS);
     }
   }
 
@@ -79,38 +104,41 @@ export function ContactForm({ siteKey }: { siteKey: string }) {
   return (
     <form ref={form} action={formAction} onSubmit={handleSubmit} noValidate>
       <FieldGroup>
-        <Field data-invalid={Boolean(errors.name)}>
-          <FieldLabel htmlFor="name">Nom</FieldLabel>
-          <Input
-            id="name"
-            name="name"
-            autoComplete="name"
-            required
-            maxLength={CONTACT_LIMITS.name}
-            defaultValue={failed?.fields?.name}
-            aria-invalid={Boolean(errors.name)}
-            aria-describedby={describedBy("name")}
-          />
-          {errors.name ? <FieldError id="name-error">{errors.name}</FieldError> : null}
-        </Field>
+        {/* Nom et e-mail côte à côte sur grand écran : la page tient en un écran. */}
+        <div className="grid gap-5 md:grid-cols-2">
+          <Field data-invalid={Boolean(errors.name)}>
+            <FieldLabel htmlFor="name">Nom</FieldLabel>
+            <Input
+              id="name"
+              name="name"
+              autoComplete="name"
+              required
+              maxLength={CONTACT_LIMITS.name}
+              defaultValue={failed?.fields?.name}
+              aria-invalid={Boolean(errors.name)}
+              aria-describedby={describedBy("name")}
+            />
+            {errors.name ? <FieldError id="name-error">{errors.name}</FieldError> : null}
+          </Field>
 
-        <Field data-invalid={Boolean(errors.email)}>
-          <FieldLabel htmlFor="email">E-mail</FieldLabel>
-          <Input
-            id="email"
-            name="email"
-            type="email"
-            inputMode="email"
-            autoComplete="email"
-            spellCheck={false}
-            required
-            maxLength={CONTACT_LIMITS.email}
-            defaultValue={failed?.fields?.email}
-            aria-invalid={Boolean(errors.email)}
-            aria-describedby={describedBy("email")}
-          />
-          {errors.email ? <FieldError id="email-error">{errors.email}</FieldError> : null}
-        </Field>
+          <Field data-invalid={Boolean(errors.email)}>
+            <FieldLabel htmlFor="email">E-mail</FieldLabel>
+            <Input
+              id="email"
+              name="email"
+              type="email"
+              inputMode="email"
+              autoComplete="email"
+              spellCheck={false}
+              required
+              maxLength={CONTACT_LIMITS.email}
+              defaultValue={failed?.fields?.email}
+              aria-invalid={Boolean(errors.email)}
+              aria-describedby={describedBy("email")}
+            />
+            {errors.email ? <FieldError id="email-error">{errors.email}</FieldError> : null}
+          </Field>
+        </div>
 
         <Field data-invalid={Boolean(errors.message)}>
           <FieldLabel htmlFor="message">Message</FieldLabel>
@@ -121,25 +149,37 @@ export function ContactForm({ siteKey }: { siteKey: string }) {
             minLength={CONTACT_LIMITS.messageMin}
             maxLength={CONTACT_LIMITS.message}
             defaultValue={failed?.fields?.message}
+            className="max-h-[30svh] min-h-28 md:min-h-[16svh]"
             aria-invalid={Boolean(errors.message)}
             aria-describedby={describedBy("message")}
           />
           {errors.message ? <FieldError id="message-error">{errors.message}</FieldError> : null}
         </Field>
 
-        {/* Le widget fait au moins 300 px de large : sur un écran plus étroit, il défile
-            dans son cadre au lieu d'élargir la page. */}
-        <div className="overflow-x-auto">
-          <Turnstile
-            ref={turnstile}
-            siteKey={siteKey}
-            options={{ theme: "dark", language: "fr", size: "flexible" }}
-          />
-        </div>
-
         <Field>
-          <Button type="submit" size="xl" aria-disabled={pending} className="md:w-fit">
-            {pending ? <Spinner data-icon="inline-start" aria-label="Envoi en cours" /> : null}
+          {/* Anti-spam discret : invisible, sauf si Cloudflare demande de cocher une case.
+              Il fait alors 300 px de large ; sur un écran plus étroit, son cadre défile. */}
+          <div className="overflow-x-auto empty:hidden">
+            <Turnstile
+              ref={turnstile}
+              siteKey={siteKey}
+              options={{
+                theme: "dark",
+                language: "fr",
+                size: "normal",
+                appearance: "interaction-only",
+              }}
+              onWidgetLoad={() => setWidgetReady(true)}
+              onSuccess={() => {
+                if (waiting) stopWaiting(true);
+              }}
+              onError={() => {
+                if (waiting) stopWaiting(false);
+              }}
+            />
+          </div>
+          <Button type="submit" size="xl" aria-disabled={busy} className="md:w-fit">
+            {busy ? <Spinner data-icon="inline-start" aria-label="Envoi en cours" /> : null}
             Envoyer le message
           </Button>
           {/* Le résultat reste affiché ici : le toast, lui, disparaît (et n'existe pas sans JavaScript). */}
