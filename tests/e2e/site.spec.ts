@@ -18,7 +18,9 @@ test.describe("contenu MDX", () => {
   test("une entrée listée ouvre sa page de détail avec son corps", async ({ page }) => {
     await page.goto("/projets");
     const firstEntry = page.getByRole("main").getByRole("listitem").getByRole("link").first();
-    const title = await firstEntry.getByRole("heading").innerText();
+    // L'affiche montre un titre court : le titre complet de la fiche est porté par le lien.
+    const title = (await firstEntry.getAttribute("data-title")) ?? "";
+    expect(title).not.toBe("");
 
     await firstEntry.click();
 
@@ -70,6 +72,8 @@ test("la navigation principale mène aux sections", async ({ page }) => {
   ] as const) {
     await nav.getByRole("link", { name: label }).click();
     await expect(page).toHaveURL(path);
+    // La page courante est signalée, aussi aux lecteurs d'écran.
+    await expect(nav.getByRole("link", { name: label })).toHaveAttribute("aria-current", "page");
     await page.goto("/");
   }
 });

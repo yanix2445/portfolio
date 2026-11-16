@@ -1,6 +1,11 @@
-import Link from "next/link";
+"use client";
 
-export const CV_PATH = "/cv/yanis-harrat-cv.pdf";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
+
+import { Button } from "@/components/ui/button";
+import { CONTACT, OWNER } from "@/lib/site";
 
 const NAV_LINKS = [
   { href: "/projets", label: "Projets" },
@@ -8,31 +13,47 @@ const NAV_LINKS = [
   { href: "/contact", label: "Contact" },
 ] as const;
 
+// En-tête fixe : transparent en haut de page (il laisse voir le hero), puis sur fond
+// dès que la page a défilé. Sans JavaScript, il reste transparent et lisible.
 export function SiteHeader() {
+  const [scrolled, setScrolled] = useState(false);
+  const pathname = usePathname();
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 24);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
   return (
-    <header className="border-b">
-      <div className="mx-auto flex w-full max-w-5xl flex-wrap items-center justify-between gap-4 px-4 py-4">
-        <Link href="/" className="focus-ring rounded-sm font-semibold tracking-tight">
-          Yanis Harrat
+    <header
+      data-scrolled={scrolled}
+      className="type-label fixed inset-x-0 top-0 z-50 h-header transition-colors duration-300 data-[scrolled=true]:bg-background/85 data-[scrolled=true]:backdrop-blur-md"
+    >
+      <div className="flex h-full items-center justify-between gap-3 px-gutter">
+        <Link href="/" className="rounded-sm whitespace-nowrap">
+          {OWNER.fullName}
         </Link>
         <nav aria-label="Navigation principale">
-          <ul className="flex items-center gap-4 text-sm">
+          <ul className="flex items-center gap-3 md:gap-[2.4vw]">
             {NAV_LINKS.map(({ href, label }) => (
               <li key={href}>
-                <Link href={href} className="focus-ring rounded-sm text-muted-foreground transition-colors duration-150 hover:text-foreground">
+                <Link
+                  href={href}
+                  aria-current={
+                    pathname === href || pathname.startsWith(`${href}/`) ? "page" : undefined
+                  }
+                  className="rounded-sm text-foreground/75 transition-colors duration-200 hover:text-foreground aria-[current=page]:text-primary"
+                >
                   {label}
                 </Link>
               </li>
             ))}
-            <li>
-              <a
-                href={CV_PATH}
-                target="_blank"
-                rel="noopener"
-                className="focus-ring rounded-md border px-3 py-1.5 font-medium transition-colors duration-150 hover:border-brand/50 hover:bg-muted"
-              >
-                CV (PDF)
-              </a>
+            <li className="max-sm:hidden">
+              <Button asChild variant="outline" size="label">
+                <a href={`tel:${CONTACT.phoneE164}`}>Appeler</a>
+              </Button>
             </li>
           </ul>
         </nav>

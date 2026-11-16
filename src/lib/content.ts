@@ -3,6 +3,8 @@ import path from "node:path";
 import { cacheLife } from "next/cache";
 import type { ComponentType } from "react";
 
+import { toProject, type Project, type ProjectFields } from "@/lib/projects";
+
 export type Collection = "projets" | "veille";
 
 export type ContentMeta = {
@@ -11,7 +13,7 @@ export type ContentMeta = {
   /** Date ISO `YYYY-MM-DD`. */
   date: string;
   tags: string[];
-};
+} & ProjectFields;
 
 export type ContentEntry = {
   slug: string;
@@ -64,6 +66,14 @@ export async function getEntry(
   if (!slugs.includes(slug)) return null;
   const { default: Content, metadata } = await loadModule(collection, slug);
   return { slug, metadata, Content };
+}
+
+/** Tous les projets, du plus récent au plus ancien, avec leurs valeurs par défaut. */
+export async function getProjects(): Promise<Project[]> {
+  const projects = (await getEntries("projets")).map(toProject);
+  // À date égale, le rang des projets à la une départage : l'accueil et le catalogue
+  // présentent ainsi les mêmes projets dans le même ordre.
+  return projects.toSorted((a, b) => b.date.localeCompare(a.date) || a.rank - b.rank);
 }
 
 export function formatDate(date: string): string {

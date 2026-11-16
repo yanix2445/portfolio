@@ -1,0 +1,141 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-15T18:28:59+00:00",
+  "title": "Design System: Yanis HARRAT · Portfolio",
+  "extensions": {
+    "colorMeta": {
+      "primary": {
+        "role": "primary",
+        "displayName": "Ember Orange"
+      },
+      "background": {
+        "role": "neutral",
+        "displayName": "Warm Near-Black"
+      },
+      "foreground": {
+        "role": "neutral",
+        "displayName": "Cream Ink"
+      },
+      "soft": {
+        "role": "neutral",
+        "displayName": "Soft Cream"
+      },
+      "muted-foreground": {
+        "role": "neutral",
+        "displayName": "Caption Taupe"
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Name",
+        "purpose": "The hero name only."
+      },
+      "headline": {
+        "displayName": "Poster headline",
+        "purpose": "Section and page titles."
+      },
+      "label": {
+        "displayName": "Slate caption",
+        "purpose": "Mono captions: dates, roles, domains, statuses."
+      }
+    },
+    "shadows": [],
+    "motion": [
+      {
+        "name": "ease-poster",
+        "value": "cubic-bezier(0.2, 0.9, 0.2, 1)",
+        "purpose": "Poster and button lift on hover."
+      },
+      {
+        "name": "enter",
+        "value": "expo.out (GSAP)",
+        "purpose": "Entrances and one-shot reveals."
+      },
+      {
+        "name": "scrub",
+        "value": "0.6–0.7 s smoothing",
+        "purpose": "Pinned hero and horizontal acts."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "md",
+        "value": "768px"
+      },
+      {
+        "name": "lg",
+        "value": "1024px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The main call to action: call, send.",
+      "html": "<button class=\"ds-btn-primary\">Appeler · 07 68 18 79 34</button>",
+      "css": ".ds-btn-primary { background: var(--primary); color: var(--primary-foreground); height: clamp(3.5rem, 5.25vw, 5.25rem); padding: 0 2.25rem; border: 0; border-radius: calc(var(--radius) * 1.4); font: 600 clamp(0.8125rem, 1.25vw, 1.25rem) var(--font-hanken), sans-serif; transition: translate 0.15s, background-color 0.15s; } .ds-btn-primary:hover { translate: 0 -3px; } .ds-btn-primary:focus-visible { outline: 2px solid var(--primary); outline-offset: 3px; }"
+    },
+    {
+      "name": "Outline Button",
+      "kind": "button",
+      "refersTo": "button-outline",
+      "description": "Secondary actions; inverts to cream on hover.",
+      "html": "<button class=\"ds-btn-outline\">CV (PDF)</button>",
+      "css": ".ds-btn-outline { background: transparent; color: var(--foreground); height: clamp(3.5rem, 5.25vw, 5.25rem); padding: 0 2.25rem; border: 1px solid var(--border); border-radius: calc(var(--radius) * 1.4); font: 600 clamp(0.8125rem, 1.25vw, 1.25rem) var(--font-hanken), sans-serif; transition: translate 0.15s, background-color 0.15s, color 0.15s; } .ds-btn-outline:hover { background: var(--foreground); color: var(--background); translate: 0 -3px; } .ds-btn-outline:focus-visible { outline: 2px solid var(--primary); outline-offset: 3px; }"
+    },
+    {
+      "name": "Badge",
+      "kind": "chip",
+      "refersTo": "badge-outline",
+      "description": "Mono caption in a rounded rectangle: keywords, statuses, tags.",
+      "html": "<span class=\"ds-badge\">À l'affiche</span>",
+      "css": ".ds-badge { display: inline-flex; padding: 0.375rem 0.75rem; border: 1px solid var(--border); border-radius: calc(var(--radius) * 0.8); color: var(--foreground); font: 400 clamp(0.625rem, 0.8vw, 0.8125rem) var(--font-geist-mono), monospace; letter-spacing: 0.16em; text-transform: uppercase; white-space: nowrap; }"
+    },
+    {
+      "name": "Text Field",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "Contact form field.",
+      "html": "<input class=\"ds-input\" placeholder=\"Nom\" />",
+      "css": ".ds-input { width: 100%; height: 3rem; padding: 0.25rem 0.875rem; background: rgb(242 235 221 / 0.07); color: var(--foreground); border: 1px solid var(--input); border-radius: var(--radius); font: 400 1rem var(--font-hanken), sans-serif; caret-color: var(--primary); outline: none; } .ds-input:focus-visible { border-color: var(--ring); box-shadow: 0 0 0 3px rgb(255 91 46 / 0.5); }"
+    }
+  ],
+  "narrative": {
+    "northStar": "« Générique »",
+    "overview": "The opening credits of a film: a full-frame portrait, a name in giant condensed capitals, then acts, posters and laurels. Warm near-black ground, cream type, one ember-orange accent, mono captions that carry facts.",
+    "keyCharacteristics": [
+      "One accent",
+      "Two voices: poster lettering and a quiet grotesque",
+      "Fluid scale capped by the viewport height",
+      "Readable without JavaScript and without motion"
+    ],
+    "rules": [
+      {
+        "name": "The One Accent Rule",
+        "body": "Orange marks the current act, a featured poster, the last line of the finale and the primary action. Never decoration.",
+        "section": "colors"
+      },
+      {
+        "name": "The Whole Head Rule",
+        "body": "The portrait's head is never cropped, at any screen size or scroll position.",
+        "section": "layout"
+      },
+      {
+        "name": "The Clear Accent Rule",
+        "body": "Accented capitals never touch or hide behind the line above.",
+        "section": "typography"
+      }
+    ],
+    "dos": [
+      "Use tokens: semantic colors, text-* roles, rounded-*, px-gutter.",
+      "Reach for a shadcn primitive before writing markup for a control."
+    ],
+    "donts": [
+      "Don't write a color, a radius or a font size in a component.",
+      "Don't use pill-shaped buttons or badges.",
+      "Don't hide content in CSS for an animation to reveal."
+    ]
+  }
+}

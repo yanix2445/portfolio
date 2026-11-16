@@ -1,0 +1,63 @@
+export const metadata = {
+  title: "Homelab Proxmox et Docker",
+  summary:
+    "Un ancien PC transformé en serveur Proxmox : pare-feu OPNsense, VLAN séparés, VM Windows Server et un hôte Docker sous Debian 13 qui fait tourner mes services derrière Traefik et WireGuard.",
+  date: "2026-11-13",
+  tags: ["Proxmox", "Docker", "OPNsense", "VLAN", "Traefik", "WireGuard"],
+  featured: true,
+  rank: 2,
+  status: "released",
+  domain: "virtualisation",
+  poster: "Proxmox & Docker",
+};
+
+## Contexte
+
+J'ai monté ce homelab de ma propre initiative, sur un ancien PC fixe recyclé en serveur. Il héberge à la fois mes labs et des services auto-hébergés.
+
+- Matériel (modèle, processeur, mémoire, stockage) : *à compléter*.
+- Période : *à compléter*.
+
+## Objectif
+
+Réunir sur une seule machine les briques d'une infrastructure complète : un hyperviseur, un pare-feu, un réseau segmenté, des services conteneurisés et un accès distant par VPN. Et y faire tourner mes labs, comme le [lab Active Directory](/projets/lab-active-directory-windows-server).
+
+## Architecture
+
+**Proxmox VE** est l'hyperviseur. Il héberge :
+
+- une VM **OPNsense**, le pare-feu qui route entre les VLAN ;
+- les **VM Windows Server** du lab Active Directory ;
+- un serveur **Docker** sous **Debian 13**.
+
+Schéma de l'architecture : *à compléter*.
+
+## Réalisation
+
+**Réseau.** J'ai séparé le réseau en **VLAN**, routés et filtrés par OPNsense. Découpage des VLAN et règles de filtrage : *à compléter*.
+
+**Services.** Sur l'hôte Docker, chaque service est décrit dans un fichier **docker compose**. Parmi eux :
+
+- **Traefik**, le reverse proxy qui reçoit les requêtes et les répartit entre les services ;
+- **Nextcloud** (fichiers), **Jellyfin** (médias), **Home Assistant** (domotique) ;
+- **n8n** (automatisation), **Cal.com** (prise de rendez-vous), **Dub** (liens courts).
+
+**Accès distant.** Un VPN **WireGuard** permet d'atteindre le homelab depuis l'extérieur. L'exposition est mixte : certains services sont publiés sur Internet via Traefik, d'autres ne sont joignables qu'à travers le VPN. Répartition exacte : *à compléter*.
+
+## Difficultés
+
+Le point le plus difficile a été la mise en place des **VLAN avec OPNsense**. Problème rencontré et solution : *à compléter*.
+
+## Résultat
+
+Un serveur domestique qui héberge mes services auto-hébergés sur un réseau segmenté, et qui accueille mes labs Windows Server. Captures (interface Proxmox, OPNsense, tableau de bord Traefik) : *à compléter*.
+
+## Compétences
+
+Référentiel BTS SIO :
+
+- **Bloc 2 SISR** : concevoir une solution d'infrastructure réseau ; l'installer, la tester, la déployer ; l'exploiter et la dépanner.
+- **Bloc 3** : garantir la disponibilité, l'intégrité et la confidentialité des services (segmentation réseau, pare-feu, VPN).
+- **Bloc 1** : organiser son développement professionnel (projet personnel d'autoformation).
+
+Outils et notions : Proxmox VE, OPNsense, VLAN, routage, Debian 13, Docker, docker compose, Traefik, WireGuard.

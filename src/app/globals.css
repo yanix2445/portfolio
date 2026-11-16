@@ -7,13 +7,13 @@
 
 @theme inline {
   --color-background: var(--background);
-  --color-brand: var(--brand);
-  --color-brand-foreground: var(--brand-foreground);
-  --color-brand-deep: var(--brand-deep);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-sans);
+  --font-sans: var(--font-hanken);
   --font-mono: var(--font-geist-mono);
-  --font-heading: var(--font-sans);
+  --font-display: var(--font-big-shoulders);
+  /* Titres d'interface (cartes, champs) : en sans. Le lettrage d'affiche passe par `type-poster`. */
+  --font-heading: var(--font-hanken);
+  --color-soft: var(--soft);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -50,128 +50,260 @@
   --radius-2xl: calc(var(--radius) * 1.8);
   --radius-3xl: calc(var(--radius) * 2.2);
   --radius-4xl: calc(var(--radius) * 2.6);
-  --animate-marquee: marquee var(--marquee-duration, 40s) linear infinite;
 
-  @keyframes marquee {
-    to {
-      transform: translateX(-50%);
+  /* Espacements du site. Les valeurs fluides sont résolues plus bas, par taille d'écran. */
+  --spacing-gutter: var(--gutter);
+  --spacing-header: var(--header-h);
+  --spacing-poster: clamp(1.25rem, 2.2vw, 2.5rem);
+  --spacing-control-xl: clamp(3.5rem, 5.25vw, 5.25rem);
+
+  /* Échelle de texte. Chaque rôle porte sa taille, son interligne, son approche et sa graisse. */
+  --text-label: clamp(0.625rem, 0.8vw, 0.8125rem);
+  --text-label--letter-spacing: 0.16em;
+  --text-caption: var(--fs-caption);
+  --text-caption--line-height: 1.35;
+  --text-meta: var(--fs-meta);
+  --text-meta--font-weight: 500;
+  --text-action: clamp(0.75rem, 1.15vw, 1.125rem);
+  --text-action--font-weight: 600;
+  --text-button: var(--fs-button);
+  --text-button--font-weight: 600;
+  --text-body-sm: var(--fs-body-sm);
+  --text-body-sm--line-height: 1.4;
+  --text-body-sm--font-weight: 500;
+  --text-body: var(--fs-body);
+  --text-body--line-height: 1.45;
+  --text-lead: var(--fs-lead);
+  --text-lead--line-height: 1.35;
+  --text-lead--letter-spacing: -0.01em;
+  --text-lead--font-weight: 500;
+  --text-subtitle: var(--fs-subtitle);
+  --text-subtitle--letter-spacing: -0.02em;
+  --text-subtitle--font-weight: 500;
+  --text-synopsis: var(--fs-synopsis);
+  --text-synopsis--line-height: 1.18;
+  --text-synopsis--letter-spacing: -0.02em;
+  --text-synopsis--font-weight: 500;
+  --text-synopsis-pinned: min(2.55vw, 4.2vh);
+  --text-synopsis-pinned--line-height: 1.18;
+  --text-synopsis-pinned--letter-spacing: -0.02em;
+  --text-synopsis-pinned--font-weight: 500;
+  --text-wreath: 10cqi;
+  --text-wreath--line-height: 0.9;
+  --text-wreath--letter-spacing: 0.01em;
+  --text-wreath--font-weight: 800;
+
+  /* Lettrage d'affiche : de l'intertitre d'article au nom plein écran. */
+  --text-display-sm: var(--fs-display-sm);
+  --text-display-sm--line-height: 0.9;
+  --text-display-title: var(--fs-display-title);
+  --text-display-title--line-height: 0.84;
+  --text-display-poster: var(--fs-display-poster);
+  --text-display-poster--line-height: 0.84;
+  --text-display-md: var(--fs-display-md);
+  --text-display-md--line-height: 0.86;
+  --text-display-lg: var(--fs-display-lg);
+  --text-display-lg--line-height: 0.82;
+  --text-display-xl: var(--fs-display-xl);
+  --text-display-xl--line-height: 0.82;
+  --text-display-fit: var(--fs-display-fit);
+  --text-display-fit--line-height: 0.82;
+  --text-display-finale: var(--fs-display-finale);
+  --text-display-finale--line-height: 0.98;
+  --text-display-name: var(--fs-display-name);
+  --text-display-name--line-height: 0.8;
+  --text-display-numeral: var(--fs-display-numeral);
+  --text-display-numeral--line-height: 0.74;
+  --text-display-numeral-wide: min(62vh, 40vw);
+  --text-display-numeral-wide--line-height: 0.74;
+
+  /* Mouvement. */
+  --ease-poster: cubic-bezier(0.2, 0.9, 0.2, 1);
+  --animate-cue: cue 1.8s ease-in-out infinite;
+
+  @keyframes cue {
+    0% {
+      transform: scaleY(0);
+      transform-origin: top;
+    }
+    50% {
+      transform: scaleY(1);
+      transform-origin: top;
+    }
+    51% {
+      transform-origin: bottom;
+    }
+    100% {
+      transform: scaleY(0);
+      transform-origin: bottom;
     }
   }
 }
 
+/* Actes en rangée : l'animation pose `data-acts-row` sur la section, sur grand écran. */
+@custom-variant acts-row (&:where([data-acts-row], [data-acts-row] *));
+
 :root {
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --radius: 0.625rem;
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
-  /* Accent ambre : reprend la lumière chaude du portrait. */
-  --brand: oklch(0.66 0.17 52);
-  --brand-foreground: oklch(0.99 0.01 80);
-  --brand-deep: oklch(0.55 0.18 40);
-}
-
-.dark {
+  --header-h: 4.25rem;
+  /* Univers « Générique » : noir chaud, crème, orange braise. Le site est sombre uniquement. */
   color-scheme: dark;
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
+  --background: #0b0a09;
+  --foreground: #f2ebdd;
+  --soft: #cfc6b6;
+  --card: #151310;
+  --card-foreground: #f2ebdd;
+  --popover: #151310;
+  --popover-foreground: #f2ebdd;
+  --primary: #ff5b2e;
+  --primary-foreground: #170a04;
+  --secondary: #1c1916;
+  --secondary-foreground: #f2ebdd;
+  --muted: #1c1916;
+  --muted-foreground: #9a9082;
+  --accent: #1c1916;
+  --accent-foreground: #f2ebdd;
   --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
-  --brand: oklch(0.8 0.15 68);
-  --brand-foreground: oklch(0.2 0.04 50);
-  --brand-deep: oklch(0.68 0.19 45);
+  --border: rgb(242 235 221 / 0.18);
+  --input: rgb(242 235 221 / 0.24);
+  --ring: #ff5b2e;
+  --chart-1: #ff5b2e;
+  --chart-2: #f2ebdd;
+  --chart-3: #cfc6b6;
+  --chart-4: #9a9082;
+  --chart-5: #1c1916;
+  --radius: 0.625rem;
+  --sidebar: #151310;
+  --sidebar-foreground: #f2ebdd;
+  --sidebar-primary: #ff5b2e;
+  --sidebar-primary-foreground: #170a04;
+  --sidebar-accent: #1c1916;
+  --sidebar-accent-foreground: #f2ebdd;
+  --sidebar-border: rgb(242 235 221 / 0.18);
+  --sidebar-ring: #ff5b2e;
+
+  /* Valeurs fluides : téléphone d'abord, grand écran dans la requête ci-dessous. */
+  --gutter: 1rem;
+  --portrait-y: 12%;
+  --outline-thin: 0.012em;
+  --outline-numeral: 1px;
+  --fs-caption: 0.6875rem;
+  --fs-meta: 0.9375rem;
+  --fs-button: 0.9375rem;
+  --fs-body-sm: 1rem;
+  --fs-body: 1rem;
+  --fs-lead: 1.0625rem;
+  --fs-subtitle: 1.1875rem;
+  --fs-synopsis: 1.625rem;
+  --fs-display-sm: 2.25rem;
+  /* Titre d'article : « INFORMATIQUE » tient dans la largeur dès 320 px. */
+  --fs-display-title: 14vw;
+  --fs-display-poster: 17vw;
+  --fs-display-md: 17vw;
+  /* « À L'AFFICHE » tient sur une ligne dès 320 px. */
+  --fs-display-lg: 19vw;
+  --fs-display-xl: 20vw;
+  --fs-display-fit: 17vw;
+  --fs-display-finale: 17.5vw;
+  --fs-display-name: 30vw;
+  --fs-display-numeral: 36vw;
 }
 
-/* Focus clavier net et cohérent, en ambre. */
-@utility focus-ring {
-  &:focus-visible {
-    outline: 2px solid var(--brand);
-    outline-offset: 3px;
+@media (min-width: 48rem) {
+  :root {
+    --gutter: 3.4vw;
+    --portrait-y: 16%;
+    --outline-numeral: 1.5px;
+    /* Le minimum de chaque taille est sa valeur téléphone : le texte ne rapetisse jamais
+       quand l'écran s'élargit (une tablette lit au moins aussi gros qu'un téléphone). */
+    --fs-caption: clamp(0.6875rem, 0.98vw, 0.9375rem);
+    --fs-meta: clamp(0.9375rem, 1.12vw, 1.125rem);
+    --fs-button: clamp(0.9375rem, 1.25vw, 1.25rem);
+    --fs-body-sm: clamp(1rem, 1.25vw, 1.25rem);
+    --fs-body: clamp(1rem, 1.4vw, 1.375rem);
+    --fs-lead: clamp(1.0625rem, 1.55vw, 1.5625rem);
+    --fs-subtitle: clamp(1.1875rem, 2.1vw, 2.125rem);
+    --fs-synopsis: clamp(1.625rem, 3.4vw, 3.5rem);
+    --fs-display-sm: clamp(2.25rem, 3.4vw, 3.5rem);
+    --fs-display-title: clamp(2.5rem, 5.9vw, 7rem);
+    --fs-display-poster: clamp(2.5rem, 5.9vw, 7rem);
+    --fs-display-md: 8.2vw;
+    --fs-display-lg: 9.6vw;
+    --fs-display-xl: 11.5vw;
+    /* Titre d'une page qui tient en un écran : borné par la hauteur. */
+    --fs-display-fit: min(9.6vw, 14svh);
+    --fs-display-finale: min(10.4vw, 24svh);
+    /* Bornées par la hauteur : sur un écran bas, le nom ne monte pas sur la légende. */
+    --fs-display-name: min(21.5vw, 34.5svh);
+    --fs-display-numeral: min(62vh, 30vw);
+  }
+
+  /* Cadrage vertical du portrait. Plus l'écran est large, plus le cadre est bas :
+     on remonte l'image pour que le haut de la tête ne soit jamais rogné. */
+  @media (min-aspect-ratio: 17/10) {
+    :root {
+      --portrait-y: 13%;
+    }
+  }
+
+  @media (min-aspect-ratio: 2/1) {
+    :root {
+      --portrait-y: 10%;
+    }
+  }
+
+  @media (min-aspect-ratio: 12/5) {
+    :root {
+      --portrait-y: 8%;
+    }
   }
 }
 
-/* Carte sombre à bordure lumineuse : filet ambré sur l'arête haute. */
-@utility glow-card {
-  position: relative;
-  isolation: isolate;
-  overflow: hidden;
-  border-radius: var(--radius-2xl);
-  border: 1px solid rgb(255 255 255 / 0.09);
-  background-image: linear-gradient(to bottom, rgb(255 255 255 / 0.055), rgb(255 255 255 / 0.015));
-  &::before {
-    content: "";
-    position: absolute;
-    inset-inline: 1.5rem;
-    top: 0;
-    height: 1px;
-    background-image: linear-gradient(to right, transparent, color-mix(in oklab, var(--brand) 70%, transparent), transparent);
-  }
+/* Légende : petites capitales mono espacées. */
+@utility type-label {
+  font-family: var(--font-mono);
+  font-size: var(--text-label);
+  letter-spacing: var(--text-label--letter-spacing);
+  text-transform: uppercase;
 }
 
-/* Grain photographique, statique : un seul calque, aucun coût au scroll. */
-@utility grain {
-  &::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    opacity: 0.07;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  }
+/* Lettrage d'affiche : capitales condensées. La taille vient d'un `text-display-*`. */
+@utility type-poster {
+  font-family: var(--font-display);
+  font-weight: 900;
+  letter-spacing: -0.005em;
+  text-transform: uppercase;
+}
+
+/* Lettres en contour : filet crème, ou filet orange pour les numéros d'acte. */
+@utility type-outline {
+  color: transparent;
+  -webkit-text-stroke: var(--outline-thin) var(--color-foreground);
+}
+
+@utility type-outline-accent {
+  color: transparent;
+  -webkit-text-stroke: var(--outline-numeral) var(--color-primary);
+}
+
+/* Corps des articles MDX : les couleurs de `prose-invert` prises dans le thème. */
+@utility prose-theme {
+  --tw-prose-invert-body: var(--soft);
+  --tw-prose-invert-headings: var(--foreground);
+  --tw-prose-invert-lead: var(--soft);
+  --tw-prose-invert-links: var(--foreground);
+  --tw-prose-invert-bold: var(--foreground);
+  --tw-prose-invert-counters: var(--muted-foreground);
+  --tw-prose-invert-bullets: var(--primary);
+  --tw-prose-invert-hr: var(--border);
+  --tw-prose-invert-quotes: var(--foreground);
+  --tw-prose-invert-quote-borders: var(--primary);
+  --tw-prose-invert-captions: var(--muted-foreground);
+  --tw-prose-invert-kbd: var(--foreground);
+  --tw-prose-invert-code: var(--foreground);
+  --tw-prose-invert-pre-code: var(--soft);
+  --tw-prose-invert-pre-bg: var(--card);
+  --tw-prose-invert-th-borders: var(--border);
+  --tw-prose-invert-td-borders: var(--border);
 }
 
 @layer base {
@@ -184,9 +316,18 @@
   html {
     @apply font-sans;
   }
-  /* Focus clavier ambre partout (contraste ≥ 3:1 sur fond sombre), pas seulement sur l'accueil. */
+  /* Surfaces du navigateur : la sélection et le curseur de saisie prennent l'accent. */
+  ::selection {
+    background-color: var(--primary);
+    color: var(--primary-foreground);
+  }
+  input,
+  textarea {
+    caret-color: var(--primary);
+  }
+  /* Focus clavier à l'accent partout (contraste ≥ 3:1 sur fond sombre). */
   :focus-visible {
-    outline: 2px solid var(--brand);
+    outline: 2px solid var(--primary);
     outline-offset: 3px;
   }
 }

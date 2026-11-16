@@ -7,25 +7,27 @@ const EXTERNAL_LINKS = [
   { href: CONTACT.linkedin, label: "LinkedIn" },
 ] as const;
 
+const LINK = "rounded-sm transition-colors duration-200 hover:text-foreground";
+
 export function SiteFooter() {
   return (
-    <footer className="border-t">
-      <div className="mx-auto flex w-full max-w-5xl flex-wrap items-center justify-between gap-4 px-4 py-6 text-sm text-muted-foreground">
+    <footer className="type-label border-t border-border text-muted-foreground">
+      <div className="flex flex-wrap items-center justify-between gap-x-8 gap-y-2 px-gutter py-4 md:gap-y-4 md:py-7">
         <p>© {OWNER.fullName}</p>
-        <ul className="flex flex-wrap items-center gap-4">
+        <ul className="flex flex-wrap items-center gap-x-6 gap-y-2 md:gap-y-3">
           <li>
-            <a href={`mailto:${CONTACT.email}`} className="hover:text-foreground">
+            <a href={`mailto:${CONTACT.email}`} className={LINK}>
               {CONTACT.email}
             </a>
           </li>
           <li>
-            <Link href="/mentions-legales" className="hover:text-foreground">
+            <Link href="/mentions-legales" className={LINK}>
               Mentions légales
             </Link>
           </li>
           {EXTERNAL_LINKS.map(({ href, label }) => (
             <li key={label}>
-              <a href={href} target="_blank" rel="noopener noreferrer me" className="hover:text-foreground">
+              <a href={href} target="_blank" rel="noopener noreferrer me" className={LINK}>
                 {label}
               </a>
             </li>

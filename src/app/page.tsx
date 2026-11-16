@@ -1,22 +1,31 @@
-import { MotionProvider } from "@/components/animations/motion-provider";
-import { CertificationsSection } from "@/components/home/certifications-section";
+import { ActsScroll } from "@/components/animations/acts-scroll";
+import { HeroScroll } from "@/components/animations/hero-scroll";
+import { Reveal } from "@/components/animations/reveal";
+import { ActsSection } from "@/components/home/acts-section";
+import { AwardsSection } from "@/components/home/awards-section";
+import { BillSection } from "@/components/home/bill-section";
+import { FinaleSection } from "@/components/home/finale-section";
 import { HeroSection } from "@/components/home/hero-section";
-import { ProjectsSection } from "@/components/home/projects-section";
-import { SkillsSection } from "@/components/home/skills-section";
-import { TimelineSection } from "@/components/home/timeline-section";
-import { WatchContactSection } from "@/components/home/watch-contact-section";
+import { SheetSection } from "@/components/home/sheet-section";
 import { PersonJsonLd } from "@/components/seo/person-json-ld";
 
+// Les sections sont rendues côté serveur ; la mise en scène est ajoutée par des enveloppes client.
 export default function HomePage() {
   return (
-    <MotionProvider>
+    <>
       <PersonJsonLd />
-      <HeroSection />
-      <SkillsSection />
-      <CertificationsSection />
-      <TimelineSection />
-      <ProjectsSection />
-      <WatchContactSection />
-    </MotionProvider>
+      <HeroScroll>
+        <HeroSection />
+      </HeroScroll>
+      <ActsScroll>
+        <ActsSection />
+      </ActsScroll>
+      <Reveal>
+        <BillSection />
+        <SheetSection />
+        <AwardsSection />
+        <FinaleSection />
+      </Reveal>
+    </>
   );
 }

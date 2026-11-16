@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import localFont from "next/font/local";
 import { Analytics } from "@vercel/analytics/next";
 
 import { SiteFooter } from "@/components/layout/site-footer";
@@ -7,14 +7,26 @@ import { SiteHeader } from "@/components/layout/site-header";
 import { BASE_OPEN_GRAPH, SITE_NAME, SITE_URL } from "@/lib/site";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-sans",
-  subsets: ["latin"],
+// Les trois polices de la maquette « Générique », servies depuis le site.
+const display = localFont({
+  src: "./fonts/big-shoulders.woff2",
+  variable: "--font-big-shoulders",
+  weight: "100 900",
+  display: "swap",
 });
 
-const geistMono = Geist_Mono({
+const sans = localFont({
+  src: "./fonts/hanken-grotesk.woff2",
+  variable: "--font-hanken",
+  weight: "100 900",
+  display: "swap",
+});
+
+const mono = localFont({
+  src: "./fonts/geist-mono.woff2",
   variable: "--font-geist-mono",
-  subsets: ["latin"],
+  weight: "100 900",
+  display: "swap",
 });
 
 const DESCRIPTION =
@@ -34,11 +46,11 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="fr"
-      className={`${geistSans.variable} ${geistMono.variable} dark h-full antialiased`}
+      className={`${display.variable} ${sans.variable} ${mono.variable} dark h-full antialiased`}
     >
       <body className="flex min-h-full flex-col">
         <SiteHeader />
-        <main className="flex flex-1 flex-col">{children}</main>
+        <main className="flex flex-1 flex-col pt-header">{children}</main>
         <SiteFooter />
         <Analytics />
       </body>

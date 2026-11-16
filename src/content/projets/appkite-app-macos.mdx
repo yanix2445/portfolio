@@ -1,0 +1,64 @@
+export const metadata = {
+  title: "AppKite, une app macOS de barre de menus",
+  summary:
+    "Une app macOS native, gratuite et hors ligne, qui réunit des outils du quotidien dans la barre de menus. Je la pilote de la spec à la revue, avec Claude Code comme développeur principal.",
+  date: "2026-11-13",
+  tags: ["macOS", "Swift", "SwiftUI", "Claude Code", "Projet personnel"],
+  featured: true,
+  rank: 3,
+  status: "in-progress",
+  domain: "code",
+  poster: "AppKite",
+};
+
+## Contexte
+
+AppKite est un projet personnel démarré le 7 novembre 2026. Le code est public sur [GitHub](https://github.com/yanix2445/AppKite).
+
+L'idée : une seule app, logée dans la barre de menus de macOS, qui regroupe plusieurs outils du quotidien. Sans compte, avec un traitement local et un fonctionnement hors ligne.
+
+## Objectif
+
+Livrer quatre outils, dans cet ordre :
+
+1. un **historique du presse-papiers** : retrouver ce qu'on a copié, le rechercher, épingler les éléments utiles et les ranger dans des collections ;
+2. la **fermeture groupée d'applications**, avec des exceptions ;
+3. un **switcher de fenêtres** pour passer rapidement de l'une à l'autre ;
+4. la **capture et l'enregistrement d'écran**.
+
+## Environnement
+
+- Swift 6, **SwiftUI** pour l'interface, **AppKit** quand l'intégration système l'exige.
+- **SwiftData** et fichiers locaux pour l'historique.
+- Tests : Swift Testing pour la logique, XCTest et XCUITest pour les parcours d'interface.
+- Cible : Mac Apple Silicon, macOS 26 minimum.
+- Architecture : Clean Architecture découpée par fonctionnalité (domaine, cas d'usage, adaptateurs système, interface).
+
+## Réalisation
+
+**Méthode.** J'applique strictement la méthode AIDD avec Claude Code : pour chaque fonctionnalité, un brainstorm, une spécification avec ses critères d'acceptation, un plan découpé en phases, puis l'implémentation, la validation et la revue. Claude Code écrit l'essentiel du code ; je cadre, je tranche, je relis et je valide. Je code moi-même les petites modifications rapides. Tout passe par des branches et des pull requests, avec des messages de commit normalisés.
+
+**Livré.** Le socle : une app sans fenêtre ni icône dans le Dock, dont la seule présence visible est une icône dans la barre de menus, avec un menu natif. Fusionné dans `main` le 9 novembre 2026.
+
+**En cours.** L'historique du presse-papiers, spécifié pour neuf familles de contenus (texte, texte enrichi, liens, images, fichiers du Finder, cellules de tableur, PDF, couleurs, contenus mixtes), avec un raccourci global, la recherche, les épingles, les collections et les exclusions par app. Il est planifié en quatre phases ; la première (copier, ouvrir le bandeau, recoller du texte) a été validée sur macOS 27.2, en partie seulement : le refus réel d'accès au presse-papiers et Handoff restent à vérifier. Ce travail n'est pas encore publié sur la branche principale.
+
+## Difficultés
+
+Trois limites de macOS sont apparues dès le cadrage et pendant la validation :
+
+- **Savoir quelle app a copié.** macOS signale qu'un contenu a changé dans le presse-papiers, sans identifier de façon fiable l'app qui l'a copié. Lors des essais dans Safari et Mail, l'origine est restée inconnue. Le filtre et l'exclusion par app ne fonctionnent donc que lorsque l'app d'origine se déclare.
+- **Coller à la place de l'utilisateur.** Activer l'app cible et lui envoyer le collage dépend d'autorisations distinctes, sans garantie que le texte arrive. La spec prévoit un repli : le contenu reste dans le presse-papiers et l'app affiche « Copié. Colle avec ⌘V. ».
+- **Deux versions de macOS.** Les critères d'acceptation visent macOS 26 et 27 ; la vérification sous macOS 26 reste à faire.
+
+## Résultat
+
+Un socle publié et testé, une première fonctionnalité spécifiée de bout en bout et en cours de livraison, et un dépôt public où chaque décision est tracée (brainstorm, spec, plan, validation). Captures de l'app : *à compléter*.
+
+## Compétences
+
+Référentiel BTS SIO :
+
+- **Bloc 1** : travailler en mode projet ; organiser son développement professionnel.
+- **Bloc 3** : protéger les données (traitement local, sans compte, exclusion des copies signalées comme confidentielles).
+
+Outils et notions : Swift, SwiftUI, AppKit, SwiftData, Xcode, tests automatisés, Git et GitHub (branches, pull requests), spécification et critères d'acceptation, développement assisté par IA (Claude Code).
