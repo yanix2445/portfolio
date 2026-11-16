@@ -95,9 +95,9 @@
 
   /* Lettrage d'affiche : de l'intertitre d'article au nom plein écran. */
   --text-display-sm: var(--fs-display-sm);
-  --text-display-sm--line-height: 0.9;
+  --text-display-sm--line-height: 1;
   --text-display-title: var(--fs-display-title);
-  --text-display-title--line-height: 0.84;
+  --text-display-title--line-height: 1;
   --text-display-poster: var(--fs-display-poster);
   --text-display-poster--line-height: 0.84;
   --text-display-md: var(--fs-display-md);
@@ -283,6 +283,28 @@
 @utility type-outline-accent {
   color: transparent;
   -webkit-text-stroke: var(--outline-numeral) var(--color-primary);
+}
+
+/* Intertitres d'une fiche numérotés comme des séquences (01, 02…), comme son sommaire.
+   Le numéro est décoratif : la seconde déclaration le retire des lecteurs d'écran. */
+@utility prose-sequences {
+  counter-reset: sequence;
+
+  & h2 {
+    counter-increment: sequence;
+  }
+
+  & h2::before {
+    content: counter(sequence, decimal-leading-zero);
+    content: counter(sequence, decimal-leading-zero) / "";
+    display: block;
+    margin-bottom: 0.9em;
+    font-family: var(--font-mono);
+    font-size: var(--text-label);
+    font-weight: 400;
+    letter-spacing: var(--text-label--letter-spacing);
+    color: var(--color-primary);
+  }
 }
 
 /* Corps des articles MDX : les couleurs de `prose-invert` prises dans le thème. */
