@@ -11,7 +11,10 @@ Comment les formulaires sont construits et validés. Le site n'en a qu'un : le f
 
 ## Conventions
 
-- Ordre de traitement côté serveur : valider les champs, vérifier le jeton Turnstile, puis envoyer le mail via Resend. Aucune donnée n'est persistée, et l'action ne lève jamais.
+- Ordre de traitement côté serveur : écarter un robot pris au champ piège (`contact_hp`, réponse « envoyé » sans rien envoyer), valider les champs, vérifier le jeton Turnstile, puis envoyer la notification à Yanis et l'accusé de réception au visiteur via Resend. Aucune donnée n'est persistée, et l'action ne lève jamais. Côté client, un appel qui échoue (réseau, ou 429 du pare-feu) devient l'erreur générique, sans planter la page.
+- Motif facultatif (Alternance, Stage, Autre) sur la ligne du libellé « Message », pour ne pas ajouter de ligne ; il préfixe l'objet de la notification. `/contact?motif=alternance` le présélectionne (le bouton « Proposer une alternance » de l'accueil). Lu après l'hydratation, la page restant prérendue.
+- Brouillon (nom, e-mail, message, motif) dans `sessionStorage`, effacé après un envoi réussi. Compteur de caractères sous le message à partir de 80 % de la limite, relié au champ par `aria-describedby`, sans `aria-live`.
+- Pare-feu Vercel : règle « Formulaire de contact : 5 envois / 10 min par IP » (`POST /contact`, 429 au-delà).
 - `/contact` n'affiche le formulaire que si les quatre variables existent (`contactSiteKey` : clé de site et clé secrète Turnstile, clé Resend, destinataire). Sinon la page garde ses coordonnées directes. La page est prérendue : ce choix est figé au build, il faut redéployer après avoir saisi les clés.
 - Le jeton Turnstile est à usage unique et expire après 300 s : le widget est réinitialisé après chaque envoi, réussi ou non. Le widget ajoute lui-même le champ `cf-turnstile-response` au formulaire.
 - Erreurs de champ : sous le champ, reliées par `aria-describedby`, `aria-invalid` sur le contrôle et `data-invalid` sur le `Field`. Le focus va au premier champ en erreur.

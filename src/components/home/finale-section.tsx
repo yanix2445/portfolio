@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 import { Button } from "@/components/ui/button";
 import { CONTACT, CV_PATH } from "@/lib/site";
 import { cn } from "@/lib/utils";
@@ -10,7 +12,7 @@ const LINES = [
   { text: "votre équipe.", accent: true },
 ] as const;
 
-// La fin : l'appel à rejoindre une équipe, avec les trois moyens de contact.
+// La fin : l'appel à rejoindre une équipe : appeler, proposer une alternance, lire le CV.
 export function FinaleSection() {
   return (
     <section
@@ -39,8 +41,10 @@ export function FinaleSection() {
           <Button asChild size="xl" data-reveal="button">
             <a href={`tel:${CONTACT.phoneE164}`}>Appeler · {CONTACT.phone}</a>
           </Button>
+          {/* Ouvre le formulaire avec le motif « Alternance » déjà choisi. L'e-mail reste
+              dans le pied de page. */}
           <Button asChild variant="outline" size="xl" data-reveal="button">
-            <a href={`mailto:${CONTACT.email}`}>Écrire un e-mail</a>
+            <Link href="/contact?motif=alternance">Proposer une alternance</Link>
           </Button>
           <Button asChild variant="outline" size="xl" data-reveal="button">
             <a href={CV_PATH} target="_blank" rel="noopener">

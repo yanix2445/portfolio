@@ -2,6 +2,7 @@
 
 import {
   CONTACT_MESSAGES,
+  HONEYPOT_FIELD,
   TURNSTILE_FIELD,
   readContactFields,
   validateContact,
@@ -12,8 +13,8 @@ import { sendContactMail } from "@/lib/resend";
 import { verifyTurnstile } from "@/lib/turnstile";
 
 /**
- * Reçoit le formulaire de contact. Dans l'ordre : revalider les champs, vérifier le jeton
- * Turnstile, envoyer le mail. Rien n'est stocké, rien n'est levé vers le client, et aucune
+ * Reçoit le formulaire de contact. Dans l'ordre : écarter les robots pris au champ piège,
+ * revalider les champs, vérifier le jeton Turnstile, envoyer les mails. Rien n'est stocké, rien n'est levé vers le client, et aucune
  * réponse brute de Turnstile ou de Resend ne sort d'ici.
  */
 export async function sendContact(
@@ -23,6 +24,11 @@ export async function sendContact(
   let fields: ContactFields | undefined;
 
   try {
+    // Champ piège rempli : un robot. On lui répond comme à un humain, sans rien envoyer.
+    if (form.get(HONEYPOT_FIELD)) {
+      return { status: "success", message: CONTACT_MESSAGES.success };
+    }
+
     fields = readContactFields(form);
     const errors = validateContact(fields);
     if (Object.keys(errors).length > 0) {

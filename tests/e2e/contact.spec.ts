@@ -85,6 +85,58 @@ test.describe("formulaire de contact", () => {
     await expect(submit).toBeFocused();
   });
 
+  test("propose un motif facultatif, présélectionné par l'URL", async ({ page }) => {
+    await page.goto("/contact?motif=alternance");
+    const reasons = page.getByRole("radiogroup", { name: "Motif" }).getByRole("radio");
+
+    await expect(reasons).toHaveText(["Alternance", "Stage", "Autre"]);
+    await expect(reasons.first()).toBeChecked();
+
+    await page.goto("/contact");
+    for (const reason of await reasons.all()) await expect(reason).not.toBeChecked();
+  });
+
+  test("garde le brouillon dans l'onglet après un rechargement", async ({ page }) => {
+    await page.goto("/contact");
+    const message = page.getByRole("textbox", { name: "Message" });
+
+    await page.getByRole("textbox", { name: "Nom" }).fill("Camille Martin");
+    await message.fill("Bonjour, nous cherchons un alternant.");
+    await expect(async () => {
+      await page.getByRole("radiogroup", { name: "Motif" }).getByRole("radio", { name: "Stage" }).click();
+      await expect(page.getByRole("radio", { name: "Stage" })).toBeChecked();
+    }).toPass();
+    await page.reload();
+
+    await expect(page.getByRole("textbox", { name: "Nom" })).toHaveValue("Camille Martin");
+    await expect(message).toHaveValue("Bonjour, nous cherchons un alternant.");
+    await expect(page.getByRole("radio", { name: "Stage" })).toBeChecked();
+  });
+
+  test("affiche le compteur de caractères à l'approche de la limite", async ({ page }) => {
+    await page.goto("/contact");
+    const message = page.getByRole("textbox", { name: "Message" });
+    const counter = page.locator("[data-message-counter]");
+
+    await message.fill("Bonjour, nous cherchons un alternant.");
+    await expect(counter).toHaveCount(0);
+    await message.fill("a".repeat(4200));
+    await expect(counter).toHaveText("4200 / 5000 caractères");
+    await expect(message).toHaveAccessibleDescription(/4200 \/ 5000 caractères/);
+  });
+
+  test("cache le champ piège aux visiteurs, au clavier et aux lecteurs d'écran", async ({ page }) => {
+    await page.goto("/contact");
+    const trap = page.locator("input[name='contact_hp']");
+
+    await expect(trap).toHaveAttribute("tabindex", "-1");
+    await expect(page.getByRole("textbox", { name: "Laissez ce champ vide" })).toHaveCount(0);
+    // Son enveloppe fait 1 px et rogne son contenu : rien ne s'affiche.
+    const box = await page.locator("[data-honeypot]").boundingBox();
+    expect(box?.width).toBeLessThanOrEqual(1);
+    expect(box?.height).toBeLessThanOrEqual(1);
+  });
+
   test("se parcourt au clavier, avec un focus visible", async ({ page }) => {
     await page.goto("/contact");
     const name = page.getByRole("textbox", { name: "Nom" });
@@ -92,6 +144,9 @@ test.describe("formulaire de contact", () => {
     await name.focus();
     await page.keyboard.press("Tab");
     await expect(page.getByRole("textbox", { name: "E-mail" })).toBeFocused();
+    // Le motif se place entre l'e-mail et le message : Tab y entre, Tab en sort.
+    await page.keyboard.press("Tab");
+    await expect(page.getByRole("radio", { name: "Alternance" })).toBeFocused();
     await page.keyboard.press("Tab");
     await expect(page.getByRole("textbox", { name: "Message" })).toBeFocused();
     const ring = await page
