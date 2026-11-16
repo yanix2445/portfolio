@@ -153,9 +153,9 @@ New text sizes and spacing tokens are added to `globals.css` and to `TEXT_SIZES`
 
 - **Gutter**: `px-gutter`, 3.4vw on wide screens and 1rem on phones.
 - **Rhythm**: sections are separated by a top rule (`border-t border-border`) and screen-relative padding. Scene-specific measures (a title pinned 16vh from the top) stay as viewport units in the classes; they are composition, not tokens.
-- **Breakpoints**: `md:` (48 rem) is the one that reshapes pages; below it everything stacks in a column. `lg:` only adds a third column to the catalog grid, and `max-sm:` hides the header call button.
+- **Breakpoints**: `md:` (48 rem) is the one that reshapes pages; below it everything stacks in a column. `lg:` only adds a third column to the catalog grid, `xl:` a third column to project and tech-watch pages, and `max-sm:` hides the header call button.
 - **Pinned scenes**: the hero and the acts are pinned and scrubbed on screens at least 48 rem wide and 35 rem tall. Elsewhere, and with reduced motion, nothing is pinned.
-- **Reading pages** (project and tech-watch pages, legal notice): a poster title, then a two-column grid matching the « Fiche technique » (`0.78fr 1.22fr`): facts on the left (date, status, domain, topics, sticky on wide screens), text on the right at 68ch through `Prose`.
+- **Reading pages** (project and tech-watch pages, legal notice): a poster title, then a two-column grid matching the « Fiche technique » (`0.78fr 1.22fr`), text on the right at 68ch through `Prose`. Project and tech-watch pages read like credits: a row of facts under the title (a two-column grid on phones), then three columns: a sticky « Séquences » table of contents on the left whose numbers match the `h2` (`prose-sequences`), the synopsis and the text centered, the entry's documents on the right when it has any (below the text under `xl:`, 80 rem; the text runs up to 75ch there), and the next entry at the end. No table of contents on phones.
 - **Portrait**: the head is never cropped. `--portrait-y` lowers the vertical framing as the screen gets wider.
 
 ## Elevation & Depth
@@ -179,7 +179,7 @@ All interactive primitives are shadcn/ui components in `src/components/ui/`, the
 - **Navigation**: the current page's link is ember and carries `aria-current="page"`.
 - **Field, Input, Textarea**: the contact form. Errors sit under the field and are linked to it.
 - **Sonner**: form feedback.
-- **Poster** (`components/projects/poster.tsx`): a project as a film poster, in three inks assigned in order: ember, cream, dark with an ember title.
+- **Poster** (`components/projects/poster.tsx`): a project as a film poster, on the home page in three inks assigned in order: ember, cream, dark with an ember title. The catalog uses a plain dark ink for every poster (too many colors at once in a large grid): the title turns ember on hover only. A project with a `cover` shows it as a 16:9 still under the top line; the poster then drops its 3:4 ratio so the still is never squeezed. On the project page the same still opens the text column, uncropped at 16:9, and is the Open Graph image.
 - **Laurel** (`components/home/laurel.tsx`): one wreath per certification; the text scales with the wreath.
 
 Keyboard focus is a 2 px ember outline everywhere; form fields use the shadcn ring in the same color.
@@ -193,6 +193,7 @@ Motion is GSAP only, in `src/components/animations/`, wrapping server-rendered s
 - Use tokens: semantic colors, `text-*` roles, `rounded-*`, `px-gutter`.
 - Reach for a shadcn primitive before writing markup for a control.
 - Keep accented capitals clear of the line above (« ÉQUIPE », « À L'AFFICHE »).
+- Never cut a word in a title: `fitTitle` shrinks the title until its longest word fits.
 - Check new layouts at 1440 × 900, 1366 × 650, 768 × 1024 and 375 × 812.
 
 **Don't**
