@@ -15,7 +15,7 @@ Le langage visuel : design system, tokens, conventions d'UI et règles d'animati
 - Tous les tokens sont dans `src/app/globals.css` : variables CSS sur `:root`, exposées à Tailwind par `@theme inline`. Il n'y a pas de `tailwind.config`.
 - Thème sombre unique : `class="dark"` sur `<html>`, `color-scheme: dark`.
 - Couleurs : `--background` `#0b0a09`, `--foreground` `#f2ebdd`, `--soft` `#cfc6b6`, `--card` `#151310`, `--primary` `#ff5b2e` (orange braise), `--muted-foreground` `#9a9082`. Aucune couleur n'est écrite dans un composant ni dans une animation.
-- Texte : chaque rôle est un token `--text-*` (`text-body`, `text-lead`, `text-display-xl`, `text-display-fit` pour une page qui tient en un écran, `text-display-name`…) qui porte sa taille, son interligne, son approche et sa graisse. Les valeurs fluides (`--fs-*`) ont une valeur téléphone et une valeur grand écran : un composant n'écrit pas de point de rupture pour le texte.
+- Texte : chaque rôle est un token `--text-*` (`text-body`, `text-lead`, `text-display-xl`, `text-display-fit` pour une page qui tient en un écran, `text-display-title` pour le titre d'une fiche ou d'un article, `text-display-sm` pour ses intertitres, `text-display-name`…) qui porte sa taille, son interligne, son approche et sa graisse. Les valeurs fluides (`--fs-*`) ont une valeur téléphone et une valeur grand écran : un composant n'écrit pas de point de rupture pour le texte. Le minimum d'une taille fluide est sa valeur téléphone : entre 768 et ~1140 px, le texte ne rapetisse pas.
 - Un nouveau token de texte ou d'espacement s'ajoute aussi à `TEXT_SIZES` ou `SPACINGS` dans `src/lib/utils.ts`. Sinon `cn()` prend une taille de texte pour une couleur (`text-button` face à `text-primary-foreground`) et ne sait pas qu'un `h-8` remplace un `h-control-xl`.
 - Espacements : `px-gutter` (3,4vw, 1 rem sur téléphone), `p-poster`, `h-control-xl`, `pt-header`. Les cotes propres à une scène (un titre à 16vh du haut) restent en unités d'écran dans les classes : c'est de la composition, pas un token.
 - Rayons : dérivés de `--radius` (0,625 rem). `rounded-md` pour les badges, `rounded-lg` pour les contrôles et les champs, `rounded-xl` pour les grands boutons, `rounded-2xl` pour les affiches. Aucun bouton ni badge en pilule.
@@ -24,7 +24,7 @@ Le langage visuel : design system, tokens, conventions d'UI et règles d'animati
 
 ## Components
 
-- Primitives en place : `button` (tailles ajoutées `xl` et `label` ; les tailles shadcn inutilisées `xs`, `sm` et leurs icônes ont été retirées), `badge` (variante ajoutée `ink`), `card`, `toggle` et `toggle-group` (taille `label`), `field`, `input`, `label`, `textarea`, `separator`, `spinner`, `sonner`.
+- Primitives en place : `button` (tailles ajoutées `xl` et `label` ; les tailles shadcn inutilisées `xs`, `sm` et leurs icônes ont été retirées), `badge` (variante ajoutée `ink`), `toggle` et `toggle-group` (taille `label`), `field`, `input`, `label`, `textarea`, `separator`, `spinner`, `sonner`.
 - Les primitives importent `cn` depuis `@/lib/utils` (et non depuis le paquet `cn`) pour connaître les tailles de texte du thème. Après un `shadcn add`, corriger cet import.
 - Les tailles de texte ont quitté la base des variantes `cva` : chaque taille de bouton ou de filtre porte la sienne.
 - **GSAP** (`useGSAP` + ScrollTrigger) est la seule librairie d'animation.
@@ -38,6 +38,9 @@ Le langage visuel : design system, tokens, conventions d'UI et règles d'animati
 - Deux animations ne touchent jamais la même propriété d'un élément : l'intro anime l'`opacity` de la légende et de « Défiler », le hero épinglé leur `filter`.
 
 ## Rules
+
+- **Pages de lecture** (fiches projet, articles de veille, mentions légales) : même grille que la fiche technique (`0.78fr 1.22fr`), faits à gauche, texte à droite via `Prose` (68ch, couleurs de `prose-theme`). Il n'y a plus de carte shadcn : la veille est une liste de lignes.
+- **Navigation** : le lien de la page courante passe à l'accent, avec `aria-current="page"`.
 
 - **Portrait** : la tête de Yanis reste entière à chaque étape et sur chaque écran. Le cadrage vertical est la variable `--portrait-y`, qui diminue par paliers quand l'écran s'élargit.
 - **Hero** : le nom et le synopsis sont bornés par la largeur et par la hauteur, pour ne pas se chevaucher sur un écran bas ou très large.

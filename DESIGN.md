@@ -127,7 +127,7 @@ Fonts are local variable files (`src/app/fonts/`).
 - **Hanken Grotesk**: all running text and interface titles.
 - **Geist Mono**, uppercase, wide tracking: captions and labels, through `type-label`.
 
-Every size is a named token (`--text-*`). Each role carries its own size, line height, tracking and weight, and resolves to a phone value or a wide-screen value, so components never write a breakpoint for type:
+Every size is a named token (`--text-*`). Each role carries its own size, line height, tracking and weight, and resolves to a phone value or a wide-screen value, so components never write a breakpoint for type. A fluid size never drops below its phone value: a tablet reads at least as large as a phone.
 
 | Role | Class | Used for |
 | ---- | ----- | -------- |
@@ -135,6 +135,8 @@ Every size is a named token (`--text-*`). Each role carries its own size, line h
 | Numeral | `text-display-numeral` | Act numbers |
 | Headline | `text-display-xl`, `-lg`, `-md` | Section, page and act titles |
 | Poster | `text-display-poster` | Project poster titles |
+| Title | `text-display-title` | Article and project-page titles (smaller on phones, so long words fit) |
+| Intertitle | `text-display-sm` | Section headings inside an article |
 | Finale | `text-display-finale` | The closing sentence |
 | Synopsis | `text-synopsis` | The pitch under the hero |
 | Subtitle | `text-subtitle` | Roles |
@@ -153,6 +155,7 @@ New text sizes and spacing tokens are added to `globals.css` and to `TEXT_SIZES`
 - **Rhythm**: sections are separated by a top rule (`border-t border-border`) and screen-relative padding. Scene-specific measures (a title pinned 16vh from the top) stay as viewport units in the classes; they are composition, not tokens.
 - **Breakpoints**: `md:` (48 rem) is the one that reshapes pages; below it everything stacks in a column. `lg:` only adds a third column to the catalog grid, and `max-sm:` hides the header call button.
 - **Pinned scenes**: the hero and the acts are pinned and scrubbed on screens at least 48 rem wide and 35 rem tall. Elsewhere, and with reduced motion, nothing is pinned.
+- **Reading pages** (project and tech-watch pages, legal notice): a poster title, then a two-column grid matching the « Fiche technique » (`0.78fr 1.22fr`): facts on the left (date, status, domain, topics, sticky on wide screens), text on the right at 68ch through `Prose`.
 - **Portrait**: the head is never cropped. `--portrait-y` lowers the vertical framing as the screen gets wider.
 
 ## Elevation & Depth
@@ -170,9 +173,10 @@ Flat. Depth comes from the portrait, veils (background-colored gradients over th
 All interactive primitives are shadcn/ui components in `src/components/ui/`, themed in their `cva` variants. Pass `className` for layout only.
 
 - **Button**: `default` (ember) and `outline` (inverts to cream on hover). Sizes `xl` for calls to action, `label` for mono-caption buttons, the shadcn sizes for the rest.
-- **Badge**: mono caption in a rounded rectangle. `outline` on the dark ground, `ink` on a colored poster, `secondary` for tags.
+- **Badge**: mono caption in a rounded rectangle. `outline` on the dark ground (keywords, topics), `ink` on a colored poster and for a project's status.
 - **ToggleGroup**: catalog filters, single choice, the active one filled with cream.
-- **Card**: listing cards on secondary pages.
+- **Prose** (`components/mdx/prose.tsx`): MDX bodies and the legal notice. Intertitles in poster lettering, ember bullets and link underlines, colors from `prose-theme` in `globals.css`.
+- **Navigation**: the current page's link is ember and carries `aria-current="page"`.
 - **Field, Input, Textarea**: the contact form. Errors sit under the field and are linked to it.
 - **Sonner**: form feedback.
 - **Poster** (`components/projects/poster.tsx`): a project as a film poster, in three inks assigned in order: ember, cream, dark with an ember title.

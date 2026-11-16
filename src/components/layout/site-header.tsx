@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
 import { Button } from "@/components/ui/button";
@@ -16,6 +17,7 @@ const NAV_LINKS = [
 // dès que la page a défilé. Sans JavaScript, il reste transparent et lisible.
 export function SiteHeader() {
   const [scrolled, setScrolled] = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -39,7 +41,10 @@ export function SiteHeader() {
               <li key={href}>
                 <Link
                   href={href}
-                  className="rounded-sm text-foreground/75 transition-colors duration-200 hover:text-foreground"
+                  aria-current={
+                    pathname === href || pathname.startsWith(`${href}/`) ? "page" : undefined
+                  }
+                  className="rounded-sm text-foreground/75 transition-colors duration-200 hover:text-foreground aria-[current=page]:text-primary"
                 >
                   {label}
                 </Link>

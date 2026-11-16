@@ -27,7 +27,7 @@ flowchart TD
 - `src/components/projects` : ce que l'accueil et le catalogue partagent (`poster.tsx`, `status-badge.tsx`) et le catalogue filtrable de `/projets` (`catalog.tsx`, composant client).
 - `src/components/contact` : le formulaire de contact (`contact-form.tsx`, composant client).
 - `src/components/animations` : la mise en scène GSAP, toujours en `"use client"` (`hero-scroll`, `acts-scroll`, `reveal`, `gsap.ts`).
-- `src/components` (autres) : `layout/` (header fixe, footer, en-tête des pages intérieures), `content/` (liste, métadonnées et page de détail, utilisées par la veille et les fiches projet), `mdx/` (rendu `prose`) et `seo/` (JSON-LD de la personne).
+- `src/components` (autres) : `layout/` (header fixe, footer, en-tête des pages intérieures), `content/` (liste de la veille et page de détail des fiches et articles), `mdx/` (rendu `prose`, aussi utilisé par les mentions légales) et `seo/` (JSON-LD de la personne).
 - `src/types` : les déclarations de modules, dont `*.mdx` (qui type `export const metadata`).
 - `src/content` : un fichier MDX par projet ou article de veille. On ajoute du contenu ici.
 - `src/lib` :

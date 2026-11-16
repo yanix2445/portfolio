@@ -72,6 +72,8 @@ test("la navigation principale mène aux sections", async ({ page }) => {
   ] as const) {
     await nav.getByRole("link", { name: label }).click();
     await expect(page).toHaveURL(path);
+    // La page courante est signalée, aussi aux lecteurs d'écran.
+    await expect(nav.getByRole("link", { name: label })).toHaveAttribute("aria-current", "page");
     await page.goto("/");
   }
 });
