@@ -10,7 +10,8 @@ type PageHeaderProps = {
   kicker?: string;
   /**
    * Page qui doit tenir en un écran : titre borné par la hauteur et, sur grand écran,
-   * introduction à côté du titre plutôt que dessous.
+   * introduction à côté du titre plutôt que dessous. Sur téléphone, l'introduction n'est
+   * lue que par les lecteurs d'écran : la place manque.
    */
   compact?: boolean;
   children: ReactNode;
@@ -31,7 +32,7 @@ export function PageHeader({ id, title, kicker, compact = false, children }: Pag
           {title}
         </h1>
       </div>
-      <p className={cn("mt-[3vh] max-w-[44ch] text-body text-soft", compact && "md:mt-0")}>
+      <p className={cn("mt-[3vh] max-w-[44ch] text-body text-soft", compact && "max-md:sr-only md:mt-0")}>
         {children}
       </p>
     </header>

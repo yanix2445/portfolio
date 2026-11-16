@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 
 import { ContactForm } from "@/components/contact/contact-form";
 import { PageHeader } from "@/components/layout/page-header";
+import { Button } from "@/components/ui/button";
 import { contactSiteKey } from "@/lib/contact";
 import { CONTACT, CV_PATH, OWNER } from "@/lib/site";
 import { cn } from "@/lib/utils";
@@ -20,6 +21,14 @@ const CHANNELS = [
   { label: "CV", value: "Télécharger le PDF", href: CV_PATH, rel: "noopener" },
 ] as const;
 
+// Sur téléphone, à côté du formulaire : les trois accès directs. LinkedIn, GitHub et
+// l'e-mail sont aussi dans le pied de page.
+const SHORTCUTS = [
+  { label: "Appeler", href: `tel:${CONTACT.phoneE164}` },
+  { label: "E-mail", href: `mailto:${CONTACT.email}` },
+  { label: "CV (PDF)", href: CV_PATH, external: true },
+] as const;
+
 // Le formulaire n'est proposé que si Turnstile et Resend sont configurés : sinon
 // (prévisualisation sans clés, par exemple), la page garde ses coordonnées directes.
 // La page est prérendue : seul ce choix est figé au build, aucun secret n'en sort.
@@ -35,7 +44,7 @@ export default function ContactPage() {
         "flex flex-col gap-8 px-gutter",
         // Le contenu est centré dans la hauteur libre : pas de grand vide sous le formulaire.
         siteKey
-          ? "pt-8 pb-12 md:flex-1 md:justify-center md:gap-[4svh] md:py-[3svh]"
+          ? "flex-1 justify-center gap-5 py-5 md:gap-[4svh] md:py-[3svh]"
           : "pt-12 pb-20 md:pt-[12vh] md:pb-[14vh]",
       )}
     >
@@ -46,7 +55,8 @@ export default function ContactPage() {
 
       <div
         className={cn(
-          "grid gap-10",
+          "grid",
+          siteKey ? "gap-5" : "gap-10",
           siteKey ? "md:grid-cols-[1.15fr_0.85fr] md:items-start md:gap-[6vw]" : "md:mt-[3vh]",
         )}
       >
@@ -62,7 +72,27 @@ export default function ContactPage() {
           </div>
         ) : null}
 
-        <dl className={cn(!siteKey && "md:max-w-[60vw]")} data-contact-channels>
+        {siteKey ? (
+          <ul className="flex flex-wrap gap-2 md:hidden" data-contact-shortcuts>
+            {SHORTCUTS.map((shortcut) => (
+              <li key={shortcut.label}>
+                <Button asChild variant="outline" size="label">
+                  <a
+                    href={shortcut.href}
+                    {...("external" in shortcut ? { target: "_blank", rel: "noopener" } : {})}
+                  >
+                    {shortcut.label}
+                  </a>
+                </Button>
+              </li>
+            ))}
+          </ul>
+        ) : null}
+
+        <dl
+          className={cn(siteKey ? "max-md:hidden" : "md:max-w-[60vw]")}
+          data-contact-channels
+        >
           {CHANNELS.map((channel) => (
             <div
               key={channel.label}

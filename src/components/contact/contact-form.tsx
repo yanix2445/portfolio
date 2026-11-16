@@ -103,9 +103,9 @@ export function ContactForm({ siteKey }: { siteKey: string }) {
 
   return (
     <form ref={form} action={formAction} onSubmit={handleSubmit} noValidate>
-      <FieldGroup>
-        {/* Nom et e-mail côte à côte sur grand écran : la page tient en un écran. */}
-        <div className="grid gap-5 md:grid-cols-2">
+      <FieldGroup className="max-md:gap-4">
+        {/* Nom et e-mail côte à côte, même sur téléphone : la page tient en un écran. */}
+        <div className="grid grid-cols-2 gap-3 md:gap-5">
           <Field data-invalid={Boolean(errors.name)}>
             <FieldLabel htmlFor="name">Nom</FieldLabel>
             <Input
@@ -149,7 +149,7 @@ export function ContactForm({ siteKey }: { siteKey: string }) {
             minLength={CONTACT_LIMITS.messageMin}
             maxLength={CONTACT_LIMITS.message}
             defaultValue={failed?.fields?.message}
-            className="max-h-[30svh] min-h-28 md:min-h-[16svh]"
+            className="max-h-[30svh] min-h-20 md:min-h-[16svh]"
             aria-invalid={Boolean(errors.message)}
             aria-describedby={describedBy("message")}
           />
@@ -194,7 +194,7 @@ export function ContactForm({ siteKey }: { siteKey: string }) {
               {state.message}
             </p>
           ) : null}
-          <FieldDescription>
+          <FieldDescription className="max-md:text-caption">
             Votre message m&apos;est transmis par e-mail et n&apos;est pas conservé par le site.{" "}
             <Link href="/mentions-legales">Mentions légales et confidentialité</Link>
           </FieldDescription>

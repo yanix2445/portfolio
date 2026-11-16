@@ -101,11 +101,14 @@ test.describe("formulaire de contact", () => {
   });
 });
 
-// Sur ordinateur, la page du formulaire tient en un écran, pied de page compris.
+// La page du formulaire tient en un écran, pied de page compris : ordinateur, tablette et
+// téléphone (390 × 664 et 375 × 667 : hauteur visible d'un iPhone, barres du navigateur ôtées).
 for (const viewport of [
   { width: 1440, height: 900 },
   { width: 1366, height: 650 },
   { width: 768, height: 1024 },
+  { width: 390, height: 664 },
+  { width: 375, height: 667 },
 ]) {
   test(`la page tient en un écran sans défiler en ${viewport.width} × ${viewport.height}`, async ({
     page,
@@ -145,11 +148,16 @@ test.describe("contact sur le plus petit téléphone", () => {
 test.describe("contact sur mobile", () => {
   test.use({ viewport: { width: 375, height: 812 } });
 
-  test("le formulaire et les coordonnées tiennent sans défilement horizontal", async ({ page }) => {
+  test("le formulaire et les accès directs tiennent sans défilement horizontal", async ({ page }) => {
     await page.goto("/contact");
 
     await expect(page.getByRole("textbox", { name: "Message" })).toBeVisible();
-    await expect(page.locator("[data-contact-channels]")).toBeVisible();
+    // Sur téléphone, la liste des coordonnées laisse place à trois accès directs.
+    const shortcuts = page.locator("[data-contact-shortcuts]");
+    await expect(shortcuts.getByRole("link", { name: "Appeler" })).toHaveAttribute("href", /^tel:/);
+    await expect(shortcuts.getByRole("link", { name: "E-mail" })).toHaveAttribute("href", /^mailto:/);
+    await expect(shortcuts.getByRole("link", { name: "CV (PDF)" })).toBeVisible();
+    await expect(page.locator("[data-contact-channels]")).toBeHidden();
     expect(
       await page.evaluate(
         () => document.documentElement.scrollWidth > document.documentElement.clientWidth,
