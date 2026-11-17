@@ -9,8 +9,8 @@ Où tourne le site et comment il est livré.
 
 ## Environments
 
-- Production : le projet Vercel `portfolio` (Hobby, Node 26.x), qui déploie `main`. Avant le lancement, il n'est servi que sur son URL Vercel (`portfolio-peach-chi-42.vercel.app`).
-- Domaine : `yanis-harrat.com` et `www` restent attachés au projet Vercel `portfolio-page-attente` (page d'attente, repo séparé) jusqu'au lancement. Ne pas les déplacer sans décision explicite de Yanis. Pour lancer : retirer le domaine de `portfolio-page-attente`, puis l'ajouter à `portfolio`. Le DNS Cloudflare ne change pas.
+- Production : le projet Vercel `portfolio` (Hobby, Node 26.x), qui déploie `main`, servi sur `yanis-harrat.com` depuis le lancement du 2026-11-17 (et toujours sur `portfolio-peach-chi-42.vercel.app`).
+- Domaine : l'apex `yanis-harrat.com` est l'adresse principale, comme `SITE_URL` (canonical, sitemap, Open Graph) ; `www` y redirige en 308. Ne pas inverser l'un sans l'autre. Le projet `portfolio-page-attente` (page d'attente, repo séparé) n'a plus le domaine.
 - Preview : une URL Vercel par PR.
 - Local : `http://localhost:3000`.
 - Les variables d'environnement sont déclarées dans Vercel, séparément pour Preview et Production, et dans `.env.local` en local (non commité).
