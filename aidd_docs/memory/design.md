@@ -24,7 +24,7 @@ Le langage visuel : design system, tokens, conventions d'UI et règles d'animati
 
 ## Components
 
-- Primitives en place : `button` (tailles ajoutées `xl` et `label` ; les tailles shadcn inutilisées `xs`, `sm` et leurs icônes ont été retirées), `badge` (variante ajoutée `ink`), `toggle` et `toggle-group` (taille `label`), `field`, `input`, `label`, `textarea`, `separator`, `spinner`, `sonner`.
+- Primitives en place : `input` et `textarea` (variante ajoutée `line` : un simple trait, focus en trait orange épaissi), `button` (tailles ajoutées `xl`, `label` et `stub`, le talon du billet de contact ; les tailles shadcn inutilisées `xs`, `sm` et leurs icônes ont été retirées), `badge` (variante ajoutée `ink`), `toggle` et `toggle-group` (taille `label`), `field`, `input`, `label`, `textarea`, `separator`, `spinner`, `sonner`.
 - Les primitives importent `cn` depuis `@/lib/utils` (et non depuis le paquet `cn`) pour connaître les tailles de texte du thème. Après un `shadcn add`, corriger cet import.
 - Les tailles de texte ont quitté la base des variantes `cva` : chaque taille de bouton ou de filtre porte la sienne.
 - **GSAP** (`useGSAP` + ScrollTrigger) est la seule librairie d'animation.

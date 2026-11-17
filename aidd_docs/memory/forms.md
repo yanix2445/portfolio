@@ -5,6 +5,7 @@ Comment les formulaires sont construits et validés. Le site n'en a qu'un : le f
 ## Approach
 
 - Composant client : `src/components/contact/contact-form.tsx`, avec les primitives shadcn/ui (`FieldGroup`, `Field`, `Input`, `Textarea`, `Button`, `Spinner`, `Sonner`) et le widget Turnstile (`@marsidev/react-turnstile`).
+- Mise en forme « billet de cinéma » (choix de Yanis, 2026-11-17, piste C4) : carte `bg-card` en `rounded-2xl`, champs en variante `line` (un trait, libellés en `type-label`), et le talon orange à droite (en bas sur téléphone) qui est le bouton d'envoi (`Button size="stub"`), séparé par une perforation pointillée et deux encoches. Le talon affiche « Envoyer » en lettres d'affiche (vertical sur grand écran) ; le délai « Réponse 48–72 h » et la flèche y sont décoratifs, le nom lu est « Envoyer le message ». Sur l'orange, le contour de focus passe en noir, à l'intérieur du talon.
 - Soumission : `useActionState` sur la Server Action `sendContact` (`src/actions/contact.ts`).
 - Règles : `src/lib/contact.ts` porte la validation (`validateContact`), les limites et les messages. Le navigateur l'utilise pour répondre tout de suite, le serveur la rejoue toujours.
 - Il n'y a pas de bibliothèque de schéma : trois champs, une fonction pure.
