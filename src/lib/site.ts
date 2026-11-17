@@ -14,7 +14,7 @@ export const OWNER = {
   firstName: "Yanis",
   lastName: "HARRAT",
   fullName: "Yanis HARRAT",
-  jobTitle: "Étudiant en BTS SIO option SISR",
+  jobTitle: "Technicien systèmes et réseaux, BTS SIO SISR en alternance",
 } as const;
 
 export const CONTACT = {
