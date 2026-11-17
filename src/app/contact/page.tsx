@@ -9,7 +9,7 @@ import { cn } from "@/lib/utils";
 
 export const metadata: Metadata = {
   title: "Contact",
-  description: `Contacter ${OWNER.fullName} pour un stage ou une alternance en systèmes et réseaux.`,
+  description: `Contacter ${OWNER.fullName} pour une alternance de technicien systèmes et réseaux, dès septembre 2027.`,
   alternates: { canonical: "/contact" },
 };
 
@@ -49,8 +49,8 @@ export default function ContactPage() {
       )}
     >
       <PageHeader id="contact-title" title="Contact" compact={Boolean(siteKey)}>
-        Je recherche un stage ou une alternance en administration systèmes et réseaux.
-        N&apos;hésitez pas à me contacter directement.
+        Je cherche une alternance de 2 ans comme technicien systèmes et réseaux, dès septembre
+        2027 : 3 jours en entreprise, 2 jours à l&apos;école. Écrivez-moi ou appelez-moi directement.
       </PageHeader>
 
       <div

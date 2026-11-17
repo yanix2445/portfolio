@@ -82,7 +82,7 @@ describe("affichage du formulaire de contact", () => {
 
 describe("lecture des champs du formulaire", () => {
   it("garde un motif connu et ignore les autres", () => {
-    expect(readContactFields(form({ ...VALID, reason: "stage" })).reason).toBe("stage");
+    expect(readContactFields(form({ ...VALID, reason: "autre" })).reason).toBe("autre");
     expect(readContactFields(form({ ...VALID, reason: "pirate" }))).not.toHaveProperty("reason");
     expect(readContactFields(form(VALID))).not.toHaveProperty("reason");
   });

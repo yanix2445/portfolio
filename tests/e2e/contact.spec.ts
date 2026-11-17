@@ -89,7 +89,7 @@ test.describe("formulaire de contact", () => {
     await page.goto("/contact?motif=alternance");
     const reasons = page.getByRole("radiogroup", { name: "Motif" }).getByRole("radio");
 
-    await expect(reasons).toHaveText(["Alternance", "Stage", "Autre"]);
+    await expect(reasons).toHaveText(["Alternance", "Autre"]);
     await expect(reasons.first()).toBeChecked();
 
     await page.goto("/contact");
@@ -103,14 +103,14 @@ test.describe("formulaire de contact", () => {
     await page.getByRole("textbox", { name: "Nom" }).fill("Camille Martin");
     await message.fill("Bonjour, nous cherchons un alternant.");
     await expect(async () => {
-      await page.getByRole("radiogroup", { name: "Motif" }).getByRole("radio", { name: "Stage" }).click();
-      await expect(page.getByRole("radio", { name: "Stage" })).toBeChecked();
+      await page.getByRole("radiogroup", { name: "Motif" }).getByRole("radio", { name: "Autre" }).click();
+      await expect(page.getByRole("radio", { name: "Autre" })).toBeChecked();
     }).toPass();
     await page.reload();
 
     await expect(page.getByRole("textbox", { name: "Nom" })).toHaveValue("Camille Martin");
     await expect(message).toHaveValue("Bonjour, nous cherchons un alternant.");
-    await expect(page.getByRole("radio", { name: "Stage" })).toBeChecked();
+    await expect(page.getByRole("radio", { name: "Autre" })).toBeChecked();
   });
 
   test("affiche le compteur de caractères à l'approche de la limite", async ({ page }) => {
