@@ -11,7 +11,6 @@ export const CONTACT_LIMITS = {
 /** Motifs proposés ; le motif est facultatif. `?motif=alternance` le présélectionne. */
 export const CONTACT_REASONS = [
   { value: "alternance", label: "Alternance" },
-  { value: "stage", label: "Stage" },
   { value: "autre", label: "Autre" },
 ] as const;
 

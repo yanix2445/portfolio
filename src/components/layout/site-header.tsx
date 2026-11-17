@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
 import { Button } from "@/components/ui/button";
-import { CONTACT, OWNER } from "@/lib/site";
+import { CONTACT, CV_PATH, OWNER } from "@/lib/site";
 
 const NAV_LINKS = [
   { href: "/projets", label: "Projets" },
@@ -50,6 +50,13 @@ export function SiteHeader() {
                 </Link>
               </li>
             ))}
+            <li className="max-md:hidden">
+              <Button asChild variant="outline" size="label">
+                <a href={CV_PATH} target="_blank" rel="noopener">
+                  CV (PDF)
+                </a>
+              </Button>
+            </li>
             <li className="max-sm:hidden">
               <Button asChild variant="outline" size="label">
                 <a href={`tel:${CONTACT.phoneE164}`}>Appeler</a>

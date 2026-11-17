@@ -26,13 +26,13 @@ export const CERTIFICATIONS: readonly Certification[] = [
 
 /** Premier écran. Année de BTS, date et lieu confirmés par Yanis le 2026-11-13. */
 export const OPENING = {
-  kicker: "Portfolio · Technicien systèmes & réseaux",
+  kicker: "Alternance · Technicien systèmes & réseaux",
   synopsis:
-    "Quatre mois de helpdesk N1/N2 en production. Active Directory, Microsoft 365, réseau, virtualisation.",
+    "Quatre mois de helpdesk N1/N2 en production au Secours Catholique. Active Directory, Microsoft 365, réseau, virtualisation.",
   synopsisAccent: "Prêt à rejoindre votre équipe.",
   slate: [
     { label: "Rôle", value: "Technicien systèmes & réseaux" },
-    { label: "Formation", value: "BTS SIO SISR · 1re année" },
+    { label: "Formation", value: "BTS SIO SISR · AURLOM, 2027-2029" },
     { label: "Rythme", value: "3 j entreprise · 2 j école" },
     { label: "Disponible", value: "Septembre 2027 · Paris" },
   ],
