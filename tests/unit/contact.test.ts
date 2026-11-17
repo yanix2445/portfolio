@@ -6,6 +6,7 @@ import { sendContact } from "@/actions/contact";
 import {
   CONTACT_LIMITS,
   CONTACT_MESSAGES,
+  HONEYPOT_FIELD,
   TURNSTILE_FIELD,
   contactSiteKey,
   readContactFields,
@@ -80,6 +81,12 @@ describe("affichage du formulaire de contact", () => {
 });
 
 describe("lecture des champs du formulaire", () => {
+  it("garde un motif connu et ignore les autres", () => {
+    expect(readContactFields(form({ ...VALID, reason: "stage" })).reason).toBe("stage");
+    expect(readContactFields(form({ ...VALID, reason: "pirate" }))).not.toHaveProperty("reason");
+    expect(readContactFields(form(VALID))).not.toHaveProperty("reason");
+  });
+
   it("compte les retours à la ligne comme le navigateur, CRLF ou non", () => {
     const data = new FormData();
     data.set("message", "Bonjour,\r\nà bientôt\rCamille");
@@ -104,6 +111,19 @@ describe("action du formulaire de contact", () => {
     );
 
     expect(sendContactMail).toHaveBeenCalledWith(VALID);
+  });
+
+  it("fait croire à un robot pris au champ piège que le message est parti", async () => {
+    const result = await sendContact(null, form({ ...VALID, [HONEYPOT_FIELD]: "https://spam.example" }));
+
+    expect(result).toEqual({ status: "success", message: CONTACT_MESSAGES.success });
+    expect(verifyTurnstile).not.toHaveBeenCalled();
+    expect(sendContactMail).not.toHaveBeenCalled();
+  });
+
+  it("transmet le motif choisi", async () => {
+    await sendContact(null, form({ ...VALID, reason: "alternance" }));
+    expect(sendContactMail).toHaveBeenCalledWith({ ...VALID, reason: "alternance" });
   });
 
   it("s'arrête à un champ invalide, sans appeler Turnstile ni Resend", async () => {

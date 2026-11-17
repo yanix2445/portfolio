@@ -48,7 +48,12 @@ export default function MentionsLegalesPage() {
             servent uniquement à répondre à votre demande. Elles ne sont pas stockées par le site :
             elles sont transmises par e-mail via le service <strong>Resend</strong>, qui les
             conserve sur des serveurs situés aux États-Unis pendant une durée de{" "}
-            <strong>30 jours</strong>.
+            <strong>30 jours</strong>. Un e-mail automatique confirme la réception à l&apos;adresse
+            saisie ; il ne reprend pas votre message. Les e-mails envoyés ne contiennent ni pixel
+            de suivi ni lien de mesure des clics. Pendant la saisie, un brouillon est gardé dans
+            votre navigateur (stockage de session de l&apos;onglet) pour ne pas perdre votre texte :
+            il ne quitte pas votre appareil et disparaît à la fermeture de l&apos;onglet ou après
+            l&apos;envoi. Pour limiter les abus, le nombre d&apos;envois par adresse IP est limité.
           </p>
 
           <h2>Protection anti-spam</h2>

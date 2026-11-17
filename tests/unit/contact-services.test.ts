@@ -1,8 +1,9 @@
 import "./setup-content";
 
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
-import { sendContactMail } from "@/lib/resend";
+import { sendContactMail, sendRejectionAlert } from "@/lib/resend";
+import { CONTACT } from "@/lib/site";
 import { verifyTurnstile } from "@/lib/turnstile";
 
 const send = vi.fn();
@@ -17,6 +18,7 @@ const FIELDS = { name: "Camille <b>", email: "camille@example.com", message: "Bo
 afterEach(() => {
   vi.unstubAllEnvs();
   vi.unstubAllGlobals();
+  vi.restoreAllMocks();
   send.mockReset();
 });
 
@@ -49,32 +51,92 @@ describe("vérification Turnstile", () => {
 });
 
 describe("envoi par Resend", () => {
+  beforeEach(() => {
+    vi.spyOn(console, "error").mockImplementation(() => {});
+  });
+
   it("n'envoie rien sans clé ou sans destinataire", async () => {
     expect(await sendContactMail(FIELDS)).toBe(false);
     expect(send).not.toHaveBeenCalled();
   });
 
-  it("envoie au destinataire configuré, réponse vers le visiteur, HTML échappé", async () => {
+  it("envoie la notification à Yanis, puis l'accusé de réception au visiteur", async () => {
     vi.stubEnv("RESEND_API_KEY", "re_test");
     vi.stubEnv("CONTACT_TO_EMAIL", "moi@example.com");
     send.mockResolvedValue({ data: { id: "1" }, error: null });
 
     expect(await sendContactMail(FIELDS)).toBe(true);
-    const mail = send.mock.calls[0][0];
-    expect(mail).toMatchObject({ to: "moi@example.com", replyTo: FIELDS.email });
+    expect(send).toHaveBeenCalledTimes(2);
+
+    const [notification, confirmation] = send.mock.calls.map(([mail]) => mail);
+    expect(notification).toMatchObject({ to: "moi@example.com", replyTo: FIELDS.email });
     // Le domaine vérifié chez Resend est le domaine racine, pas le sous-domaine `send.`.
-    expect(mail.from).toBe("Portfolio <contact@yanis-harrat.com>");
-    expect(mail.html).not.toContain("<script>");
-    expect(mail.html).toContain("&lt;script&gt;");
+    expect(notification.from).toBe("Portfolio <contact@yanis-harrat.com>");
+    expect(notification.html).not.toContain("<script>");
+    expect(notification.html).toContain("&lt;script&gt;");
+
+    expect(confirmation).toMatchObject({ to: FIELDS.email, replyTo: CONTACT.email });
+    expect(confirmation.from).toBe("Yanis Harrat <contact@yanis-harrat.com>");
+    expect(confirmation.headers).toMatchObject({ "Auto-Submitted": "auto-generated" });
+    // Les étiquettes permettent au webhook de reconnaître les mails du formulaire.
+    expect(notification.tags).toEqual([{ name: "contact", value: "notification" }]);
+    expect(confirmation.tags).toEqual([{ name: "contact", value: "confirmation" }]);
   });
 
-  it("renvoie false si Resend répond en erreur ou plante", async () => {
+  it("garde l'adresse seule si CONTACT_FROM_EMAIL contient un nom", async () => {
+    vi.stubEnv("RESEND_API_KEY", "re_test");
+    vi.stubEnv("CONTACT_TO_EMAIL", "moi@example.com");
+    vi.stubEnv("CONTACT_FROM_EMAIL", "Autre <bonjour@yanis-harrat.com>");
+    send.mockResolvedValue({ data: { id: "1" }, error: null });
+
+    await sendContactMail(FIELDS);
+    expect(send.mock.calls[0][0].from).toBe("Portfolio <bonjour@yanis-harrat.com>");
+  });
+
+  it("renvoie false si la notification échoue, sans envoyer l'accusé", async () => {
     vi.stubEnv("RESEND_API_KEY", "re_test");
     vi.stubEnv("CONTACT_TO_EMAIL", "moi@example.com");
 
-    send.mockResolvedValueOnce({ data: null, error: { message: "domain not verified" } });
+    send.mockResolvedValueOnce({ data: null, error: { name: "validation_error", message: "domain not verified" } });
     expect(await sendContactMail(FIELDS)).toBe(false);
     send.mockRejectedValueOnce(new Error("réseau coupé"));
     expect(await sendContactMail(FIELDS)).toBe(false);
+    expect(send).toHaveBeenCalledTimes(2);
+  });
+
+  it("réussit quand même si seul l'accusé de réception échoue", async () => {
+    vi.stubEnv("RESEND_API_KEY", "re_test");
+    vi.stubEnv("CONTACT_TO_EMAIL", "moi@example.com");
+
+    send
+      .mockResolvedValueOnce({ data: { id: "1" }, error: null })
+      .mockResolvedValueOnce({ data: null, error: { name: "validation_error", message: "invalid to" } });
+    expect(await sendContactMail(FIELDS)).toBe(true);
+
+    send.mockResolvedValueOnce({ data: { id: "2" }, error: null }).mockRejectedValueOnce(new Error("panne"));
+    expect(await sendContactMail(FIELDS)).toBe(true);
+  });
+});
+
+describe("alerte de mail non remis", () => {
+  const ALERT = { recipient: "camille@example.com", kind: "confirmation" as const, detail: "rejet", at: new Date() };
+
+  it("part vers Yanis, sans l'étiquette du formulaire", async () => {
+    vi.stubEnv("RESEND_API_KEY", "re_test");
+    vi.stubEnv("CONTACT_TO_EMAIL", "moi@example.com");
+    send.mockResolvedValue({ data: { id: "1" }, error: null });
+
+    expect(await sendRejectionAlert(ALERT)).toBe(true);
+    const mail = send.mock.calls[0][0];
+    expect(mail.to).toBe("moi@example.com");
+    expect(mail.tags).toBeUndefined();
+  });
+
+  it("renvoie false sans clé ou si Resend échoue", async () => {
+    expect(await sendRejectionAlert(ALERT)).toBe(false);
+    vi.stubEnv("RESEND_API_KEY", "re_test");
+    vi.stubEnv("CONTACT_TO_EMAIL", "moi@example.com");
+    send.mockRejectedValueOnce(new Error("panne"));
+    expect(await sendRejectionAlert(ALERT)).toBe(false);
   });
 });

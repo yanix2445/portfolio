@@ -8,7 +8,24 @@ export const CONTACT_LIMITS = {
   message: 5000,
 } as const;
 
-export type ContactFields = { name: string; email: string; message: string };
+/** Motifs proposés ; le motif est facultatif. `?motif=alternance` le présélectionne. */
+export const CONTACT_REASONS = [
+  { value: "alternance", label: "Alternance" },
+  { value: "stage", label: "Stage" },
+  { value: "autre", label: "Autre" },
+] as const;
+
+export type ContactReason = (typeof CONTACT_REASONS)[number]["value"];
+
+export function parseReason(value: unknown): ContactReason | undefined {
+  return CONTACT_REASONS.find((reason) => reason.value === value)?.value;
+}
+
+export function reasonLabel(reason: ContactReason): string {
+  return CONTACT_REASONS.find(({ value }) => value === reason)?.label ?? reason;
+}
+
+export type ContactFields = { name: string; email: string; message: string; reason?: ContactReason };
 
 export type ContactErrors = Partial<Record<keyof ContactFields, string>>;
 
@@ -19,8 +36,17 @@ export type ContactResult =
 /** Nom du champ que le widget Turnstile ajoute lui-même au formulaire. */
 export const TURNSTILE_FIELD = "cf-turnstile-response";
 
+/**
+ * Champ piège : invisible pour les visiteurs, rempli par les robots qui remplissent tout.
+ * Son nom ne ressemble à rien que le remplissage automatique d'un navigateur reconnaîtrait.
+ */
+export const HONEYPOT_FIELD = "contact_hp";
+
+/** Le message s'affiche sous le champ à partir de cette part de la limite. */
+export const MESSAGE_COUNTER_FROM = 0.8;
+
 export const CONTACT_MESSAGES = {
-  success: "Message envoyé. Je vous réponds dès que possible.",
+  success: "Message envoyé. Un e-mail de confirmation vous attend : je vous réponds sous 48 à 72 h.",
   invalid: "Certains champs sont à corriger.",
   challenge: "La vérification anti-spam n'a pas abouti. Réessayez dans un instant.",
   failure: "Le message n'a pas pu être envoyé. Réessayez plus tard, ou écrivez-moi par e-mail.",
@@ -47,9 +73,11 @@ function text(value: unknown): string {
   return typeof value === "string" ? value.trim() : "";
 }
 
-/** Lit les trois champs d'un formulaire. Le nom et l'e-mail tiennent sur une ligne. */
+/** Lit les champs d'un formulaire. Le nom et l'e-mail tiennent sur une ligne. */
 export function readContactFields(form: FormData): ContactFields {
+  const reason = parseReason(form.get("reason"));
   return {
+    ...(reason ? { reason } : {}),
     name: text(form.get("name")).replace(/\s+/g, " "),
     email: text(form.get("email")),
     // Un navigateur envoie les retours à la ligne en CRLF : on compte comme lui, en LF.
