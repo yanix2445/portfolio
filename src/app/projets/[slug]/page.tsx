@@ -1,4 +1,11 @@
-import { EntryPage, entryMetadata, entryStaticParams } from "@/components/content/entry-page";
+import { Suspense } from "react";
+
+import {
+  EntryPage,
+  EntryPageFallback,
+  entryMetadata,
+  entryStaticParams,
+} from "@/components/content/entry-page";
 
 // Un slug absent de generateStaticParams est rendu en entier avant la réponse :
 // notFound() renvoie alors un vrai statut 404 au lieu d'un shell en 200.
@@ -13,7 +20,12 @@ export async function generateMetadata({ params }: PageProps<"/projets/[slug]">)
   return entryMetadata("projets", slug);
 }
 
-export default async function ProjetPage({ params }: PageProps<"/projets/[slug]">) {
-  const { slug } = await params;
-  return <EntryPage collection="projets" slug={slug} />;
+// `params` se lit sous <Suspense>, même prérendu : l'App Shell commun à tous les slugs
+// (prefetch partiel) ne peut pas le contenir, et la navigation reste instantanée.
+export default function ProjetPage({ params }: PageProps<"/projets/[slug]">) {
+  return (
+    <Suspense fallback={<EntryPageFallback />}>
+      <EntryPage collection="projets" params={params} />
+    </Suspense>
+  );
 }

@@ -14,6 +14,10 @@ export type ProjectFields = {
   domain?: ProjectDomain;
   /** Titre court pour l'affiche. À défaut, le titre de la fiche. */
   poster?: string;
+  /** Image de l'affiche (capture, photo, schéma), chemin dans `public/`, ex. `/images/projets/<slug>.jpg`. */
+  cover?: string;
+  /** Description de l'image pour les lecteurs d'écran, sur la page du projet. */
+  coverAlt?: string;
 };
 
 export const STATUS_LABEL: Record<ProjectStatus, string> = {
@@ -51,6 +55,8 @@ export type Project = {
   rank: number;
   status: ProjectStatus;
   domain: ProjectDomain;
+  /** Image de l'affiche, ou `null` sans image. */
+  cover: string | null;
 };
 
 type ProjectSource = {
@@ -72,6 +78,7 @@ export function toProject({ slug, metadata }: ProjectSource): Project {
     // Une valeur inconnue (faute de frappe dans une fiche) retombe sur le défaut.
     status: metadata.status && metadata.status in STATUS_LABEL ? metadata.status : "released",
     domain: metadata.domain && metadata.domain in DOMAIN_LABEL ? metadata.domain : "autre",
+    cover: metadata.cover ?? null,
   };
 }
 

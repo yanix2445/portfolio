@@ -11,6 +11,7 @@ Comment le projet est vérifié : deux niveaux de tests automatisés, en plus du
   - Mise en scène en 1440 × 900 : tête entière à cinq instants du hero, intro sans élément qui s'affiche puis disparaît, synopsis toujours lu par les lecteurs d'écran, actes épinglés jusqu'au dernier, tout affiché une fois la page parcourue, retour propre sur petit écran après redimensionnement, aucun épinglage orphelin après une navigation client.
   - Autres tailles : portable 16:9 (1366 × 650), ultra-large (2560 × 1080) et tablette en portrait (768 × 1024) sans chevauchement ni débordement ; téléphone en paysage sans épinglage ; mobile 375 px sans débordement, actes en colonne, couronnes lisibles.
   - Avec `reducedMotion: 'reduce'` : rien d'épinglé ni de masqué, actes en colonne.
+- **E2E fiches** (`tests/e2e/entry.spec.ts`) : sur chaque fiche projet et article, le sommaire pointe vers chaque `h2`, la séquence cliquée passe en cours, la suite est présente ; sur téléphone, pas de sommaire ni de débordement.
 - **E2E catalogue** (`tests/e2e/projects.spec.ts`) : tous les projets avec leur statut, filtres par domaine et compteur.
 - **Formulaire de contact** :
   - Unitaires (`contact.test.ts`, `contact-services.test.ts`, `contact-emails.test.ts`) : validation, ordre de traitement de l'action avec Turnstile et Resend simulés (aucun mail si un champ est invalide ou si le jeton est refusé, jamais d'exception), les deux clients avec `fetch` et le SDK simulés (notification puis accusé, échec de l'accusé sans effet sur le résultat), les templates (échappement, heure limite à Paris, accusé sans le message, motif, alerte), le champ piège et le webhook (`resend-webhook.test.ts`, signature Standard Webhooks calculée avec `node:crypto`).
@@ -33,6 +34,7 @@ Comment le projet est vérifié : deux niveaux de tests automatisés, en plus du
 - Les erreurs console de `/_vercel/` sont ignorées en e2e : le script Vercel Analytics n'est servi que sur Vercel.
 - On teste le comportement visible (statuts HTTP, rôles ARIA, URL), jamais les détails d'implémentation.
 - Une section épinglée se repère par son `.pin-spacer` : `scrollToPin` place le défilement à une fraction de cet espace, `settle` attend que l'élément mesuré ne bouge plus (le `scrub` est lissé). Pas d'attente fixe.
+- Une interaction clavier qui dépend de React (flèches d'un groupe Radix) se fait dans `expect(...).toPass()` : la page peut ne pas être hydratée juste après `goto`.
 - `scrollThrough` relit la hauteur de la page à chaque pas : les sections épinglées l'allongent après l'hydratation.
 - `headCrop` mesure la part du portrait rognée en haut ; le plancher est 6 % (les cheveux commencent vers 8 %).
 - Une affiche montre un titre court : le titre complet de la fiche est dans l'attribut `data-title` du lien.

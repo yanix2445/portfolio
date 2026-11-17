@@ -125,7 +125,7 @@ describe("projets", () => {
       },
     });
 
-    expect(project).toMatchObject({ status: "released", domain: "autre" });
+    expect(project).toMatchObject({ status: "released", domain: "autre", cover: null });
   });
 
   it("ne dépasse jamais le nombre de projets à la une demandé", async () => {

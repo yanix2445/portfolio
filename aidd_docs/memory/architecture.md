@@ -28,7 +28,7 @@ flowchart LR
 - **Budget de 0 €/mois.** Uniquement des offres gratuites (Vercel Hobby, Resend Free, Turnstile, Vercel Analytics). Aucune dépendance payante sans décision explicite.
 - **Vercel Hobby = usage non commercial.** Pas d'offre de prestation, de pub ni de paiement sur le site. Une activité freelance imposerait de passer en Pro ou de migrer.
 - **Une seule librairie d'animation.** GSAP porte toute la mise en scène au défilement. `motion` a été retiré avec l'ancien accueil. Le détail est dans `design.md`.
-- **Modèle d'un projet.** Le `metadata` d'une fiche MDX porte, en plus du titre et de la date, `featured` et `rank` (à la une sur l'accueil), `status` (`released`, `in-progress`, `upcoming`), `domain` et `poster` (titre court de l'affiche). L'accueil montre 3 projets à la une, `/projets` les liste tous.
+- **Modèle d'un projet.** Le `metadata` d'une fiche MDX porte, en plus du titre et de la date, `featured` et `rank` (à la une sur l'accueil), `status` (`released`, `in-progress`, `upcoming`), `domain` et `poster` (titre court de l'affiche), `cover` (image de l'affiche, chemin dans `public/images/projets/`). Toute fiche (projet ou veille) peut lister des `documents` (`{ label, href }`) : un fichier de `public/documents/<slug>/` ou un lien externe. L'accueil montre 3 projets à la une, `/projets` les liste tous.
 - **Filtre du catalogue côté client.** Sous Cache Components, la page ne lit pas `searchParams` : le filtre par domaine est un état React, la page reste prérendue.
 
 ## Gotchas

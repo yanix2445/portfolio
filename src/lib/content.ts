@@ -1,11 +1,18 @@
-import { readdir } from "node:fs/promises";
+import { readdir, readFile } from "node:fs/promises";
 import path from "node:path";
 import { cacheLife } from "next/cache";
 import type { ComponentType } from "react";
 
+import { extractHeadings, readingMinutes, type Heading } from "@/lib/headings";
 import { toProject, type Project, type ProjectFields } from "@/lib/projects";
 
 export type Collection = "projets" | "veille";
+
+/** Pièce jointe d'une fiche : un fichier de `public/documents/<slug>/` ou un lien externe. */
+export type EntryDocument = {
+  label: string;
+  href: string;
+};
 
 export type ContentMeta = {
   title: string;
@@ -13,6 +20,8 @@ export type ContentMeta = {
   /** Date ISO `YYYY-MM-DD`. */
   date: string;
   tags: string[];
+  /** Documents affichés à droite du texte (schémas, captures, rapports). */
+  documents?: EntryDocument[];
 } & ProjectFields;
 
 export type ContentEntry = {
@@ -66,6 +75,20 @@ export async function getEntry(
   if (!slugs.includes(slug)) return null;
   const { default: Content, metadata } = await loadModule(collection, slug);
   return { slug, metadata, Content };
+}
+
+export type Outline = {
+  headings: Heading[];
+  /** Temps de lecture estimé, en minutes. */
+  minutes: number;
+};
+
+/** Plan d'une fiche, lu dans sa source MDX : le sommaire et le temps de lecture. */
+export async function getOutline(collection: Collection, slug: string): Promise<Outline> {
+  "use cache";
+  cacheLife("max");
+  const source = await readFile(path.join(CONTENT_DIR, collection, `${slug}.mdx`), "utf8");
+  return { headings: extractHeadings(source), minutes: readingMinutes(source) };
 }
 
 /** Tous les projets, du plus récent au plus ancien, avec leurs valeurs par défaut. */

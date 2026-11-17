@@ -28,11 +28,13 @@ flowchart TD
 - `src/components/projects` : ce que l'accueil et le catalogue partagent (`poster.tsx`, `status-badge.tsx`) et le catalogue filtrable de `/projets` (`catalog.tsx`, composant client).
 - `src/components/contact` : le formulaire de contact (`contact-form.tsx`, composant client).
 - `src/components/animations` : la mise en scène GSAP, toujours en `"use client"` (`hero-scroll`, `acts-scroll`, `reveal`, `gsap.ts`).
-- `src/components` (autres) : `layout/` (header fixe, footer, en-tête des pages intérieures), `content/` (liste de la veille et page de détail des fiches et articles), `mdx/` (rendu `prose`, aussi utilisé par les mentions légales) et `seo/` (JSON-LD de la personne).
+- `src/components` (autres) : `layout/` (header fixe, footer, en-tête des pages intérieures), `content/` (liste de la veille, page de détail des fiches et articles, sommaire `sequence-nav`), `mdx/` (rendu `prose`, aussi utilisé par les mentions légales) et `seo/` (JSON-LD de la personne).
 - `src/types` : les déclarations de modules, dont `*.mdx` (qui type `export const metadata`).
 - `src/content` : un fichier MDX par projet ou article de veille. On ajoute du contenu ici.
 - `src/lib` :
   - `content.ts` : listing du contenu MDX, côté serveur (`getProjects`).
+  - `headings.ts` : plan d'une fiche lu dans sa source MDX (intertitres, ancres, temps de lecture), sans dépendance serveur.
+  - `typography.ts` (espaces insécables) et `title-fit.ts` (taille d'un titre pour que son mot le plus long tienne).
   - `projects.ts` : modèle d'un projet, utilisable côté client (statuts, domaines, `pickFeatured`).
   - `profile.ts` : le contenu de l'accueil (`OPENING`, `ACTS`, `SHEET`, `CERTIFICATIONS`). Il n'est pas dans `src/content/`, que Vitest redirige vers les fixtures.
   - `contact.ts` : règles et messages du formulaire, sans dépendance serveur ; `contact-emails.ts` : les deux mails (notification, accusé de réception) ; `turnstile.ts` et `resend.ts` : les deux appels externes, côté serveur.

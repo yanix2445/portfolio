@@ -47,6 +47,16 @@ describe("entryMetadata", () => {
     });
   });
 
+  it("partage l'image de la fiche, et rien sans image", async () => {
+    const withCover = await entryMetadata("projets", "projet-recent");
+    const withoutCover = await entryMetadata("projets", "ancien-projet");
+
+    expect(withCover.openGraph?.images).toEqual([
+      { url: "/images/projets/projet-recent.jpg", alt: "Capture du projet récent" },
+    ]);
+    expect(withoutCover.openGraph).not.toHaveProperty("images");
+  });
+
   it("renvoie des métadonnées vides pour un slug inconnu", async () => {
     expect(await entryMetadata("projets", "inexistant")).toEqual({});
   });
