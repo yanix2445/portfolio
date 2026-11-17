@@ -30,7 +30,7 @@ const mono = localFont({
 });
 
 const DESCRIPTION =
-  "Portfolio de Yanis Harrat, étudiant en BTS SIO option SISR : projets infrastructure et réseau, veille technologique et CV.";
+  "Portfolio de Yanis Harrat, futur alternant technicien systèmes et réseaux (BTS SIO SISR) : projets infrastructure et réseau, veille technologique et CV.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
