@@ -4,12 +4,14 @@ La surface serveur du site. Il n'y a pas d'API publique, seulement des Server Ac
 
 ## Style
 
-- Server Actions Next.js (`"use server"`) dans `src/actions/`. Il n'y a ni route REST ni Route Handler `POST`.
+- Server Actions Next.js (`"use server"`) dans `src/actions/`. Une seule route `POST` : le webhook Resend.
 - Les seules routes `GET` sont générées au build : `sitemap.ts` et `robots.ts`. `opengraph-image.tsx` est à venir.
 
 ## Resources
 
 - `sendContact` (`src/actions/contact.ts`) : reçoit le formulaire de contact, revalide les champs, vérifie Turnstile et envoie le mail via Resend. Sa signature suit `useActionState` : `(état précédent, FormData) => ContactResult`.
+
+- `POST /api/resend-webhook` (`src/app/api/resend-webhook/route.ts`) : reçoit les événements Resend, vérifie leur signature (`RESEND_WEBHOOK_SECRET`) et alerte Yanis par mail quand un mail du formulaire (étiquette `contact`) est rejeté, échoue, est bloqué ou signalé comme spam. Répond 404 sans secret, 400 si la signature est fausse, 200 sinon, même si l'alerte échoue (pas de renvoi en boucle).
 
 ## Contracts
 

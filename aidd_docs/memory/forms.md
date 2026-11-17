@@ -5,13 +5,17 @@ Comment les formulaires sont construits et validés. Le site n'en a qu'un : le f
 ## Approach
 
 - Composant client : `src/components/contact/contact-form.tsx`, avec les primitives shadcn/ui (`FieldGroup`, `Field`, `Input`, `Textarea`, `Button`, `Spinner`, `Sonner`) et le widget Turnstile (`@marsidev/react-turnstile`).
+- Mise en forme « billet de cinéma » (choix de Yanis, 2026-11-17, piste C4) : carte `bg-card` en `rounded-2xl`, champs en variante `line` (un trait, libellés en `type-label`), et le talon orange à droite (en bas sur téléphone) qui est le bouton d'envoi (`Button size="stub"`), séparé par une perforation pointillée et deux encoches. Le talon affiche « Envoyer » en lettres d'affiche (vertical sur grand écran) ; le délai « Réponse 48–72 h » et la flèche y sont décoratifs, le nom lu est « Envoyer le message ». Sur l'orange, le contour de focus passe en noir, à l'intérieur du talon.
 - Soumission : `useActionState` sur la Server Action `sendContact` (`src/actions/contact.ts`).
 - Règles : `src/lib/contact.ts` porte la validation (`validateContact`), les limites et les messages. Le navigateur l'utilise pour répondre tout de suite, le serveur la rejoue toujours.
 - Il n'y a pas de bibliothèque de schéma : trois champs, une fonction pure.
 
 ## Conventions
 
-- Ordre de traitement côté serveur : valider les champs, vérifier le jeton Turnstile, puis envoyer le mail via Resend. Aucune donnée n'est persistée, et l'action ne lève jamais.
+- Ordre de traitement côté serveur : écarter un robot pris au champ piège (`contact_hp`, réponse « envoyé » sans rien envoyer), valider les champs, vérifier le jeton Turnstile, puis envoyer la notification à Yanis et l'accusé de réception au visiteur via Resend. Aucune donnée n'est persistée, et l'action ne lève jamais. Côté client, un appel qui échoue (réseau, ou 429 du pare-feu) devient l'erreur générique, sans planter la page.
+- Motif facultatif (Alternance, Stage, Autre) sur la ligne du libellé « Message », pour ne pas ajouter de ligne ; il préfixe l'objet de la notification. `/contact?motif=alternance` le présélectionne (le bouton « Proposer une alternance » de l'accueil). Lu après l'hydratation, la page restant prérendue.
+- Brouillon (nom, e-mail, message, motif) dans `sessionStorage`, effacé après un envoi réussi. Compteur de caractères sous le message à partir de 80 % de la limite, relié au champ par `aria-describedby`, sans `aria-live`.
+- Pare-feu Vercel : règle « Formulaire de contact : 5 envois / 10 min par IP » (`POST /contact`, 429 au-delà).
 - `/contact` n'affiche le formulaire que si les quatre variables existent (`contactSiteKey` : clé de site et clé secrète Turnstile, clé Resend, destinataire). Sinon la page garde ses coordonnées directes. La page est prérendue : ce choix est figé au build, il faut redéployer après avoir saisi les clés.
 - Le jeton Turnstile est à usage unique et expire après 300 s : le widget est réinitialisé après chaque envoi, réussi ou non. Le widget ajoute lui-même le champ `cf-turnstile-response` au formulaire.
 - Erreurs de champ : sous le champ, reliées par `aria-describedby`, `aria-invalid` sur le contrôle et `data-invalid` sur le `Field`. Le focus va au premier champ en erreur.

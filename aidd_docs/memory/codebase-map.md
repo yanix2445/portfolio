@@ -22,6 +22,7 @@ flowchart TD
 
 - `src/app` : les routes de l'App Router (accueil, projets, veille, contact, mentions légales), `sitemap.ts`, `robots.ts`, `fonts/` (les trois polices locales) et `globals.css` (tous les tokens de design). L'image OpenGraph est à venir.
 - `src/actions` : les Server Actions. `contact.ts` reçoit le formulaire de contact.
+- `src/app/api/resend-webhook` : la seule route `POST`, le webhook Resend qui alerte des mails du formulaire non remis.
 - `src/components/ui` : les primitives shadcn/ui, thémées (bouton, badge, carte, filtres, champs, toasts).
 - `src/components/home` : les six sections de l'accueil « Générique », en Server Components (`hero`, `acts`, `bill`, `sheet`, `awards`, `finale`), et la couronne (`laurel.tsx`).
 - `src/components/projects` : ce que l'accueil et le catalogue partagent (`poster.tsx`, `status-badge.tsx`) et le catalogue filtrable de `/projets` (`catalog.tsx`, composant client).
@@ -36,7 +37,7 @@ flowchart TD
   - `typography.ts` (espaces insécables) et `title-fit.ts` (taille d'un titre pour que son mot le plus long tienne).
   - `projects.ts` : modèle d'un projet, utilisable côté client (statuts, domaines, `pickFeatured`).
   - `profile.ts` : le contenu de l'accueil (`OPENING`, `ACTS`, `SHEET`, `CERTIFICATIONS`). Il n'est pas dans `src/content/`, que Vitest redirige vers les fixtures.
-  - `contact.ts` : règles et messages du formulaire, sans dépendance serveur ; `turnstile.ts` et `resend.ts` : les deux appels externes, côté serveur.
+  - `contact.ts` : règles et messages du formulaire, sans dépendance serveur ; `contact-emails.ts` : les deux mails (notification, accusé de réception) ; `turnstile.ts` et `resend.ts` : les deux appels externes, côté serveur.
   - `site.ts` : constantes du site (`SITE_URL`, `OWNER`, `CONTACT`, `CV_PATH`, `BASE_OPEN_GRAPH`).
   - `utils.ts` : `cn()`, configuré avec les tailles de texte du thème.
 - `tests/visual` : `capture.mjs` et `compare.mjs`, pour comparer le rendu avant et après une réécriture de styles.

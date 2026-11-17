@@ -28,6 +28,12 @@ const buttonVariants = cva(
         label: "h-auto gap-2 px-4 py-2.5 type-label",
         // Grand appel à l'action : hero sur téléphone, fin de l'accueil, envoi du formulaire.
         xl: "h-control-xl gap-3 rounded-xl px-7 text-button motion-safe:hover:-translate-y-0.75 md:px-9",
+        // Talon du billet de contact : il remplit sa colonne (sa rangée sur téléphone). Sur
+        // fond orange, le contour de focus orange du site serait invisible : il passe en
+        // noir, à l'intérieur du talon.
+        // La perforation est un trait pointillé couleur du fond : en haut sur téléphone, à
+        // gauche à partir de `md`.
+        stub: "h-auto w-full justify-between gap-3 rounded-none border-0 border-t-2 border-dashed border-background px-5 py-3 focus-visible:outline-background focus-visible:-outline-offset-6 md:h-full md:flex-col md:border-t-0 md:border-l-2 md:px-3 md:py-6",
         icon: "size-8 text-sm font-medium",
         "icon-lg": "size-9 text-sm font-medium",
       },

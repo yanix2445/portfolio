@@ -15,7 +15,7 @@ Où tourne le site et comment il est livré.
 - Local : `http://localhost:3000`.
 - Les variables d'environnement sont déclarées dans Vercel, séparément pour Preview et Production, et dans `.env.local` en local (non commité).
 - Variables du formulaire de contact, saisies le 2026-11-16 par les CLI (`vercel env add`, `resend api-keys create`, `wrangler turnstile widget create`) :
-  - **Preview** : widget Turnstile `portfolio-contact-preview` (hôtes `portfolio-git-claude-home-generique-yanis-harrat.vercel.app` et `localhost`), clé Resend `portfolio-preview`, destinataire `CONTACT_TO_EMAIL`. Choix de Yanis du 2026-11-16 : un vrai widget plutôt que les clés de test. Le widget ne marche donc que sur l'URL fixe de cette branche ; une URL par commit ou une autre branche affiche un widget en erreur tant que son hôte n'est pas ajouté (`wrangler turnstile widget update`).
+  - **Preview** : widget Turnstile `portfolio-contact-preview` (hôtes `localhost` et l'URL fixe de chaque branche testée : `portfolio-git-claude-home-generique-yanis-harrat.vercel.app`, `portfolio-git-claude-reading-pages-redesign-yanis-harrat.vercel.app`, `portfolio-git-claude-contact-confirmation-yanis-harrat.vercel.app`), clé Resend `portfolio-preview`, destinataire `CONTACT_TO_EMAIL`. Choix de Yanis du 2026-11-16 : un vrai widget plutôt que les clés de test. Le widget ne marche donc que sur les URL fixes listées ; une URL par commit ou une autre branche affiche un widget en erreur (toast « La vérification anti-spam n'a pas abouti ») tant que son hôte n'est pas ajouté (`wrangler turnstile widget update`, ou l'API Cloudflare). Pas de joker possible : ajouter `vercel.app` ouvrirait le widget à tous les sites Vercel.
   - **Production** : widget Turnstile `portfolio-contact` (hôtes `yanis-harrat.com`, `www`, `portfolio-peach-chi-42.vercel.app`, `localhost`), clé Resend `portfolio-production`, même destinataire.
   - Les deux clés Resend sont en envoi seul, limitées au domaine `yanis-harrat.com`.
   - Widgets Turnstile de l'ancien portfolio supprimés le 2026-11-16 sur confirmation de Yanis : `portfolio-prod-2026-10-15`, `portfolio-dev-2026-10-15`, `yanis-harrat.com`. Restent : `portfolio-contact`, `portfolio-contact-preview`, `portfolio-waitlist` (page d'attente en ligne, ne pas supprimer) et `polaris` (autre projet).
@@ -28,7 +28,9 @@ Où tourne le site et comment il est livré.
 
 ## Monitoring
 
-- Vercel Analytics pour l'audience et les logs Vercel pour la Server Action de contact. Aucune alerte n'est configurée.
+- Vercel Analytics pour l'audience et les logs Vercel pour la Server Action de contact.
+- Alerte de mail non remis (2026-11-17) : webhook Resend vers `https://portfolio-peach-chi-42.vercel.app/api/resend-webhook`, événements `email.bounced`, `email.failed`, `email.suppressed`, `email.complained`. Son secret est `RESEND_WEBHOOK_SECRET`, en Production seulement (variable sensible, jamais affichée). Testé de bout en bout avec un mail étiqueté `contact=confirmation` vers `bounced@resend.dev`. L'URL `vercel.app` reste valable après le lancement du domaine. Après un changement de secret (`resend webhooks rotate-signing-secret`), mettre à jour la variable et redéployer.
+- Pare-feu Vercel : règle « Formulaire de contact : 5 envois / 10 min par IP » (`POST /contact`), publiée le 2026-11-17. Les règles se préparent en brouillon (`vercel firewall rules add`) ; Yanis les publie (`vercel firewall publish`).
 
 ## DNS
 
