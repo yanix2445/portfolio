@@ -9,7 +9,7 @@ Où tourne le site et comment il est livré.
 
 ## Environments
 
-- Production : le projet Vercel `portfolio` (Hobby, Node 26.x), qui déploie `main`, servi sur `yanis-harrat.com` depuis le lancement du 2026-11-17 (et toujours sur `portfolio-peach-chi-42.vercel.app`).
+- Production : le projet Vercel `portfolio` (Hobby, Node 26.x), qui déploie `main`, servi sur `yanis-harrat.com` depuis le lancement du 2026-11-17. L'ancienne URL `portfolio-peach-chi-42.vercel.app` ne sert plus rien (`DEPLOYMENT_NOT_FOUND`, constaté le 2026-11-17) : n'y faire pointer aucun service.
 - Domaine : l'apex `yanis-harrat.com` est l'adresse principale, comme `SITE_URL` (canonical, sitemap, Open Graph) ; `www` y redirige en 308. Ne pas inverser l'un sans l'autre. Le projet `portfolio-page-attente` (page d'attente, repo séparé) n'a plus le domaine.
 - Preview : une URL Vercel par PR.
 - Local : `http://localhost:3000`.
@@ -29,7 +29,7 @@ Où tourne le site et comment il est livré.
 ## Monitoring
 
 - Vercel Analytics pour l'audience et les logs Vercel pour la Server Action de contact.
-- Alerte de mail non remis (2026-11-17) : webhook Resend vers `https://portfolio-peach-chi-42.vercel.app/api/resend-webhook`, événements `email.bounced`, `email.failed`, `email.suppressed`, `email.complained`. Son secret est `RESEND_WEBHOOK_SECRET`, en Production seulement (variable sensible, jamais affichée). Testé de bout en bout avec un mail étiqueté `contact=confirmation` vers `bounced@resend.dev`. L'URL `vercel.app` reste valable après le lancement du domaine. Après un changement de secret (`resend webhooks rotate-signing-secret`), mettre à jour la variable et redéployer.
+- Alerte de mail non remis (2026-11-17) : webhook Resend vers `https://yanis-harrat.com/api/resend-webhook`, événements `email.bounced`, `email.failed`, `email.suppressed`, `email.complained`. Son secret est `RESEND_WEBHOOK_SECRET`, en Production seulement (variable sensible, jamais affichée). Testé de bout en bout avec un mail étiqueté `contact=confirmation` vers `bounced@resend.dev`. Repointé le 2026-11-17 depuis l'URL `vercel.app`, devenue introuvable (aucun événement réel perdu, même secret). Après un changement de secret (`resend webhooks rotate-signing-secret`), mettre à jour la variable et redéployer.
 - Pare-feu Vercel : règle « Formulaire de contact : 5 envois / 10 min par IP » (`POST /contact`), publiée le 2026-11-17. Les règles se préparent en brouillon (`vercel firewall rules add`) ; Yanis les publie (`vercel firewall publish`).
 
 ## DNS
