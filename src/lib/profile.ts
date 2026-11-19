@@ -56,15 +56,6 @@ export type Act = {
 /** Un acte par expérience, dans l'ordre chronologique, la formation en cours en dernier. */
 export const ACTS: readonly Act[] = [
   {
-    start: "2023",
-    period: "2023",
-    note: "Paris",
-    place: "École 42",
-    role: "Piscine · cursus Concepteur Développeur d'Applications",
-    text: "Là où j'apprends à coder, et surtout à chercher la solution par moi-même.",
-    keywords: ["Programmation", "Autonomie"],
-  },
-  {
     start: "2023-09",
     period: "sept. 2023 → janv. 2025",
     note: "16 mois",
@@ -74,8 +65,17 @@ export const ACTS: readonly Act[] = [
     keywords: ["Relation client", "Priorisation", "Encadrement"],
   },
   {
+    start: "2024-09",
+    period: "2024",
+    note: "Paris",
+    place: "École 42",
+    role: "Piscine · cursus Concepteur Développeur d'Applications",
+    text: "Là où j'apprends à coder, et surtout à chercher la solution par moi-même.",
+    keywords: ["Programmation", "Autonomie"],
+  },
+  {
     start: "2025-01",
-    period: "janv. → mars 2025",
+    period: "janv. → juin 2025",
     note: "Meaux",
     place: "IUT Meaux",
     role: "Consultant IT junior & développeur",
@@ -136,7 +136,7 @@ export const SHEET: readonly SheetRow[] = [
   },
   {
     label: "Formation",
-    items: "BTS SIO SISR, AURLOM (dès septembre 2027) · 1re année de BTS SIO, Fénelon Sup (2025-2026) · Piscine, École 42 (2023)",
+    items: "BTS SIO SISR, AURLOM (dès septembre 2027) · 1re année de BTS SIO, Fénelon Sup (2025-2026) · Piscine, École 42 (2024)",
     aside: "Bac Pro SN ARED, Lycée Newton (2022)",
   },
 ];
