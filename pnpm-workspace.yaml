@@ -1,3 +1,6 @@
 allowBuilds:
   sharp: false
   unrs-resolver: false
+# GHSA-rj75-hqrm-r3gf : @tailwindcss/typography fige postcss-selector-parser en 6.0.10.
+overrides:
+  "@tailwindcss/typography>postcss-selector-parser": ^6.1.5
