@@ -1,9 +1,8 @@
 "use client";
 
-import { Turnstile, type TurnstileInstance } from "@marsidev/react-turnstile";
+import { Turnstile } from "@marsidev/react-turnstile";
 import Link from "next/link";
 import { useActionState, useEffect, useRef, useState, type FormEvent } from "react";
-import { flushSync } from "react-dom";
 import { toast } from "sonner";
 
 import { sendContact } from "@/actions/contact";
@@ -21,45 +20,19 @@ import {
   HONEYPOT_FIELD,
   MESSAGE_COUNTER_FROM,
   TURNSTILE_FIELD,
-  parseReason,
   readContactFields,
   validateContact,
   type ContactErrors,
   type ContactFields,
-  type ContactReason,
   type ContactResult,
 } from "@/lib/contact";
 import { cn } from "@/lib/utils";
 
+import { useContactDraft } from "./use-contact-draft";
+import { useTurnstileGate } from "./use-turnstile-gate";
+
 // Les champs texte, dans l'ordre de la page : le focus va au premier en erreur.
 const TEXT_FIELDS = ["name", "email", "message"] as const;
-
-// Le widget est invisible tant que Cloudflare n'a pas besoin d'une interaction. S'il faut
-// cliquer, on laisse ce temps au visiteur avant d'abandonner l'envoi.
-const CHALLENGE_TIMEOUT_MS = 20_000;
-
-// Brouillon gardé dans l'onglet (sessionStorage) : il survit à un rechargement ou à un
-// retour arrière, disparaît à la fermeture de l'onglet et ne quitte jamais le navigateur.
-const DRAFT_KEY = "contact-draft";
-
-type Draft = Partial<Pick<ContactFields, "name" | "email" | "message">> & { reason?: string };
-
-function readDraft(): Draft {
-  try {
-    return JSON.parse(sessionStorage.getItem(DRAFT_KEY) ?? "{}") as Draft;
-  } catch {
-    return {};
-  }
-}
-
-function writeDraft(draft: Draft | null) {
-  try {
-    if (draft) sessionStorage.setItem(DRAFT_KEY, JSON.stringify(draft));
-    else sessionStorage.removeItem(DRAFT_KEY);
-  } catch {
-    // Stockage indisponible (navigation privée, refusé) : le formulaire marche sans.
-  }
-}
 
 // La Server Action ne lève jamais. Si l'appel lui-même échoue (réseau coupé, ou envoi
 // bloqué par la limite par adresse IP du pare-feu), on rend une erreur au lieu de planter.
@@ -80,87 +53,30 @@ function focusFirstInvalid(form: HTMLFormElement | null, errors: ContactErrors) 
 // Formulaire de contact. Les champs sont validés ici pour répondre tout de suite, puis
 // revalidés par la Server Action, qui vérifie le jeton Turnstile avant tout envoi.
 export function ContactForm({ siteKey }: { siteKey: string }) {
-  const [reason, setReason] = useState<ContactReason | "">("");
-  const [messageLength, setMessageLength] = useState(0);
+  const form = useRef<HTMLFormElement>(null);
+  const { reason, messageLength, saveDraft, chooseReason, clearDraft } = useContactDraft(form);
+  const { waiting, waitForToken, resetWidget, widget } = useTurnstileGate(form);
   const [state, formAction, pending] = useActionState(
     async (previous: ContactResult | null, data: FormData) => {
       const result = await submitContact(previous, data);
-      if (result.status === "success") {
-        // React vide le formulaire après l'action : le brouillon et le motif suivent.
-        writeDraft(null);
-        setReason("");
-        setMessageLength(0);
-      }
+      if (result.status === "success") clearDraft();
       return result;
     },
     null,
   );
   const [clientErrors, setClientErrors] = useState<ContactErrors | null>(null);
-  const [waiting, setWaiting] = useState(false);
-  const [widgetReady, setWidgetReady] = useState(false);
-  const form = useRef<HTMLFormElement>(null);
-  const turnstile = useRef<TurnstileInstance>(null);
-  const challengeTimer = useRef<ReturnType<typeof setTimeout>>(undefined);
   const busy = pending || waiting;
-
-  // Au chargement : brouillon de l'onglet, puis motif de l'URL (`?motif=alternance`), prioritaire.
-  // Ces deux sources n'existent que dans le navigateur : les lire au rendu ferait différer le
-  // HTML prérendu et l'hydratation. On les applique donc une fois, juste après.
-  useEffect(() => {
-    const draft = readDraft();
-    const elements = form.current?.elements;
-    for (const name of TEXT_FIELDS) {
-      const control = elements?.namedItem(name);
-      const value = draft[name];
-      if (value && (control instanceof HTMLInputElement || control instanceof HTMLTextAreaElement)) {
-        control.value = value;
-      }
-    }
-    const initial =
-      parseReason(new URLSearchParams(window.location.search).get("motif")) ?? parseReason(draft.reason);
-    // Synchronisation unique avec le navigateur, après l'hydratation : voulue ici.
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setMessageLength(draft.message?.length ?? 0);
-    if (initial) setReason(initial);
-  }, []);
-
-  // `nextReason` : le motif vient de changer, le champ caché ne le porte pas encore.
-  function saveDraft(nextReason?: ContactReason | "") {
-    const current = form.current;
-    if (!current) return;
-    const fields = readContactFields(new FormData(current));
-    setMessageLength(fields.message.length);
-    writeDraft({
-      name: fields.name,
-      email: fields.email,
-      message: fields.message,
-      reason: nextReason ?? fields.reason,
-    });
-  }
-
-  // Fin de l'attente du jeton : on envoie s'il est arrivé, sinon on le dit.
-  function stopWaiting(submit: boolean) {
-    clearTimeout(challengeTimer.current);
-    // Appliqué tout de suite : sinon `handleSubmit`, appelé par `requestSubmit`, verrait
-    // encore l'attente en cours et annulerait l'envoi.
-    flushSync(() => setWaiting(false));
-    if (submit) form.current?.requestSubmit();
-    else toast.error(CONTACT_MESSAGES.challenge);
-  }
-
-  useEffect(() => () => clearTimeout(challengeTimer.current), []);
 
   useEffect(() => {
     if (!state) return;
-    // Un jeton Turnstile ne sert qu'une fois : le widget repart à zéro après chaque envoi.
-    turnstile.current?.reset();
+    resetWidget();
     if (state.status === "success") {
       toast.success(state.message);
     } else {
       toast.error(state.message);
       if (state.errors) focusFirstInvalid(form.current, state.errors);
     }
-  }, [state]);
+  }, [state, resetWidget]);
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     // Le bouton reste focalisable pendant l'envoi (`aria-disabled`) : on refuse ici le double envoi.
@@ -179,14 +95,7 @@ export function ContactForm({ siteKey }: { siteKey: string }) {
     setClientErrors(null);
     if (!data.get(TURNSTILE_FIELD)) {
       event.preventDefault();
-      // Widget absent (script bloqué ou en échec) : inutile d'attendre.
-      if (!widgetReady) {
-        toast.error(CONTACT_MESSAGES.challenge);
-        return;
-      }
-      // Le jeton arrive d'habitude en une seconde : on l'attend, puis on envoie tout seul.
-      setWaiting(true);
-      challengeTimer.current = setTimeout(() => stopWaiting(false), CHALLENGE_TIMEOUT_MS);
+      waitForToken();
     }
   }
 
@@ -201,7 +110,7 @@ export function ContactForm({ siteKey }: { siteKey: string }) {
     undefined;
 
   return (
-    <form ref={form} action={formAction} onSubmit={handleSubmit} onInput={() => saveDraft()} noValidate>
+    <form ref={form} action={formAction} onSubmit={handleSubmit} onInput={saveDraft} noValidate>
       {/* Le formulaire est un billet de cinéma : les champs à gauche, le talon orange à
           droite (en bas sur téléphone), qui est le bouton d'envoi. */}
       <div
@@ -274,11 +183,7 @@ export function ContactForm({ siteKey }: { siteKey: string }) {
                   size="label"
                   aria-labelledby="reason-label"
                   value={reason}
-                  onValueChange={(value) => {
-                    const next = parseReason(value) ?? "";
-                    setReason(next);
-                    saveDraft(next);
-                  }}
+                  onValueChange={chooseReason}
                   data-contact-reason
                 >
                   {CONTACT_REASONS.map(({ value, label }) => (
@@ -321,20 +226,13 @@ export function ContactForm({ siteKey }: { siteKey: string }) {
               Il fait alors 300 px de large ; sur un écran plus étroit, son cadre défile. */}
           <div className="overflow-x-auto empty:hidden">
             <Turnstile
-              ref={turnstile}
+              {...widget}
               siteKey={siteKey}
               options={{
                 theme: "dark",
                 language: "fr",
                 size: "normal",
                 appearance: "interaction-only",
-              }}
-              onWidgetLoad={() => setWidgetReady(true)}
-              onSuccess={() => {
-                if (waiting) stopWaiting(true);
-              }}
-              onError={() => {
-                if (waiting) stopWaiting(false);
               }}
             />
           </div>
