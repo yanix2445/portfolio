@@ -52,18 +52,23 @@ describe("notification pour Yanis", () => {
 });
 
 describe("accusé de réception pour le visiteur", () => {
-  const mail = confirmationEmail(FIELDS);
+  const mail = confirmationEmail();
 
   it("salue le visiteur et annonce le délai de 48 à 72 h", () => {
-    expect(mail.html).toContain("Bonjour Camille &lt;b&gt;,");
+    expect(mail.html).toContain("Bonjour,");
+    expect(mail.text).toContain("Bonjour,");
     expect(mail.html).toContain("sous 48&nbsp;à&nbsp;72&nbsp;heures maximum");
     expect(mail.text).toContain("sous 48 à 72 heures maximum");
     expect(mail.subject).toContain("48 à 72 h");
   });
 
-  it("ne recopie jamais le message saisi", () => {
-    expect(mail.html).not.toContain("alert(1)");
-    expect(mail.text).not.toContain("alert(1)");
+  // L'accusé part vers n'importe quelle adresse saisie : aucun texte du visiteur ne doit y
+  // figurer, sinon le formulaire relaierait du spam depuis le domaine.
+  it("ne recopie ni le nom ni le message saisis", () => {
+    for (const part of [mail.subject, mail.html, mail.text]) {
+      expect(part).not.toContain("Camille");
+      expect(part).not.toContain("alert(1)");
+    }
   });
 });
 
