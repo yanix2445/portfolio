@@ -11,10 +11,14 @@ export type Certification = {
 };
 
 export const CERTIFICATIONS: readonly Certification[] = [
-  { issuer: "Cisco", title: "Introduction to Cybersecurity" },
-  { issuer: "Google", title: "IT Support Professional Certificate" },
-  { issuer: "Google", title: "Cybersécurité Professional Certificate" },
-  { issuer: "EBIOS", title: "Risk Manager, le MOOC" },
+  { issuer: "Cisco", title: "Introduction to Cybersecurity", badge: "/images/certifs/cisco-intro-cybersecurity.png" },
+  { issuer: "Google", title: "IT Support Professional Certificate", badge: "/images/certifs/google-it-support.png" },
+  {
+    issuer: "Google",
+    title: "Cybersécurité Professional Certificate",
+    badge: "/images/certifs/google-cybersecurity.png",
+  },
+  { issuer: "EBIOS", title: "Risk Manager, le MOOC", badge: "/images/certifs/ebios-risk-manager.png" },
   { issuer: "Anthropic", title: "AI Fluency: Framework & Foundations" },
   { issuer: "Anthropic", title: "Claude Code in Action" },
   { issuer: "Anthropic", title: "Claude 101" },
