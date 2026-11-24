@@ -3,6 +3,7 @@
 import { Turnstile, type TurnstileInstance } from "@marsidev/react-turnstile";
 import Link from "next/link";
 import { useActionState, useEffect, useRef, useState, type FormEvent } from "react";
+import { flushSync } from "react-dom";
 import { toast } from "sonner";
 
 import { sendContact } from "@/actions/contact";
@@ -140,7 +141,9 @@ export function ContactForm({ siteKey }: { siteKey: string }) {
   // Fin de l'attente du jeton : on envoie s'il est arrivé, sinon on le dit.
   function stopWaiting(submit: boolean) {
     clearTimeout(challengeTimer.current);
-    setWaiting(false);
+    // Appliqué tout de suite : sinon `handleSubmit`, appelé par `requestSubmit`, verrait
+    // encore l'attente en cours et annulerait l'envoi.
+    flushSync(() => setWaiting(false));
     if (submit) form.current?.requestSubmit();
     else toast.error(CONTACT_MESSAGES.challenge);
   }
