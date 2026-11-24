@@ -6,6 +6,9 @@ export default defineConfig({
   testDir: "tests/e2e",
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
+  // Les tests Turnstile dépendent du réseau : une relance en CI absorbe une lenteur de
+  // Cloudflare. Un test qui ne passe qu'à la relance est signalé « flaky » dans le rapport.
+  retries: process.env.CI ? 1 : 0,
   reporter: "list",
   use: {
     baseURL: `http://localhost:${PORT}`,
