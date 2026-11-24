@@ -5,9 +5,9 @@ import { SITE_HOST } from "@/lib/site";
 const SITEVERIFY_URL = "https://challenges.cloudflare.com/turnstile/v0/siteverify";
 const TIMEOUT_MS = 8000;
 
-// En production, le jeton doit venir du site lui-même : le widget de production accepte aussi
-// `localhost`, d'où un jeton pourrait être obtenu hors du site. Les previews ont une adresse
-// par branche : leur hôte n'est pas vérifié.
+// En production, le jeton doit venir du site lui-même, quels que soient les hôtes autorisés
+// sur le widget chez Cloudflare. Les previews ont une adresse par branche : leur hôte n'est
+// pas vérifié.
 const PRODUCTION_HOSTS = [SITE_HOST, `www.${SITE_HOST}`];
 
 /**
