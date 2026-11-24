@@ -35,5 +35,7 @@ flowchart LR
 
 - Les CSS modules ne sont pas disponibles : la règle Turbopack `*.css` de `next.config.ts` envoie tout au loader Tailwind. Le style passe par des classes Tailwind et les tokens de `globals.css`.
 - `cn()` vient du paquet `cn` de shadcn (remplaçant de `clsx` + `tailwind-merge`), configuré dans `src/lib/utils.ts` avec les tailles de texte du thème.
+- TypeScript 6 et 7 sont installés côte à côte (montage recommandé par Microsoft) : `@typescript/native` est TypeScript 7 et fournit `tsc` (`pnpm typecheck`) ; `typescript` est un alias de `@typescript/typescript6`, car TypeScript 7 n'a pas d'API JavaScript et `typescript-eslint` en a besoin. `next build` contrôle les types avec ce paquet `typescript`, donc avec TypeScript 6 (`tsc6`). Ne pas remettre `typescript` en version 7 tant que `typescript-eslint` ne la supporte pas (son backend `tsgo` vise TypeScript 7.1).
+- ESLint 10 : `eslint-config-next` (16.4 et plus) corrige lui-même `eslint-plugin-react`, `eslint-plugin-import` et son parser Babel. Les avertissements de peer de ces plugins (`eslint` ≤ 9 déclaré) sont attendus.
 - `next-mdx-remote` est archivé : ne pas l'utiliser. Sous Turbopack, les plugins remark/rehype se déclarent sous forme de *strings* dans `next.config.ts`.
 - Next.js publie des security releases fréquentes : Dependabot doit rester actif, et ses PR doivent être traitées vite.

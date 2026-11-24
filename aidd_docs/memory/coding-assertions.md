@@ -8,7 +8,7 @@ La vérification rapide.
 
 | Ordre | Commande         | Vérifie                     |
 | ----- | ---------------- | --------------------------- |
-| 1     | `pnpm typecheck` | typage TypeScript (`next typegen && tsc --noEmit`, `next typegen` génère les types de routes `PageProps`/`LayoutProps`) |
+| 1     | `pnpm typecheck` | typage TypeScript 7 (`next typegen && tsc --noEmit`, `next typegen` génère les types de routes `PageProps`/`LayoutProps`) |
 | 2     | `pnpm lint`      | règles ESLint via la CLI `eslint` (flat config `eslint.config.mjs`, `next lint` est supprimé en Next 16) |
 | 3     | `pnpm test`      | tests unitaires Vitest (contenu, sitemap, métadonnées) |
 
