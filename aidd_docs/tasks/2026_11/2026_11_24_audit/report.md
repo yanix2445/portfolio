@@ -6,6 +6,7 @@ Code sain et bien testé, mais un bug critique sur le seul chemin de conversion 
 - **Scope**: tout le repo (`main` à `9bd7bff`), en-têtes HTTP de production
 - **Health**: fair
 - **Findings**: 1 critical, 4 major, 16 minor
+- **Suivi (2026-11-24, fin de journée)**: 18 constats corrigés (PR #25 à #34) et vérifiés dans le code de `main` ou en production ; 3 mineurs laissés ouverts volontairement (chiffres romains, helpers de `entry-page.tsx`, statut des `plan.md`). Envoi réel du formulaire en production testé et validé par Yanis.
 
 Sévérité : 🔴 critique (à corriger maintenant), 🟡 majeur (bientôt), 🟢 mineur (quand c'est pratique). Effort : `S` < 1 h, `M` < 1 j, `L` > 1 j. Le détail de chaque ligne est dans le fichier du pilier.
 
@@ -18,17 +19,17 @@ Sévérité : 🔴 critique (à corriger maintenant), 🟡 majeur (bientôt), �
 | 🟡  | security     | `next.config.ts:4` | Seul HSTS est envoyé en production : pas de CSP, de `frame-ancestors`, de `nosniff`, de `Referrer-Policy`. **Corrigé le 2026-11-24.** | `headers()` dans `next.config.ts`, puis une CSP en `Report-Only`. | M |
 | 🟡  | tests        | `tests/e2e/contact.spec.ts:8` | Cloudflare est bloqué dans tous les tests du formulaire : le chemin d'attente du jeton n'est jamais exécuté. **Corrigé le 2026-11-24** (`tests/e2e/contact-turnstile.spec.ts`). | Test e2e avec la clé de test et un défi retardé. | M |
 | 🟡  | tests        | `.github/dependabot.yml:1` | Pas de CI : rien ne vérifie les PR, Dependabot compris. **Corrigé le 2026-11-24** (`.github/workflows/ci.yml`). | Workflow GitHub Actions : typage, lint, unitaires, e2e. | M |
-| 🟢  | code-quality | `src/components/contact/contact-form.tsx:81` | 379 lignes : brouillon, attente Turnstile et rendu mêlés. | Extraire `useContactDraft` et `useTurnstileGate`. | M |
+| 🟢  | code-quality | `src/components/contact/contact-form.tsx:81` | 379 lignes : brouillon, attente Turnstile et rendu mêlés. **Corrigé le 2026-11-24** (PR #33 : `useContactDraft` et `useTurnstileGate`, 280 lignes). | Extraire `useContactDraft` et `useTurnstileGate`. | M |
 | 🟢  | code-quality | `src/components/contact/contact-form.tsx:33` | `FIELD_ORDER` et `TEXT_FIELDS` en double. **Corrigé le 2026-11-24.** | Une seule constante. | S |
 | 🟢  | code-quality | `src/components/content/entry-list.tsx:53` | « Lire l'article → » en dur malgré le paramètre `collection`. **Corrigé le 2026-11-24** (libellé tiré de `collection`). | Retirer le paramètre ou dériver le libellé. | S |
 | 🟢  | code-quality | `src/components/home/hero-section.tsx:37` | `priority` est déprécié depuis Next 16. **Corrigé le 2026-11-24.** | `preload`. | S |
 | 🟢  | code-quality | `.env.example:17` | « quatre variables ci-dessus » : il y en a six. **Corrigé le 2026-11-24.** | Nommer les quatre variables requises. | S |
 | 🟢  | code-quality | `src/components/home/acts-section.tsx:5` | `ROMAN` s'arrête à 8 actes. | Conversion générique ou garde-fou dans le test. | S |
-| 🟢  | security     | `src/lib/turnstile.ts:23` | `hostname` de `siteverify` non vérifié ; `localhost` accepté en production. **Corrigé le 2026-11-24** (hôte vérifié en production ; `localhost` reste sur le widget Cloudflare). | Contrôler `result.hostname`. | S |
+| 🟢  | security     | `src/lib/turnstile.ts:23` | `hostname` de `siteverify` non vérifié ; `localhost` accepté en production. **Corrigé le 2026-11-24** (hôte vérifié en production ; widget de production limité à `yanis-harrat.com` et `www`, PR #30 et #31). | Contrôler `result.hostname`. | S |
 | 🟢  | security     | `src/lib/contact.ts:69` | La regex d'e-mail accepte `?&<>"` : la réponse `mailto:` peut être pré-remplie. **Corrigé le 2026-11-24.** | Durcir la regex ou encoder la partie locale. | S |
 | 🟢  | dependencies | `package.json:31` | Le CLI `shadcn` en production entraîne `minimatch` vulnérable (modérée). **Corrigé le 2026-11-24** (alerte restante limitée au CLI en dev). | Passer en `devDependencies`. | S |
 | 🟢  | dependencies | `package.json:39` | `postcss-selector-parser` vulnérable (modérée, build seulement). **Corrigé le 2026-11-24** (override pnpm, 6.1.6). | Override pnpm. | S |
-| 🟢  | dependencies | `package.json:44` | ESLint 10 et TypeScript 7 disponibles ; PR Dependabot #23 et #24 ouvertes. | Merger #23 et #24, planifier les majeures. | M |
+| 🟢  | dependencies | `package.json:44` | ESLint 10 et TypeScript 7 disponibles ; PR Dependabot #23 et #24 ouvertes. **Corrigé le 2026-11-24** (PR #32 : ESLint 10.15, TypeScript 7.0.2 via `@typescript/native`, TypeScript 6 gardé pour `typescript-eslint` ; #23 fermée, #24 mergée). | Merger #23 et #24, planifier les majeures. | M |
 | 🟢  | architecture | `src/components/content/entry-page.tsx:46` | Helpers de route (paramètres, métadonnées) dans un module d'UI. | Les déplacer dans `src/lib/`. | S |
 | 🟢  | architecture | `aidd_docs/tasks/2026_11/2026_11_15_finition-tokens-contact/plan.md:3` | Plans livrés restés en `status: implemented`. | Statut final après le merge. | S |
 | 🟢  | performance  | `src/components/home/hero-section.tsx:33` | Portrait source PNG de 1,75 Mo. **Corrigé le 2026-11-24** (JPEG qualité 88, 274 Ko). | Source compressée en WebP ou JPEG. | S |
