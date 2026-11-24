@@ -31,7 +31,7 @@ import {
 } from "@/lib/contact";
 import { cn } from "@/lib/utils";
 
-const FIELD_ORDER: (keyof ContactFields)[] = ["name", "email", "message"];
+// Les champs texte, dans l'ordre de la page : le focus va au premier en erreur.
 const TEXT_FIELDS = ["name", "email", "message"] as const;
 
 // Le widget est invisible tant que Cloudflare n'a pas besoin d'une interaction. S'il faut
@@ -72,7 +72,7 @@ async function submitContact(previous: ContactResult | null, data: FormData): Pr
 }
 
 function focusFirstInvalid(form: HTMLFormElement | null, errors: ContactErrors) {
-  const first = FIELD_ORDER.find((field) => errors[field]);
+  const first = TEXT_FIELDS.find((field) => errors[field]);
   const control = first ? form?.elements.namedItem(first) : null;
   if (control instanceof HTMLElement) control.focus();
 }
