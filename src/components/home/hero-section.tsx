@@ -34,7 +34,7 @@ export function HeroSection() {
             alt={`Portrait de ${OWNER.fullName}`}
             width={1122}
             height={1402}
-            priority
+            preload
             sizes="(min-width: 768px) 66vw, 100vw"
             className="absolute top-0 right-0 h-full w-full max-w-none origin-[60%_30%] object-cover object-[50%_var(--portrait-y)] md:w-[66%]"
             data-hero-photo

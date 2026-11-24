@@ -51,6 +51,12 @@ describe("validation du formulaire de contact", () => {
 
   it("refuse un e-mail mal formé, un message trop court ou trop long", () => {
     expect(validateContact({ ...VALID, email: "camille@example" })).toHaveProperty("email");
+    // `?` ouvrirait des paramètres dans le lien `mailto:` de la notification ; `<>"` casseraient
+    // l'en-tête Reply-To.
+    for (const email of ["a@b.co?body=x", "a<b@c.co", "a@b.co>", '"a"@b.co']) {
+      expect(validateContact({ ...VALID, email })).toHaveProperty("email");
+    }
+    expect(validateContact({ ...VALID, email: "o'brien+cv@example.co.uk" })).toEqual({});
     expect(validateContact({ ...VALID, message: "Trop court" })).toEqual({});
     expect(validateContact({ ...VALID, message: "Court" })).toHaveProperty("message");
     expect(
