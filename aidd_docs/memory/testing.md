@@ -46,6 +46,7 @@ Comment le projet est vérifié : deux niveaux de tests automatisés, en plus du
 - Unitaires : `pnpm test`.
 - E2E : `pnpm test:e2e`. Le premier lancement nécessite `pnpm exec playwright install chromium`.
 - Les deux commandes sont bornées : on les lance via `portly temp`.
+- En CI (`.github/workflows/ci.yml`), les deux suites tournent sur chaque PR. `retries` vaut 1 en CI seulement : un test qui ne passe qu'à la relance est marqué « flaky », à surveiller.
 
 ## Browser QA
 

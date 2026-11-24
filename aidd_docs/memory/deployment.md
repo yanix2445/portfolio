@@ -5,7 +5,7 @@ Où tourne le site et comment il est livré.
 ## Pipeline
 
 - Vercel est connecté au repo GitHub : un push sur `main` déploie en production, une PR crée un déploiement Preview.
-- Il n'y a pas de CI GitHub Actions. Le build Vercel (`next build`) sert de vérification finale.
+- CI GitHub Actions (`.github/workflows/ci.yml`), sur chaque PR (Dependabot comprises) et chaque push sur `main` : un job typage, lint et tests unitaires, un job e2e sur le build de production (Chromium en cache, une relance en CI pour les tests qui dépendent de Cloudflare). Gratuite : le dépôt est public. Le build Vercel reste séparé, il ne lance pas les tests.
 
 ## Environments
 
