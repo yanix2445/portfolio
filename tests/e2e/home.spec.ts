@@ -23,12 +23,14 @@ function sectionIds(page: Page) {
     .evaluateAll((sections) => sections.map((section) => section.getAttribute("aria-labelledby")));
 }
 
-// Erreurs console, hors Vercel Analytics dont le script n'est servi que sur Vercel.
+// Erreurs console, hors Vercel Analytics dont le script n'est servi que sur Vercel. En local,
+// sa réponse 404 est en texte : avec `nosniff`, l'erreur cite l'URL dans son message.
 function collectErrors(page: Page) {
   const errors: string[] = [];
   page.on("pageerror", (error) => errors.push(error.message));
   page.on("console", (message) => {
-    if (message.type() === "error" && !message.location().url.includes("/_vercel/")) {
+    const fromAnalytics = message.location().url.includes("/_vercel/") || message.text().includes("/_vercel/");
+    if (message.type() === "error" && !fromAnalytics) {
       errors.push(message.text());
     }
   });

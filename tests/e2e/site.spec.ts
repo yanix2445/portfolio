@@ -14,6 +14,41 @@ test.describe("pages publiques", () => {
   }
 });
 
+test.describe("en-têtes de sécurité", () => {
+  for (const path of ["/", "/contact", "/page-qui-n-existe-pas"]) {
+    test(`${path} interdit l'encadrement et le reniflage de type`, async ({ request }) => {
+      const headers = (await request.get(path)).headers();
+
+      expect(headers["content-security-policy"]).toContain("frame-ancestors 'none'");
+      expect(headers["content-security-policy"]).toContain("object-src 'none'");
+      expect(headers["x-frame-options"]).toBe("DENY");
+      expect(headers["x-content-type-options"]).toBe("nosniff");
+      expect(headers["referrer-policy"]).toBe("strict-origin-when-cross-origin");
+      expect(headers["permissions-policy"]).toContain("camera=()");
+    });
+  }
+
+  // La politique ne doit rien bloquer de ce que le site charge, Turnstile compris (`/contact`).
+  for (const path of PAGES) {
+    test(`${path} ne déclenche aucune violation de la politique`, async ({ page }) => {
+      const violations: string[] = [];
+      page.on("console", (message) => {
+        if (message.text().includes("Content Security Policy")) violations.push(message.text());
+      });
+
+      await page.goto(path, { waitUntil: "load" });
+      if (path === "/contact") {
+        // Un jeton prouve que le script et le cadre de Turnstile ont pu se charger.
+        await expect(page.locator("input[name='cf-turnstile-response']")).not.toHaveValue("", {
+          timeout: 20_000,
+        });
+      }
+
+      expect(violations).toEqual([]);
+    });
+  }
+});
+
 test.describe("contenu MDX", () => {
   test("une entrée listée ouvre sa page de détail avec son corps", async ({ page }) => {
     await page.goto("/projets");
