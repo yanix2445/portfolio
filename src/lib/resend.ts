@@ -69,7 +69,7 @@ export async function sendContactMail(fields: ContactFields): Promise<boolean> {
       // Mail automatique (RFC 3834) : les répondeurs d'absence ne doivent pas y répondre.
       headers: { "Auto-Submitted": "auto-generated", "X-Auto-Response-Suppress": "All" },
       tags: tags("confirmation"),
-      ...confirmationEmail(fields),
+      ...confirmationEmail(),
     });
     if (error) console.error("contact: accusé de réception refusé par Resend", error.name);
   } catch {

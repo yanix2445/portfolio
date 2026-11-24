@@ -179,17 +179,16 @@ ${factRow("Répondre avant", `<span style="color:${COLOR.primary};">${escapeHtml
 }
 
 /**
- * L'accusé de réception envoyé au visiteur. Il ne recopie pas le message : sinon, le
- * formulaire permettrait d'envoyer n'importe quel texte à n'importe quelle adresse depuis le
- * domaine du site. Une réponse à ce mail arrive chez Yanis.
+ * L'accusé de réception envoyé au visiteur. Il ne recopie rien de la saisie, ni le message
+ * ni le nom : il part vers l'adresse saisie, quelle qu'elle soit, et le formulaire permettrait
+ * sinon d'envoyer un texte choisi à n'importe qui depuis le domaine du site. Une réponse à ce
+ * mail arrive chez Yanis.
  */
-export function confirmationEmail({ name }: Pick<ContactFields, "name">): Email {
-  const safeName = escapeHtml(name);
-
+export function confirmationEmail(): Email {
   const body = [
     label("Message reçu", COLOR.primary),
     poster(["Bien reçu,", "je reviens", "vers vous."]),
-    paragraph(`Bonjour ${safeName},`, COLOR.foreground),
+    paragraph("Bonjour,", COLOR.foreground),
     paragraph(
       `Merci pour votre message envoyé depuis mon portfolio. Je l'ai bien reçu et je vous réponds <strong style="color:${COLOR.foreground};">sous ${nbsp(REPLY_DELAY.label)} maximum</strong>, à cette adresse <span style="white-space:nowrap;">e-mail</span>.`,
     ),
@@ -209,7 +208,7 @@ export function confirmationEmail({ name }: Pick<ContactFields, "name">): Email 
       body,
     }),
     text: [
-      `Bonjour ${name},`,
+      "Bonjour,",
       "",
       `Merci pour votre message envoyé depuis mon portfolio. Je l'ai bien reçu et je vous réponds sous ${REPLY_DELAY.label} maximum, à cette adresse e-mail.`,
       "",
