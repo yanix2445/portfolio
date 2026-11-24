@@ -28,7 +28,7 @@ A systems & network technician profile with traits a typical BTS SIO SISR studen
 
 - Visitors read the site on desktop (recruiter at work) and on mobile (from LinkedIn or email).
 - The CV PDF (`public/cv/yanis-harrat-cv.pdf`) is downloaded and forwarded internally.
-- Contact happens by email, phone or the contact form on `/contact` (Turnstile + Resend, nothing stored). The form only renders once its keys are configured.
+- Contact happens by email, phone or the contact form on `/contact` (Turnstile + Resend, nothing stored). The form is live in production; a real send was verified on 2026-11-24.
 
 ## Capabilities and Constraints
 
@@ -36,12 +36,12 @@ A systems & network technician profile with traits a typical BTS SIO SISR studen
 - Content is MDX in the repo (`src/content/`); profile data lives in `src/lib/profile.ts`; contact data in `src/lib/site.ts`.
 - Pages: home, `/projets`, `/veille`, `/contact`, `/mentions-legales`, CV PDF.
 - Must stay fast, indexable (SEO matters for the name « Yanis Harrat ») and GDPR-compliant.
-- The domain stays on a separate waiting page until Yanis decides to launch.
+- Live on `yanis-harrat.com` since 2026-11-17.
 
 ## Brand Commitments
 
 - Name written « Yanis HARRAT ». Professional contact: `yanis@yanis-harrat.com`, `07 68 18 79 34`, LinkedIn `/in/yanis-harrat/`, GitHub `yanix2445`.
-- Portrait photo provided: `public/images/yanis-harrat.png` (warm amber bokeh on a dark background).
+- Portrait photo provided: `public/images/yanis-harrat.jpg` (warm amber bokeh on a dark background).
 - Copy in French.
 - Visual direction validated by Yanis on a rendered mockup (2026-11-13): « Générique », a film-title world. Dark warm ground, cream type, ember orange accent, condensed poster lettering. Reference: `aidd_docs/tasks/2026_11/2026_11_13_home-generique/mockup/index.html`.
 - Two earlier directions were rejected and must not come back: the amber SaaS-like dark theme (PR #10) and the editorial « Opérationnel dès lundi » page (PR #11).
@@ -51,6 +51,7 @@ A systems & network technician profile with traits a typical BTS SIO SISR studen
 
 - CV (skills, certifications, experiences, education): `public/cv/yanis-harrat-cv.pdf`.
 - Real projects Yanis can document: Windows Server / Active Directory labs, a Proxmox / Docker homelab, a macOS app. They are written up as MDX project pages; a few sections are still marked « à compléter ».
+- One tech-watch article: « L'IA comme copilote du technicien informatique » (`src/content/veille/ia-copilote-technicien-informatique.mdx`).
 - Absent: testimonials, employer quotes, metrics, logos of companies. Do not fabricate them.
 
 ## Product Principles
