@@ -5,8 +5,11 @@ import { formatDate, type Collection, type ContentEntry } from "@/lib/content";
 import { fitTitle } from "@/lib/title-fit";
 import { frenchSpacing } from "@/lib/typography";
 
+const ACTION = { projets: "Voir le projet →", veille: "Lire l'article →" } as const;
+
 // Liste d'articles : une ligne par entrée, la date dans une colonne étroite à gauche, pour
-// laisser au titre toute la largeur possible.
+// laisser au titre toute la largeur possible. Toute la ligne est cliquable, mais le lien
+// n'est nommé que par le titre : un lecteur d'écran n'annonce pas la ligne entière.
 export function EntryList({
   collection,
   entries,
@@ -28,6 +31,7 @@ export function EntryList({
         <li key={slug} className="border-t border-border">
           <Link
             href={`/${collection}/${slug}`}
+            aria-labelledby={`entry-${slug}`}
             data-title={frenchSpacing(metadata.title)}
             className="group/entry grid gap-4 py-8 md:grid-cols-[13rem_minmax(0,1fr)] md:gap-[4vw] md:py-[5vh]"
           >
@@ -36,6 +40,7 @@ export function EntryList({
             </time>
             <div className="@container">
               <h2
+                id={`entry-${slug}`}
                 className="type-poster pt-[0.14em] text-display-title text-balance transition-colors duration-200 group-hover/entry:text-primary"
                 style={fitTitle(frenchSpacing(metadata.title), "display-title")}
               >
@@ -50,7 +55,7 @@ export function EntryList({
                     </li>
                   ))}
                 </ul>
-                <span className="text-action whitespace-nowrap">Lire l&apos;article →</span>
+                <span className="text-action whitespace-nowrap">{ACTION[collection]}</span>
               </div>
             </div>
           </Link>
