@@ -7,6 +7,8 @@ const isPreview = process.env.VERCEL_ENV === "preview";
 
 const TURNSTILE = "https://challenges.cloudflare.com";
 const VERCEL_LIVE = isPreview ? " https://vercel.live" : "";
+// Mode Live d'Impeccable : en développement seulement.
+const __impeccableLiveDev = isDev ? " http://localhost:8400" : "";
 
 // Politique de sécurité du contenu, sans nonce : un nonce imposerait le rendu dynamique, et le
 // site est prérendu. `'unsafe-inline'` reste donc nécessaire pour les scripts de Next (et le
@@ -14,11 +16,11 @@ const VERCEL_LIVE = isPreview ? " https://vercel.live" : "";
 // Vercel Analytics est servi par le site lui-même (`/_vercel/insights`).
 const CSP = [
   "default-src 'self'",
-  `script-src 'self' 'unsafe-inline'${isDev ? " 'unsafe-eval' https://va.vercel-scripts.com" : ""} ${TURNSTILE}${VERCEL_LIVE}`,
+  `script-src 'self' 'unsafe-inline'${isDev ? " 'unsafe-eval' https://va.vercel-scripts.com" : ""} ${TURNSTILE}${VERCEL_LIVE}${__impeccableLiveDev}`,
   "style-src 'self' 'unsafe-inline'",
   `img-src 'self' data: blob:${VERCEL_LIVE}`,
   "font-src 'self'",
-  `connect-src 'self'${VERCEL_LIVE}`,
+  `connect-src 'self'${VERCEL_LIVE}${__impeccableLiveDev}`,
   `frame-src ${TURNSTILE}${VERCEL_LIVE}`,
   "object-src 'none'",
   "base-uri 'self'",
