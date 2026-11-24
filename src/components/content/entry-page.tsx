@@ -135,11 +135,23 @@ function Documents({ documents }: { documents: EntryDocument[] }) {
 }
 
 /**
- * Corps d'une fiche : sommaire à gauche, texte centré, documents à droite. Sous 80 rem,
- * les documents passent sous le texte ; sur téléphone, tout est en colonne.
+ * Corps d'une fiche, centré dans la page à toutes les tailles. Dès 64 rem : trois colonnes
+ * symétriques, sommaire à gauche, texte au centre, documents à droite (la colonne reste
+ * réservée sans documents, pour que le texte reste centré). En dessous : une colonne, le
+ * sommaire au-dessus du texte (sur deux colonnes dès `md`), les documents dessous. Sur
+ * téléphone, pas de sommaire.
  */
 const BODY_GRID =
-  "grid gap-10 md:grid-cols-[minmax(0,1fr)_minmax(0,2.6fr)] md:gap-[4vw] xl:grid-cols-[minmax(13rem,0.75fr)_minmax(0,3fr)_minmax(13rem,0.75fr)] xl:gap-[3vw]";
+  "grid gap-10 md:gap-[6vh] lg:grid-cols-[minmax(11rem,0.75fr)_minmax(0,3fr)_minmax(11rem,0.75fr)] lg:gap-[2.4vw] xl:gap-[3vw]";
+
+/**
+ * Bloc de lecture : 75ch au plus, centré dans sa colonne, texte aligné à gauche.
+ * `text-body` donne à `ch` la même mesure que le texte de `Prose`.
+ */
+const READING = "mx-auto w-full max-w-[75ch] text-body";
+
+/** Colonne latérale : alignée sur le bloc de lecture tant qu'elle est empilée, collante dès `lg`. */
+const SIDE = cn(READING, "lg:sticky lg:top-[calc(var(--header-h)+5vh)] lg:row-start-1 lg:mx-0 lg:max-w-none");
 
 /** Place réservée pendant la navigation, le temps que la fiche arrive : évite le saut du pied de page. */
 export function EntryPageFallback() {
@@ -214,11 +226,11 @@ export async function EntryPage({
 
       <div className={cn(BODY_GRID, "mt-12 items-start md:mt-[9vh]")}>
         {outline.headings.length > 0 ? (
-          <aside className="max-md:hidden md:sticky md:top-[calc(var(--header-h)+5vh)] md:row-span-2 xl:row-span-1">
+          <aside className={cn(SIDE, "max-md:hidden lg:col-start-1")}>
             <SequenceNav headings={outline.headings} />
           </aside>
         ) : null}
-        <div className="md:col-start-2 md:row-start-1">
+        <div className={cn(READING, "lg:col-start-2 lg:row-start-1")}>
           {metadata.cover ? (
             // L'image de l'affiche, en tête du texte : entière (16:9), jamais rognée ni agrandie.
             <div className="relative mb-12 aspect-video overflow-hidden rounded-xl md:mb-[8vh] md:rounded-2xl">
@@ -227,7 +239,7 @@ export async function EntryPage({
                 alt={metadata.coverAlt ?? ""}
                 fill
                 preload
-                sizes="(min-width: 80rem) 60vw, (min-width: 48rem) 70vw, 100vw"
+                sizes="(min-width: 48rem) min(60rem, 90vw), 100vw"
                 className="object-cover"
               />
             </div>
@@ -236,12 +248,12 @@ export async function EntryPage({
           <p className="mt-4 max-w-[44ch] text-subtitle text-pretty md:mt-[2.6vh]">
             {frenchSpacing(metadata.summary)}
           </p>
-          <Prose className="prose-sequences mt-12 max-w-[75ch] md:mt-[9vh]">
+          <Prose className="prose-sequences mt-12 max-w-none md:mt-[9vh]">
             <Content />
           </Prose>
         </div>
         {documents.length > 0 ? (
-          <aside className="md:col-start-2 md:row-start-2 xl:sticky xl:top-[calc(var(--header-h)+5vh)] xl:col-start-3 xl:row-start-1">
+          <aside className={cn(SIDE, "lg:col-start-3")}>
             <Documents documents={documents} />
           </aside>
         ) : null}
@@ -251,9 +263,9 @@ export async function EntryPage({
         aria-label="Suite"
         className={cn(BODY_GRID, "mt-20 gap-8 border-t border-border pt-10 md:mt-[14vh] md:pt-[6vh]")}
       >
-        <div className="flex flex-col items-start gap-6">
+        <div className={cn(READING, "flex flex-col items-start gap-6 lg:mx-0 lg:max-w-none")}>
           <p className="type-label text-muted-foreground">{next ? copy.next : "Fin"}</p>
-          <Button asChild variant="outline" size="label" className="max-md:order-last">
+          <Button asChild variant="outline" size="label">
             <Link href={copy.back.href}>{copy.back.label}</Link>
           </Button>
         </div>
@@ -261,7 +273,7 @@ export async function EntryPage({
           <Link
             href={`/${collection}/${next.slug}`}
             data-title={frenchSpacing(next.title)}
-            className="group/card block @container"
+            className={cn(READING, "group/card block @container lg:col-start-2")}
           >
             <span
               className="block type-poster pt-[0.1em] text-display-title text-balance transition-colors duration-200 group-hover/card:text-primary"
