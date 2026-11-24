@@ -1,11 +1,10 @@
 import Link from "next/link";
 
+import { ActionCue, ENTRY_ACTION } from "@/components/content/action-cue";
 import { Badge } from "@/components/ui/badge";
 import { formatDate, type Collection, type ContentEntry } from "@/lib/content";
 import { fitTitle } from "@/lib/title-fit";
 import { frenchSpacing } from "@/lib/typography";
-
-const ACTION = { projets: "Voir le projet →", veille: "Lire l'article →" } as const;
 
 // Liste d'articles : une ligne par entrée, la date dans une colonne étroite à gauche, pour
 // laisser au titre toute la largeur possible. Toute la ligne est cliquable, mais le lien
@@ -33,7 +32,7 @@ export function EntryList({
             href={`/${collection}/${slug}`}
             aria-labelledby={`entry-${slug}`}
             data-title={frenchSpacing(metadata.title)}
-            className="group/entry grid gap-4 py-8 md:grid-cols-[13rem_minmax(0,1fr)] md:gap-[4vw] md:py-[5vh]"
+            className="group/card grid gap-4 py-8 md:grid-cols-[13rem_minmax(0,1fr)] md:gap-[4vw] md:py-[5vh]"
           >
             <time dateTime={metadata.date} className="type-label pt-[0.4em] text-muted-foreground">
               {formatDate(metadata.date)}
@@ -41,7 +40,7 @@ export function EntryList({
             <div className="@container">
               <h2
                 id={`entry-${slug}`}
-                className="type-poster pt-[0.14em] text-display-title text-balance transition-colors duration-200 group-hover/entry:text-primary"
+                className="type-poster pt-[0.14em] text-display-title text-balance transition-colors duration-200 group-hover/card:text-primary"
                 style={fitTitle(frenchSpacing(metadata.title), "display-title")}
               >
                 {frenchSpacing(metadata.title)}
@@ -55,7 +54,7 @@ export function EntryList({
                     </li>
                   ))}
                 </ul>
-                <span className="text-action whitespace-nowrap">{ACTION[collection]}</span>
+                <ActionCue>{ENTRY_ACTION[collection]}</ActionCue>
               </div>
             </div>
           </Link>

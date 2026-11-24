@@ -1,12 +1,13 @@
 import Image from "next/image";
 import Link from "next/link";
 
+import { ActionCue, ENTRY_ACTION } from "@/components/content/action-cue";
 import { DOMAIN_LABEL, type Project } from "@/lib/projects";
+import { fitTitle } from "@/lib/title-fit";
+import { frenchSpacing } from "@/lib/typography";
 import { cn } from "@/lib/utils";
 
 import { StatusBadge } from "./status-badge";
-import { fitTitle } from "@/lib/title-fit";
-import { frenchSpacing } from "@/lib/typography";
 
 // Trois encres d'affiche, attribuées dans l'ordre (accueil) : orange, crème, sombre (titre orange).
 const INKS: readonly { frame: string; title?: string }[] = [
@@ -17,9 +18,9 @@ const INKS: readonly { frame: string; title?: string }[] = [
 
 // Encre neutre, pour une grille de nombreuses affiches : sombre, l'orange seulement au survol.
 const PLAIN_INK = {
-  frame: "group/poster border border-border bg-card",
+  frame: "border border-border bg-card",
   title:
-    "transition-colors duration-200 group-hover/poster:text-primary group-focus-visible/poster:text-primary",
+    "transition-colors duration-200 group-hover/card:text-primary group-focus-visible/card:text-primary",
 };
 
 type PosterProps = {
@@ -39,7 +40,7 @@ export function Poster({ project, index, heading: Heading = "h3", plain = false 
     <Link
       href={`/projets/${project.slug}`}
       className={cn(
-        "relative flex h-full min-h-96 flex-col justify-between gap-6 overflow-hidden rounded-xl p-poster md:aspect-3/4 md:min-h-0 md:rounded-2xl",
+        "group/card relative flex h-full min-h-96 flex-col justify-between gap-6 overflow-hidden rounded-xl p-poster md:aspect-3/4 md:min-h-0 md:rounded-2xl",
         "motion-safe:transition-transform motion-safe:duration-550 motion-safe:ease-poster motion-safe:hover:-translate-y-3 motion-safe:hover:-rotate-[1.2deg] motion-safe:focus-visible:-translate-y-3 motion-safe:focus-visible:-rotate-[1.2deg]",
         // Avec une image, l'affiche grandit au lieu d'écraser l'image ; la grille aligne les hauteurs.
         project.cover && "md:aspect-auto",
@@ -50,7 +51,7 @@ export function Poster({ project, index, heading: Heading = "h3", plain = false 
     >
       {/* L'image suit la ligne du haut : dans une rangée, les images s'alignent. */}
       <div className="flex shrink-0 flex-col gap-6">
-        <div className="type-label flex items-start justify-between gap-4">
+        <div className="type-label flex items-center justify-between gap-4">
           <span>N° {index + 1}</span>
           <StatusBadge status={project.status} />
         </div>
@@ -81,9 +82,7 @@ export function Poster({ project, index, heading: Heading = "h3", plain = false 
       </div>
       <div className="type-label flex items-center justify-between gap-4 border-t border-current pt-3 md:pt-4">
         <span>{DOMAIN_LABEL[project.domain]}</span>
-        <span className="font-sans text-action tracking-normal whitespace-nowrap normal-case">
-          Voir la fiche →
-        </span>
+        <ActionCue className="font-sans tracking-normal normal-case">{ENTRY_ACTION.projets}</ActionCue>
       </div>
     </Link>
   );
