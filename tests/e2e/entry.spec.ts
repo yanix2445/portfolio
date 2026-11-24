@@ -9,6 +9,20 @@ const slugs = (collection: string) =>
 
 const PAGES = [...slugs("projets"), ...slugs("veille")];
 
+test("chaque ligne de la veille est un lien nommé par son seul titre", async ({ page }) => {
+  await page.goto("/veille");
+  const links = page.getByRole("main").getByRole("listitem").getByRole("link");
+  const count = await links.count();
+  expect(count).toBeGreaterThan(0);
+
+  for (let index = 0; index < count; index++) {
+    const link = links.nth(index);
+    // Le titre affiché (espaces insécables compris) est porté par `data-title`.
+    await expect(link).toHaveAccessibleName((await link.getAttribute("data-title")) ?? "");
+    await expect(link).toContainText("Lire l'article");
+  }
+});
+
 test.describe("fiches projet et articles de veille", () => {
   for (const url of PAGES) {
     test(`${url} : sommaire relié aux intertitres, générique et suite`, async ({ page }) => {
