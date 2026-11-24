@@ -48,6 +48,22 @@ describe("vérification Turnstile", () => {
     fetchMock.mockRejectedValueOnce(new Error("réseau coupé"));
     expect(await verifyTurnstile("jeton")).toBe(false);
   });
+
+  it("en production, refuse un jeton obtenu sur un autre site que le domaine", async () => {
+    vi.stubEnv("TURNSTILE_SECRET_KEY", "secret");
+    vi.stubEnv("VERCEL_ENV", "production");
+    const fetchMock = vi.fn();
+    vi.stubGlobal("fetch", fetchMock);
+
+    fetchMock.mockResolvedValueOnce(Response.json({ success: true, hostname: "yanis-harrat.com" }));
+    expect(await verifyTurnstile("jeton")).toBe(true);
+    fetchMock.mockResolvedValueOnce(Response.json({ success: true, hostname: "www.yanis-harrat.com" }));
+    expect(await verifyTurnstile("jeton")).toBe(true);
+    fetchMock.mockResolvedValueOnce(Response.json({ success: true, hostname: "localhost" }));
+    expect(await verifyTurnstile("jeton")).toBe(false);
+    fetchMock.mockResolvedValueOnce(Response.json({ success: true }));
+    expect(await verifyTurnstile("jeton")).toBe(false);
+  });
 });
 
 describe("envoi par Resend", () => {

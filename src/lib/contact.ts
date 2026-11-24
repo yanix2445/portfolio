@@ -66,7 +66,9 @@ export function contactSiteKey(env: Record<string, string | undefined>): string 
   return REQUIRED_ENV.every((name) => env[name]) ? (env.NEXT_PUBLIC_TURNSTILE_SITE_KEY ?? null) : null;
 }
 
-const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+// Sans `?` (il ouvrirait des paramètres dans le lien `mailto:` de la notification) ni `<>"`
+// (ils casseraient l'en-tête Reply-To). Une vraie adresse n'en a pas besoin.
+const EMAIL = /^[^\s@?<>"]+@[^\s@?<>"]+\.[^\s@?<>"]+$/;
 
 function text(value: unknown): string {
   return typeof value === "string" ? value.trim() : "";

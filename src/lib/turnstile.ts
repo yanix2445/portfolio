@@ -1,11 +1,19 @@
 import "server-only";
 
+import { SITE_HOST } from "@/lib/site";
+
 const SITEVERIFY_URL = "https://challenges.cloudflare.com/turnstile/v0/siteverify";
 const TIMEOUT_MS = 8000;
 
+// En production, le jeton doit venir du site lui-même : le widget de production accepte aussi
+// `localhost`, d'où un jeton pourrait être obtenu hors du site. Les previews ont une adresse
+// par branche : leur hôte n'est pas vérifié.
+const PRODUCTION_HOSTS = [SITE_HOST, `www.${SITE_HOST}`];
+
 /**
  * Vérifie un jeton Turnstile auprès de Cloudflare. Un jeton ne sert qu'une fois et expire
- * après 300 s. Renvoie `false` pour tout échec : jeton refusé, clé absente, panne réseau.
+ * après 300 s. Renvoie `false` pour tout échec : jeton refusé, clé absente, panne réseau,
+ * ou, en production, jeton obtenu sur un autre hôte que le site.
  */
 export async function verifyTurnstile(token: string): Promise<boolean> {
   const secret = process.env.TURNSTILE_SECRET_KEY;
@@ -20,8 +28,10 @@ export async function verifyTurnstile(token: string): Promise<boolean> {
       signal: AbortSignal.timeout(TIMEOUT_MS),
     });
     if (!response.ok) return false;
-    const result = (await response.json()) as { success?: boolean };
-    return result.success === true;
+    const result = (await response.json()) as { success?: boolean; hostname?: string };
+    if (result.success !== true) return false;
+    if (process.env.VERCEL_ENV !== "production") return true;
+    return PRODUCTION_HOSTS.includes(result.hostname ?? "");
   } catch {
     return false;
   }
