@@ -13,7 +13,7 @@ Sévérité : 🔴 critique, 🟡 majeur, 🟢 mineur. Effort : `S` < 1 h, `M` <
 
 | Sev | Category    | Location | Issue | Suggested fix | Effort |
 | --- | ----------- | -------- | ----- | ------------- | ------ |
-| 🟢  | performance | `src/components/home/hero-section.tsx:33` | Le portrait source (`public/images/yanis-harrat.png`) pèse 1,75 Mo. `next/image` le sert optimisé, donc l'impact pour le visiteur reste faible. Mais chaque nouvelle taille passe par l'optimisation d'image de Vercel à partir de ce fichier, et le repo porte le poids. | Remplacer la source par une version compressée (WebP ou JPEG de qualité ~85, 1122 × 1402), en gardant le cadrage. | S |
+| 🟢  | performance | `src/components/home/hero-section.tsx:33` | Le portrait source (`public/images/yanis-harrat.png`) pèse 1,75 Mo. `next/image` le sert optimisé, donc l'impact pour le visiteur reste faible. Mais chaque nouvelle taille passe par l'optimisation d'image de Vercel à partir de ce fichier, et le repo porte le poids. **Corrigé le 2026-11-24** (JPEG qualité 88, 274 Ko). | Remplacer la source par une version compressée (WebP ou JPEG de qualité ~85, 1122 × 1402), en gardant le cadrage. | S |
 
 ## Top actions
 

@@ -30,7 +30,7 @@ export function HeroSection() {
           data-hero-plate
         >
           <Image
-            src="/images/yanis-harrat.png"
+            src="/images/yanis-harrat.jpg"
             alt={`Portrait de ${OWNER.fullName}`}
             width={1122}
             height={1402}

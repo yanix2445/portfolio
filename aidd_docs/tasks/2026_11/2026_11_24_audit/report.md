@@ -20,7 +20,7 @@ Sévérité : 🔴 critique (à corriger maintenant), 🟡 majeur (bientôt), �
 | 🟡  | tests        | `.github/dependabot.yml:1` | Pas de CI : rien ne vérifie les PR, Dependabot compris. **Corrigé le 2026-11-24** (`.github/workflows/ci.yml`). | Workflow GitHub Actions : typage, lint, unitaires, e2e. | M |
 | 🟢  | code-quality | `src/components/contact/contact-form.tsx:81` | 379 lignes : brouillon, attente Turnstile et rendu mêlés. | Extraire `useContactDraft` et `useTurnstileGate`. | M |
 | 🟢  | code-quality | `src/components/contact/contact-form.tsx:33` | `FIELD_ORDER` et `TEXT_FIELDS` en double. **Corrigé le 2026-11-24.** | Une seule constante. | S |
-| 🟢  | code-quality | `src/components/content/entry-list.tsx:53` | « Lire l'article → » en dur malgré le paramètre `collection`. | Retirer le paramètre ou dériver le libellé. | S |
+| 🟢  | code-quality | `src/components/content/entry-list.tsx:53` | « Lire l'article → » en dur malgré le paramètre `collection`. **Corrigé le 2026-11-24** (libellé tiré de `collection`). | Retirer le paramètre ou dériver le libellé. | S |
 | 🟢  | code-quality | `src/components/home/hero-section.tsx:37` | `priority` est déprécié depuis Next 16. **Corrigé le 2026-11-24.** | `preload`. | S |
 | 🟢  | code-quality | `.env.example:17` | « quatre variables ci-dessus » : il y en a six. **Corrigé le 2026-11-24.** | Nommer les quatre variables requises. | S |
 | 🟢  | code-quality | `src/components/home/acts-section.tsx:5` | `ROMAN` s'arrête à 8 actes. | Conversion générique ou garde-fou dans le test. | S |
@@ -31,9 +31,9 @@ Sévérité : 🔴 critique (à corriger maintenant), 🟡 majeur (bientôt), �
 | 🟢  | dependencies | `package.json:44` | ESLint 10 et TypeScript 7 disponibles ; PR Dependabot #23 et #24 ouvertes. | Merger #23 et #24, planifier les majeures. | M |
 | 🟢  | architecture | `src/components/content/entry-page.tsx:46` | Helpers de route (paramètres, métadonnées) dans un module d'UI. | Les déplacer dans `src/lib/`. | S |
 | 🟢  | architecture | `aidd_docs/tasks/2026_11/2026_11_15_finition-tokens-contact/plan.md:3` | Plans livrés restés en `status: implemented`. | Statut final après le merge. | S |
-| 🟢  | performance  | `src/components/home/hero-section.tsx:33` | Portrait source PNG de 1,75 Mo. | Source compressée en WebP ou JPEG. | S |
-| 🟢  | ui           | `src/components/content/entry-list.tsx:29` | Nom accessible très long pour chaque ligne de la veille. | Lien nommé par le titre seul. | S |
-| 🟢  | ui           | `src/lib/contact-emails.ts:14` | Couleurs des mails recopiées sans contrôle de synchronisation. | Test qui compare avec `globals.css`. | S |
+| 🟢  | performance  | `src/components/home/hero-section.tsx:33` | Portrait source PNG de 1,75 Mo. **Corrigé le 2026-11-24** (JPEG qualité 88, 274 Ko). | Source compressée en WebP ou JPEG. | S |
+| 🟢  | ui           | `src/components/content/entry-list.tsx:29` | Nom accessible très long pour chaque ligne de la veille. **Corrigé le 2026-11-24** (`aria-labelledby` sur le titre). | Lien nommé par le titre seul. | S |
+| 🟢  | ui           | `src/lib/contact-emails.ts:14` | Couleurs des mails recopiées sans contrôle de synchronisation. **Corrigé le 2026-11-24** (test de synchronisation ; filet aligné en `#3d3a35`). | Test qui compare avec `globals.css`. | S |
 
 ## Top actions
 
