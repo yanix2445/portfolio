@@ -1,8 +1,12 @@
 import "./setup-content";
 
+import { readFileSync } from "node:fs";
+import path from "node:path";
+
 import { describe, expect, it } from "vitest";
 
 import {
+  COLOR,
   confirmationEmail,
   formatParisDate,
   notificationEmail,
@@ -88,5 +92,43 @@ describe("alerte de mail non remis", () => {
   it("pointe vers la configuration si c'est la notification qui échoue", () => {
     const mail = rejectionAlertEmail({ recipient: "moi@example.com", kind: "notification", detail: "x", at: RECEIVED });
     expect(mail.text).toContain("CONTACT_TO_EMAIL");
+  });
+});
+
+// Un mail n'a pas de variables CSS : ses couleurs recopient les tokens du site.
+describe("couleurs des mails", () => {
+  const css = readFileSync(path.join(import.meta.dirname, "../../src/app/globals.css"), "utf8");
+  const token = (name: string) => {
+    const value = new RegExp(`^\\s*--${name}:\\s*([^;]+);`, "m").exec(css)?.[1].trim();
+    if (!value) throw new Error(`token --${name} introuvable`);
+    return value;
+  };
+
+  it("reprennent les tokens de globals.css", () => {
+    expect({
+      background: COLOR.background,
+      card: COLOR.card,
+      foreground: COLOR.foreground,
+      soft: COLOR.soft,
+      muted: COLOR.muted,
+      primary: COLOR.primary,
+      primaryForeground: COLOR.primaryForeground,
+    }).toEqual({
+      background: token("background"),
+      card: token("card"),
+      foreground: token("foreground"),
+      soft: token("soft"),
+      muted: token("muted-foreground"),
+      primary: token("primary"),
+      primaryForeground: token("primary-foreground"),
+    });
+  });
+
+  it("donnent au filet la teinte du `--border` translucide posé sur une carte", () => {
+    const [r, g, b, alpha] = /rgb\((\d+) (\d+) (\d+) \/ ([\d.]+)\)/.exec(token("border"))!.slice(1).map(Number);
+    const card = token("card").match(/[\da-f]{2}/gi)!.map((hex) => parseInt(hex, 16));
+    const blend = [r, g, b].map((channel, index) => Math.round(alpha * channel + (1 - alpha) * card[index]));
+
+    expect(COLOR.border).toBe(`#${blend.map((channel) => channel.toString(16).padStart(2, "0")).join("")}`);
   });
 });

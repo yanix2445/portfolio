@@ -11,7 +11,7 @@ export const REPLY_DELAY = { label: "48 à 72 heures", short: "48 à 72 h", maxH
 
 export type Email = { subject: string; html: string; text: string };
 
-const COLOR = {
+export const COLOR = {
   background: "#0b0a09",
   card: "#151310",
   foreground: "#f2ebdd",
@@ -19,7 +19,7 @@ const COLOR = {
   muted: "#9a9082",
   primary: "#ff5b2e",
   primaryForeground: "#170a04",
-  border: "#3a3631",
+  border: "#3d3a35",
 } as const;
 
 const FONT = {
