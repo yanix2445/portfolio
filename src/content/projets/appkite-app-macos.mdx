@@ -1,7 +1,7 @@
 export const metadata = {
   title: "AppKite, une app macOS de barre de menus",
   summary:
-    "Une app macOS native, gratuite et hors ligne, qui réunit des outils du quotidien dans la barre de menus. Je la pilote de la spec à la revue, avec Claude Code comme développeur principal.",
+    "Une app macOS native, gratuite et hors ligne, qui réunit quatre outils du quotidien dans la barre de menus. Le premier, un historique du presse-papiers, est terminé. Je pilote le projet de la spec à la revue, avec Claude Code comme développeur principal.",
   date: "2026-11-13",
   tags: ["macOS", "Swift", "SwiftUI", "Claude Code", "Projet personnel"],
   featured: true,
@@ -9,56 +9,190 @@ export const metadata = {
   status: "in-progress",
   domain: "code",
   poster: "AppKite",
+  documents: [
+    { label: "Code source sur GitHub", href: "https://github.com/yanix2445/AppKite" },
+    {
+      label: "Spécification de l'historique",
+      href: "https://github.com/yanix2445/AppKite/blob/main/aidd_docs/tasks/2026_11/2026_11_09_historique_presse_papiers/spec.md",
+    },
+    {
+      label: "Spécification des aperçus",
+      href: "https://github.com/yanix2445/AppKite/blob/main/aidd_docs/tasks/2026_11/2026_11_16_apercus_presse_papiers/spec.md",
+    },
+    {
+      label: "Audit d'architecture",
+      href: "https://github.com/yanix2445/AppKite/blob/main/aidd_docs/tasks/2026_11/2026_11_17_audit/architecture.md",
+    },
+  ],
 };
 
 ## Contexte
 
-AppKite est un projet personnel démarré le 7 novembre 2026. Le code est public sur [GitHub](https://github.com/yanix2445/AppKite).
+Sur Mac, retrouver un texte copié il y a une heure, fermer toutes ses apps d'un coup, passer d'une fenêtre à l'autre ou annoter une capture d'écran demande chacun une app à part. AppKite les réunit dans une seule, que je construis d'abord pour moi.
 
-L'idée : une seule app, logée dans la barre de menus de macOS, qui regroupe plusieurs outils du quotidien. Sans compte, avec un traitement local et un fonctionnement hors ligne.
+Elle vit dans la barre de menus, en haut de l'écran. Elle est gratuite, sans compte, et tout reste sur le Mac : AppKite ne contacte aucun serveur. Le code est public sur [GitHub](https://github.com/yanix2445/AppKite), avec toute la documentation du projet, du premier brainstorm au dernier audit.
 
 ## Objectif
 
-Livrer quatre outils, dans cet ordre :
+Livrer quatre outils, un par un :
 
-1. un **historique du presse-papiers** : retrouver ce qu'on a copié, le rechercher, épingler les éléments utiles et les ranger dans des collections ;
-2. la **fermeture groupée d'applications**, avec des exceptions ;
-3. un **switcher de fenêtres** pour passer rapidement de l'une à l'autre ;
-4. la **capture et l'enregistrement d'écran**.
+1. un **historique du presse-papiers**, pour retrouver ce qu'on a copié, le rechercher, le voir et le recoller ;
+2. la **fermeture groupée d'applications**, avec des exceptions et une confirmation ;
+3. un **switcher de fenêtres**, avec des miniatures et des raccourcis ;
+4. la **capture et l'enregistrement d'écran**, avec annotations et reconnaissance de texte.
+
+Le premier est terminé. Les trois autres restent à faire.
+
+Chaque fonctionnalité a un cahier des charges chiffré, écrit avant la première ligne de code. Pour l'historique :
+
+- recoller neuf sortes de contenus sans rien perdre de ce que l'app de destination sait lire ;
+- afficher les premiers résultats d'une recherche en moins de 200 ms dans 95 % des cas, sur un historique de 10 000 copies ;
+- fonctionner hors ligne, sur macOS 26 et 27 ;
+- ne jamais supprimer une copie épinglée ou rangée dans une collection.
 
 ## Environnement
 
-- Swift 6, **SwiftUI** pour l'interface, **AppKit** quand l'intégration système l'exige.
-- **SwiftData** et fichiers locaux pour l'historique.
-- Tests : Swift Testing pour la logique, XCTest et XCUITest pour les parcours d'interface.
-- Cible : Mac Apple Silicon, macOS 26 minimum.
-- Architecture : Clean Architecture découpée par fonctionnalité (domaine, cas d'usage, adaptateurs système, interface).
+- Un Mac Apple Silicon sous macOS 27.2, avec Xcode 27.2. L'app vise macOS 26 au minimum.
+- **Swift 6 et SwiftUI**, le langage et l'outil d'interface d'Apple, avec **AppKit**, l'ancienne boîte à outils du Mac, quand il faut parler directement au système.
+- **SwiftData**, la base de données intégrée d'Apple, pour l'historique. Les gros contenus (images, vidéos, fichiers) sont rangés à côté, en fichiers.
+- Vision pour lire le texte d'une image, Quick Look pour afficher la première page d'un document, AVFoundation pour tirer une image d'une vidéo.
+- Swift Testing pour tester la logique, XCTest pour cliquer dans l'interface comme le ferait un utilisateur.
+- Git et GitHub, avec une branche et une pull request par étape.
+
+### L'architecture
+
+Le code est rangé par outil, puis en quatre couches : les règles (ce qui est permis), les actions (ce que fait l'app), les échanges avec macOS (presse-papiers, disque, clavier) et l'interface. Une règle ne connaît ni macOS ni l'écran. Je peux donc la tester seule, sans lancer l'app ni toucher au vrai presse-papiers.
+
+### Trois choix de départ
+
+AppKite tourne hors de l'App Sandbox, le bac à sable d'Apple. Les outils à venir doivent agir sur d'autres apps, pour les fermer ou passer de l'une à l'autre, et le bac à sable l'interdit. En échange, l'app active le Hardened Runtime, qui bloque l'injection de code, et elle demande chaque autorisation macOS au moment où un outil en a besoin.
+
+J'ai gardé une seule app, en un seul processus. L'autre piste, sortir les traitements lourds dans un service séparé, ajoutait des échanges de fichiers et une seconde signature à gérer.
+
+L'historique est rangé dans SwiftData pour la recherche, et les contenus volumineux en fichiers à côté. Une recherche lit ainsi des fiches légères, sans ouvrir une seule image.
 
 ## Réalisation
 
-**Méthode.** J'applique strictement la méthode AIDD avec Claude Code : pour chaque fonctionnalité, un brainstorm, une spécification avec ses critères d'acceptation, un plan découpé en phases, puis l'implémentation, la validation et la revue. Claude Code écrit l'essentiel du code ; je cadre, je tranche, je relis et je valide. Je code moi-même les petites modifications rapides. Tout passe par des branches et des pull requests, avec des messages de commit normalisés.
+### Je décide, Claude Code écrit
 
-**Livré.** Le socle : une app sans fenêtre ni icône dans le Dock, dont la seule présence visible est une icône dans la barre de menus, avec un menu natif. Fusionné dans `main` le 9 novembre 2026.
+Je travaille avec Claude Code, un assistant de programmation, en suivant la méthode AIDD. Chaque fonctionnalité passe par six étapes, et chacune laisse un document dans le dépôt :
 
-**En cours.** L'historique du presse-papiers, spécifié pour neuf familles de contenus (texte, texte enrichi, liens, images, fichiers du Finder, cellules de tableur, PDF, couleurs, contenus mixtes), avec un raccourci global, la recherche, les épingles, les collections et les exclusions par app. Il est planifié en quatre phases ; la première (copier, ouvrir le bandeau, recoller du texte) a été validée sur macOS 27.2, en partie seulement : le refus réel d'accès au presse-papiers et Handoff restent à vérifier. Ce travail n'est pas encore publié sur la branche principale.
+1. un brainstorm, que je valide ;
+2. une spécification avec des critères vérifiables, comme « la recherche répond en moins de 200 ms » ;
+3. un plan en phases, avec les tests prévus pour chacune ;
+4. le code ;
+5. la validation : compilation, tests, captures de l'interface, mesures ;
+6. une revue qui cherche les failles, puis une contre-revue des corrections.
+
+Claude Code écrit l'essentiel du code. Je cadre, je tranche, je relis, je teste, et je refuse ce qui ne tient pas. Quand une validation échoue, on revient au code, puis on rejoue la validation et la revue. Sept pull requests ont été fusionnées de cette façon.
+
+### Une icône dans la barre de menus
+
+Le socle est une app sans fenêtre ni icône dans le Dock. On ne voit qu'une icône en haut de l'écran, avec un menu. Chaque outil s'y branche, à commencer par l'historique, qui y ajoute son ouverture, sa pause et ses réglages.
+
+### Enregistrer chaque copie
+
+Le presse-papiers de macOS ne garde qu'une chose à la fois : chaque copie écrase la précédente. AppKite enregistre chaque nouvelle copie pour qu'on puisse la retrouver.
+
+Il fallait gérer neuf sortes de contenus : du texte, du texte mis en forme, des liens, des images, des fichiers du Finder, des cellules de tableur, des PDF, des couleurs, et des mélanges de tout ça. AppKite garde toutes les versions qu'une app dépose. Une plage copiée dans Numbers garde ainsi ses formules au recollage, et une app qui ne lit que le texte reçoit les valeurs, rangées en lignes et en colonnes.
+
+Une copie identique ne crée pas de doublon. AppKite calcule une empreinte SHA-256 de chaque contenu ; si elle existe déjà, la carte existante remonte en tête, avec ses épingles et ses collections.
+
+Un fichier copié dans le Finder est archivé à part. Il reste recollable même après la suppression de l'original. Une sélection de plusieurs fichiers forme une seule carte, et si un seul fichier ne peut pas être archivé, AppKite écarte toute la sélection et le signale.
+
+### Retrouver et recoller
+
+Le raccourci `⇧⌥V` ouvre un bandeau de cartes en bas de l'écran où se trouve le pointeur. C'est un panneau qui ne prend pas le premier plan : l'app dans laquelle j'écrivais reste active, et `Entrée` y recolle la carte choisie.
+
+Le raccourci a posé deux problèmes. Sur un clavier AZERTY, la touche `V` n'a pas le même code que sur un clavier anglais : AppKite cherche donc la bonne touche selon la disposition du clavier. Et si le nouveau raccourci est déjà pris par une autre app, AppKite le signale et garde l'ancien.
+
+La recherche fonctionne sur un index en mémoire, sans tenir compte des majuscules ni des accents : « resume » trouve « Résumé ». Elle couvre le texte copié, les liens, les cellules, les noms de fichiers, et le texte des images et des PDF. Pour un PDF, AppKite lit le texte de chaque page, puis passe la page à Vision pour lire aussi les parties scannées. Des filtres par type et par app d'origine s'y ajoutent, et se combinent.
+
+Les cartes utiles s'épinglent en tête du bandeau, ou se rangent dans des collections. Une même carte peut appartenir à plusieurs collections.
+
+### Protéger ce qui est copié
+
+Un presse-papiers voit passer des mots de passe, des codes et des messages privés. Trois réglages le protègent :
+
+- une liste d'apps exclues, dont AppKite n'enregistre plus les copies ;
+- l'abandon des copies qu'une app signale comme confidentielles, comme le font les gestionnaires de mots de passe, actif par défaut ;
+- une pause de l'enregistrement, sans limite ou pour une durée choisie, qui tient même après une relance.
+
+Au lancement, AppKite ignore ce qui se trouvait déjà dans le presse-papiers. L'historique commence à la première nouvelle copie.
+
+### Ne rien perdre, même disque plein
+
+L'historique n'a ni date d'expiration ni taille maximale par copie : seul l'espace disque l'arrête. Quand il manque de la place, AppKite supprime les cartes utilisées le moins récemment, jamais une carte épinglée ou rangée. Mais il vérifie d'abord que ces suppressions libéreront assez d'espace. Sinon, il ne supprime rien et signale que la copie n'a pas été archivée.
+
+AppKite garde aussi une réserve de 16 Mio sur le disque. Il la libère au moment de faire le ménage, pour que le nettoyage lui-même ne manque pas de place.
+
+La validation l'a vérifié sur de petits disques virtuels de 128 et 160 Mio, remplis exprès. Elle a aussi arrêté l'app de force juste avant, puis juste après l'enregistrement d'une copie. À chaque réouverture, l'historique était intact, les fichiers sans carte étaient supprimés, et les contenus gardés étaient identiques à l'octet près.
+
+### Ce que la revue a trouvé
+
+La première validation a échoué. Le lanceur de tests s'est bloqué, et un test n'a pas trouvé le champ de recherche. Relancés un par un, les tests sont passés. Je n'ai jamais isolé la cause du premier échec, et c'est écrit tel quel dans le bilan.
+
+La revue a ensuite trouvé trois vrais problèmes.
+
+- Quand le disque était presque plein, recopier un fichier déjà présent pouvait supprimer d'autres cartes avant qu'AppKite voie que c'était un doublon. Il reconnaît maintenant le doublon avant de supprimer quoi que ce soit.
+- Pendant l'archivage d'un gros fichier, AppKite cessait de surveiller le presse-papiers. Si je copiais deux fois pendant ce temps, la première copie était perdue. La surveillance continue désormais pendant l'archivage, et les copies s'enregistrent dans l'ordre.
+- Trois tests d'interface lançaient l'app sur mes vraies données et pouvaient modifier mon historique. Chaque test a maintenant son propre historique, vide.
+
+### Des aperçus pour reconnaître une copie
+
+Une carte qui affiche seulement « Image » ou « Fichier » ne sert pas à grand-chose. Chaque carte montre donc son contenu :
+
+- une image entière, avec ses dimensions et un damier derrière les zones transparentes ;
+- la première page d'un PDF ou d'un document Word ;
+- les premières lignes d'un CSV, en grille ;
+- une mosaïque et le nombre d'éléments pour un dossier ;
+- pour une vidéo, une image tirée du film ; pour un morceau, sa pochette ou sa forme d'onde.
+
+Les GIF, vidéos et morceaux se lisent dans la carte, avec leur propre bouton. Un clic ailleurs sur la carte la recolle, comme avant. Si un contenu ne peut pas être lu, la carte affiche « Aperçu indisponible », avec le nom et le type connus.
+
+La revue a encore trouvé des cas réels. Un GIF copié avec une image fixe de secours restait figé, parce qu'AppKite affichait la première image lisible au lieu de l'animation : il essaie maintenant le GIF en premier. Et `⌘A` suivi d'un collage pouvait charger tout l'historique en mémoire d'un coup. Un lot trop lourd est maintenant refusé, avec un message.
+
+### Deux audits
+
+Une fois l'historique livré, je l'ai fait auditer. L'audit de qualité a relevé neuf défauts, dont six majeurs. Le plus grave touchait à la vie privée. Si le réglage des apps exclues devenait illisible, AppKite le prenait pour une liste vide et recommençait à tout enregistrer, sans prévenir. Il met maintenant l'enregistrement en pause et affiche « Collecte suspendue. Réglages à réparer. ».
+
+L'audit d'architecture a relevé quatre écarts avec les couches prévues. L'interface pilotait elle-même la surveillance du presse-papiers, et le collage dépendait directement des classes de macOS. Une refactorisation a séparé le cœur de l'historique (enregistrer, coller, préparer les aperçus) de l'interface, sans changer son comportement. Je peux maintenant tester ce cœur sans toucher au vrai presse-papiers.
 
 ## Difficultés
 
-Trois limites de macOS sont apparues dès le cadrage et pendant la validation :
+macOS n'envoie aucun signal quand le presse-papiers change. AppKite relève donc un compteur de changements toutes les 180 ms ; s'il a bougé, une nouvelle copie est arrivée.
 
-- **Savoir quelle app a copié.** macOS signale qu'un contenu a changé dans le presse-papiers, sans identifier de façon fiable l'app qui l'a copié. Lors des essais dans Safari et Mail, l'origine est restée inconnue. Le filtre et l'exclusion par app ne fonctionnent donc que lorsque l'app d'origine se déclare.
-- **Coller à la place de l'utilisateur.** Activer l'app cible et lui envoyer le collage dépend d'autorisations distinctes, sans garantie que le texte arrive. La spec prévoit un repli : le contenu reste dans le presse-papiers et l'app affiche « Copié. Colle avec ⌘V. ».
-- **Deux versions de macOS.** Les critères d'acceptation visent macOS 26 et 27 ; la vérification sous macOS 26 reste à faire.
+macOS ne dit pas non plus de façon fiable quelle app a copié. AppKite retient l'app qui se déclare elle-même, et l'app au premier plan ne compte que comme un indice. Lors des essais, une copie depuis Safari ou Mail ne déclarait aucune origine. Elle est quand même enregistrée, mais le filtre et l'exclusion par app ne s'y appliquent pas.
+
+Pour coller à ma place, AppKite a besoin d'une autorisation d'accessibilité, et même avec elle, rien ne garantit que le collage arrive. Dans ce cas, le contenu reste copié et l'app affiche « Copié. Colle avec ⌘V. ».
+
+Le refus d'accès au presse-papiers est impossible à provoquer sur mon Mac. Apple propose une alerte d'autorisation, mais l'option qui permettait de la déclencher pour tester a été retirée dans macOS 27.2. Ce cas est donc vérifié par des tests simulés, et le bandeau sait afficher le message et le bouton vers les Réglages Système.
+
+Sur APFS, le système de fichiers du Mac, un fichier dupliqué partage ses données avec l'original : le supprimer ne libère rien. AppKite calcule donc la place réellement récupérable avant de supprimer une carte.
+
+L'app vise macOS 26 et 27, mais je n'ai pu tester que macOS 27.2.
 
 ## Résultat
 
-Un socle publié et testé, une première fonctionnalité spécifiée de bout en bout et en cours de livraison, et un dépôt public où chaque décision est tracée (brainstorm, spec, plan, validation). Captures de l'app : *à compléter*.
+Le premier outil est complet : environ 7 700 lignes de Swift pour l'app, 4 500 pour les tests.
+
+- 120 tests automatiques réussissent, dont 10 qui pilotent l'interface.
+- Sur 10 000 cartes, la recherche affiche ses résultats en moins de 100 ms dans 95 % des cas, pour un objectif de 200 ms. La mesure est prise à l'écran, de la saisie à l'apparition des résultats, au repos puis pendant le chargement des aperçus.
+- Une copie faite sur mon iPhone arrive sur le Mac par le presse-papiers universel d'Apple. AppKite la reconnaît comme venant d'un autre appareil et sait la recoller.
+
+Deux points restent ouverts : le vrai refus d'accès par macOS, et l'exécution sous macOS 26.
+
+## Suite du projet
+
+Le prochain outil est la fermeture groupée d'applications. Il suivra le même chemin, du brainstorm à la revue.
+
+L'app n'est pas encore publiée. Elle le sera sur GitHub Releases, en ZIP et en DMG, signée avec un certificat Developer ID et notariée par Apple, pour que macOS l'ouvre sans avertissement. Avant cela, je dois vérifier un premier lancement depuis chaque format, et qu'une mise à jour garde les autorisations déjà accordées.
 
 ## Compétences
 
 Référentiel BTS SIO :
 
-- **Bloc 1** : travailler en mode projet ; organiser son développement professionnel.
-- **Bloc 3** : protéger les données (traitement local, sans compte, exclusion des copies signalées comme confidentielles).
+- **Bloc 1** : travailler en mode projet ; mettre à disposition des utilisateurs un service informatique (tests, validation, documentation) ; organiser son développement professionnel.
+- **Bloc 3** : protéger les données (traitement local, sans compte, apps exclues, copies confidentielles écartées).
 
-Outils et notions : Swift, SwiftUI, AppKit, SwiftData, Xcode, tests automatisés, Git et GitHub (branches, pull requests), spécification et critères d'acceptation, développement assisté par IA (Claude Code).
+Outils et notions : Swift, SwiftUI, AppKit, SwiftData, Xcode, tests automatisés, mesure de performance, audit de code, refactorisation, Git et GitHub (branches, pull requests), spécification et critères d'acceptation, développement assisté par IA (Claude Code).
