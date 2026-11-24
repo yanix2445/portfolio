@@ -41,7 +41,7 @@ flowchart TD
   - `site.ts` : constantes du site (`SITE_URL`, `OWNER`, `CONTACT`, `CV_PATH`, `BASE_OPEN_GRAPH`).
   - `utils.ts` : `cn()`, configuré avec les tailles de texte du thème.
 - `tests/visual` : `capture.mjs` et `compare.mjs`, pour comparer le rendu avant et après une réécriture de styles.
-- `public` : le CV en PDF (`cv/`) et le portrait. Les badges officiels des certifications iront dans `images/certifs/`.
+- `public` : le CV en PDF (`cv/`) et le portrait. Les badges officiels des certifications sont dans `images/certifs/` (Cisco, Google ×2, EBIOS ; pas encore Anthropic).
 
 ## Entry points
 

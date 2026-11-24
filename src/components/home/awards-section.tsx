@@ -17,7 +17,7 @@ function Award({ certification }: { certification: Certification }) {
           alt={`Badge officiel ${issuer}`}
           width={96}
           height={96}
-          className="mb-[1vh] h-auto w-[34%]"
+          className="aspect-square w-[30%] object-contain @2xs:mb-[1vh] @2xs:w-1/2"
         />
       ) : null}
       <span className="font-display text-wreath uppercase">{issuer}</span>
