@@ -49,9 +49,10 @@ export function SequenceNav({ headings }: { headings: Heading[] }) {
       <p id="sequences-title" className="type-label text-muted-foreground">
         Séquences
       </p>
-      <ol className="mt-5 border-b border-border md:mt-[2.6vh]">
+      {/* Au-dessus du texte (tablette), la liste tient sur deux colonnes ; à côté du texte, une seule. */}
+      <ol className="mt-5 border-b border-border md:mt-[2.6vh] md:columns-2 md:gap-x-[4vw] lg:columns-1">
         {headings.map(({ id, text }, index) => (
-          <li key={id} className="border-t border-border">
+          <li key={id} className="break-inside-avoid border-t border-border">
             <a
               href={`#${id}`}
               aria-current={active === id ? "location" : undefined}
