@@ -4,6 +4,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { ReactNode } from "react";
 
+import { ActionCue, ENTRY_ACTION } from "@/components/content/action-cue";
 import { SequenceNav } from "@/components/content/sequence-nav";
 import { Prose } from "@/components/mdx/prose";
 import { StatusBadge } from "@/components/projects/status-badge";
@@ -91,7 +92,8 @@ function Credit({ label, wide, children }: { label: string; wide?: boolean; chil
       )}
     >
       <dt className="type-label text-muted-foreground">{label}</dt>
-      <dd className="text-body-sm">{children}</dd>
+      {/* Hauteur d'un badge : un texte et un badge voisins se centrent sur la même ligne. */}
+      <dd className="flex min-h-8 items-center text-body-sm">{children}</dd>
     </div>
   );
 }
@@ -259,10 +261,10 @@ export async function EntryPage({
           <Link
             href={`/${collection}/${next.slug}`}
             data-title={frenchSpacing(next.title)}
-            className="group/next block @container"
+            className="group/card block @container"
           >
             <span
-              className="block type-poster pt-[0.1em] text-display-title text-balance transition-colors duration-200 group-hover/next:text-primary"
+              className="block type-poster pt-[0.1em] text-display-title text-balance transition-colors duration-200 group-hover/card:text-primary"
               style={fitTitle(frenchSpacing(next.title), "display-title")}
             >
               {frenchSpacing(next.title)}
@@ -270,9 +272,7 @@ export async function EntryPage({
             <span className="mt-[2.4vh] block max-w-[56ch] text-body text-soft">
               {frenchSpacing(next.summary)}
             </span>
-            <span className="mt-[3vh] block text-action">
-              {collection === "projets" ? "Voir le projet →" : "Lire l'article →"}
-            </span>
+            <ActionCue className="mt-[3vh] flex w-fit">{ENTRY_ACTION[collection]}</ActionCue>
           </Link>
         ) : null}
       </nav>

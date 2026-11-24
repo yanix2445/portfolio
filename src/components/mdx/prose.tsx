@@ -13,7 +13,8 @@ export function Prose({ children, className }: { children: ReactNode; className?
         "prose-h3:mt-[1.6em] prose-h3:mb-[0.4em] prose-h3:text-lead prose-h3:font-semibold",
         "prose-a:decoration-primary prose-a:decoration-1 prose-a:underline-offset-[0.2em] prose-a:transition-colors prose-a:hover:text-primary",
         "prose-strong:font-semibold",
-        "prose-li:my-[0.35em] prose-li:marker:text-primary",
+        // Plus d'espace entre deux puces qu'entre deux lignes d'une même puce.
+        "prose-li:my-[0.75em] prose-li:marker:text-primary",
         "prose-code:rounded-sm prose-code:bg-secondary prose-code:px-[0.3em] prose-code:py-[0.1em] prose-code:font-normal prose-code:before:content-none prose-code:after:content-none",
         "[&>:first-child]:mt-0",
         className,

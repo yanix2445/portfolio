@@ -26,6 +26,9 @@ Le langage visuel : design system, tokens, conventions d'UI et règles d'animati
 ## Components
 
 - Primitives en place : `input` et `textarea` (variante ajoutée `line` : un simple trait, focus en trait orange épaissi), `button` (tailles ajoutées `xl`, `label` et `stub`, le talon du billet de contact ; les tailles shadcn inutilisées `xs`, `sm` et leurs icônes ont été retirées), `badge` (variante ajoutée `ink`), `toggle` et `toggle-group` (taille `label`), `field`, `input`, `label`, `textarea`, `separator`, `spinner`, `sonner`.
+- Boutons et filtres : transitions sur des propriétés nommées (jamais `transition-all`), `ease-poster`, retour d'appui `scale(0.97)` en `motion-safe`. Le badge n'est pas interactif : aucune transition.
+- Appel « → » d'une carte ou d'une ligne cliquable (affiche, liste de veille, suite d'une fiche) : `ActionCue` (`src/components/content/action-cue.tsx`), libellés dans `ENTRY_ACTION` (« Voir la fiche », « Lire l'article »). Le lien parent porte `group/card` ; la flèche, décorative, avance de 4 px au survol ou au focus.
+- Pas de surtitre ajouté au-dessus d'un titre (règle Impeccable) : les légendes orange existantes de l'accueil restent, on n'en crée pas d'autres.
 - Les primitives importent `cn` depuis `@/lib/utils` (et non depuis le paquet `cn`) pour connaître les tailles de texte du thème. Après un `shadcn add`, corriger cet import.
 - Les tailles de texte ont quitté la base des variantes `cva` : chaque taille de bouton ou de filtre porte la sienne.
 - **GSAP** (`useGSAP` + ScrollTrigger) est la seule librairie d'animation.

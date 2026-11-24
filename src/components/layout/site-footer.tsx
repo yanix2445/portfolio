@@ -15,7 +15,8 @@ export function SiteFooter() {
       <div className="flex flex-wrap items-center justify-between gap-x-8 gap-y-2 px-gutter py-4 md:gap-y-4 md:py-7">
         <p>© {OWNER.fullName}</p>
         <ul className="flex flex-wrap items-center gap-x-6 gap-y-2 md:gap-y-3">
-          <li>
+          {/* Sur téléphone, l'adresse a sa ligne : les liens courts restent groupés dessous. */}
+          <li className="max-sm:w-full">
             <a href={`mailto:${CONTACT.email}`} className={LINK}>
               {CONTACT.email}
             </a>

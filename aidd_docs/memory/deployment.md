@@ -12,7 +12,7 @@ Où tourne le site et comment il est livré.
 - Production : le projet Vercel `portfolio` (Hobby, Node 26.x), qui déploie `main`, servi sur `yanis-harrat.com` depuis le lancement du 2026-11-17. L'ancienne URL `portfolio-peach-chi-42.vercel.app` ne sert plus rien (`DEPLOYMENT_NOT_FOUND`, constaté le 2026-11-17) : n'y faire pointer aucun service.
 - Domaine : l'apex `yanis-harrat.com` est l'adresse principale, comme `SITE_URL` (canonical, sitemap, Open Graph) ; `www` y redirige en 308. Ne pas inverser l'un sans l'autre. Le projet `portfolio-page-attente` (page d'attente, repo séparé) n'a plus le domaine.
 - Preview : une URL Vercel par PR.
-- Local : `http://localhost:3000`.
+- Local : `http://localhost:3000`, géré par Portly (voir « Serveurs locaux »).
 - Les variables d'environnement sont déclarées dans Vercel, séparément pour Preview et Production, et dans `.env.local` en local (non commité).
 - Variables du formulaire de contact, saisies le 2026-11-16 par les CLI (`vercel env add`, `resend api-keys create`, `wrangler turnstile widget create`) :
   - **Preview** : widget Turnstile `portfolio-contact-preview` (hôtes `localhost` et l'URL fixe de chaque branche testée : `portfolio-git-claude-home-generique-yanis-harrat.vercel.app`, `portfolio-git-claude-reading-pages-redesign-yanis-harrat.vercel.app`, `portfolio-git-claude-contact-confirmation-yanis-harrat.vercel.app`), clé Resend `portfolio-preview`, destinataire `CONTACT_TO_EMAIL`. Choix de Yanis du 2026-11-16 : un vrai widget plutôt que les clés de test. Le widget ne marche donc que sur les URL fixes listées ; une URL par commit ou une autre branche affiche un widget en erreur (toast « La vérification anti-spam n'a pas abouti ») tant que son hôte n'est pas ajouté (`cf turnstile widgets update <sitekey> --name … --widget-mode managed --domains …`, qui remplace la liste entière : la relire avec `cf turnstile widgets get` avant). Pas de joker possible : ajouter `vercel.app` ouvrirait le widget à tous les sites Vercel.
@@ -21,6 +21,23 @@ Où tourne le site et comment il est livré.
   - Widgets Turnstile de l'ancien portfolio supprimés le 2026-11-16 sur confirmation de Yanis : `portfolio-prod-2026-10-15`, `portfolio-dev-2026-10-15`, `yanis-harrat.com`. Restent : `portfolio-contact`, `portfolio-contact-preview`, `portfolio-waitlist` (page d'attente en ligne, ne pas supprimer) et `polaris` (autre projet).
   - `/contact` est prérendue : après un changement de variable, il faut un nouveau déploiement pour que le formulaire apparaisse ou disparaisse.
   - En local : `vercel env pull --environment preview --project portfolio --scope yanis-harrat` écrit `.env.local`.
+
+## Serveurs locaux (Portly)
+
+- **Permanent** : un seul, `portfolio/web` (`pnpm dev`, port 3000, relancé après un crash). `portly start portfolio/web`, `portly logs portfolio/web`. Le réutiliser, ne jamais lancer un second `pnpm dev`.
+- **Temporaire** : tout le reste, borné. `job_id="$(portly temp '<commande>' --name <nom> --timeout <durée>)"`, puis `portly wait "$job_id"` (logs et vrai code de sortie).
+
+| Nom | Commande | Port | Timeout |
+| --- | -------- | ---- | ------- |
+| `typecheck` | `pnpm typecheck` | — | 10m |
+| `lint` | `pnpm lint` | — | 10m |
+| `test` | `pnpm test` | — | 10m |
+| `build` | `pnpm build` | — | 15m |
+| `e2e` | `pnpm test:e2e` (Playwright build puis sert le site) | 3100 | 30m |
+| `prod-local` | `pnpm build && pnpm start -p 3200`, avec les variables de test de `playwright.config.ts` (Lighthouse, voir `testing.md`) | 3200 | 30m |
+
+- Ports réservés : 3000 (dev), 3100 (e2e), 3200 (build de prod local), 8400 (assistant Impeccable live, lancé par son skill, autorisé par la CSP en dev seulement).
+- `build`, `e2e` et `prod-local` écrivent tous dans `.next` : jamais deux à la fois. `next dev` écrit dans `.next/dev` et peut tourner en même temps.
 
 ## Release
 
