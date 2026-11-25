@@ -1,6 +1,6 @@
 import { ImageResponse } from "next/og";
 
-import { imageFonts } from "@/lib/image-fonts";
+import { imageFonts } from "@/lib/image-assets";
 import { COLOR } from "@/lib/palette";
 
 // Le monogramme du site, « YH » en lettres d'affiche orange sur fond noir. `favicon.ico` en est

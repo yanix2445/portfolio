@@ -22,7 +22,7 @@ import {
   type EntryDocument,
 } from "@/lib/content";
 import { DOMAIN_LABEL, toProject } from "@/lib/projects";
-import { BASE_OPEN_GRAPH, SHARE_IMAGE } from "@/lib/site";
+import { BASE_OPEN_GRAPH } from "@/lib/site";
 import { entryGraph } from "@/lib/structured-data";
 import { cn } from "@/lib/utils";
 import { fitTitle } from "@/lib/title-fit";
@@ -54,7 +54,7 @@ export async function entryStaticParams(collection: Collection) {
 export async function entryMetadata(collection: Collection, slug: string): Promise<Metadata> {
   const entry = await getEntry(collection, slug);
   if (!entry) return {};
-  const { title, summary, cover, coverAlt, seoTitle = title, description = summary } = entry.metadata;
+  const { title, summary, seoTitle = title, description = summary } = entry.metadata;
   const url = `/${collection}/${slug}`;
   return {
     title: seoTitle,
@@ -66,8 +66,7 @@ export async function entryMetadata(collection: Collection, slug: string): Promi
       title,
       description,
       url,
-      // L'image de la fiche sert aussi d'aperçu quand le lien est partagé ; sinon, celle du site.
-      images: [cover ? { url: cover, alt: coverAlt ?? title } : SHARE_IMAGE],
+      // L'image de partage vient du `opengraph-image.tsx` de la route : une par fiche.
     },
   };
 }

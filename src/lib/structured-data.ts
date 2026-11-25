@@ -4,7 +4,7 @@
 
 import type { Collection, ContentMeta } from "@/lib/content";
 import { CERTIFICATIONS } from "@/lib/profile";
-import { CONTACT, OWNER, SITE_NAME, SITE_URL } from "@/lib/site";
+import { CONTACT, OWNER, PORTRAIT, SITE_NAME, SITE_URL } from "@/lib/site";
 
 const PERSON_ID = `${SITE_URL}/#person`;
 const WEBSITE_ID = `${SITE_URL}/#website`;
@@ -43,7 +43,7 @@ export function profileGraph() {
         description:
           "Après une 1re année de BTS SIO à Fénelon Sup, Yanis Harrat entre en BTS SIO option SISR à l'AURLOM en septembre 2027 et cherche une alternance de deux ans comme technicien systèmes et réseaux à Paris et en Île-de-France (3 jours en entreprise, 2 jours à l'école).",
         url: SITE_URL,
-        image: `${SITE_URL}/images/yanis-harrat.jpg`,
+        image: `${SITE_URL}${PORTRAIT.src}`,
         email: `mailto:${CONTACT.email}`,
         address: { "@type": "PostalAddress", addressLocality: "Paris", addressCountry: "FR" },
         alumniOf: [

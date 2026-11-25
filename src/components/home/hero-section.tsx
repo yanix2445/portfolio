@@ -4,7 +4,7 @@ import Link from "next/link";
 import { BookCallLink } from "@/components/contact/book-call-link";
 import { Button } from "@/components/ui/button";
 import { OPENING } from "@/lib/profile";
-import { CV_PATH, OWNER } from "@/lib/site";
+import { CV_PATH, OWNER, PORTRAIT } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
 function Synopsis({ className }: { className: string }) {
@@ -33,10 +33,10 @@ export function HeroSection() {
           data-hero-plate
         >
           <Image
-            src="/images/yanis-harrat.jpg"
+            src={PORTRAIT.src}
             alt={`Portrait de ${OWNER.fullName}`}
-            width={1122}
-            height={1402}
+            width={PORTRAIT.width}
+            height={PORTRAIT.height}
             preload
             sizes="(min-width: 768px) 66vw, 100vw"
             className="absolute top-0 right-0 h-full w-full max-w-none origin-[60%_30%] object-cover object-[50%_var(--portrait-y)] md:w-[66%]"

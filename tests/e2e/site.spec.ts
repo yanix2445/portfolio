@@ -95,11 +95,8 @@ test.describe("SEO technique", () => {
     expect(body).toContain("Sitemap: https://yanis-harrat.com/sitemap.xml");
   });
 
-  test("chaque page partage une grande image servie par le site", async ({ page, request }) => {
-    // Une fiche redéfinit son openGraph : elle doit redonner l'image elle-même.
-    await page.goto("/veille");
-    const entry = await page.locator('main a[href^="/veille/"]').first().getAttribute("href");
-    for (const path of ["/", "/projets", "/veille", "/contact", entry!]) {
+  test("les pages du site partagent l'image du site", async ({ page, request }) => {
+    for (const path of ["/", "/projets", "/veille", "/contact"]) {
       await page.goto(path);
       const image = await page.locator('meta[property="og:image"]').getAttribute("content");
       expect(image, path).toMatch(/^https:\/\/yanis-harrat\.com\/opengraph-image/);
@@ -109,6 +106,26 @@ test.describe("SEO technique", () => {
     const response = await request.get("/opengraph-image");
     expect(response.status()).toBe(200);
     expect(response.headers()["content-type"]).toBe("image/png");
+  });
+
+  test("chaque fiche partage sa propre image", async ({ page, request }) => {
+    for (const collection of ["projets", "veille"] as const) {
+      await page.goto(`/${collection}`);
+      const hrefs = await page
+        .locator(`main a[href^="/${collection}/"]`)
+        .evaluateAll((links) => [...new Set(links.map((link) => link.getAttribute("href")!))]);
+      expect(hrefs.length).toBeGreaterThan(0);
+
+      for (const href of hrefs) {
+        await page.goto(href);
+        const image = await page.locator('meta[property="og:image"]').getAttribute("content");
+        expect(image, href).toMatch(new RegExp(`^https://yanis-harrat\\.com${href}/opengraph-image`));
+
+        const response = await request.get(`${href}/opengraph-image`);
+        expect(response.status(), href).toBe(200);
+        expect(response.headers()["content-type"]).toBe("image/png");
+      }
+    }
   });
 
   test("chaque fiche déclare son article et son auteur en JSON-LD", async ({ page }) => {

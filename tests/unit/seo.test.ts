@@ -6,7 +6,7 @@ import sitemap from "@/app/sitemap";
 import { entryMetadata } from "@/components/content/entry-page";
 import { getEntry } from "@/lib/content";
 import { CERTIFICATIONS } from "@/lib/profile";
-import { CONTACT, SHARE_IMAGE, SITE_URL } from "@/lib/site";
+import { CONTACT, SITE_URL } from "@/lib/site";
 import { entryGraph, profileGraph } from "@/lib/structured-data";
 
 describe("sitemap", () => {
@@ -51,14 +51,11 @@ describe("entryMetadata", () => {
     });
   });
 
-  it("partage l'image de la fiche, sinon celle du site", async () => {
-    const withCover = await entryMetadata("projets", "projet-recent");
-    const withoutCover = await entryMetadata("projets", "ancien-projet");
+  it("laisse l'image de partage à la route de la fiche", async () => {
+    // Le `opengraph-image.tsx` de la fiche prime : une image ici serait ignorée.
+    const metadata = await entryMetadata("projets", "projet-recent");
 
-    expect(withCover.openGraph?.images).toEqual([
-      { url: "/images/projets/projet-recent.jpg", alt: "Capture du projet récent" },
-    ]);
-    expect(withoutCover.openGraph?.images).toEqual([SHARE_IMAGE]);
+    expect(metadata.openGraph).not.toHaveProperty("images");
   });
 
   it("préfère le titre et la description dédiés aux moteurs, sans changer l'Open Graph", async () => {
