@@ -14,12 +14,12 @@ export const metadata: Metadata = {
   alternates: { canonical: "/contact" },
 };
 
+// Les autres moyens de joindre Yanis, sur une ligne discrète sous la carte « appel ». Le CV est
+// dans l'en-tête ; LinkedIn et GitHub sont aussi dans le pied de page.
 const CHANNELS = [
-  { label: "E-mail", value: CONTACT.email, href: `mailto:${CONTACT.email}` },
-  { label: "Rendez-vous", value: "Réserver un appel de 15 min", href: BOOKING.url, booking: true },
-  { label: "LinkedIn", value: "linkedin.com/in/yanis-harrat", href: CONTACT.linkedin, rel: "noopener noreferrer me" },
-  { label: "GitHub", value: "github.com/yanix2445", href: CONTACT.github, rel: "noopener noreferrer me" },
-  { label: "CV", value: "Télécharger le PDF", href: CV_PATH, rel: "noopener" },
+  { label: CONTACT.email, href: `mailto:${CONTACT.email}` },
+  { label: "LinkedIn", href: CONTACT.linkedin, rel: "noopener noreferrer me" },
+  { label: "GitHub", href: CONTACT.github, rel: "noopener noreferrer me" },
 ] as const;
 
 // Sur téléphone, à côté du formulaire : les trois accès directs. LinkedIn, GitHub et
@@ -94,35 +94,45 @@ export default function ContactPage() {
           </ul>
         ) : null}
 
-        <dl
-          className={cn(siteKey ? "max-md:hidden" : "md:max-w-[60vw]")}
-          data-contact-channels
-        >
-          {CHANNELS.map((channel) => (
-            <div
-              key={channel.label}
-              className={cn(
-                "grid items-baseline gap-1.5 border-t border-border last:border-b md:grid-cols-[9rem_1fr] md:gap-6",
-                siteKey ? "py-3 md:py-[1.4svh]" : "py-4.5",
-              )}
-            >
-              <dt className="type-label text-muted-foreground">{channel.label}</dt>
-              <dd className="text-lead">
-                {"booking" in channel ? (
-                  <BookCallLink className="underline-offset-4 hover:underline">{channel.value}</BookCallLink>
-                ) : (
-                  <a
-                    href={channel.href}
-                    className="underline-offset-4 hover:underline"
-                    {...("rel" in channel ? { target: "_blank", rel: channel.rel } : {})}
-                  >
-                    {channel.value}
-                  </a>
-                )}
-              </dd>
-            </div>
-          ))}
-        </dl>
+        {/* Le second chemin : parler de vive voix. Sur téléphone, avec le formulaire, il tient
+            dans les accès directs ci-dessus ; la page reste sur un écran. */}
+        <div className={cn("flex flex-col gap-6 md:gap-[3svh]", siteKey && "max-md:hidden")}>
+          <section
+            aria-labelledby="talk-title"
+            className="flex flex-col items-start gap-5 rounded-2xl border border-border bg-card p-5 md:gap-[2.4svh] md:p-6"
+            data-contact-talk
+          >
+            <h2 id="talk-title" className="type-poster pt-[0.1em] text-display-sm">
+              Un appel de 15 minutes
+            </h2>
+            <p className="-mt-2 text-body text-soft">
+              Pour en parler de vive voix : choisissez un créneau dans mon agenda.
+            </p>
+            {/* En contour : l'orange reste au talon « Envoyer », une seule action pleine à l'écran. */}
+            <Button asChild variant="outline" size="xl">
+              <BookCallLink />
+            </Button>
+          </section>
+
+          {/* Le point termine la ligne quand la liste passe à la ligne, jamais il ne la commence. */}
+          <p className="flex flex-wrap items-baseline gap-x-[0.8em] gap-y-1 text-body-sm text-soft" data-contact-channels>
+            <span>Ou directement :</span>
+            {CHANNELS.map((channel) => (
+              <span
+                key={channel.href}
+                className="whitespace-nowrap not-last:after:ml-[0.8em] not-last:after:text-muted-foreground not-last:after:content-['·']"
+              >
+                <a
+                  href={channel.href}
+                  className="text-foreground underline underline-offset-4 decoration-border transition-colors duration-200 hover:decoration-primary"
+                  {...("rel" in channel ? { target: "_blank", rel: channel.rel } : {})}
+                >
+                  {channel.label}
+                </a>
+              </span>
+            ))}
+          </p>
+        </div>
       </div>
     </section>
   );
