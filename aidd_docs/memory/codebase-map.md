@@ -20,7 +20,7 @@ flowchart TD
 
 ## Areas
 
-- `src/app` : les routes de l'App Router (accueil, projets, veille, contact, mentions légales), `sitemap.ts`, `robots.ts`, `fonts/` (les trois polices locales) et `globals.css` (tous les tokens de design). L'image OpenGraph est à venir.
+- `src/app` : les routes de l'App Router (accueil, projets, veille, contact, mentions légales), `sitemap.ts`, `robots.ts`, `fonts/` (les trois polices locales, et `fonts/og/` : leurs copies statiques en TTF pour les images générées), `opengraph-image.tsx` (l'image de partage), `apple-icon.tsx` et `favicon.ico` (le monogramme « YH »), `globals.css` (tous les tokens de design).
 - `src/actions` : les Server Actions. `contact.ts` reçoit le formulaire de contact.
 - `src/app/api/resend-webhook` : la seule route `POST`, le webhook Resend qui alerte des mails du formulaire non remis.
 - `src/components/ui` : les primitives shadcn/ui, thémées (bouton, badge, carte, filtres, champs, toasts).
@@ -28,7 +28,7 @@ flowchart TD
 - `src/components/projects` : ce que l'accueil et le catalogue partagent (`poster.tsx`, `status-badge.tsx`) et le catalogue filtrable de `/projets` (`catalog.tsx`, composant client).
 - `src/components/contact` : le formulaire de contact (`contact-form.tsx`, composant client, rendu seul) et ses deux hooks : `use-contact-draft.ts` (brouillon de l'onglet, motif) et `use-turnstile-gate.ts` (attente du jeton Turnstile, envoi automatique). `sentence-blank.tsx` : un blanc de la phrase du formulaire, qui grandit et passe à la ligne avec le texte saisi. `book-call-link.tsx` : le lien « Réserver un appel » (Cal.com), utilisé dans l'en-tête, l'accueil et `/contact`.
 - `src/components/animations` : la mise en scène GSAP, toujours en `"use client"` (`hero-scroll`, `acts-scroll`, `reveal`, `gsap.ts`).
-- `src/components` (autres) : `layout/` (header fixe, footer, en-tête des pages intérieures), `content/` (liste de la veille, page de détail des fiches et articles, sommaire `sequence-nav`, appel « → » partagé `action-cue`), `mdx/` (rendu `prose`, aussi utilisé par les mentions légales) et `seo/` (JSON-LD de la personne).
+- `src/components` (autres) : `layout/` (header fixe, footer, en-tête des pages intérieures), `content/` (liste de la veille, page de détail des fiches et articles, sommaire `sequence-nav`, appel « → » partagé `action-cue`), `mdx/` (rendu `prose`, aussi utilisé par les mentions légales) et `seo/` (`JsonLd`, qui rend le balisage schema.org d'une page).
 - `src/types` : les déclarations de modules, dont `*.mdx` (qui type `export const metadata`).
 - `src/content` : un fichier MDX par projet ou article de veille. On ajoute du contenu ici.
 - `src/lib` :
@@ -38,6 +38,8 @@ flowchart TD
   - `projects.ts` : modèle d'un projet, utilisable côté client (statuts, domaines, `pickFeatured`).
   - `profile.ts` : le contenu de l'accueil (`OPENING`, `ACTS`, `SHEET`, `CERTIFICATIONS`). Il n'est pas dans `src/content/`, que Vitest redirige vers les fixtures.
   - `contact.ts` : règles et messages du formulaire, sans dépendance serveur ; `contact-emails.ts` : les deux mails (notification, accusé de réception) ; `turnstile.ts` et `resend.ts` : les deux appels externes, côté serveur.
+  - `structured-data.ts` : le balisage schema.org (le site, le profil et la personne sur l'accueil ; l'article et le fil d'Ariane de chaque fiche).
+  - `palette.ts` : les couleurs du site pour les rendus sans CSS (mails, images générées) ; `image-fonts.ts` : les polices de ces images.
   - `site.ts` : constantes du site (`SITE_URL`, `OWNER`, `CONTACT`, `CV_PATH`, `BASE_OPEN_GRAPH`).
   - `legal.ts` : contenu des mentions légales (hébergeur, prestataires, un traitement de données par fiche, date de mise à jour).
   - `utils.ts` : `cn()`, configuré avec les tailles de texte du thème.
