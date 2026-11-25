@@ -12,6 +12,10 @@ const toggleVariants = cva(
       variant: {
         default: "bg-transparent",
         outline: "border border-border bg-transparent hover:border-foreground hover:bg-transparent",
+        // Mot d'affiche dans une phrase (motif du formulaire de contact) : en contour tant qu'il
+        // n'est pas choisi, plein en orange une fois choisi. Il prend la taille de la phrase.
+        poster:
+          "rounded-sm border-0 bg-transparent type-outline hover:bg-transparent hover:[-webkit-text-stroke-color:var(--color-primary)] data-[state=on]:bg-transparent data-[state=on]:text-primary data-[state=on]:[-webkit-text-stroke-width:0]",
       },
       size: {
         default:
@@ -19,6 +23,8 @@ const toggleVariants = cva(
         lg: "h-9 min-w-9 px-2.5 text-sm font-medium has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2",
         // Légende mono : filtres du catalogue.
         label: "h-auto px-4 py-2.5 type-label",
+        // Hérite de la police, de la taille et de l'approche du texte autour.
+        inherit: "h-auto px-0 py-0 [font:inherit] [letter-spacing:inherit] [text-transform:inherit]",
       },
     },
     defaultVariants: {

@@ -55,7 +55,7 @@ export default function ContactPage() {
         <h1 id="contact-title" className={cn(siteKey ? "sr-only" : "type-poster pt-[0.1em] text-display-xl")}>
           Contact
         </h1>
-        <p className={cn("max-w-[60ch] text-body text-soft", siteKey ? "max-md:sr-only" : "mt-[3vh]")}>
+        <p className={cn("max-w-[64ch] text-body-sm text-muted-foreground", siteKey ? "max-md:sr-only" : "mt-[3vh]")}>
           Je cherche une alternance de 2 ans comme technicien systèmes et réseaux, dès septembre
           2027 : 3 jours en entreprise, 2 jours à l&apos;école. Écrivez-moi, ou réservez un appel de
           15 minutes.

@@ -110,8 +110,11 @@ export function ContactForm({ siteKey }: { siteKey: string }) {
 
   // Un blanc de la phrase : le champ s'écrit dans la phrase, en lettres d'affiche, souligné.
   // Son nom (« Nom », « E-mail ») est lu par les lecteurs d'écran ; son erreur est sous la phrase.
+  // Deux traits en fond : le trait du blanc, et un trait orange qui se dessine de gauche à droite
+  // au focus (rouge en erreur). Il indique le focus à la place du contour, sans animation si
+  // le visiteur réduit les animations.
   const blank =
-    "inline-block max-w-full border-0 border-b-2 border-border bg-transparent px-[0.1em] align-baseline [font:inherit] [letter-spacing:inherit] normal-case text-primary outline-none transition-colors duration-200 ease-poster placeholder:text-muted-foreground/70 hover:border-soft focus-visible:border-primary aria-invalid:border-destructive";
+    "inline-block max-w-full border-0 bg-transparent px-[0.1em] pb-[0.04em] align-baseline [font:inherit] [letter-spacing:inherit] normal-case text-primary outline-none [--blank-accent:var(--color-primary)] [--blank-line:var(--color-border)] bg-[image:linear-gradient(var(--blank-accent),var(--blank-accent)),linear-gradient(var(--blank-line),var(--blank-line))] bg-[length:0%_2px,100%_2px] bg-[position:0_100%,0_100%] bg-no-repeat transition-[background-size] duration-300 ease-poster motion-reduce:transition-none placeholder:text-muted-foreground/60 hover:[--blank-line:var(--color-soft)] focus-visible:bg-[length:100%_2px,100%_2px] aria-invalid:[--blank-accent:var(--color-destructive)] aria-invalid:bg-[length:100%_2px,100%_2px]";
 
   return (
     <form ref={form} action={formAction} onSubmit={handleSubmit} onInput={saveDraft} noValidate>
@@ -168,24 +171,32 @@ export function ContactForm({ siteKey }: { siteKey: string }) {
         </p>
         {/* Un <div> et non un <p> : le groupe du motif est un bloc, qu'un paragraphe ne peut pas
             contenir (le navigateur couperait le paragraphe et l'hydratation échouerait). */}
-        <div className="mt-[0.3em] flex flex-wrap items-center gap-x-[0.35em] gap-y-2">
+        <div className="flex flex-wrap items-baseline gap-x-[0.3em]">
           <span>
             <span className="max-md:hidden">C&apos;est </span>pour
           </span>
           {/* Le motif, facultatif, préfixe l'objet de la notification. */}
+          {/* Les deux motifs sont des mots de la phrase : en contour, puis pleins en orange une
+              fois choisis. Facultatif : aucun n'est choisi au départ. */}
           <ToggleGroup
             type="single"
-            variant="outline"
-            size="label"
+            variant="poster"
+            size="inherit"
             aria-label="Motif"
             value={reason}
             onValueChange={chooseReason}
+            className="gap-[0.3em]"
             data-contact-reason
           >
-            {CONTACT_REASONS.map(({ value, label }) => (
-              <ToggleGroupItem key={value} value={value}>
-                {label}
-              </ToggleGroupItem>
+            {CONTACT_REASONS.map(({ value, label }, index) => (
+              <span key={value} className="flex items-baseline gap-[0.3em]">
+                {index > 0 ? (
+                  <span aria-hidden className="text-muted-foreground">
+                    /
+                  </span>
+                ) : null}
+                <ToggleGroupItem value={value}>{label}</ToggleGroupItem>
+              </span>
             ))}
           </ToggleGroup>
           <input type="hidden" name="reason" value={reason} />
