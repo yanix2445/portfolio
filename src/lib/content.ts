@@ -22,6 +22,11 @@ export type ContentMeta = {
   tags: string[];
   /** Documents affichés à droite du texte (schémas, captures, rapports). */
   documents?: EntryDocument[];
+  /**
+   * Fiche de veille : ce que Yanis en retient, en une phrase citée de sa section
+   * « Ce que j'en retiens ». Affichée dans la liste de `/veille`. Facultatif.
+   */
+  takeaway?: string;
 } & ProjectFields;
 
 export type ContentEntry = {
