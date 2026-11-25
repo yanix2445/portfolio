@@ -97,6 +97,8 @@
   --text-wreath--font-weight: 800;
 
   /* Lettrage d'affiche : de l'intertitre d'article au nom plein écran. */
+  --text-display-sentence: var(--fs-display-sentence);
+  --text-display-sentence--line-height: 1.08;
   --text-display-sm: var(--fs-display-sm);
   --text-display-sm--line-height: 1;
   --text-display-title: var(--fs-display-title);
@@ -200,6 +202,9 @@
   --fs-subtitle: 1.1875rem;
   --fs-synopsis: 1.625rem;
   --fs-display-sm: 2.25rem;
+  /* Phrase à compléter de /contact : un cran sous les intertitres sur téléphone, pour que la page
+     tienne en un écran ; comme eux dès 48 rem. */
+  --fs-display-sentence: 1.875rem;
   /* Titre d'article : « INFORMATIQUE » tient dans la largeur dès 320 px. */
   --fs-display-title: 14vw;
   --fs-display-poster: 17vw;
@@ -230,6 +235,7 @@
     --fs-subtitle: clamp(1.1875rem, 2.1vw, 2.125rem);
     --fs-synopsis: clamp(1.625rem, 3.4vw, 3.5rem);
     --fs-display-sm: clamp(2.25rem, 3.4vw, 3.5rem);
+    --fs-display-sentence: clamp(2.25rem, 3.4vw, 3.5rem);
     --fs-display-title: clamp(2.5rem, 5.9vw, 7rem);
     --fs-display-poster: clamp(2.5rem, 5.9vw, 7rem);
     --fs-display-md: 8.2vw;
