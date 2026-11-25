@@ -4,23 +4,13 @@
 // système (aucune police web : elle ferait appeler un serveur tiers à l'ouverture du mail).
 
 import { reasonLabel, type ContactFields } from "@/lib/contact";
+import { COLOR } from "@/lib/palette";
 import { BOOKING, OWNER, SITE_HOST, SITE_URL } from "@/lib/site";
 
 /** Délai de réponse promis au visiteur. */
 export const REPLY_DELAY = { label: "48 à 72 heures", short: "48 à 72 h", maxHours: 72 } as const;
 
 export type Email = { subject: string; html: string; text: string };
-
-export const COLOR = {
-  background: "#0b0a09",
-  card: "#151310",
-  foreground: "#f2ebdd",
-  soft: "#cfc6b6",
-  muted: "#9a9082",
-  primary: "#ff5b2e",
-  primaryForeground: "#170a04",
-  border: "#3d3a35",
-} as const;
 
 const FONT = {
   display: "Impact, Haettenschweiler, 'Arial Narrow Bold', 'Helvetica Neue', Arial, sans-serif",

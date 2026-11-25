@@ -6,12 +6,12 @@ import path from "node:path";
 import { describe, expect, it } from "vitest";
 
 import {
-  COLOR,
   confirmationEmail,
   formatParisDate,
   notificationEmail,
   rejectionAlertEmail,
 } from "@/lib/contact-emails";
+import { COLOR } from "@/lib/palette";
 
 const FIELDS = {
   name: "Camille <b>",
@@ -95,8 +95,8 @@ describe("alerte de mail non remis", () => {
   });
 });
 
-// Un mail n'a pas de variables CSS : ses couleurs recopient les tokens du site.
-describe("couleurs des mails", () => {
+// Un mail ou une image générée n'a pas de variables CSS : leurs couleurs recopient les tokens du site.
+describe("couleurs des mails et des images", () => {
   const css = readFileSync(path.join(import.meta.dirname, "../../src/app/globals.css"), "utf8");
   const token = (name: string) => {
     const value = new RegExp(`^\\s*--${name}:\\s*([^;]+);`, "m").exec(css)?.[1].trim();

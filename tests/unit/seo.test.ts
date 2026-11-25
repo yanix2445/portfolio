@@ -4,7 +4,10 @@ import { describe, expect, it } from "vitest";
 
 import sitemap from "@/app/sitemap";
 import { entryMetadata } from "@/components/content/entry-page";
-import { SITE_URL } from "@/lib/site";
+import { getEntry } from "@/lib/content";
+import { CERTIFICATIONS } from "@/lib/profile";
+import { CONTACT, SITE_URL } from "@/lib/site";
+import { entryGraph, profileGraph } from "@/lib/structured-data";
 
 describe("sitemap", () => {
   it("liste les pages fixes et une URL absolue datée par entrée", async () => {
@@ -18,6 +21,7 @@ describe("sitemap", () => {
         `${SITE_URL}/veille`,
         `${SITE_URL}/contact`,
         `${SITE_URL}/mentions-legales`,
+        `${SITE_URL}/cv/yanis-harrat-cv.pdf`,
       ]),
     );
     expect(routes).toContainEqual({
@@ -28,7 +32,7 @@ describe("sitemap", () => {
       url: `${SITE_URL}/veille/article-veille`,
       lastModified: "2026-02-15",
     });
-    expect(routes).toHaveLength(9);
+    expect(routes).toHaveLength(10);
     expect(urls.every((url) => url.startsWith(SITE_URL))).toBe(true);
   });
 });
@@ -47,17 +51,58 @@ describe("entryMetadata", () => {
     });
   });
 
-  it("partage l'image de la fiche, et rien sans image", async () => {
-    const withCover = await entryMetadata("projets", "projet-recent");
-    const withoutCover = await entryMetadata("projets", "ancien-projet");
+  it("laisse l'image de partage à la route de la fiche", async () => {
+    // Le `opengraph-image.tsx` de la fiche prime : une image ici serait ignorée.
+    const metadata = await entryMetadata("projets", "projet-recent");
 
-    expect(withCover.openGraph?.images).toEqual([
-      { url: "/images/projets/projet-recent.jpg", alt: "Capture du projet récent" },
-    ]);
-    expect(withoutCover.openGraph).not.toHaveProperty("images");
+    expect(metadata.openGraph).not.toHaveProperty("images");
+  });
+
+  it("préfère le titre et la description dédiés aux moteurs, sans changer l'Open Graph", async () => {
+    const metadata = await entryMetadata("veille", "article-veille");
+
+    expect(metadata.title).toBe("Veille courte");
+    expect(metadata.description).toBe("Description pour les moteurs.");
+    expect(metadata.openGraph).toMatchObject({
+      title: "Article de veille",
+      description: "Description pour les moteurs.",
+    });
   });
 
   it("renvoie des métadonnées vides pour un slug inconnu", async () => {
     expect(await entryMetadata("projets", "inexistant")).toEqual({});
+  });
+});
+
+describe("données structurées", () => {
+  const nodes = (graph: { "@graph": Record<string, unknown>[] }) =>
+    Object.fromEntries(graph["@graph"].map((node) => [node["@type"], node]));
+
+  it("décrit le site, la page de profil et la personne, reliés par leurs @id", () => {
+    const { WebSite, ProfilePage, Person } = nodes(profileGraph());
+
+    expect(ProfilePage).toMatchObject({ mainEntity: { "@id": Person["@id"] } });
+    expect(WebSite).toMatchObject({ publisher: { "@id": Person["@id"] } });
+    expect(Person).toMatchObject({
+      name: "Yanis Harrat",
+      sameAs: [CONTACT.linkedin, CONTACT.github],
+    });
+    expect(Person.hasCredential).toHaveLength(CERTIFICATIONS.length);
+  });
+
+  it("type une fiche selon sa collection et désigne l'auteur sans le recopier", async () => {
+    const entry = await getEntry("veille", "article-veille");
+    const { BlogPosting, BreadcrumbList } = nodes(entryGraph("veille", "article-veille", entry!.metadata));
+    const { TechArticle } = nodes(entryGraph("projets", "projet-recent", entry!.metadata));
+    const { Person } = nodes(profileGraph());
+
+    expect(BlogPosting).toMatchObject({
+      headline: "Article de veille",
+      description: "Description pour les moteurs.",
+      datePublished: "2026-02-15",
+      author: { "@id": Person["@id"] },
+    });
+    expect(TechArticle).toBeDefined();
+    expect(BreadcrumbList.itemListElement).toHaveLength(3);
   });
 });

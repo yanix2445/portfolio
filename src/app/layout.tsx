@@ -30,16 +30,18 @@ const mono = localFont({
 });
 
 const DESCRIPTION =
-  "Portfolio de Yanis Harrat, futur alternant technicien systèmes et réseaux (BTS SIO SISR) : projets infrastructure et réseau, veille technologique et CV.";
+  "Futur alternant BTS SIO SISR, je cherche une alternance de technicien systèmes et réseaux à Paris dès septembre 2027 : Active Directory, Microsoft 365, Proxmox.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: `${SITE_NAME} · Technicien systèmes et réseaux en alternance`,
+    default: `${SITE_NAME} · Technicien systèmes & réseaux, alternance Paris`,
     template: `%s · ${SITE_NAME}`,
   },
   description: DESCRIPTION,
   openGraph: { ...BASE_OPEN_GRAPH, type: "website" },
+  // Grande image au partage : celle de `opengraph-image.tsx`.
+  twitter: { card: "summary_large_image" },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

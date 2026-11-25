@@ -8,9 +8,9 @@ import { Button } from "@/components/ui/button";
 import { getProjects } from "@/lib/content";
 
 export const metadata: Metadata = {
-  title: "Projets",
+  title: "Projets systèmes et réseaux",
   description:
-    "Les projets de Yanis Harrat, futur technicien systèmes et réseaux en alternance (BTS SIO SISR) : en entreprise, en formation ou personnels, chacun avec sa fiche détaillée.",
+    "Lab Active Directory sous Windows Server 2025, homelab Proxmox et OPNsense, app macOS : mes projets d'étudiant BTS SIO SISR, chacun avec sa fiche détaillée.",
   alternates: { canonical: "/projets" },
 };
 

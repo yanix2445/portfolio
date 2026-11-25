@@ -14,7 +14,8 @@ function Award({ certification }: { certification: Certification }) {
       {badge ? (
         <Image
           src={badge}
-          alt={`Badge officiel ${issuer}`}
+          // Décoratif : l'émetteur et le titre sont écrits juste dessous.
+          alt=""
           width={96}
           height={96}
           className="aspect-square w-[30%] object-contain @2xs:mb-[1vh] @2xs:w-1/2"

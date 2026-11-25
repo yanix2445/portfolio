@@ -9,7 +9,8 @@ import { BillSection } from "@/components/home/bill-section";
 import { FinaleSection } from "@/components/home/finale-section";
 import { HeroSection } from "@/components/home/hero-section";
 import { SheetSection } from "@/components/home/sheet-section";
-import { PersonJsonLd } from "@/components/seo/person-json-ld";
+import { JsonLd } from "@/components/seo/json-ld";
+import { profileGraph } from "@/lib/structured-data";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/" },
@@ -19,7 +20,7 @@ export const metadata: Metadata = {
 export default function HomePage() {
   return (
     <>
-      <PersonJsonLd />
+      <JsonLd data={profileGraph()} />
       <HeroScroll>
         <HeroSection />
       </HeroScroll>

@@ -10,6 +10,9 @@ export const BASE_OPEN_GRAPH = {
   siteName: SITE_NAME,
 } as const;
 
+/** Le portrait de Yanis : accueil, balisage schema.org et images de partage. */
+export const PORTRAIT = { src: "/images/yanis-harrat.jpg", width: 1122, height: 1402 } as const;
+
 export const OWNER = {
   firstName: "Yanis",
   lastName: "HARRAT",

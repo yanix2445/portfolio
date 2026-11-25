@@ -17,6 +17,10 @@ export type EntryDocument = {
 export type ContentMeta = {
   title: string;
   summary: string;
+  /** Titre de l'onglet et des résultats de recherche, si `title` est trop long (60 caractères avec « · Yanis Harrat »). */
+  seoTitle?: string;
+  /** Meta description, si `summary` dépasse 160 caractères. Le résumé affiché ne change pas. */
+  description?: string;
   /** Date ISO `YYYY-MM-DD`. */
   date: string;
   tags: string[];

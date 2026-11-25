@@ -4,7 +4,7 @@ Ce qu'est le projet, le problème qu'il résout et son vocabulaire. Le « pourqu
 
 ## What it is
 
-- Portfolio personnel de Yanis Harrat, étudiant en 1re année de BTS SIO option SISR à l'AURLOM, publié sur `yanis-harrat.com`.
+- Portfolio personnel de Yanis Harrat, publié sur `yanis-harrat.com`. Après une 1re année de BTS SIO à Fénelon Sup (2025-2026), il entre en BTS SIO option SISR à l'AURLOM en septembre 2027, en alternance (confirmé par Yanis le 2026-11-25). Zone de recherche : Paris et toute l'Île-de-France.
 - Il s'adresse aux recruteurs, aux entreprises qui cherchent un alternant et aux professeurs, soit environ 50 à 200 visiteurs uniques par mois.
 
 ## Why it exists
