@@ -9,7 +9,7 @@ import {
   getProjects,
   getSlugs,
 } from "@/lib/content";
-import { pickFeatured, presentDomains, toProject } from "@/lib/projects";
+import { pickFeatured, presentContexts, presentDomains, toProject } from "@/lib/projects";
 
 describe("getSlugs", () => {
   it("ne liste que les fichiers MDX d'une collection", async () => {
@@ -71,6 +71,7 @@ describe("projets", () => {
       featured: false,
       status: "released",
       domain: "autre",
+      context: "personnel",
       poster: "Ancien projet",
     });
   });
@@ -82,6 +83,7 @@ describe("projets", () => {
       featured: true,
       status: "in-progress",
       domain: "systemes",
+      context: "entreprise",
       poster: "Récent",
     });
     expect(projects.find((project) => project.slug === "projet-a-venir")?.status).toBe("upcoming");
@@ -122,10 +124,11 @@ describe("projets", () => {
         tags: [],
         status: "relased" as never,
         domain: "systeme" as never,
+        context: "ecole" as never,
       },
     });
 
-    expect(project).toMatchObject({ status: "released", domain: "autre", cover: null });
+    expect(project).toMatchObject({ status: "released", domain: "autre", context: "personnel", cover: null });
   });
 
   it("ne dépasse jamais le nombre de projets à la une demandé", async () => {
@@ -138,5 +141,9 @@ describe("projets", () => {
 
   it("ne propose que les domaines qui ont un projet, dans l'ordre d'affichage", async () => {
     expect(presentDomains(await getProjects())).toEqual(["systemes", "reseau", "autre"]);
+  });
+
+  it("ne propose que les cadres qui ont un projet : entreprise, formation, puis personnel", async () => {
+    expect(presentContexts(await getProjects())).toEqual(["entreprise", "formation", "personnel"]);
   });
 });
