@@ -76,7 +76,6 @@ export default async function OpengraphImage() {
             </div>
           </div>
         </div>
-        {/* eslint-disable-next-line @next/next/no-img-element -- rendu par next/og, pas par le navigateur */}
         <img src={portrait} alt="" width={PHOTO_WIDTH} height={size.height} style={{ objectFit: "cover" }} />
       </div>
     ),
