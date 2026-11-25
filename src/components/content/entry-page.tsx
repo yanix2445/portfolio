@@ -146,9 +146,10 @@ const BODY_GRID =
 
 /**
  * Bloc de lecture : 75ch au plus, centré dans sa colonne, texte aligné à gauche.
- * `text-body` donne à `ch` la même mesure que le texte de `Prose`.
+ * `text-body` donne à `ch` la même mesure que le texte de `Prose`. `min-w-0` : un bloc de code
+ * trop large défile dans la colonne au lieu de l'élargir (et la page avec, sur téléphone).
  */
-const READING = "mx-auto w-full max-w-[75ch] text-body";
+const READING = "mx-auto w-full min-w-0 max-w-[75ch] text-body";
 
 /** Colonne latérale : alignée sur le bloc de lecture tant qu'elle est empilée, collante dès `lg`. */
 const SIDE = cn(READING, "lg:sticky lg:top-[calc(var(--header-h)+5vh)] lg:row-start-1 lg:mx-0 lg:max-w-none");
