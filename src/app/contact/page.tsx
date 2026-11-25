@@ -3,12 +3,12 @@ import type { Metadata } from "next";
 import { BookCallLink } from "@/components/contact/book-call-link";
 import { ContactForm } from "@/components/contact/contact-form";
 import { contactSiteKey } from "@/lib/contact";
-import { BOOKING, CONTACT, CV_PATH, OWNER } from "@/lib/site";
+import { BOOKING, CONTACT, CV_PATH, SITE_NAME } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
 export const metadata: Metadata = {
-  title: "Contact",
-  description: `Contacter ${OWNER.fullName} pour une alternance de technicien systèmes et réseaux, dès septembre 2027.`,
+  title: "Proposer une alternance",
+  description: `Proposer une alternance de technicien systèmes et réseaux à ${SITE_NAME} (BTS SIO SISR, Île-de-France, septembre 2027) : formulaire, appel de 15 min ou e-mail.`,
   alternates: { canonical: "/contact" },
 };
 

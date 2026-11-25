@@ -94,6 +94,47 @@ test.describe("SEO technique", () => {
     expect(body).toContain("Allow: /");
     expect(body).toContain("Sitemap: https://yanis-harrat.com/sitemap.xml");
   });
+
+  test("chaque page partage une grande image servie par le site", async ({ page, request }) => {
+    // Une fiche redéfinit son openGraph : elle doit redonner l'image elle-même.
+    await page.goto("/veille");
+    const entry = await page.locator('main a[href^="/veille/"]').first().getAttribute("href");
+    for (const path of ["/", "/projets", "/veille", "/contact", entry!]) {
+      await page.goto(path);
+      const image = await page.locator('meta[property="og:image"]').getAttribute("content");
+      expect(image, path).toMatch(/^https:\/\/yanis-harrat\.com\/opengraph-image/);
+      await expect(page.locator('meta[name="twitter:card"]')).toHaveAttribute("content", "summary_large_image");
+    }
+
+    const response = await request.get("/opengraph-image");
+    expect(response.status()).toBe(200);
+    expect(response.headers()["content-type"]).toBe("image/png");
+  });
+
+  test("chaque fiche déclare son article et son auteur en JSON-LD", async ({ page }) => {
+    for (const collection of ["projets", "veille"] as const) {
+      await page.goto(`/${collection}`);
+      const href = await page.locator(`main a[href^="/${collection}/"]`).first().getAttribute("href");
+      await page.goto(href!);
+      const raw = await page.locator('script[type="application/ld+json"]').textContent();
+      const graph: Record<string, unknown>[] = JSON.parse(raw ?? "{}")["@graph"];
+
+      expect(graph).toContainEqual(
+        expect.objectContaining({
+          "@type": collection === "veille" ? "BlogPosting" : "TechArticle",
+          url: `https://yanis-harrat.com${href}`,
+          author: { "@id": "https://yanis-harrat.com/#person" },
+        }),
+      );
+    }
+  });
+
+  test("llms.txt résume le profil pour les assistants IA", async ({ request }) => {
+    const response = await request.get("/llms.txt");
+
+    expect(response.status()).toBe(200);
+    expect(await response.text()).toMatch(/^# Yanis Harrat/);
+  });
 });
 
 test("la navigation principale mène aux sections", async ({ page }) => {
@@ -167,12 +208,14 @@ test.describe("contact", () => {
   test("l'accueil déclare la personne en JSON-LD", async ({ page }) => {
     await page.goto("/");
     const raw = await page.locator('script[type="application/ld+json"]').textContent();
-    const person = JSON.parse(raw ?? "{}");
+    const graph: Record<string, unknown>[] = JSON.parse(raw ?? "{}")["@graph"];
 
-    expect(person).toMatchObject({
-      "@type": "Person",
-      name: "Yanis HARRAT",
-      sameAs: ["https://www.linkedin.com/in/yanis-harrat/", "https://github.com/yanix2445"],
-    });
+    expect(graph).toContainEqual(
+      expect.objectContaining({
+        "@type": "Person",
+        name: "Yanis Harrat",
+        sameAs: ["https://www.linkedin.com/in/yanis-harrat/", "https://github.com/yanix2445"],
+      }),
+    );
   });
 });

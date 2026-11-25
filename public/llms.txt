@@ -1,0 +1,25 @@
+# Yanis Harrat
+
+> Après une 1re année de BTS SIO à Fénelon Sup, Yanis Harrat entre en BTS SIO option SISR (systèmes et réseaux) à l'AURLOM en septembre 2027. Il cherche une alternance de deux ans comme technicien systèmes et réseaux à Paris et en Île-de-France (3 jours en entreprise, 2 jours à l'école).
+
+- Expérience : technicien helpdesk N1/N2 au Secours Catholique (juin à septembre 2026) : Microsoft 365, Entra ID, Intune, Autopilot, Active Directory, tickets sous SLA.
+- Compétences : Windows Server, Active Directory, GPO, Microsoft 365, Intune, Proxmox, OPNsense, Docker, VLAN, TCP/IP, DNS, DHCP, Python, n8n.
+- Contact : https://yanis-harrat.com/contact
+
+## Projets
+
+- [Lab Active Directory sous Windows Server 2025](https://yanis-harrat.com/projets/lab-active-directory-windows-server) : AD DS, DNS, DHCP, AGDLP, GPO, DFS-R.
+- [Homelab Proxmox et Docker](https://yanis-harrat.com/projets/homelab-proxmox-docker) : OPNsense, VLAN, Traefik, WireGuard.
+- [AppKite](https://yanis-harrat.com/projets/appkite-app-macos) : app macOS en SwiftUI, pilotée avec Claude Code.
+
+## Veille technologique
+
+- [Présentation](https://yanis-harrat.com/veille) : l'IA comme assistant de l'administrateur systèmes et réseaux, sans perdre la sécurité ni la traçabilité.
+- [L'IA copilote de dépannage](https://yanis-harrat.com/veille/ia-copilote-depannage-homelab) : diagnostiquer une panne avec un agent IA, selon le guide ANSSI sur l'IA agentique.
+- [L'IA comme copilote du technicien informatique](https://yanis-harrat.com/veille/ia-copilote-technicien-informatique) : ce qu'on confie à un agent IA dans un homelab, et où placer la limite.
+
+## Profils
+
+- [LinkedIn](https://www.linkedin.com/in/yanis-harrat/)
+- [GitHub](https://github.com/yanix2445)
+- [CV (PDF)](https://yanis-harrat.com/cv/yanis-harrat-cv.pdf)

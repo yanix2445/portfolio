@@ -8,6 +8,7 @@ import { ActionCue, ENTRY_ACTION } from "@/components/content/action-cue";
 import { SequenceNav } from "@/components/content/sequence-nav";
 import { Prose } from "@/components/mdx/prose";
 import { StatusBadge } from "@/components/projects/status-badge";
+import { JsonLd } from "@/components/seo/json-ld";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -21,7 +22,8 @@ import {
   type EntryDocument,
 } from "@/lib/content";
 import { DOMAIN_LABEL, toProject } from "@/lib/projects";
-import { BASE_OPEN_GRAPH } from "@/lib/site";
+import { BASE_OPEN_GRAPH, SHARE_IMAGE } from "@/lib/site";
+import { entryGraph } from "@/lib/structured-data";
 import { cn } from "@/lib/utils";
 import { fitTitle } from "@/lib/title-fit";
 import { frenchSpacing } from "@/lib/typography";
@@ -52,20 +54,20 @@ export async function entryStaticParams(collection: Collection) {
 export async function entryMetadata(collection: Collection, slug: string): Promise<Metadata> {
   const entry = await getEntry(collection, slug);
   if (!entry) return {};
-  const { title, summary, cover, coverAlt } = entry.metadata;
+  const { title, summary, cover, coverAlt, seoTitle = title, description = summary } = entry.metadata;
   const url = `/${collection}/${slug}`;
   return {
-    title,
-    description: summary,
+    title: seoTitle,
+    description,
     alternates: { canonical: url },
     openGraph: {
       ...BASE_OPEN_GRAPH,
       type: "article",
       title,
-      description: summary,
+      description,
       url,
-      // L'image de la fiche sert aussi d'aperçu quand le lien est partagé.
-      ...(cover ? { images: [{ url: cover, alt: coverAlt ?? title }] } : {}),
+      // L'image de la fiche sert aussi d'aperçu quand le lien est partagé ; sinon, celle du site.
+      images: [cover ? { url: cover, alt: coverAlt ?? title } : SHARE_IMAGE],
     },
   };
 }
@@ -183,6 +185,7 @@ export async function EntryPage({
 
   return (
     <article aria-labelledby="entry-title" className="px-gutter pt-8 pb-20 md:pt-[6vh] md:pb-[12vh]">
+      <JsonLd data={entryGraph(collection, slug, metadata)} />
       <header className="@container">
         <div className="flex items-center justify-between gap-4">
           <Button asChild variant="outline" size="label">

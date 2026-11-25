@@ -1,9 +1,10 @@
 import type { MetadataRoute } from "next";
 
 import { getEntries, type Collection } from "@/lib/content";
-import { SITE_URL } from "@/lib/site";
+import { CV_PATH, SITE_URL } from "@/lib/site";
 
-const STATIC_PATHS = ["", "/projets", "/veille", "/contact", "/mentions-legales"];
+// Le CV en PDF est indexé comme une page : un recruteur peut le trouver en cherchant le nom.
+const STATIC_PATHS = ["", "/projets", "/veille", "/contact", "/mentions-legales", CV_PATH];
 const COLLECTIONS: Collection[] = ["projets", "veille"];
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
