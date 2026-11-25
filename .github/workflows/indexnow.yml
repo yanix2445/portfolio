@@ -1,0 +1,32 @@
+# Signale à Bing, via IndexNow, les pages changées par chaque déploiement de production.
+# Vercel publie un statut de commit « Vercel » : il passe à « success » sur `main` quand la
+# production sert le nouveau build. Les statuts des previews (autres branches) sont ignorés.
+name: IndexNow
+
+on:
+  status:
+
+permissions:
+  contents: read
+
+jobs:
+  notify:
+    name: Signaler les pages changées
+    if: >-
+      github.event.context == 'Vercel' &&
+      github.event.state == 'success' &&
+      contains(github.event.branches.*.name, 'main')
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ github.event.sha }}
+          # Le commit et son premier parent : les fichiers changés par le merge.
+          fetch-depth: 2
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 26
+      - run: node scripts/indexnow.ts "$SHA"
+        env:
+          SHA: ${{ github.event.sha }}
