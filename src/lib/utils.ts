@@ -18,6 +18,7 @@ const TEXT_SIZES = [
   "synopsis-pinned",
   "wreath",
   "display-sm",
+  "display-sentence",
   "display-title",
   "display-poster",
   "display-md",

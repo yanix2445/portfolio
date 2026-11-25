@@ -2,8 +2,6 @@ import type { Metadata } from "next";
 
 import { BookCallLink } from "@/components/contact/book-call-link";
 import { ContactForm } from "@/components/contact/contact-form";
-import { PageHeader } from "@/components/layout/page-header";
-import { Button } from "@/components/ui/button";
 import { contactSiteKey } from "@/lib/contact";
 import { BOOKING, CONTACT, CV_PATH, OWNER } from "@/lib/site";
 import { cn } from "@/lib/utils";
@@ -14,12 +12,14 @@ export const metadata: Metadata = {
   alternates: { canonical: "/contact" },
 };
 
+// Les autres moyens de joindre Yanis, sur une ligne discrète sous le formulaire. Le CV est
+// dans l'en-tête ; LinkedIn et GitHub sont aussi dans le pied de page.
+const CHANNEL_LINK =
+  "text-foreground underline decoration-border underline-offset-4 transition-colors duration-200 hover:decoration-primary";
 const CHANNELS = [
-  { label: "E-mail", value: CONTACT.email, href: `mailto:${CONTACT.email}` },
-  { label: "Rendez-vous", value: "Réserver un appel de 15 min", href: BOOKING.url, booking: true },
-  { label: "LinkedIn", value: "linkedin.com/in/yanis-harrat", href: CONTACT.linkedin, rel: "noopener noreferrer me" },
-  { label: "GitHub", value: "github.com/yanix2445", href: CONTACT.github, rel: "noopener noreferrer me" },
-  { label: "CV", value: "Télécharger le PDF", href: CV_PATH, rel: "noopener" },
+  { label: CONTACT.email, href: `mailto:${CONTACT.email}` },
+  { label: "LinkedIn", href: CONTACT.linkedin, rel: "noopener noreferrer me" },
+  { label: "GitHub", href: CONTACT.github, rel: "noopener noreferrer me" },
 ] as const;
 
 // Sur téléphone, à côté du formulaire : les trois accès directs. LinkedIn, GitHub et
@@ -49,18 +49,20 @@ export default function ContactPage() {
           : "pt-12 pb-20 md:pt-[12vh] md:pb-[14vh]",
       )}
     >
-      <PageHeader id="contact-title" title="Contact" compact={Boolean(siteKey)}>
-        Je cherche une alternance de 2 ans comme technicien systèmes et réseaux, dès septembre
-        2027 : 3 jours en entreprise, 2 jours à l&apos;école. Écrivez-moi, ou réservez un appel de 15 minutes.
-      </PageHeader>
+      {/* La phrase à compléter tient lieu de titre visuel ; le titre de la page reste pour les
+          lecteurs d'écran et l'onglet du navigateur. */}
+      <header>
+        <h1 id="contact-title" className={cn(siteKey ? "sr-only" : "type-poster pt-[0.1em] text-display-xl")}>
+          Contact
+        </h1>
+        <p className={cn("max-w-[64ch] text-body-sm text-muted-foreground", siteKey ? "max-md:sr-only" : "mt-[3vh]")}>
+          Je cherche une alternance de 2 ans comme technicien systèmes et réseaux, dès septembre
+          2027 : 3 jours en entreprise, 2 jours à l&apos;école. Écrivez-moi, ou réservez un appel de
+          15 minutes.
+        </p>
+      </header>
 
-      <div
-        className={cn(
-          "grid",
-          siteKey ? "gap-5" : "gap-10",
-          siteKey ? "md:grid-cols-[1.15fr_0.85fr] md:items-start md:gap-[6vw]" : "md:mt-[3vh]",
-        )}
-      >
+      <div className={cn("flex flex-col", siteKey ? "gap-4 md:gap-[4svh]" : "gap-10 md:mt-[3vh]")}>
         {siteKey ? (
           <div>
             <ContactForm siteKey={siteKey} />
@@ -74,55 +76,58 @@ export default function ContactPage() {
         ) : null}
 
         {siteKey ? (
-          <ul className="flex flex-wrap gap-2 md:hidden" data-contact-shortcuts>
+          // Sur téléphone, les autres chemins en une ligne de liens, sous l'envoi.
+          <p className="flex flex-wrap items-baseline gap-x-[0.8em] gap-y-1 text-body-sm text-soft md:hidden" data-contact-shortcuts>
+            <span>Ou :</span>
             {SHORTCUTS.map((shortcut) => (
-              <li key={shortcut.label}>
-                <Button asChild variant="outline" size="label">
-                  {"booking" in shortcut ? (
-                    <BookCallLink>{shortcut.label}</BookCallLink>
-                  ) : (
-                    <a
-                      href={shortcut.href}
-                      {...("external" in shortcut ? { target: "_blank", rel: "noopener" } : {})}
-                    >
-                      {shortcut.label}
-                    </a>
-                  )}
-                </Button>
-              </li>
-            ))}
-          </ul>
-        ) : null}
-
-        <dl
-          className={cn(siteKey ? "max-md:hidden" : "md:max-w-[60vw]")}
-          data-contact-channels
-        >
-          {CHANNELS.map((channel) => (
-            <div
-              key={channel.label}
-              className={cn(
-                "grid items-baseline gap-1.5 border-t border-border last:border-b md:grid-cols-[9rem_1fr] md:gap-6",
-                siteKey ? "py-3 md:py-[1.4svh]" : "py-4.5",
-              )}
-            >
-              <dt className="type-label text-muted-foreground">{channel.label}</dt>
-              <dd className="text-lead">
-                {"booking" in channel ? (
-                  <BookCallLink className="underline-offset-4 hover:underline">{channel.value}</BookCallLink>
+              <span
+                key={shortcut.label}
+                className="whitespace-nowrap not-last:after:ml-[0.8em] not-last:after:text-muted-foreground not-last:after:content-['·']"
+              >
+                {"booking" in shortcut ? (
+                  <BookCallLink className={CHANNEL_LINK}>{shortcut.label}</BookCallLink>
                 ) : (
                   <a
-                    href={channel.href}
-                    className="underline-offset-4 hover:underline"
-                    {...("rel" in channel ? { target: "_blank", rel: channel.rel } : {})}
+                    href={shortcut.href}
+                    className={CHANNEL_LINK}
+                    {...("external" in shortcut ? { target: "_blank", rel: "noopener" } : {})}
                   >
-                    {channel.value}
+                    {shortcut.label}
                   </a>
                 )}
-              </dd>
-            </div>
+              </span>
+            ))}
+          </p>
+        ) : null}
+
+        {/* Les autres chemins, sur une ligne sous la phrase : l'appel, l'e-mail, les profils.
+            Le point termine la ligne quand elle passe à la ligne, jamais il ne la commence. */}
+        <p
+          className={cn(
+            "flex flex-wrap items-baseline gap-x-[0.8em] gap-y-1 border-t border-border pt-4 text-body-sm text-soft md:pt-[2svh]",
+            siteKey && "max-md:hidden",
+          )}
+          data-contact-channels
+        >
+          <span>Ou bien :</span>
+          <span className="whitespace-nowrap after:ml-[0.8em] after:text-muted-foreground after:content-['·']">
+            <BookCallLink className={CHANNEL_LINK}>Réserver un appel de 15 min</BookCallLink>
+          </span>
+          {CHANNELS.map((channel) => (
+            <span
+              key={channel.href}
+              className="whitespace-nowrap not-last:after:ml-[0.8em] not-last:after:text-muted-foreground not-last:after:content-['·']"
+            >
+              <a
+                href={channel.href}
+                className={CHANNEL_LINK}
+                {...("rel" in channel ? { target: "_blank", rel: channel.rel } : {})}
+              >
+                {channel.label}
+              </a>
+            </span>
           ))}
-        </dl>
+        </p>
       </div>
     </section>
   );

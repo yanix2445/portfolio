@@ -8,7 +8,6 @@ import { toast } from "sonner";
 import { sendContact } from "@/actions/contact";
 import { Button } from "@/components/ui/button";
 import { Field, FieldDescription, FieldError, FieldGroup, FieldLabel } from "@/components/ui/field";
-import { Input } from "@/components/ui/input";
 import { Toaster } from "@/components/ui/sonner";
 import { Spinner } from "@/components/ui/spinner";
 import { Textarea } from "@/components/ui/textarea";
@@ -29,6 +28,7 @@ import {
 import { cn } from "@/lib/utils";
 
 import { useContactDraft } from "./use-contact-draft";
+import { SentenceBlank } from "./sentence-blank";
 import { useTurnstileGate } from "./use-turnstile-gate";
 
 // Les champs texte, dans l'ordre de la page : le focus va au premier en erreur.
@@ -109,151 +109,172 @@ export function ContactForm({ siteKey }: { siteKey: string }) {
     [describedBy("message"), showCounter ? "message-counter" : undefined].filter(Boolean).join(" ") ||
     undefined;
 
+  // Un blanc de la phrase : le champ s'écrit dans la phrase, en lettres d'affiche, souligné.
+  // Son nom (« Nom », « E-mail ») est lu par les lecteurs d'écran ; son erreur est sous la phrase.
+  // Deux traits en fond : le trait du blanc, et un trait orange qui se dessine de gauche à droite
+  // au focus (rouge en erreur). Il indique le focus à la place du contour, sans animation si
+  // le visiteur réduit les animations.
+  const blank =
+    "inline-block max-w-full resize-none overflow-hidden border-0 bg-transparent px-[0.1em] pb-[0.04em] align-baseline [overflow-wrap:anywhere] [font:inherit] [letter-spacing:inherit] normal-case text-primary outline-none [--blank-accent:var(--color-primary)] [--blank-line:var(--color-border)] bg-[image:linear-gradient(var(--blank-accent),var(--blank-accent)),linear-gradient(var(--blank-line),var(--blank-line))] bg-[length:0%_2px,100%_2px] bg-[position:0_100%,0_100%] bg-no-repeat transition-[background-size] duration-300 ease-poster motion-reduce:transition-none placeholder:text-muted-foreground/60 hover:[--blank-line:var(--color-soft)] focus-visible:bg-[length:100%_2px,100%_2px] aria-invalid:[--blank-accent:var(--color-destructive)] aria-invalid:bg-[length:100%_2px,100%_2px]";
+
   return (
     <form ref={form} action={formAction} onSubmit={handleSubmit} onInput={saveDraft} noValidate>
-      {/* Le formulaire est un billet de cinéma : les champs à gauche, le talon orange à
-          droite (en bas sur téléphone), qui est le bouton d'envoi. */}
-      <div
-        className="relative grid grid-cols-[minmax(0,1fr)] overflow-hidden rounded-2xl border border-border bg-card md:grid-cols-[minmax(0,1fr)_7rem]"
-        data-contact-ticket
-      >
-        {/* Encoches de part et d'autre de la perforation. */}
-        <span aria-hidden className="absolute -top-2.5 right-[calc(7rem-0.625rem)] size-5 rounded-full border border-border bg-background max-md:hidden" />
-        <span aria-hidden className="absolute right-[calc(7rem-0.625rem)] -bottom-2.5 size-5 rounded-full border border-border bg-background max-md:hidden" />
-
-        <FieldGroup className="gap-3 px-4 py-3.5 md:gap-5 md:p-6">
-          {/* Nom et e-mail côte à côte, même sur téléphone : la page tient en un écran. */}
-          <div className="grid grid-cols-2 gap-3 md:gap-6">
-            <Field data-invalid={Boolean(errors.name)}>
-              <FieldLabel htmlFor="name" className="type-label text-muted-foreground">
-                Nom
-              </FieldLabel>
-              <Input
-                id="name"
-                name="name"
-                variant="line"
-                autoComplete="name"
-                required
-                maxLength={CONTACT_LIMITS.name}
-                defaultValue={failed?.fields?.name}
-                aria-invalid={Boolean(errors.name)}
-                aria-describedby={describedBy("name")}
-              />
-              {errors.name ? <FieldError id="name-error">{errors.name}</FieldError> : null}
-            </Field>
-
-            <Field data-invalid={Boolean(errors.email)}>
-              <FieldLabel htmlFor="email" className="type-label text-muted-foreground">
-                E-mail
-              </FieldLabel>
-              <Input
-                id="email"
-                name="email"
-                type="email"
-                variant="line"
-                inputMode="email"
-                autoComplete="email"
-                spellCheck={false}
-                required
-                maxLength={CONTACT_LIMITS.email}
-                defaultValue={failed?.fields?.email}
-                aria-invalid={Boolean(errors.email)}
-                aria-describedby={describedBy("email")}
-              />
-              {errors.email ? <FieldError id="email-error">{errors.email}</FieldError> : null}
-            </Field>
-          </div>
-
-          <Field data-invalid={Boolean(errors.message)}>
-            {/* Le motif, facultatif, partage la ligne du libellé : la page tient en un écran.
-                Il apparaît dans l'objet de la notification. */}
-            <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
-              <FieldLabel htmlFor="message" className="type-label text-muted-foreground">
-                Message
-              </FieldLabel>
-              {/* Boutons plus bas que les filtres du catalogue, et marges négatives : la ligne
-                  garde la hauteur du libellé. */}
-              <div className="-my-1.5 flex items-center gap-3">
-                <span id="reason-label" className="type-label text-muted-foreground max-md:sr-only">
-                  Motif
-                </span>
-                <ToggleGroup
-                  type="single"
-                  variant="outline"
-                  size="label"
-                  aria-labelledby="reason-label"
-                  value={reason}
-                  onValueChange={chooseReason}
-                  data-contact-reason
-                >
-                  {CONTACT_REASONS.map(({ value, label }) => (
-                    <ToggleGroupItem key={value} value={value} className="px-3 py-1.5">
-                      {label}
-                    </ToggleGroupItem>
-                  ))}
-                </ToggleGroup>
-                <input type="hidden" name="reason" value={reason} />
-              </div>
-            </div>
-            <Textarea
-              id="message"
-              name="message"
-              variant="line"
-              required
-              minLength={CONTACT_LIMITS.messageMin}
-              maxLength={CONTACT_LIMITS.message}
-              defaultValue={failed?.fields?.message}
-              className="max-h-[30svh] min-h-12 md:min-h-[12svh]"
-              aria-invalid={Boolean(errors.message)}
-              aria-describedby={messageDescription}
-            />
-            {errors.message ? <FieldError id="message-error">{errors.message}</FieldError> : null}
-            {showCounter ? (
-              <p id="message-counter" className="type-label text-muted-foreground" data-message-counter>
-                {messageLength} / {CONTACT_LIMITS.message} caractères
-              </p>
-            ) : null}
-          </Field>
-
-          {/* Champ piège : hors de l'écran, ignoré au clavier et par les lecteurs d'écran.
-              Seul un robot le remplit ; le serveur fait alors semblant d'avoir envoyé. */}
-          <div aria-hidden className="sr-only" data-honeypot>
-            <label htmlFor={HONEYPOT_FIELD}>Laissez ce champ vide</label>
-            <input id={HONEYPOT_FIELD} name={HONEYPOT_FIELD} type="text" tabIndex={-1} autoComplete="off" />
-          </div>
-
-          {/* Anti-spam discret : invisible, sauf si Cloudflare demande de cocher une case.
-              Il fait alors 300 px de large ; sur un écran plus étroit, son cadre défile. */}
-          <div className="overflow-x-auto empty:hidden">
-            <Turnstile
-              {...widget}
-              siteKey={siteKey}
-              options={{
-                theme: "dark",
-                language: "fr",
-                size: "normal",
-                appearance: "interaction-only",
-              }}
-            />
-          </div>
-        </FieldGroup>
-
-        {/* Le talon : bouton d'envoi. Le délai et la flèche sont décoratifs ; le nom lu est
-            « Envoyer le message ». */}
-        <Button type="submit" size="stub" aria-disabled={busy}>
-          <span aria-hidden className="type-label md:text-center">
-            Réponse
-            <br className="max-md:hidden" /> 48–72 h
+      {/* Le formulaire est une phrase d'affiche à compléter : le nom, l'e-mail et le motif
+          s'écrivent dans les blancs ; le message vient dessous. */}
+      {/* Sur grand écran, la phrase à gauche, le message et l'envoi à droite : la page tient en
+          un écran même sur un portable bas. */}
+      <div className="grid gap-4 md:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)] md:items-start md:gap-x-[5vw]">
+      <div>
+      <div className="type-poster text-display-sentence" data-contact-sentence>
+        <p>
+          Bonjour, je suis{" "}
+          <label htmlFor="name" className="sr-only">
+            Nom
+          </label>
+          {/* La ponctuation reste collée au blanc : elle ne part jamais seule à la ligne. */}
+          <span className="relative whitespace-nowrap">
+          <SentenceBlank
+            id="name"
+            name="name"
+            autoComplete="name"
+            autoCapitalize="words"
+            required
+            maxLength={CONTACT_LIMITS.name}
+            placeholder="votre nom"
+            defaultValue={failed?.fields?.name}
+            aria-invalid={Boolean(errors.name)}
+            aria-describedby={describedBy("name")}
+            className={blank}
+          />
+          ,</span>
+        </p>
+        <p>
+          joignable à{" "}
+          <label htmlFor="email" className="sr-only">
+            E-mail
+          </label>
+          <span className="relative whitespace-nowrap">
+          <SentenceBlank
+            id="email"
+            name="email"
+            inputMode="email"
+            autoComplete="email"
+            autoCapitalize="none"
+            autoCorrect="off"
+            spellCheck={false}
+            required
+            maxLength={CONTACT_LIMITS.email}
+            placeholder="vous@exemple.fr"
+            defaultValue={failed?.fields?.email}
+            aria-invalid={Boolean(errors.email)}
+            aria-describedby={describedBy("email")}
+            className={cn(blank, "[word-break:break-all]")}
+          />
+          .</span>
+        </p>
+        {/* Un <div> et non un <p> : le groupe du motif est un bloc, qu'un paragraphe ne peut pas
+            contenir (le navigateur couperait le paragraphe et l'hydratation échouerait). */}
+        <div className="flex flex-wrap items-baseline gap-x-[0.3em]">
+          <span>
+            <span className="max-md:hidden">C&apos;est </span>pour
           </span>
-          <span className="flex items-center gap-3 type-poster text-display-sm md:rotate-180 md:[writing-mode:vertical-rl]">
+          {/* Le motif, facultatif, préfixe l'objet de la notification. */}
+          {/* Les deux motifs sont des mots de la phrase : en contour, puis pleins en orange une
+              fois choisis. Facultatif : aucun n'est choisi au départ. */}
+          <ToggleGroup
+            type="single"
+            variant="poster"
+            size="inherit"
+            aria-label="Motif"
+            value={reason}
+            onValueChange={chooseReason}
+            className="gap-[0.3em]"
+            data-contact-reason
+          >
+            {CONTACT_REASONS.map(({ value, label }, index) => (
+              <span key={value} className="flex items-baseline gap-[0.3em]">
+                {index > 0 ? (
+                  <span aria-hidden className="text-muted-foreground">
+                    /
+                  </span>
+                ) : null}
+                <ToggleGroupItem value={value}>{label}</ToggleGroupItem>
+              </span>
+            ))}
+          </ToggleGroup>
+          <input type="hidden" name="reason" value={reason} />
+        </div>
+      </div>
+
+      {errors.name || errors.email ? (
+        <div className="mt-3 flex flex-col gap-1">
+          {errors.name ? <FieldError id="name-error">{errors.name}</FieldError> : null}
+          {errors.email ? <FieldError id="email-error">{errors.email}</FieldError> : null}
+        </div>
+      ) : null}
+      </div>
+
+      <FieldGroup className="gap-2.5 md:gap-[2.4svh]">
+        <Field data-invalid={Boolean(errors.message)}>
+          <FieldLabel htmlFor="message" className="type-label text-muted-foreground">
+            Message
+          </FieldLabel>
+          <Textarea
+            id="message"
+            name="message"
+            variant="line"
+            required
+            minLength={CONTACT_LIMITS.messageMin}
+            maxLength={CONTACT_LIMITS.message}
+            defaultValue={failed?.fields?.message}
+            placeholder="Le poste, l'équipe, ce que vous attendez de l'alternance…"
+            className="max-h-[30svh] min-h-12 md:min-h-[14svh]"
+            aria-invalid={Boolean(errors.message)}
+            aria-describedby={messageDescription}
+          />
+          {errors.message ? <FieldError id="message-error">{errors.message}</FieldError> : null}
+          {showCounter ? (
+            <p id="message-counter" className="type-label text-muted-foreground" data-message-counter>
+              {messageLength} / {CONTACT_LIMITS.message} caractères
+            </p>
+          ) : null}
+        </Field>
+
+        {/* Champ piège : hors de l'écran, ignoré au clavier et par les lecteurs d'écran.
+            Seul un robot le remplit ; le serveur fait alors semblant d'avoir envoyé. */}
+        <div aria-hidden className="sr-only" data-honeypot>
+          <label htmlFor={HONEYPOT_FIELD}>Laissez ce champ vide</label>
+          <input id={HONEYPOT_FIELD} name={HONEYPOT_FIELD} type="text" tabIndex={-1} autoComplete="off" />
+        </div>
+
+        {/* Anti-spam discret : invisible, sauf si Cloudflare demande de cocher une case.
+            Il fait alors 300 px de large ; sur un écran plus étroit, son cadre défile. */}
+        <div className="overflow-x-auto empty:hidden">
+          <Turnstile
+            {...widget}
+            siteKey={siteKey}
+            options={{
+              theme: "dark",
+              language: "fr",
+              size: "normal",
+              appearance: "interaction-only",
+            }}
+          />
+        </div>
+
+        {/* La signature de la phrase : l'envoi, le délai de réponse et la confidentialité. */}
+        <div className="flex flex-col gap-3 md:gap-[1.6svh]">
+          <FieldDescription className="max-md:text-caption">
+            Réponse sous 48 à 72 h, avec un accusé de réception. Rien n&apos;est conservé par le
+            site. <Link href="/mentions-legales">Mentions légales et confidentialité</Link>
+          </FieldDescription>
+          <Button type="submit" size="xl" aria-disabled={busy} className="w-full">
             {busy ? <Spinner aria-label="Envoi en cours" /> : null}
             Envoyer<span className="sr-only"> le message</span>
-          </span>
-          <span aria-hidden className="type-label">
-            <span className="md:hidden">→</span>
-            <span className="max-md:hidden">↑</span>
-          </span>
-        </Button>
+            <span aria-hidden>→</span>
+          </Button>
+        </div>
+      </FieldGroup>
       </div>
 
       {/* Le résultat reste affiché ici : le toast, lui, disparaît (et n'existe pas sans JavaScript). */}
@@ -268,12 +289,6 @@ export function ContactForm({ siteKey }: { siteKey: string }) {
           {state.message}
         </p>
       ) : null}
-      <div className="mt-2 md:mt-3">
-        <FieldDescription className="max-md:text-caption">
-          Vous recevrez un accusé de réception. Rien n&apos;est conservé par le site.{" "}
-          <Link href="/mentions-legales">Mentions légales et confidentialité</Link>
-        </FieldDescription>
-      </div>
       <Toaster position="bottom-center" />
     </form>
   );
