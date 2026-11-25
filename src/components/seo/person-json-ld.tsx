@@ -10,7 +10,6 @@ const PERSON = {
   jobTitle: OWNER.jobTitle,
   url: SITE_URL,
   email: `mailto:${CONTACT.email}`,
-  telephone: CONTACT.phoneE164,
   sameAs: [CONTACT.linkedin, CONTACT.github],
 };
 

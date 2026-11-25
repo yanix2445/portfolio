@@ -114,7 +114,7 @@ test("la navigation principale mène aux sections", async ({ page }) => {
 });
 
 test.describe("contact", () => {
-  test("la page contact expose l'e-mail, le téléphone et les profils", async ({ page }) => {
+  test("la page contact expose l'e-mail, la réservation d'un appel et les profils", async ({ page }) => {
     await page.goto("/contact");
     const main = page.getByRole("main");
 
@@ -122,9 +122,9 @@ test.describe("contact", () => {
       "href",
       "mailto:yanis@yanis-harrat.com",
     );
-    await expect(main.getByRole("link", { name: "07 68 18 79 34" })).toHaveAttribute(
+    await expect(main.getByRole("link", { name: /Réserver un appel/ })).toHaveAttribute(
       "href",
-      "tel:+33768187934",
+      "https://cal.com/yanis-harrat/rdv-15min",
     );
     await expect(main.getByRole("link", { name: /linkedin/i })).toHaveAttribute(
       "href",
@@ -134,6 +134,13 @@ test.describe("contact", () => {
       "href",
       "https://github.com/yanix2445",
     );
+  });
+
+  test("aucune page n'affiche de numéro de téléphone", async ({ page }) => {
+    for (const path of ["/", "/contact", "/mentions-legales"]) {
+      await page.goto(path);
+      await expect(page.locator('a[href^="tel:"]')).toHaveCount(0);
+    }
   });
 
   test("le footer pointe vers les vrais profils", async ({ page }) => {

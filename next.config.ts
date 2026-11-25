@@ -6,6 +6,8 @@ const isDev = process.env.NODE_ENV === "development";
 const isPreview = process.env.VERCEL_ENV === "preview";
 
 const TURNSTILE = "https://challenges.cloudflare.com";
+// Réservation d'un appel : le script de l'embed et le calendrier dans sa fenêtre.
+const CAL = "https://app.cal.com";
 const VERCEL_LIVE = isPreview ? " https://vercel.live" : "";
 // Mode Live d'Impeccable : en développement seulement.
 const __impeccableLiveDev = isDev ? " http://localhost:8400" : "";
@@ -16,12 +18,12 @@ const __impeccableLiveDev = isDev ? " http://localhost:8400" : "";
 // Vercel Analytics est servi par le site lui-même (`/_vercel/insights`).
 const CSP = [
   "default-src 'self'",
-  `script-src 'self' 'unsafe-inline'${isDev ? " 'unsafe-eval' https://va.vercel-scripts.com" : ""} ${TURNSTILE}${VERCEL_LIVE}${__impeccableLiveDev}`,
+  `script-src 'self' 'unsafe-inline'${isDev ? " 'unsafe-eval' https://va.vercel-scripts.com" : ""} ${TURNSTILE} ${CAL}${VERCEL_LIVE}${__impeccableLiveDev}`,
   "style-src 'self' 'unsafe-inline'",
   `img-src 'self' data: blob:${VERCEL_LIVE}`,
   "font-src 'self'",
   `connect-src 'self'${VERCEL_LIVE}${__impeccableLiveDev}`,
-  `frame-src ${TURNSTILE}${VERCEL_LIVE}`,
+  `frame-src ${TURNSTILE} ${CAL}${VERCEL_LIVE}`,
   "object-src 'none'",
   "base-uri 'self'",
   "form-action 'self'",

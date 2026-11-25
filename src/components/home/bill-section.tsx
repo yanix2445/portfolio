@@ -26,8 +26,8 @@ export async function BillSection() {
         </div>
         <div className="mt-5 md:mt-0 md:max-w-[30vw] md:pb-[1vw]">
           <p className="text-body text-soft">
-            Ce que je monte chez moi, en dehors des cours et du travail. Chaque projet a sa fiche
-            détaillée.
+            Des labs et une app que je monte chez moi, hors cours et hors travail. Chaque fiche
+            raconte l&apos;installation, les pannes rencontrées et le résultat.
           </p>
           <Button asChild variant="outline" size="label" className="mt-[2.4vh]">
             <Link href="/projets" data-all-projects>

@@ -5,6 +5,7 @@ import { createCn } from "cn/config";
 // et ne saurait pas qu'un `h-8` passé en `className` remplace un `h-control-xl`.
 const TEXT_SIZES = [
   "label",
+  "nav",
   "caption",
   "meta",
   "action",

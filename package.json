@@ -12,6 +12,7 @@
     "test:e2e": "playwright test"
   },
   "dependencies": {
+    "@calcom/embed-react": "1.5.3",
     "@gsap/react": "2.1.2",
     "@marsidev/react-turnstile": "^1.6.3",
     "@mdx-js/loader": "^3.1.1",

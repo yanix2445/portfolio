@@ -29,7 +29,7 @@ describe("profil", () => {
   it("renseigne la fiche technique et le premier écran, sans champ vide", () => {
     expect(SHEET.length).toBeGreaterThanOrEqual(7);
     SHEET.forEach(expectNoEmptyString);
-    expect(OPENING.slate).toHaveLength(4);
+    expect(OPENING.slate).toHaveLength(3);
     OPENING.slate.forEach(expectNoEmptyString);
     expectNoEmptyString(OPENING);
   });

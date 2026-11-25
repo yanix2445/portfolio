@@ -209,9 +209,12 @@ test.describe("contact sur mobile", () => {
     await expect(page.getByRole("textbox", { name: "Message" })).toBeVisible();
     // Sur téléphone, la liste des coordonnées laisse place à trois accès directs.
     const shortcuts = page.locator("[data-contact-shortcuts]");
-    await expect(shortcuts.getByRole("link", { name: "Appeler" })).toHaveAttribute("href", /^tel:/);
+    await expect(shortcuts.getByRole("link", { name: "Réserver un appel" })).toHaveAttribute(
+      "href",
+      /^https:\/\/cal\.com\//,
+    );
     await expect(shortcuts.getByRole("link", { name: "E-mail" })).toHaveAttribute("href", /^mailto:/);
-    await expect(shortcuts.getByRole("link", { name: "CV (PDF)" })).toBeVisible();
+    await expect(shortcuts.getByRole("link", { name: "CV" })).toBeVisible();
     await expect(page.locator("[data-contact-channels]")).toBeHidden();
     expect(
       await page.evaluate(
