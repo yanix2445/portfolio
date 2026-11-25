@@ -60,6 +60,9 @@
   /* Échelle de texte. Chaque rôle porte sa taille, son interligne, son approche et sa graisse. */
   --text-label: clamp(0.625rem, 0.8vw, 0.8125rem);
   --text-label--letter-spacing: 0.16em;
+  /* Navigation : la légende mono, un cran plus lisible sur téléphone (11 px au lieu de 10). */
+  --text-nav: clamp(0.6875rem, 0.8vw, 0.8125rem);
+  --text-nav--letter-spacing: var(--nav-tracking);
   --text-caption: var(--fs-caption);
   --text-caption--line-height: 1.35;
   --text-meta: var(--fs-meta);
@@ -183,6 +186,8 @@
 
   /* Valeurs fluides : téléphone d'abord, grand écran dans la requête ci-dessous. */
   --gutter: 1rem;
+  /* Approche de la navigation : resserrée sur téléphone pour que tout tienne dès 320 px. */
+  --nav-tracking: 0.12em;
   --portrait-y: 12%;
   --outline-thin: 0.012em;
   --outline-numeral: 1px;
@@ -211,6 +216,7 @@
 @media (min-width: 48rem) {
   :root {
     --gutter: 3.4vw;
+    --nav-tracking: 0.16em;
     --portrait-y: 16%;
     --outline-numeral: 1.5px;
     /* Le minimum de chaque taille est sa valeur téléphone : le texte ne rapetisse jamais
@@ -232,8 +238,9 @@
     /* Titre d'une page qui tient en un écran : borné par la hauteur. */
     --fs-display-fit: min(9.6vw, 14svh);
     --fs-display-finale: min(10.4vw, 24svh);
-    /* Bornées par la hauteur : sur un écran bas, le nom ne monte pas sur la légende. */
-    --fs-display-name: min(21.5vw, 34.5svh);
+    /* Bornée par la hauteur : sur un écran bas, le nom laisse la place à la phrase du haut
+       et au bandeau des appels à l'action. */
+    --fs-display-name: min(20vw, 26svh);
     --fs-display-numeral: min(62vh, 30vw);
   }
 

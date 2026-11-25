@@ -30,15 +30,17 @@ export const CERTIFICATIONS: readonly Certification[] = [
 
 /** Premier écran. Année de BTS, date et lieu confirmés par Yanis le 2026-11-13. */
 export const OPENING = {
-  kicker: "Alternance · Technicien systèmes & réseaux",
+  /** Ce que cherche Yanis, lisible avant le défilement : le rôle, la durée, le lieu, la date. */
+  statement:
+    // Espaces insécables : « je », « à » et l'année ne restent pas seuls en fin de ligne.
+    "Technicien systèmes & réseaux, je\u00a0cherche une alternance de deux ans à\u00a0Paris, à\u00a0partir de septembre\u00a02027.",
   synopsis:
-    "Quatre mois de helpdesk N1/N2 en production au Secours Catholique. Active Directory, Microsoft 365, réseau, virtualisation.",
+    "Active Directory, Microsoft 365 et Intune en production. Windows Server et Proxmox dans mes labs. Python et n8n pour automatiser le reste.",
   synopsisAccent: "Prêt à rejoindre votre équipe.",
   slate: [
-    { label: "Rôle", value: "Technicien systèmes & réseaux" },
-    { label: "Formation", value: "BTS SIO SISR · AURLOM, 2027-2029" },
+    { label: "Formation", value: "BTS SIO SISR · AURLOM" },
     { label: "Rythme", value: "3 j entreprise · 2 j école" },
-    { label: "Disponible", value: "Septembre 2027 · Paris" },
+    { label: "Expérience", value: "Helpdesk N1/N2 · Secours Catholique" },
   ],
 } as const;
 

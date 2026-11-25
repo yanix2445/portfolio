@@ -28,7 +28,7 @@ A systems & network technician profile with traits a typical BTS SIO SISR studen
 
 - Visitors read the site on desktop (recruiter at work) and on mobile (from LinkedIn or email).
 - The CV PDF (`public/cv/yanis-harrat-cv.pdf`) is downloaded and forwarded internally.
-- Contact happens by email, phone or the contact form on `/contact` (Turnstile + Resend, nothing stored). The form is live in production; a real send was verified on 2026-11-24.
+- Contact happens by email, a 15-minute call booked on Cal.com (`cal.com/yanis-harrat/rdv-15min`, opened in the official embed), or the contact form on `/contact` (Turnstile + Resend, nothing stored). The form is live in production; a real send was verified on 2026-11-24.
 
 ## Capabilities and Constraints
 
@@ -40,7 +40,7 @@ A systems & network technician profile with traits a typical BTS SIO SISR studen
 
 ## Brand Commitments
 
-- Name written « Yanis HARRAT ». Professional contact: `yanis@yanis-harrat.com`, `07 68 18 79 34`, LinkedIn `/in/yanis-harrat/`, GitHub `yanix2445`.
+- Name written « Yanis HARRAT ». Professional contact: `yanis@yanis-harrat.com`, Cal.com booking, LinkedIn `/in/yanis-harrat/`, GitHub `yanix2445`. No phone number on the site (Yanis's choice, 2026-11-25); the CV PDF still carries it.
 - Portrait photo provided: `public/images/yanis-harrat.jpg` (warm amber bokeh on a dark background).
 - Copy in French.
 - Visual direction validated by Yanis on a rendered mockup (2026-11-13): « Générique », a film-title world. Dark warm ground, cream type, ember orange accent, condensed poster lettering. Reference: `aidd_docs/tasks/2026_11/2026_11_13_home-generique/mockup/index.html`.

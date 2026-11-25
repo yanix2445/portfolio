@@ -4,7 +4,7 @@
 // système (aucune police web : elle ferait appeler un serveur tiers à l'ouverture du mail).
 
 import { reasonLabel, type ContactFields } from "@/lib/contact";
-import { CONTACT, OWNER, SITE_HOST, SITE_URL } from "@/lib/site";
+import { BOOKING, OWNER, SITE_HOST, SITE_URL } from "@/lib/site";
 
 /** Délai de réponse promis au visiteur. */
 export const REPLY_DELAY = { label: "48 à 72 heures", short: "48 à 72 h", maxHours: 72 } as const;
@@ -56,7 +56,7 @@ export function formatParisDate(date: Date): string {
   return `${day} à ${hours} h ${minutes}`;
 }
 
-/** Espaces insécables : « 48 à 72 heures » ou un numéro de téléphone ne se coupent pas. */
+/** Espaces insécables : « 48 à 72 heures » ou « un appel de 15 minutes » ne se coupent pas. */
 function nbsp(text: string): string {
   return text.replaceAll(" ", "&nbsp;");
 }
@@ -193,7 +193,7 @@ export function confirmationEmail(): Email {
       `Merci pour votre message envoyé depuis mon portfolio. Je l'ai bien reçu et je vous réponds <strong style="color:${COLOR.foreground};">sous ${nbsp(REPLY_DELAY.label)} maximum</strong>, à cette adresse <span style="white-space:nowrap;">e-mail</span>.`,
     ),
     paragraph(
-      `Besoin d'aller plus vite&nbsp;? Appelez-moi au ${link(`tel:${CONTACT.phoneE164}`, nbsp(CONTACT.phone))}, ou répondez simplement à ce mail.`,
+      `Besoin d'aller plus vite&nbsp;? ${link(BOOKING.url, nbsp("Réservez un appel de 15 minutes"))}, ou répondez simplement à ce mail.`,
     ),
     paragraph(`À très vite,<br><span style="color:${COLOR.foreground};">${escapeHtml(OWNER.firstName)}</span>`),
     button(SITE_URL, "Revoir le portfolio"),
@@ -212,7 +212,7 @@ export function confirmationEmail(): Email {
       "",
       `Merci pour votre message envoyé depuis mon portfolio. Je l'ai bien reçu et je vous réponds sous ${REPLY_DELAY.label} maximum, à cette adresse e-mail.`,
       "",
-      `Besoin d'aller plus vite ? Appelez-moi au ${CONTACT.phone}, ou répondez simplement à ce mail.`,
+      `Besoin d'aller plus vite ? Réservez un appel de 15 minutes : ${BOOKING.url}, ou répondez simplement à ce mail.`,
       "",
       "À très vite,",
       OWNER.firstName,

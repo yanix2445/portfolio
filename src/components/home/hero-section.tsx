@@ -1,8 +1,10 @@
 import Image from "next/image";
+import Link from "next/link";
 
+import { BookCallLink } from "@/components/contact/book-call-link";
 import { Button } from "@/components/ui/button";
 import { OPENING } from "@/lib/profile";
-import { CONTACT, CV_PATH, OWNER } from "@/lib/site";
+import { CV_PATH, OWNER } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
 function Synopsis({ className }: { className: string }) {
@@ -13,7 +15,8 @@ function Synopsis({ className }: { className: string }) {
   );
 }
 
-// Premier écran : le portrait plein cadre et le nom en lettres d'affiche.
+// Premier écran : le portrait plein cadre, le nom en lettres d'affiche, ce que cherche Yanis
+// et les appels à l'action.
 // Le synopsis est rendu deux fois : la copie lue suit le hero dans le flux,
 // la copie décorative est posée dans le hero par l'animation (grand écran).
 export function HeroSection() {
@@ -21,12 +24,12 @@ export function HeroSection() {
     <>
       <section
         aria-labelledby="hero-title"
-        className="relative -mt-header px-gutter pb-10 md:h-svh md:min-h-136 md:overflow-hidden md:px-0 md:pb-0"
+        className="relative -mt-header px-gutter pb-10 md:h-svh md:min-h-136 md:overflow-hidden md:px-0 md:pb-0 md:[--hero-band:calc(2.6vw+1.1vw+3rem+2.4vh+var(--spacing-control-xl))] lg:[--hero-band:calc(2.6vw+1.1vw+var(--spacing-control-xl))]"
         data-hero
       >
         {/* Le cadre coupe le zoom d'entrée de la photo : il ne doit pas élargir la page. */}
         <div
-          className="relative -mx-gutter h-[68svh] min-h-88 overflow-hidden md:absolute md:inset-0 md:mx-0 md:h-auto md:min-h-0"
+          className="relative -mx-gutter h-[56svh] min-h-88 overflow-hidden md:absolute md:inset-0 md:mx-0 md:h-auto md:min-h-0"
           data-hero-plate
         >
           <Image
@@ -47,7 +50,7 @@ export function HeroSection() {
         </div>
 
         <div
-          className="relative -mt-[24vw] origin-bottom-left md:absolute md:bottom-[calc(min(3.4vw,6vh)+10.5vh)] md:left-[3.1vw] md:mt-0"
+          className="relative -mt-[24vw] origin-bottom-left md:absolute md:bottom-[calc(var(--hero-band)+2.4vh)] md:left-[3.1vw] md:mt-0"
           data-hero-title
         >
           <h1 id="hero-title" aria-label={OWNER.fullName} className="type-poster text-display-name">
@@ -65,12 +68,17 @@ export function HeroSection() {
           </h1>
         </div>
 
+        {/* Ce que cherche Yanis, en une phrase : lisible dès le premier écran, au-dessus du nom
+            sur grand écran, juste dessous sur téléphone. La pastille dit qu'il est disponible. */}
         <p
-          className="type-label mt-5 flex items-center gap-[1em] md:absolute md:top-[16vh] md:left-gutter md:mt-0"
+          className="mt-5 flex max-w-[34ch] items-baseline gap-[0.7em] text-lead text-pretty md:absolute md:top-[14vh] md:left-gutter md:mt-0 md:max-w-[min(40vw,34ch)]"
           data-hero-kicker
         >
-          <i aria-hidden className="size-[0.7em] rounded-full bg-primary ring-[0.35em] ring-primary/20" />
-          {OPENING.kicker}
+          <i
+            aria-hidden
+            className="size-[0.55em] shrink-0 -translate-y-[0.05em] rounded-full bg-primary ring-[0.3em] ring-primary/20"
+          />
+          {OPENING.statement}
         </p>
 
         <div
@@ -89,28 +97,42 @@ export function HeroSection() {
           Défiler
         </div>
 
-        <dl className="type-label mt-7 grid grid-cols-2 border-t border-border md:absolute md:inset-x-gutter md:bottom-[2.6vw] md:mt-0 md:grid-cols-4">
-          {OPENING.slate.map(({ label, value }) => (
-            <div
-              key={label}
-              className="py-3.5 pr-3 max-md:even:border-l max-md:even:pl-3.5 max-md:nth-[n+3]:border-t md:pt-[1.1vw] md:pr-[1.4vw] md:pb-0 md:not-first:border-l md:not-first:pl-[1.4vw]"
-              data-hero-slate
-            >
-              <dt className="text-muted-foreground">{label}</dt>
-              <dd className="mt-[0.5em] font-sans text-meta tracking-normal normal-case">{value}</dd>
-            </div>
-          ))}
-        </dl>
-
-        <div className="mt-7 flex flex-wrap gap-2.5 md:hidden">
-          <Button asChild size="xl" className="flex-1 basis-36">
-            <a href={`tel:${CONTACT.phoneE164}`}>Appeler</a>
-          </Button>
-          <Button asChild variant="outline" size="xl" className="flex-1 basis-36">
-            <a href={CV_PATH} target="_blank" rel="noopener">
-              CV (PDF)
-            </a>
-          </Button>
+        {/* Bandeau du bas : les faits utiles au recruteur, puis les appels à l'action. Sa hauteur
+            (`--hero-band`) place le nom juste au-dessus ; sur téléphone, les appels passent en premier. */}
+        <div
+          className="mt-7 flex flex-col gap-7 md:absolute md:inset-x-gutter md:bottom-[2.6vw] md:mt-0 md:gap-[2.4vh] lg:flex-row lg:gap-0"
+          data-hero-band
+        >
+          <dl className="type-label grid grid-cols-2 border-t border-border md:grid-cols-3 lg:flex-1">
+            {OPENING.slate.map(({ label, value }) => (
+              <div
+                key={label}
+                className="py-3.5 pr-3 max-md:even:border-l max-md:even:pl-3.5 max-md:nth-[n+3]:col-span-2 max-md:nth-[n+3]:border-t md:pt-[1.1vw] md:pr-[1.4vw] md:pb-0 md:not-first:border-l md:not-first:pl-[1.4vw]"
+                data-hero-slate
+              >
+                <dt className="text-muted-foreground">{label}</dt>
+                <dd className="mt-[0.5em] font-sans text-meta tracking-normal normal-case">{value}</dd>
+              </div>
+            ))}
+          </dl>
+          <div
+            className="flex flex-wrap gap-2.5 max-md:order-first md:gap-[0.8vw] lg:border-t lg:border-l lg:border-border lg:pt-[1.1vw] lg:pl-[1.4vw]"
+            data-hero-slate
+          >
+            {/* Le formulaire s'ouvre avec le motif « Alternance » déjà choisi. */}
+            <Button asChild size="xl" className="max-md:basis-full">
+              <Link href="/contact?motif=alternance">Proposer une alternance</Link>
+            </Button>
+            {/* Sur grand écran, « Réserver un appel » est déjà dans l'en-tête. */}
+            <Button asChild variant="outline" size="xl" className="flex-1 md:hidden">
+              <BookCallLink />
+            </Button>
+            <Button asChild variant="outline" size="xl">
+              <a href={CV_PATH} target="_blank" rel="noopener">
+                CV
+              </a>
+            </Button>
+          </div>
         </div>
       </section>
 

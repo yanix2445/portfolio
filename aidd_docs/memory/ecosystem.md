@@ -12,6 +12,7 @@ flowchart LR
   DNS["Cloudflare DNS · human only"]
   Turnstile["Cloudflare Turnstile · integration.md"]
   Resend["Resend · integration.md"]
+  Cal["Cal.com · integration.md"]
 
   Agent -- cli --> GitHub
   Agent -- cli --> Vercel
@@ -19,6 +20,7 @@ flowchart LR
   App -- http --> Turnstile
   App -- http --> Resend
   App -- http --> Analytics
+  App -- "embed au clic" --> Cal
 
   Dependabot -- "PR de mise à jour" --> GitHub
   GitHub -- "push sur main" --> Vercel

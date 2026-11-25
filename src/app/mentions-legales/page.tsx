@@ -29,8 +29,6 @@ export default function MentionsLegalesPage() {
             Ce site est édité par {OWNER.fullName}, à titre personnel et non commercial.
             <br />
             E-mail : <a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a>
-            <br />
-            Téléphone : <a href={`tel:${CONTACT.phoneE164}`}>{CONTACT.phone}</a>
           </p>
 
           <h2>Hébergeur</h2>
@@ -62,6 +60,18 @@ export default function MentionsLegalesPage() {
             signaux techniques du navigateur pour distinguer les humains des robots. Ce traitement
             repose sur l&apos;intérêt légitime de l&apos;éditeur à protéger le site contre le spam
             et les abus.
+          </p>
+
+          <h2>Prise de rendez-vous</h2>
+          <p>
+            Le bouton « Réserver un appel » ouvre le calendrier de <strong>Cal.com</strong> (Cal.com,
+            Inc., États-Unis). Son script n&apos;est chargé que lorsque vous survolez, ciblez ou
+            cliquez ce bouton. Les informations saisies pour réserver (nom, adresse e-mail, créneau,
+            message éventuel) sont traitées par Cal.com pour organiser l&apos;appel, selon sa{" "}
+            <a href="https://cal.com/privacy" target="_blank" rel="noopener noreferrer">
+              politique de confidentialité
+            </a>
+            .
           </p>
 
           <h2>Mesure d&apos;audience</h2>

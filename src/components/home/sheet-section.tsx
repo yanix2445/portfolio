@@ -14,7 +14,7 @@ export function SheetSection() {
           Fiche technique
         </h2>
         <p className="mt-[3vh] text-body text-soft md:max-w-[26vw]">
-          Les environnements que je sais installer, administrer et dépanner.
+          Ce que je sais installer, administrer et dépanner, en production ou dans mes labs.
         </p>
       </div>
       <dl>

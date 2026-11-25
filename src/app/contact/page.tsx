@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
 
+import { BookCallLink } from "@/components/contact/book-call-link";
 import { ContactForm } from "@/components/contact/contact-form";
 import { PageHeader } from "@/components/layout/page-header";
 import { Button } from "@/components/ui/button";
 import { contactSiteKey } from "@/lib/contact";
-import { CONTACT, CV_PATH, OWNER } from "@/lib/site";
+import { BOOKING, CONTACT, CV_PATH, OWNER } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
 export const metadata: Metadata = {
@@ -15,7 +16,7 @@ export const metadata: Metadata = {
 
 const CHANNELS = [
   { label: "E-mail", value: CONTACT.email, href: `mailto:${CONTACT.email}` },
-  { label: "Téléphone", value: CONTACT.phone, href: `tel:${CONTACT.phoneE164}` },
+  { label: "Rendez-vous", value: "Réserver un appel de 15 min", href: BOOKING.url, booking: true },
   { label: "LinkedIn", value: "linkedin.com/in/yanis-harrat", href: CONTACT.linkedin, rel: "noopener noreferrer me" },
   { label: "GitHub", value: "github.com/yanix2445", href: CONTACT.github, rel: "noopener noreferrer me" },
   { label: "CV", value: "Télécharger le PDF", href: CV_PATH, rel: "noopener" },
@@ -24,9 +25,9 @@ const CHANNELS = [
 // Sur téléphone, à côté du formulaire : les trois accès directs. LinkedIn, GitHub et
 // l'e-mail sont aussi dans le pied de page.
 const SHORTCUTS = [
-  { label: "Appeler", href: `tel:${CONTACT.phoneE164}` },
+  { label: "Réserver un appel", href: BOOKING.url, booking: true },
   { label: "E-mail", href: `mailto:${CONTACT.email}` },
-  { label: "CV (PDF)", href: CV_PATH, external: true },
+  { label: "CV", href: CV_PATH, external: true },
 ] as const;
 
 // Le formulaire n'est proposé que si Turnstile et Resend sont configurés : sinon
@@ -50,7 +51,7 @@ export default function ContactPage() {
     >
       <PageHeader id="contact-title" title="Contact" compact={Boolean(siteKey)}>
         Je cherche une alternance de 2 ans comme technicien systèmes et réseaux, dès septembre
-        2027 : 3 jours en entreprise, 2 jours à l&apos;école. Écrivez-moi ou appelez-moi directement.
+        2027 : 3 jours en entreprise, 2 jours à l&apos;école. Écrivez-moi, ou réservez un appel de 15 minutes.
       </PageHeader>
 
       <div
@@ -77,12 +78,16 @@ export default function ContactPage() {
             {SHORTCUTS.map((shortcut) => (
               <li key={shortcut.label}>
                 <Button asChild variant="outline" size="label">
-                  <a
-                    href={shortcut.href}
-                    {...("external" in shortcut ? { target: "_blank", rel: "noopener" } : {})}
-                  >
-                    {shortcut.label}
-                  </a>
+                  {"booking" in shortcut ? (
+                    <BookCallLink>{shortcut.label}</BookCallLink>
+                  ) : (
+                    <a
+                      href={shortcut.href}
+                      {...("external" in shortcut ? { target: "_blank", rel: "noopener" } : {})}
+                    >
+                      {shortcut.label}
+                    </a>
+                  )}
                 </Button>
               </li>
             ))}
@@ -103,13 +108,17 @@ export default function ContactPage() {
             >
               <dt className="type-label text-muted-foreground">{channel.label}</dt>
               <dd className="text-lead">
-                <a
-                  href={channel.href}
-                  className="underline-offset-4 hover:underline"
-                  {...("rel" in channel ? { target: "_blank", rel: channel.rel } : {})}
-                >
-                  {channel.value}
-                </a>
+                {"booking" in channel ? (
+                  <BookCallLink className="underline-offset-4 hover:underline">{channel.value}</BookCallLink>
+                ) : (
+                  <a
+                    href={channel.href}
+                    className="underline-offset-4 hover:underline"
+                    {...("rel" in channel ? { target: "_blank", rel: channel.rel } : {})}
+                  >
+                    {channel.value}
+                  </a>
+                )}
               </dd>
             </div>
           ))}

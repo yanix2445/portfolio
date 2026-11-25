@@ -17,11 +17,17 @@ export const OWNER = {
   jobTitle: "Technicien systèmes et réseaux, BTS SIO SISR en alternance",
 } as const;
 
+// Pas de numéro de téléphone sur le site (choix de Yanis, 2026-11-25) : on réserve un appel.
 export const CONTACT = {
   email: "yanis@yanis-harrat.com",
-  phone: "07 68 18 79 34",
-  // Format E.164 pour les liens tel: et le balisage schema.org.
-  phoneE164: "+33768187934",
   linkedin: "https://www.linkedin.com/in/yanis-harrat/",
   github: "https://github.com/yanix2445",
+} as const;
+
+/** Réservation d'un appel de 15 minutes sur Cal.com, ouverte dans une fenêtre par l'embed officiel. */
+export const BOOKING = {
+  label: "Réserver un appel",
+  url: "https://cal.com/yanis-harrat/rdv-15min",
+  calLink: "yanis-harrat/rdv-15min",
+  namespace: "rdv-15min",
 } as const;

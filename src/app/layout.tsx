@@ -49,8 +49,17 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${display.variable} ${sans.variable} ${mono.variable} dark h-full antialiased`}
     >
       <body className="flex min-h-full flex-col">
+        {/* Premier arrêt au clavier : sauter l'en-tête. Invisible tant qu'il n'a pas le focus. */}
+        <a
+          href="#contenu"
+          className="type-label sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-gutter focus:z-60 focus:rounded-lg focus:bg-primary focus:px-4 focus:py-3 focus:text-primary-foreground focus-visible:outline-background focus-visible:-outline-offset-4"
+        >
+          Aller au contenu
+        </a>
         <SiteHeader />
-        <main className="flex flex-1 flex-col pt-header">{children}</main>
+        <main id="contenu" tabIndex={-1} className="flex flex-1 flex-col pt-header focus:outline-none">
+          {children}
+        </main>
         <SiteFooter />
         <Analytics />
       </body>
