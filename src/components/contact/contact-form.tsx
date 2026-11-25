@@ -28,6 +28,7 @@ import {
 import { cn } from "@/lib/utils";
 
 import { useContactDraft } from "./use-contact-draft";
+import { SentenceBlank } from "./sentence-blank";
 import { useTurnstileGate } from "./use-turnstile-gate";
 
 // Les champs texte, dans l'ordre de la page : le focus va au premier en erreur.
@@ -114,7 +115,7 @@ export function ContactForm({ siteKey }: { siteKey: string }) {
   // au focus (rouge en erreur). Il indique le focus à la place du contour, sans animation si
   // le visiteur réduit les animations.
   const blank =
-    "inline-block max-w-full border-0 bg-transparent px-[0.1em] pb-[0.04em] align-baseline [font:inherit] [letter-spacing:inherit] normal-case text-primary outline-none [--blank-accent:var(--color-primary)] [--blank-line:var(--color-border)] bg-[image:linear-gradient(var(--blank-accent),var(--blank-accent)),linear-gradient(var(--blank-line),var(--blank-line))] bg-[length:0%_2px,100%_2px] bg-[position:0_100%,0_100%] bg-no-repeat transition-[background-size] duration-300 ease-poster motion-reduce:transition-none placeholder:text-muted-foreground/60 hover:[--blank-line:var(--color-soft)] focus-visible:bg-[length:100%_2px,100%_2px] aria-invalid:[--blank-accent:var(--color-destructive)] aria-invalid:bg-[length:100%_2px,100%_2px]";
+    "inline-block max-w-full resize-none overflow-hidden border-0 bg-transparent px-[0.1em] pb-[0.04em] align-baseline [overflow-wrap:anywhere] [font:inherit] [letter-spacing:inherit] normal-case text-primary outline-none [--blank-accent:var(--color-primary)] [--blank-line:var(--color-border)] bg-[image:linear-gradient(var(--blank-accent),var(--blank-accent)),linear-gradient(var(--blank-line),var(--blank-line))] bg-[length:0%_2px,100%_2px] bg-[position:0_100%,0_100%] bg-no-repeat transition-[background-size] duration-300 ease-poster motion-reduce:transition-none placeholder:text-muted-foreground/60 hover:[--blank-line:var(--color-soft)] focus-visible:bg-[length:100%_2px,100%_2px] aria-invalid:[--blank-accent:var(--color-destructive)] aria-invalid:bg-[length:100%_2px,100%_2px]";
 
   return (
     <form ref={form} action={formAction} onSubmit={handleSubmit} onInput={saveDraft} noValidate>
@@ -131,18 +132,19 @@ export function ContactForm({ siteKey }: { siteKey: string }) {
             Nom
           </label>
           {/* La ponctuation reste collée au blanc : elle ne part jamais seule à la ligne. */}
-          <span className="whitespace-nowrap">
-          <input
+          <span className="relative whitespace-nowrap">
+          <SentenceBlank
             id="name"
             name="name"
             autoComplete="name"
+            autoCapitalize="words"
             required
             maxLength={CONTACT_LIMITS.name}
             placeholder="votre nom"
             defaultValue={failed?.fields?.name}
             aria-invalid={Boolean(errors.name)}
             aria-describedby={describedBy("name")}
-            className={cn(blank, "w-[6.5em]")}
+            className={blank}
           />
           ,</span>
         </p>
@@ -151,13 +153,14 @@ export function ContactForm({ siteKey }: { siteKey: string }) {
           <label htmlFor="email" className="sr-only">
             E-mail
           </label>
-          <span className="whitespace-nowrap">
-          <input
+          <span className="relative whitespace-nowrap">
+          <SentenceBlank
             id="email"
             name="email"
-            type="email"
             inputMode="email"
             autoComplete="email"
+            autoCapitalize="none"
+            autoCorrect="off"
             spellCheck={false}
             required
             maxLength={CONTACT_LIMITS.email}
@@ -165,7 +168,7 @@ export function ContactForm({ siteKey }: { siteKey: string }) {
             defaultValue={failed?.fields?.email}
             aria-invalid={Boolean(errors.email)}
             aria-describedby={describedBy("email")}
-            className={cn(blank, "w-[min(9em,85%)]")}
+            className={cn(blank, "[word-break:break-all]")}
           />
           .</span>
         </p>
