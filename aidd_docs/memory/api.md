@@ -5,7 +5,7 @@ La surface serveur du site. Il n'y a pas d'API publique, seulement des Server Ac
 ## Style
 
 - Server Actions Next.js (`"use server"`) dans `src/actions/`. Une seule route `POST` : le webhook Resend.
-- Les seules routes `GET` sont générées au build : `sitemap.ts`, `robots.ts`, `opengraph-image.tsx` (l'image de partage des pages du site, avec le portrait), un `opengraph-image.tsx` par fiche dans `projets/[slug]` et `veille/[slug]` (une image par projet ou article, générée sans rien faire à chaque nouvelle fiche MDX) et `apple-icon.tsx`. `public/llms.txt` est un fichier statique, à tenir à jour à chaque nouvelle fiche.
+- Les seules routes `GET` sont générées au build : `sitemap.ts`, `robots.ts`, `opengraph-image.tsx` (l'image de partage des pages du site, avec le portrait), un `opengraph-image.tsx` par fiche dans `projets/[slug]` et `veille/[slug]` (une image par projet ou article, générée sans rien faire à chaque nouvelle fiche MDX). `public/llms.txt` est un fichier statique, à tenir à jour à chaque nouvelle fiche.
 
 ## Resources
 

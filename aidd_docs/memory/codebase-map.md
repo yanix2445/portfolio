@@ -20,7 +20,7 @@ flowchart TD
 
 ## Areas
 
-- `src/app` : les routes de l'App Router (accueil, projets, veille, contact, mentions légales), `sitemap.ts`, `robots.ts`, `fonts/` (les trois polices locales, et `fonts/og/` : leurs copies statiques en TTF pour les images générées), `opengraph-image.tsx` (l'image de partage du site ; chaque `[slug]` a la sienne), `apple-icon.tsx` et `favicon.ico` (le monogramme « YH »), `globals.css` (tous les tokens de design).
+- `src/app` : les routes de l'App Router (accueil, projets, veille, contact, mentions légales), `sitemap.ts`, `robots.ts`, `fonts/` (les trois polices locales, et `fonts/og/` : leurs copies statiques en TTF pour les images générées), `opengraph-image.tsx` (l'image de partage du site ; chaque `[slug]` a la sienne), `favicon.ico`, `icon.png` et `apple-icon.png` (le badge « YH » orange choisi par Yanis le 2026-11-25, détouré ; l'icône Apple est posée sur le fond du site, iOS noircissant la transparence), `globals.css` (tous les tokens de design).
 - `src/actions` : les Server Actions. `contact.ts` reçoit le formulaire de contact.
 - `src/app/api/resend-webhook` : la seule route `POST`, le webhook Resend qui alerte des mails du formulaire non remis.
 - `src/components/ui` : les primitives shadcn/ui, thémées (bouton, badge, carte, filtres, champs, toasts).
