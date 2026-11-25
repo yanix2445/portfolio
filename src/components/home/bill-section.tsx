@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import { Poster } from "@/components/projects/poster";
+import { POSTER_SLOT, Poster } from "@/components/projects/poster";
 import { Button } from "@/components/ui/button";
 import { getProjects } from "@/lib/content";
 import { pickFeatured } from "@/lib/projects";
@@ -19,15 +19,15 @@ export async function BillSection() {
     >
       <div className="mb-8 md:mb-[6vh] md:flex md:items-end md:justify-between md:gap-[4vw]">
         <div>
-          <p className="type-label mb-[1.6vh] text-primary">Projets personnels</p>
+          <p className="type-label mb-[1.6vh] text-primary">Projets</p>
           <h2 id="bill-title" className="type-poster pt-[0.16em] text-display-xl" data-reveal="title">
             À l&apos;affiche
           </h2>
         </div>
         <div className="mt-5 md:mt-0 md:max-w-[30vw] md:pb-[1vw]">
           <p className="text-body text-soft">
-            Des labs et une app que je monte chez moi, hors cours et hors travail. Chaque fiche
-            raconte l&apos;installation, les pannes rencontrées et le résultat.
+            Trois projets choisis parmi tous les autres. Chaque fiche raconte l&apos;installation,
+            les pannes rencontrées et le résultat.
           </p>
           <Button asChild variant="outline" size="label" className="mt-[2.4vh]">
             <Link href="/projets" data-all-projects>
@@ -38,7 +38,7 @@ export async function BillSection() {
       </div>
       <ul className="grid gap-4 md:grid-cols-3 md:gap-[1.6vw]">
         {featured.map((project, index) => (
-          <li key={project.slug} data-reveal="poster">
+          <li key={project.slug} className={POSTER_SLOT} data-reveal="poster">
             <Poster project={project} index={index} />
           </li>
         ))}

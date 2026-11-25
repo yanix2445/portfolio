@@ -71,6 +71,48 @@ test.describe("catalogue des projets", () => {
   });
 });
 
+test.describe("catalogue qui grandit", () => {
+  test("un filtre se garde dans l'adresse et survit au rechargement", async ({ page }) => {
+    await page.goto("/projets");
+    const filters = page.getByRole("radiogroup", { name: "Filtrer par domaine" }).getByRole("radio");
+    const domain = filters.nth(1);
+
+    await expect(async () => {
+      await domain.click();
+      await expect(page).toHaveURL(/[?&]domaine=/, { timeout: 500 });
+    }).toPass();
+    await page.reload();
+    await expect(filters.nth(1)).toBeChecked();
+  });
+
+  test("deux filtres sans projet commun le disent et proposent de tout réafficher", async ({ page }) => {
+    await page.goto("/projets");
+    const contexts = page.getByRole("radiogroup", { name: "Filtrer par cadre" }).getByRole("radio");
+    const domains = page.getByRole("radiogroup", { name: "Filtrer par domaine" }).getByRole("radio");
+    test.skip((await contexts.count()) < 3, "un seul cadre : pas de combinaison possible");
+    await expect(async () => {
+      await contexts.nth(1).click();
+      await expect(contexts.nth(1)).toBeChecked({ timeout: 500 });
+    }).toPass();
+
+    // On cherche un domaine qui ne croise pas ce cadre ; s'il n'y en a pas, rien à vérifier.
+    let empty = false;
+    for (let index = 1; index < (await domains.count()); index++) {
+      await domains.nth(index).click();
+      if ((await page.locator("[data-poster]").count()) === 0) {
+        empty = true;
+        break;
+      }
+    }
+    test.skip(!empty, "chaque domaine croise ce cadre");
+
+    await expect(page.getByText("Aucun projet ne correspond à ces deux filtres.")).toBeVisible();
+    await page.getByRole("button", { name: "Voir tous les projets" }).click();
+    await expect(page.locator("[data-poster]")).toHaveCount(PROJECT_COUNT);
+    await expect(page).not.toHaveURL(/[?&](cadre|domaine)=/);
+  });
+});
+
 test.describe("catalogue sans JavaScript", () => {
   test.use({ javaScriptEnabled: false });
 
