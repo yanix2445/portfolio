@@ -10,6 +10,15 @@ export const BASE_OPEN_GRAPH = {
   siteName: SITE_NAME,
 } as const;
 
+// L'image de partage du site (`src/app/opengraph-image.tsx`). Une page qui définit son propre
+// openGraph perd celle du layout : elle la redonne explicitement, faute d'image à elle.
+export const SHARE_IMAGE = {
+  url: "/opengraph-image",
+  width: 1200,
+  height: 630,
+  alt: "Yanis Harrat, technicien systèmes et réseaux : alternance de deux ans à Paris à partir de septembre 2027",
+} as const;
+
 export const OWNER = {
   firstName: "Yanis",
   lastName: "HARRAT",
