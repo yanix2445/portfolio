@@ -31,7 +31,7 @@ export function longestWordEm(title: string): number {
   );
 }
 
-type DisplaySize = "display-poster" | "display-title";
+type DisplaySize = "display-poster" | "display-title" | "display-sm";
 
 /**
  * Taille d'un titre : celle du token, réduite si besoin pour que le mot le plus long tienne

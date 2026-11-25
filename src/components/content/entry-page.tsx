@@ -146,9 +146,10 @@ const BODY_GRID =
 
 /**
  * Bloc de lecture : 75ch au plus, centré dans sa colonne, texte aligné à gauche.
- * `text-body` donne à `ch` la même mesure que le texte de `Prose`.
+ * `text-body` donne à `ch` la même mesure que le texte de `Prose`. `min-w-0` : un bloc de code
+ * trop large défile dans la colonne au lieu de l'élargir (et la page avec, sur téléphone).
  */
-const READING = "mx-auto w-full max-w-[75ch] text-body";
+const READING = "mx-auto w-full min-w-0 max-w-[75ch] text-body";
 
 /** Colonne latérale : alignée sur le bloc de lecture tant qu'elle est empilée, collante dès `lg`. */
 const SIDE = cn(READING, "lg:sticky lg:top-[calc(var(--header-h)+5vh)] lg:row-start-1 lg:mx-0 lg:max-w-none");
@@ -263,7 +264,7 @@ export async function EntryPage({
         aria-label="Suite"
         className={cn(BODY_GRID, "mt-20 gap-8 border-t border-border pt-10 md:mt-[14vh] md:pt-[6vh]")}
       >
-        <div className={cn(READING, "flex flex-col items-start gap-6 lg:mx-0 lg:max-w-none")}>
+        <div className="flex flex-col items-start gap-6">
           <p className="type-label text-muted-foreground">{next ? copy.next : "Fin"}</p>
           <Button asChild variant="outline" size="label">
             <Link href={copy.back.href}>{copy.back.label}</Link>
@@ -273,11 +274,11 @@ export async function EntryPage({
           <Link
             href={`/${collection}/${next.slug}`}
             data-title={frenchSpacing(next.title)}
-            className={cn(READING, "group/card block @container lg:col-start-2")}
+            className="group/card block @container text-body lg:col-span-2 lg:col-start-2"
           >
             <span
-              className="block type-poster pt-[0.1em] text-display-title text-balance transition-colors duration-200 group-hover/card:text-primary"
-              style={fitTitle(frenchSpacing(next.title), "display-title")}
+              className="line-clamp-2 type-poster pt-[0.1em] pb-[0.06em] text-display-sm text-balance transition-colors duration-200 group-hover/card:text-primary"
+              style={fitTitle(frenchSpacing(next.title), "display-sm")}
             >
               {frenchSpacing(next.title)}
             </span>

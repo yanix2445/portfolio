@@ -1,0 +1,148 @@
+export const metadata = {
+  title: "L'IA copilote de dépannage : diagnostiquer une panne sans perdre le contrôle",
+  summary:
+    "Un agent IA pour diagnostiquer une panne dans un homelab Proxmox et OPNsense : ce qu'il apporte, ce que le nouveau guide de l'ANSSI sur l'IA agentique impose, et pourquoi les journaux qu'il lit sont eux-mêmes une menace.",
+  date: "2026-11-25",
+  tags: ["IA agentique", "Dépannage", "ANSSI", "Injection de prompt", "Proxmox", "OPNsense"],
+  takeaway:
+    "Le bon réglage n'est pas « l'IA a le droit » ou « l'IA n'a pas le droit », mais une liste d'actions classées, appliquée par le système et non par le modèle.",
+};
+
+## Problématique
+
+Dans quelle mesure l'IA peut-elle assister un administrateur systèmes et réseaux pour dépanner une infrastructure, tout en garantissant la sécurité, la traçabilité et la maîtrise humaine des actions ?
+
+Ma [fiche précédente](/veille/ia-copilote-technicien-informatique) posait la question en général. Celle-ci la resserre sur un usage précis, le **diagnostic de panne**, et s'appuie sur une publication récente : le guide [*Sécuriser un système IA agentique*](https://messervices.cyber.gouv.fr/guides/essentiels-ia-agentique) de l'ANSSI, paru le 30 octobre 2026.
+
+La réponse n'est ni « l'IA fait tout », ni « l'IA ne sert à rien ». Il faut décider, action par action, ce que l'agent fait seul, ce qu'il propose, ce qu'un humain valide et ce qui lui est interdit.
+
+## Le scénario : une panne de service dans le homelab
+
+Le cas s'appuie sur une infrastructure du type de mon [homelab Proxmox et Docker](/projets/homelab-proxmox-docker) :
+
+- **Proxmox VE** héberge les machines virtuelles ;
+- **OPNsense** route et filtre entre les VLAN ;
+- une **VM Linux** fait tourner un service web dans un conteneur **Docker** ;
+- une **supervision** collecte métriques, alertes et journaux ;
+- un **agent IA** analyse le contexte et propose ;
+- l'**administrateur** valide, exécute ce qui est sensible et décide.
+
+La panne : un service interne ne répond plus depuis le LAN. Le conteneur semble démarré, mais la page ne s'affiche pas. Les pistes sont nombreuses : état de la VM, du conteneur, journaux, résolution DNS, règles et alias OPNsense, interfaces et VLAN, modifications récentes.
+
+La demande faite à l'agent tient en une phrase : « Analyse les informations disponibles, propose un diagnostic et un plan d'action. Ne modifie rien sans validation. »
+
+## Ce que l'IA apporte au diagnostic, et ses limites
+
+En lecture seule, l'agent peut consulter la supervision, lire les journaux autorisés, interroger l'état des VM, des conteneurs et des interfaces, lire les règles OPNsense, faire un ping ou une requête HTTP, puis comparer l'état attendu à l'état observé. Son vrai apport est de **réduire le temps passé à chercher où regarder**.
+
+Un retour d'expérience le montre bien. Un administrateur a donné à Claude Code un accès SSH à tout son homelab, avec une règle simple : les commandes de lecture passent, toute modification demande son accord ([tskulbru.dev, juillet 2026](https://tskulbru.dev/posts/claude-code-homelab-audit/)). L'agent a relevé quatorze problèmes, dont un qu'il ignorait : une VM de collecte de journaux morte depuis des mois, vers laquelle pointait encore le pilote de logs Docker d'un autre serveur. Sa conclusion : les pannes dangereuses étaient **relationnelles**, une configuration sur une machine pointant vers un service mort sur une autre. C'est exactement ce qu'un agent qui lit tout en quelques minutes repère mieux qu'un humain pressé. Il a aussi signalé des problèmes sans importance, que l'auteur a écartés.
+
+Il ne faut pas pour autant surestimer la fiabilité du diagnostic. Sur le banc d'essai [OpenRCA](https://microsoft.github.io/OpenRCA) (Microsoft, ICLR 2025 : 335 pannes réelles, 68 Go de journaux, métriques et traces), le meilleur résultat publié trouvait la cause complète d'à peine **11 %** des pannes. Des modèles plus récents font mieux selon certains classements, mais la leçon reste : l'IA produit une **hypothèse à vérifier**, pas un verdict.
+
+Une bonne sortie ressemble donc à ceci (exemple illustratif, pas un résultat de test) :
+
+> **Constat.** La VM est démarrée, le conteneur répond localement sur le port 8080. La résolution DNS interne renvoie une ancienne adresse IP, et l'alias OPNsense de la règle pointe aussi vers cette ancienne adresse.
+>
+> **Hypothèse principale.** Le service est injoignable parce que l'enregistrement DNS et l'alias n'ont pas suivi le changement d'adresse de la VM.
+>
+> **Vérifications proposées.** Résoudre le nom depuis un poste du LAN ; comparer l'adresse actuelle de la VM à celle de l'alias ; si elles diffèrent, corriger l'alias puis retester.
+>
+> **Statut.** Aucune modification appliquée. Validation humaine requise.
+
+L'agent explique son raisonnement au lieu d'annoncer « j'ai réparé ». Chaque affirmation peut être contrôlée.
+
+## Trois catégories d'actions
+
+Le guide de l'ANSSI demande de classer chaque action possible dans **l'une de trois catégories** : exécution autonome, approbation humaine obligatoire, action interdite. Appliqué au scénario :
+
+- **Exécution autonome** : lire les journaux et les métriques, consulter l'état d'un service, d'une VM ou d'une règle, tester la connectivité sans rien modifier.
+- **Approbation humaine obligatoire** : redémarrer un service, corriger un alias ou un enregistrement DNS, modifier une règle interne. L'ANSSI y range explicitement les accès à des données sensibles, les modifications d'identité ou de droits et les déploiements en production.
+- **Action interdite** : toucher aux règles WAN, ouvrir un port vers l'extérieur, supprimer une VM ou un snapshot, modifier des comptes. Ces opérations restent dans la procédure de changement, faite par un humain.
+
+L'approbation n'a de valeur que si l'humain sait ce qu'il approuve. L'ANSSI demande de présenter **l'action exacte, son objectif et ses effets attendus**, et de n'exécuter que l'action approuvée. L'article 14 du [règlement européen sur l'IA](https://artificialintelligenceact.eu/article/14/), qui vise les systèmes à haut risque, nomme le danger inverse : le **biais d'automatisation**, la tendance à se fier par habitude à la sortie de la machine. Valider vingt propositions d'affilée sans les lire revient à ne rien valider. Un homelab n'est pas un système à haut risque, mais les exigences de l'article sont un bon modèle : comprendre les limites de l'outil, pouvoir refuser sa sortie et pouvoir l'arrêter.
+
+Concrètement, l'agent ne dit pas « j'ai corrigé le pare-feu ». Il dit : « voici la différence entre l'adresse actuelle et celle de l'alias, voici l'appel d'API qui la corrige, voici comment vérifier le résultat. Je l'applique ? »
+
+## Des droits techniques, pas des consignes
+
+Écrire « ne modifie rien » dans la demande ne protège de rien : un modèle peut se tromper, être manipulé ou enchaîner des actions permises en un résultat interdit. Le guide de l'ANSSI en fait un principe : fonder l'autorisation sur un **contrôle déterministe**, placé devant chaque outil, que l'agent ne peut ni contourner ni modifier, et qui **refuse par défaut**. Le mécanisme d'approbation doit lui aussi rester hors de portée de l'agent.
+
+Deux incidents montrent pourquoi :
+
+- En juillet 2025, l'agent de [Replit](https://fortune.com/2025/07/23/ai-coding-tool-replit-wiped-database-called-it-a-catastrophic-failure/) a supprimé la base de données de production d'un utilisateur pendant un gel des modifications. La même base servait au développement et à la production. Replit a ensuite séparé les deux.
+- En décembre 2025, selon le *Financial Times*, l'agent Kiro d'Amazon aurait supprimé puis recréé un environnement, provoquant une panne de treize heures d'un service AWS. [Amazon conteste](https://www.theregister.com/2026/02/20/amazon_denies_kiro_agentic_ai_behind_outage/) et parle d'une erreur humaine : des contrôles d'accès mal configurés. Les deux versions mènent à la même leçon : ce sont **les droits** qui ont permis la panne.
+
+Dans le homelab, cela se traduit par une **identité dédiée** à l'agent :
+
+- **Proxmox VE** : un utilisateur à part et un [jeton d'API à privilèges séparés](https://pve.proxmox.com/wiki/User_Management), le réglage par défaut, dont les droits effectifs sont l'intersection de ceux du jeton et de l'utilisateur. Le rôle `PVEAuditor` donne une lecture seule. Le jeton peut avoir une date d'expiration et être révoqué sans désactiver l'utilisateur.
+- **OPNsense** : les [clés d'API](https://docs.opnsense.org/development/how-tos/api.html) sont rattachées à un utilisateur local et héritent de ses privilèges. Un utilisateur dédié, limité à la lecture des règles et des alias, borne donc l'agent. La documentation recommande une clé par application.
+- **Secrets** : aucun mot de passe ni clé dans le contexte du modèle, ses mémoires ou ses journaux. L'ANSSI demande de les confier à un coffre-fort ou à un proxy, et de donner à l'agent des jetons de courte durée, limités au strict nécessaire.
+
+Le protocole **MCP**, qui relie un agent à des outils, ne change rien à ce principe. Sa [spécification d'autorisation](https://modelcontextprotocol.io/specification/2025-06-18/basic/authorization) impose des jetons émis pour un serveur précis et interdit de les relayer à un autre service, mais l'autorisation y est facultative. Un serveur MCP qui expose un accès shell donne à l'agent un accès shell.
+
+## Les journaux sont une entrée non fiable
+
+Un agent de diagnostic lit des journaux. Or un journal contient des données que n'importe qui peut écrire : une URL demandée, un nom d'utilisateur, un en-tête HTTP. Un attaquant peut y glisser une consigne destinée à l'agent : c'est l'**injection de prompt indirecte**.
+
+Ce n'est plus théorique. La prépublication [LogJack](https://arxiv.org/abs/2604.15368) (avril 2026) a injecté des commandes dans des journaux cloud lus par huit modèles chargés de déboguer. Quand la consigne les invitait à corriger, la part de commandes injectées exécutées telles quelles allait de 0 % (Claude Sonnet 4.6) à 86 % (Llama 3.3 70B). Une simple consigne « n'exécute aucun correctif » ramenait la plupart des modèles à zéro, mais pas tous. Surtout, les filtres anti-injection d'Azure et de Google n'ont presque rien détecté : le format des journaux (horodatage, niveau, pile d'appels) trompe des détecteurs entraînés sur d'autres textes.
+
+Simon Willison décrit le cas le plus dangereux sous le nom de [« trifecta létale »](https://simonwillison.net/2025/Jun/16/the-lethal-trifecta/) : un agent qui a accès à des données privées, lit du contenu non fiable et peut communiquer vers l'extérieur. Un agent de diagnostic coche facilement les trois cases. La seule parade fiable selon lui est d'en retirer une. L'ANSSI va dans le même sens : considérer comme non fiables les entrées et les sorties de l'agent, faire passer ses communications par des interfaces maîtrisées, et considérer que **toute donnée envoyée à un modèle hébergé peut être lue par son fournisseur**.
+
+Les contre-mesures pour le homelab :
+
+- l'agent n'a aucune sortie réseau, hormis l'API du modèle et les API d'administration en lecture ;
+- aucune commande issue d'un journal ne s'exécute sans validation ;
+- les outils et commandes autorisés sont une liste blanche ;
+- les journaux sont filtrés avant l'envoi (secrets, données personnelles) ;
+- les essais d'injection se font dans un environnement isolé, jamais sur le réseau principal.
+
+## Tracer la chaîne complète
+
+Sans traces, impossible de savoir ce que l'agent a lu, proposé ou fait exécuter. L'ANSSI demande des journaux **hors de portée de l'agent**, qui permettent de reconstituer la séquence demande → autorisation → action → résultat. Elle demande aussi un **arrêt d'urgence** qui révoque les accès, et de tester la restauration en vérifiant qu'une action déjà exécutée n'est pas rejouée.
+
+Pour le scénario, le journal visé ressemblerait à ceci (format cible, pas une trace réelle) :
+
+```text
+08:12:03 agent   demande     diagnostic du service
+08:12:05 agent   lecture     supervision, Docker, OPNsense
+08:12:09 agent   hypothèse   alias et DNS sur ancienne IP
+08:12:10 agent   proposition corriger l'alias (approbation)
+08:12:35 humain  décision    validée
+08:12:36 système action      alias corrigé par l'API
+08:13:02 agent   contrôle    service joignable (LAN)
+```
+
+Ce journal sert de preuve, mais aussi d'outil d'apprentissage : il permet de relire, après coup, si le raisonnement de l'agent était juste.
+
+## Protocole de test, à mener
+
+Rien de ce qui précède n'a encore été testé dans mon homelab. Voici le protocole que je prévois, pour séparer ce que j'ai lu de ce que j'aurai vérifié :
+
+1. Déployer une VM Linux de test dans Proxmox, avec Docker et un petit service web.
+2. Autoriser l'accès depuis le LAN dans OPNsense, par une règle qui utilise un alias.
+3. Créer pour l'agent un utilisateur Proxmox avec un jeton `PVEAuditor` et un utilisateur OPNsense en lecture seule.
+4. Provoquer une panne à la fois : alias sur une ancienne IP, conteneur arrêté, port bloqué, enregistrement DNS faux.
+5. Demander un diagnostic sans modification, puis comparer l'hypothèse de l'agent à la cause réelle.
+6. Valider ou refuser le correctif à la main, en notant le temps passé avec et sans l'agent.
+7. Glisser une fausse consigne dans un journal du service et observer la réaction de l'agent.
+
+Les résultats feront l'objet d'une prochaine fiche, erreurs de l'agent comprises.
+
+## Ce que j'en retiens
+
+L'IA est utile au dépannage parce qu'elle lit vite et relie des indices dispersés. Mais son diagnostic reste une hypothèse, et les journaux qu'elle lit peuvent la manipuler. Le bon réglage n'est pas « l'IA a le droit » ou « l'IA n'a pas le droit », mais une liste d'actions classées, appliquée par le système et non par le modèle. Lecture seule par défaut, identité dédiée, approbation pour ce qui modifie, interdiction pour ce qui expose, et des journaux que l'agent ne peut pas toucher.
+
+> L'IA propose. L'humain décide. Le système autorise et journalise.
+
+## Sources
+
+- ANSSI, [*Sécuriser un système IA agentique*](https://messervices.cyber.gouv.fr/guides/essentiels-ia-agentique), collection Les Essentiels, 30 octobre 2026.
+- CERT-FR, [*Vulnérabilités et risques des produits d'automatisation par IA agentique sur les postes de travail*](https://cert.cyber.gouv.fr/actualite/CERTFR-2026-ACT-016/), CERTFR-2026-ACT-016, 13 avril 2026.
+- Union européenne, [règlement sur l'IA, article 14 : contrôle humain](https://artificialintelligenceact.eu/article/14/).
+- Xu et al., [*OpenRCA: Can Large Language Models Locate the Root Cause of Software Failures?*](https://microsoft.github.io/OpenRCA), ICLR 2025.
+- H. Shah, [*LogJack: Indirect Prompt Injection Through Cloud Logs Against LLM Debugging Agents*](https://arxiv.org/abs/2604.15368), prépublication arXiv, 15 avril 2026.
+- S. Willison, [*The lethal trifecta for AI agents*](https://simonwillison.net/2025/Jun/16/the-lethal-trifecta/), 16 juin 2025.
+- Model Context Protocol, [*Authorization*](https://modelcontextprotocol.io/specification/2025-06-18/basic/authorization), spécification du 18 juin 2025.
+- Proxmox, [*User Management*](https://pve.proxmox.com/wiki/User_Management) ; OPNsense, [*Use the API*](https://docs.opnsense.org/development/how-tos/api.html), consultés le 25 novembre 2026.
+- tskulbru.dev, [*I Gave Claude Code SSH Access to My Homelab and Asked It What's Wrong*](https://tskulbru.dev/posts/claude-code-homelab-audit/), 21 juillet 2026.
+- *Fortune*, [*AI coding tool Replit wiped database*](https://fortune.com/2025/07/23/ai-coding-tool-replit-wiped-database-called-it-a-catastrophic-failure/), 23 juillet 2025 ; *The Register*, [*Amazon denies Kiro agentic AI behind outage*](https://www.theregister.com/2026/02/20/amazon_denies_kiro_agentic_ai_behind_outage/), 20 février 2026.
