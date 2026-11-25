@@ -28,7 +28,9 @@ const CSP = [
   "base-uri 'self'",
   "form-action 'self'",
   "frame-ancestors 'none'",
-  "upgrade-insecure-requests",
+  // Sur Vercel seulement : Safari l'applique aussi à `http://localhost` (Chromium l'en exempte)
+  // et y chercherait CSS et scripts en HTTPS, ce qui casse le site en local.
+  ...(process.env.VERCEL ? ["upgrade-insecure-requests"] : []),
 ].join("; ");
 
 const SECURITY_HEADERS = [
