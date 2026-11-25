@@ -177,7 +177,7 @@ test.describe("mise en scène sur grand écran", () => {
 
   test("la photo se range en affiche, la tête entière à chaque instant", async ({ page }) => {
     await page.goto("/");
-    await expect(page.locator(".pin-spacer")).toHaveCount(2);
+    await expect(page.locator(".pin-spacer")).toHaveCount(3);
     await expect(page.locator("[data-hero-photo]")).toHaveJSProperty("complete", true);
 
     for (const fraction of [0, 0.25, 0.5, 0.75, 1]) {
@@ -238,7 +238,7 @@ test.describe("mise en scène sur grand écran", () => {
 
   test("le synopsis reste lu par les lecteurs d'écran pendant le hero épinglé", async ({ page }) => {
     await page.goto("/");
-    await expect(page.locator(".pin-spacer")).toHaveCount(2);
+    await expect(page.locator(".pin-spacer")).toHaveCount(3);
     const flow = page.locator("[data-hero-synopsis-flow]");
 
     // La copie affichée dans le hero est décorative ; la copie du flux reste dans l'arbre d'accessibilité.
@@ -268,6 +268,37 @@ test.describe("mise en scène sur grand écran", () => {
     await expect(page.locator("[data-acts-count]")).toHaveText(`Acte ${ACTS.length} / ${ACTS.length}`);
   });
 
+  test("le titre de la fiche technique reste en place pendant les compétences, puis repart avec la section", async ({
+    page,
+  }) => {
+    await page.goto("/");
+    await expect(page.locator(".pin-spacer [data-sheet-aside]")).toBeAttached();
+    // Défilement relatif au haut de la section, que l'ancrage ne déplace pas.
+    const scrollInSheet = (offset: number) =>
+      page.evaluate((at) => {
+        const section = document.querySelector("[data-sheet-aside]")!.closest("section")!;
+        window.scrollTo(0, section.getBoundingClientRect().top + window.scrollY + at);
+      }, offset);
+    const asideTop = async () => (await box(page, "[data-sheet-aside]")).top;
+
+    await scrollInSheet(0);
+    const anchored = await asideTop();
+    const drift = async () => Math.abs((await asideTop()) - anchored);
+    await scrollInSheet(300);
+    await expect.poll(drift).toBeLessThanOrEqual(1);
+
+    // Au bout de la liste, il repart avec elle : son bas reste aligné sur celui de la liste, sans chevauchement.
+    await scrollInSheet(900);
+    await expect.poll(asideTop).toBeLessThan(anchored - 100);
+    const aside = await box(page, "[data-sheet-aside]");
+    const list = await box(page, "[data-sheet-list]");
+    expect(Math.abs(aside.bottom - list.bottom)).toBeLessThan(2);
+
+    // En remontant, il se réancre au même endroit.
+    await scrollInSheet(300);
+    await expect.poll(drift).toBeLessThanOrEqual(1);
+  });
+
   test("une fois la page parcourue, tout est affiché et les affiches ont retrouvé leur style", async ({ page }) => {
     await page.goto("/");
     await scrollThrough(page);
@@ -287,7 +318,7 @@ test.describe("mise en scène sur grand écran", () => {
 
   test("en repassant sur petit écran, la photo retrouve son cadre et plus rien n'est épinglé", async ({ page }) => {
     await page.goto("/");
-    await expect(page.locator(".pin-spacer")).toHaveCount(2);
+    await expect(page.locator(".pin-spacer")).toHaveCount(3);
 
     await page.setViewportSize({ width: 600, height: 800 });
 
@@ -316,7 +347,7 @@ test.describe("mise en scène sur grand écran", () => {
     await expect(page.locator(".pin-spacer")).toHaveCount(0);
     await page.getByRole("banner").getByRole("link", { name: OWNER.fullName, exact: true }).click();
     await expect(page).toHaveURL("/");
-    await expect(page.locator(".pin-spacer")).toHaveCount(2);
+    await expect(page.locator(".pin-spacer")).toHaveCount(3);
     await scrollThrough(page);
     expect(errors).toEqual([]);
   });
@@ -333,7 +364,7 @@ for (const [label, viewport] of [
 
     test("rien ne se chevauche, la tête est entière et la page ne déborde pas", async ({ page }) => {
       await page.goto("/");
-      await expect(page.locator(".pin-spacer")).toHaveCount(2);
+      await expect(page.locator(".pin-spacer")).toHaveCount(3);
       await expect(page.locator("[data-hero-photo]")).toHaveJSProperty("complete", true);
 
       // Premier écran, une fois l'intro jouée : la légende est au-dessus du nom, le haut de la tête dans le cadre.
