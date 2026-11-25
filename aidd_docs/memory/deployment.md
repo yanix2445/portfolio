@@ -5,6 +5,7 @@ Où tourne le site et comment il est livré.
 ## Pipeline
 
 - Vercel est connecté au repo GitHub : un push sur `main` déploie en production, une PR crée un déploiement Preview.
+- IndexNow (`.github/workflows/indexnow.yml`, 2026-11-25) : quand Vercel passe le statut de commit « Vercel » à `success` sur `main` (la production sert le nouveau build), `scripts/indexnow.ts` signale à Bing les pages changées par le merge. Une fiche MDX signale sa page et sa liste (l'accueil en plus pour un projet), tout autre fichier du site signale tout le sitemap, la documentation, les tests et la CI ne signalent rien. Clé publique dans `public/<clé>.txt`. Essai à blanc : `INDEXNOW_DRY_RUN=1 node scripts/indexnow.ts <sha>`. Le site est aussi dans Bing Webmaster Tools et Google Search Console (sitemap lu, pages soumises le 2026-11-25).
 - CI GitHub Actions (`.github/workflows/ci.yml`), sur chaque PR (Dependabot comprises) et chaque push sur `main` : un job typage, lint et tests unitaires, un job e2e sur le build de production (Chromium en cache, une relance en CI pour les tests qui dépendent de Cloudflare). Gratuite : le dépôt est public. Le build Vercel reste séparé, il ne lance pas les tests.
 
 ## Environments
