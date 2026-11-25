@@ -39,6 +39,7 @@ flowchart TD
   - `profile.ts` : le contenu de l'accueil (`OPENING`, `ACTS`, `SHEET`, `CERTIFICATIONS`). Il n'est pas dans `src/content/`, que Vitest redirige vers les fixtures.
   - `contact.ts` : règles et messages du formulaire, sans dépendance serveur ; `contact-emails.ts` : les deux mails (notification, accusé de réception) ; `turnstile.ts` et `resend.ts` : les deux appels externes, côté serveur.
   - `site.ts` : constantes du site (`SITE_URL`, `OWNER`, `CONTACT`, `CV_PATH`, `BASE_OPEN_GRAPH`).
+  - `legal.ts` : contenu des mentions légales (hébergeur, prestataires, un traitement de données par fiche, date de mise à jour).
   - `utils.ts` : `cn()`, configuré avec les tailles de texte du thème.
 - `tests/visual` : `capture.mjs` et `compare.mjs`, pour comparer le rendu avant et après une réécriture de styles.
 - `public` : le CV en PDF (`cv/`) et le portrait. Les badges officiels des certifications sont dans `images/certifs/` (Cisco, Google ×2, EBIOS ; pas encore Anthropic).
