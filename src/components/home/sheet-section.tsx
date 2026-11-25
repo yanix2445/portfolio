@@ -8,7 +8,7 @@ export function SheetSection() {
       className="grid items-start gap-8 border-t border-border px-gutter pt-20 pb-12 md:grid-cols-[0.78fr_1.22fr] md:gap-[4vw] md:pt-[16vh] md:pb-[12vh]"
       data-reveal-group
     >
-      <div>
+      <div data-sheet-aside>
         <p className="type-label mb-[1.6vh] text-primary">Compétences</p>
         <h2 id="sheet-title" className="type-poster text-display-lg" data-reveal="title">
           Fiche technique
@@ -17,7 +17,7 @@ export function SheetSection() {
           Ce que je sais installer, administrer et dépanner, en production ou dans mes labs.
         </p>
       </div>
-      <dl>
+      <dl data-sheet-list>
         {SHEET.map(({ label, items, aside }) => (
           <div
             key={label}

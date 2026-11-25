@@ -27,7 +27,7 @@ flowchart TD
 - `src/components/home` : les six sections de l'accueil « Générique », en Server Components (`hero`, `acts`, `bill`, `sheet`, `awards`, `finale`), et la couronne (`laurel.tsx`).
 - `src/components/projects` : ce que l'accueil et le catalogue partagent (`poster.tsx`, `status-badge.tsx`) et le catalogue filtrable de `/projets` (`catalog.tsx`, composant client).
 - `src/components/contact` : le formulaire de contact (`contact-form.tsx`, composant client, rendu seul) et ses deux hooks : `use-contact-draft.ts` (brouillon de l'onglet, motif) et `use-turnstile-gate.ts` (attente du jeton Turnstile, envoi automatique). `sentence-blank.tsx` : un blanc de la phrase du formulaire, qui grandit et passe à la ligne avec le texte saisi. `book-call-link.tsx` : le lien « Réserver un appel » (Cal.com), utilisé dans l'en-tête, l'accueil et `/contact`.
-- `src/components/animations` : la mise en scène GSAP, toujours en `"use client"` (`hero-scroll`, `acts-scroll`, `reveal`, `gsap.ts`).
+- `src/components/animations` : la mise en scène GSAP, toujours en `"use client"` (`hero-scroll`, `acts-scroll`, `sheet-scroll`, `reveal`, `gsap.ts`).
 - `src/components` (autres) : `layout/` (header fixe, footer, en-tête des pages intérieures), `content/` (liste de la veille, page de détail des fiches et articles, sommaire `sequence-nav`, appel « → » partagé `action-cue`), `mdx/` (rendu `prose`, aussi utilisé par les mentions légales) et `seo/` (`JsonLd`, qui rend le balisage schema.org d'une page ; `entry-share-image.tsx`, l'image de partage d'une fiche).
 - `src/types` : les déclarations de modules, dont `*.mdx` (qui type `export const metadata`).
 - `src/content` : un fichier MDX par projet ou article de veille. On ajoute du contenu ici.

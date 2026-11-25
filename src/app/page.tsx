@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { ActsScroll } from "@/components/animations/acts-scroll";
 import { HeroScroll } from "@/components/animations/hero-scroll";
 import { Reveal } from "@/components/animations/reveal";
+import { SheetScroll } from "@/components/animations/sheet-scroll";
 import { ActsSection } from "@/components/home/acts-section";
 import { AwardsSection } from "@/components/home/awards-section";
 import { BillSection } from "@/components/home/bill-section";
@@ -29,7 +30,9 @@ export default function HomePage() {
       </ActsScroll>
       <Reveal>
         <BillSection />
-        <SheetSection />
+        <SheetScroll>
+          <SheetSection />
+        </SheetScroll>
         <AwardsSection />
         <FinaleSection />
       </Reveal>
