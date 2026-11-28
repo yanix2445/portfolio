@@ -27,7 +27,7 @@ Ce qu'est le projet, le problème qu'il résout et son vocabulaire. Le « pourqu
 
 ## Key features
 
-- Accueil « Générique », mis en scène comme un générique de film (GSAP) : hero, parcours en cinq actes, 3 projets à l'affiche, fiche technique des compétences, certifications et appel final.
+- Accueil « Générique », mis en scène comme un générique de film (GSAP) : hero, parcours en cinq actes, 3 projets à la une, fiche technique des compétences, certifications et appel final.
 - Catalogue `/projets` : tous les projets en affiches, avec statut et filtre par domaine.
 - Une page dédiée par projet ou réalisation, écrite en MDX.
 - Section veille technologique : une présentation permanente (sujet, objectif, problématique, position, méthode) et un journal des fiches MDX, une par semaine, chacune séparant ce que Yanis a lu de ce qu'il a vérifié.
