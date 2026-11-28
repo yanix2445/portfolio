@@ -192,7 +192,7 @@ Motion is GSAP only, in `src/components/animations/`, wrapping server-rendered s
 
 - Use tokens: semantic colors, `text-*` roles, `rounded-*`, `px-gutter`.
 - Reach for a shadcn primitive before writing markup for a control.
-- Keep accented capitals clear of the line above (« ÉQUIPE », « À L'AFFICHE »).
+- Keep accented capitals clear of the line above (« ÉQUIPE »).
 - Never cut a word in a title: `fitTitle` shrinks the title until its longest word fits.
 - Check new layouts at 1440 × 900, 1366 × 650, 768 × 1024 and 375 × 812.
 
