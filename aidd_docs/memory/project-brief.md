@@ -19,7 +19,7 @@ Ce qu'est le projet, le problème qu'il résout et son vocabulaire. Le « pourqu
 | BTS SIO | Brevet de technicien supérieur « Services informatiques aux organisations » |
 | SISR | Option « Solutions d'infrastructure, systèmes et réseaux » (par opposition à SLAM, orientée développement) |
 | Réalisation professionnelle | Projet mené en stage ou en formation, présenté à l'épreuve du BTS, avec une page dédiée sur le site |
-| Veille technologique | Suivi d'un sujet tech exigé par le référentiel du BTS. Celle de Yanis porte sur l'IA comme assistant de l'administrateur systèmes et réseaux : jusqu'où l'IA peut aider sans compromettre la sécurité ni la traçabilité, l'administrateur gardant la décision |
+| Veille technologique | Suivi d'un sujet tech exigé par le référentiel du BTS. Celle de Yanis (thème choisi le 2026-11-28) : « L'IA, assistante de l'administrateur systèmes et réseaux : administrer, développer, automatiser et dépanner une infrastructure ». Question implicite : que peut vraiment faire l'IA pour un administrateur aujourd'hui, et que doit-il encore savoir faire lui-même ? Tous les 7 à 10 jours, une fiche : l'actu retenue, le test, l'avis |
 | Projet | Une entrée MDX dans `src/content/projets/`, rendue sur `/projets/[slug]` |
 | Acte | Une étape du parcours sur l'accueil : une expérience, avec lieu, dates et rôle, dans l'ordre chronologique |
 | À l'affiche / En tournage / Prochainement | Statut d'un projet : terminé, en cours, à venir |
@@ -30,7 +30,7 @@ Ce qu'est le projet, le problème qu'il résout et son vocabulaire. Le « pourqu
 - Accueil « Générique », mis en scène comme un générique de film (GSAP) : hero, parcours en cinq actes, 3 projets à la une, fiche technique des compétences, certifications et appel final.
 - Catalogue `/projets` : tous les projets en affiches, avec statut et filtre par domaine.
 - Une page dédiée par projet ou réalisation, écrite en MDX.
-- Section veille technologique : une présentation permanente (sujet, objectif, problématique, position, méthode) et un journal des fiches MDX, une par semaine, chacune séparant ce que Yanis a lu de ce qu'il a vérifié.
+- Section veille technologique : une présentation permanente (sujet, objectif, problématique, position, méthode) et un journal des fiches MDX, une tous les 7 à 10 jours, chacune séparant ce que Yanis a lu de ce qu'il a vérifié, puis donnant son avis.
 - CV téléchargeable en PDF.
 - Formulaire de contact protégé par Turnstile, envoyé par mail via Resend, sans stockage.
 - Page mentions légales et confidentialité (RGPD).

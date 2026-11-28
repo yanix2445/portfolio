@@ -11,7 +11,7 @@ import { VEILLE } from "@/lib/veille";
 export const metadata: Metadata = {
   title: "Veille technologique : l'IA et l'admin réseau",
   description:
-    "Veille technologique BTS SIO SISR : l'IA comme assistant de l'administrateur systèmes et réseaux, sans perdre sécurité ni traçabilité. Une fiche par semaine.",
+    "Veille technologique BTS SIO SISR : l'IA, assistante de l'administrateur systèmes et réseaux, pour administrer, développer, automatiser et dépanner.",
   alternates: { canonical: "/veille" },
 };
 
