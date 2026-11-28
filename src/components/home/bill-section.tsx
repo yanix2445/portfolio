@@ -20,14 +20,14 @@ export async function BillSection() {
       <div className="mb-8 md:mb-[6vh] md:flex md:items-end md:justify-between md:gap-[4vw]">
         <div>
           <p className="type-label mb-[1.6vh] text-primary">Projets</p>
-          <h2 id="bill-title" className="type-poster pt-[0.16em] text-display-xl" data-reveal="title">
-            À l&apos;affiche
+          <h2 id="bill-title" className="type-poster pt-[0.16em] text-display-lg" data-reveal="title">
+            En tournage
           </h2>
         </div>
         <div className="mt-5 md:mt-0 md:max-w-[30vw] md:pb-[1vw]">
           <p className="text-body text-soft">
             Trois projets choisis parmi tous les autres. Chaque fiche raconte l&apos;installation,
-            les pannes rencontrées et le résultat.
+            les pannes rencontrées et où j&apos;en suis.
           </p>
           <Button asChild variant="outline" size="label" className="mt-[2.4vh]">
             <Link href="/projets" data-all-projects>
