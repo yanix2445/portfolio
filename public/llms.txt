@@ -14,7 +14,7 @@
 
 ## Veille technologique
 
-- [Présentation](https://yanis-harrat.com/veille) : l'IA comme assistant de l'administrateur systèmes et réseaux, sans perdre la sécurité ni la traçabilité.
+- [Présentation](https://yanis-harrat.com/veille) : l'IA, assistante de l'administrateur systèmes et réseaux, pour administrer, développer, automatiser et dépanner une infrastructure.
 - [L'IA copilote de dépannage](https://yanis-harrat.com/veille/ia-copilote-depannage-homelab) : diagnostiquer une panne avec un agent IA, selon le guide ANSSI sur l'IA agentique.
 - [L'IA comme copilote du technicien informatique](https://yanis-harrat.com/veille/ia-copilote-technicien-informatique) : ce qu'on confie à un agent IA dans un homelab, et où placer la limite.
 
